@@ -38,8 +38,8 @@ task.
 Definitions are produced through
 [commons-idea](https://github.com/Open-Labor-Foundation/commons-idea): describe
 your expertise in a guided conversation, and it generates the structured
-`spec.yaml` and supporting files. Submit the result here as a pull request.
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full spec format.
+`spec.yaml` and supporting files. See [CONTRIBUTING.md](CONTRIBUTING.md) for
+current submission status and the full spec format.
 
 ## Staying current
 
