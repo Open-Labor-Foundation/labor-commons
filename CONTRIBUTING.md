@@ -1,5 +1,7 @@
 # Contributing to labor-commons
 
+> **A note on contributions:** This repository is public for transparency, but is not yet accepting external pull requests for specialist definitions — the content-intake process for community submissions is still being finalized. This is expected to change as the project matures — check back, or watch [openlabor.foundation](https://openlabor.foundation) for updates.
+
 Anyone with expertise in a profession, trade, or specialized domain can contribute a specialist definition. No technical background required.
 
 ---
