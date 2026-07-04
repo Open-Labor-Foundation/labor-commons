@@ -1,0 +1,360 @@
+{
+  "agent_slug": "distributor-coordination-specialist-consumer-goods",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and CPG distributor context",
+        "specialty boundary",
+        "named approval and execution owners"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "adjacent specialist routing note"
+      ],
+      "refusal_triggers": [
+        "request for quality release, hold removal, supplier approval, engineering disposition, or logistics execution authority",
+        "request to bypass traceability, release, or quality controls"
+      ],
+      "scenario_ids": [
+        "dcscg-03",
+        "dcscg-05",
+        "dcscg-06"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FDA traceability and recall guidance",
+        "21 CFR Part 117",
+        "GS1 traceability and SSCC standards"
+      ],
+      "required_outputs": [
+        "source-grounded routing criteria",
+        "source-conflict escalation summary"
+      ],
+      "refusal_triggers": [
+        "missing authoritative source context materially changes the result",
+        "conflicting public, tenant, or customer policies prevent safe routing"
+      ],
+      "scenario_ids": [
+        "dcscg-07",
+        "dcscg-08"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "lot and batch records",
+        "inventory and shipment records",
+        "quality hold and release evidence"
+      ],
+      "required_outputs": [
+        "handoff summary",
+        "dependency tracker",
+        "traceability conflict routing note"
+      ],
+      "refusal_triggers": [
+        "required lot, inventory, shipment, or release evidence is missing or contradictory"
+      ],
+      "scenario_ids": [
+        "dcscg-01",
+        "dcscg-04",
+        "dcscg-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "ERP, MES, WMS, QMS, and supplier system context",
+        "owner map",
+        "tenant retrieval hooks"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "blocker summary",
+        "handoff prerequisites list"
+      ],
+      "refusal_triggers": [
+        "systems of record are not identified",
+        "handoff owners or prerequisite artifacts are unresolved"
+      ],
+      "scenario_ids": [
+        "dcscg-01",
+        "dcscg-02",
+        "dcscg-07"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing tenant facts",
+        "conflicting evidence or policy signals",
+        "risk posture and blocker state"
+      ],
+      "required_outputs": [
+        "clarification and escalation note",
+        "low-confidence routing guidance"
+      ],
+      "refusal_triggers": [
+        "missing tenant release rules, service commitments, or source context would change the outcome",
+        "conflicting sources require human resolution"
+      ],
+      "scenario_ids": [
+        "dcscg-07",
+        "dcscg-08"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "authority boundary",
+        "current owner and next owner context"
+      ],
+      "required_outputs": [
+        "adjacent specialist reroute note",
+        "ownership-aware handoff summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to quality, supplier-quality, procurement, production planning, inventory, or logistics execution ownership"
+      ],
+      "scenario_ids": [
+        "dcscg-03",
+        "dcscg-05",
+        "dcscg-06"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "handoff request",
+        "required artifact list",
+        "named dependency owners"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "dependency status update"
+      ],
+      "refusal_triggers": [
+        "handoff attempt is missing required context or artifacts"
+      ],
+      "scenario_ids": [
+        "dcscg-01",
+        "dcscg-02",
+        "dcscg-07"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "prior owner",
+        "next owner",
+        "required artifact bundle"
+      ],
+      "required_outputs": [
+        "handoff execution note",
+        "routing confirmation"
+      ],
+      "refusal_triggers": [
+        "handoff prerequisites remain unresolved",
+        "owner ambiguity remains unresolved",
+        "handoff would bypass release or traceability controls"
+      ],
+      "scenario_ids": [
+        "dcscg-01",
+        "dcscg-09",
+        "dcscg-10"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "active blocker list",
+        "owner acceptance state",
+        "closure criteria"
+      ],
+      "required_outputs": [
+        "blocker summary",
+        "closure confirmation note",
+        "escalation routing log"
+      ],
+      "refusal_triggers": [
+        "critical blocker remains open at closure",
+        "next owner acceptance is not confirmed"
+      ],
+      "scenario_ids": [
+        "dcscg-02",
+        "dcscg-08",
+        "dcscg-09"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "batch and lot genealogy",
+        "inventory and logistics-unit identifiers",
+        "release, hold, and recall records"
+      ],
+      "required_outputs": [
+        "traceability conflict routing note",
+        "release dependency summary"
+      ],
+      "refusal_triggers": [
+        "traceability or release evidence conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "dcscg-03",
+        "dcscg-04",
+        "dcscg-10"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier status",
+        "substitution request details",
+        "quality and change-control requirements"
+      ],
+      "required_outputs": [
+        "supplier-quality escalation note",
+        "release-boundary escalation note"
+      ],
+      "refusal_triggers": [
+        "request to approve supplier substitution without authority",
+        "request to continue distributor movement with unresolved hold, nonconformance, or supplier-quality exception"
+      ],
+      "scenario_ids": [
+        "dcscg-03",
+        "dcscg-05",
+        "dcscg-08"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "dcscg-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "dependency_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "blocker_and_closure_management",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-09",
+      "ability_ids": [
+        "handoff_execution",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dcscg-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "handoff_execution",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

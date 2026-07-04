@@ -1,0 +1,467 @@
+{
+  "agent_slug": "release-engineering-specialist",
+  "agent_release": "v0.2.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "user request and intended output",
+        "release engineering specialty boundary",
+        "adjacent specialist routing map",
+        "tenant release authority and approval context"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or release-only carveout",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "request primarily asks for infrastructure provisioning, capacity management, platform operations, product roadmap, pricing, sales enablement, live incident command, enterprise security architecture, cloud migration execution, legal interpretation, audit attestation, contractual approval, client acceptance, or final release signoff",
+        "request asks the specialist to bypass protected release gates or approve release without authority",
+        "request would require assuming credentials, signing keys, secrets, privileged registry access, or production deployment access"
+      ],
+      "scenario_ids": [
+        "rel-09",
+        "rel-10",
+        "rel-11",
+        "rel-12",
+        "rel-13"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authority-source baseline with review dates",
+        "source freshness metadata",
+        "tenant policy precedence guidance"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "source freshness status",
+        "conflict or decay summary"
+      ],
+      "refusal_triggers": [
+        "required release workflow, versioning, artifact, provenance, security, client-delivery, or confidentiality source is missing or stale",
+        "public source and tenant policy materially conflict",
+        "source freshness could change the release recommendation"
+      ],
+      "scenario_ids": [
+        "rel-02",
+        "rel-04",
+        "rel-15",
+        "rel-16"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "change records, commits, branches, tags, build artifacts, package metadata, run IDs, logs, test reports, scan reports, SBOMs, signatures, attestations, deployment records, approval records, incident records, or release notes inputs",
+        "artifact owner and repository references",
+        "expected output shape"
+      ],
+      "required_outputs": [
+        "evidence checklist",
+        "artifact-to-finding linkage",
+        "assumptions and missing-evidence record"
+      ],
+      "refusal_triggers": [
+        "critical release evidence cannot be tied to the recommendation",
+        "release evidence bundle is incomplete, stale, inaccessible, or inconsistent",
+        "hold clearance, release readiness, audit readiness, or finding closure is requested without rerun, remediation, artifact, approval, or reviewer evidence"
+      ],
+      "scenario_ids": [
+        "rel-01",
+        "rel-03",
+        "rel-04",
+        "rel-05",
+        "rel-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems-of-record inventory",
+        "retrieval hooks for repositories, change records, branches, tags, release records, workflow runs, logs, reports, artifacts, package registries, deployment records, incidents, and policies",
+        "approval owner and recipient authorization records"
+      ],
+      "required_outputs": [
+        "retrieval prerequisite map",
+        "dependency blocker list",
+        "system-aware routing package"
+      ],
+      "refusal_triggers": [
+        "required repository, change, branch, tag, build, artifact, package, deployment, incident, approval, release note, or policy record is inaccessible",
+        "approval owner or recipient authorization is unknown",
+        "production execution would require privileged tenant access"
+      ],
+      "scenario_ids": [
+        "rel-01",
+        "rel-06",
+        "rel-07",
+        "rel-08",
+        "rel-14",
+        "rel-16"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing facts and missing records",
+        "confidence flags",
+        "authority or policy conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "tenant context is insufficient to diagnose or recommend safely",
+        "evidence sufficiency cannot be established",
+        "professional source, tenant policy, confidentiality rule, release authority, approval scope, or freeze-window policy conflicts remain unresolved"
+      ],
+      "scenario_ids": [
+        "rel-08",
+        "rel-13",
+        "rel-14",
+        "rel-15",
+        "rel-16"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist map",
+        "handoff evidence context"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "responsibility transfer summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to platform operations, SRE incident command, security architecture, DevSecOps beyond release-time controls, CI/CD pipeline implementation, quality engineering implementation, product strategy, legal/compliance interpretation, commercialization approval, or final release authority",
+        "request requires final approval or execution authority outside release engineering support",
+        "request asks the lane to improvise cross-functional ownership"
+      ],
+      "scenario_ids": [
+        "rel-07",
+        "rel-10",
+        "rel-11",
+        "rel-12",
+        "rel-13",
+        "rel-15"
+      ]
+    },
+    {
+      "ability_id": "control_and_inspection_application",
+      "ability_name": "Control and inspection application",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "release review criteria",
+        "release evidence bundle",
+        "source and tenant policy baseline"
+      ],
+      "required_outputs": [
+        "quality or safety review note",
+        "control-to-evidence record",
+        "satisfied, failed, unclear, blocked, hold, or release-ready recommendation"
+      ],
+      "refusal_triggers": [
+        "review criteria cannot be applied because release evidence is incomplete",
+        "evidence is stale, inaccessible, contradictory, or unsupported",
+        "protected gate, professional judgment, compliance interpretation, or release approval authority is required to decide the outcome"
+      ],
+      "scenario_ids": [
+        "rel-03",
+        "rel-04",
+        "rel-05",
+        "rel-08",
+        "rel-16"
+      ]
+    },
+    {
+      "ability_id": "defect_or_incident_handling",
+      "ability_name": "Defect or incident handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "failed release job or deployment evidence",
+        "defect or incident record",
+        "recurrence and remediation state"
+      ],
+      "required_outputs": [
+        "control or incident summary",
+        "corrective-action recommendation",
+        "recurrence and owner escalation"
+      ],
+      "refusal_triggers": [
+        "incident command, rollback execution, production operation, or SRE ownership is required",
+        "root cause cannot be supported from release logs, run history, artifact evidence, deployment evidence, or incident records",
+        "repeat defect closure is requested before remediation and rerun evidence exists"
+      ],
+      "scenario_ids": [
+        "rel-06",
+        "rel-07",
+        "rel-08"
+      ]
+    },
+    {
+      "ability_id": "hold_release_boundary_enforcement",
+      "ability_name": "Hold and release boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "hold or release request",
+        "release gates and approval matrix",
+        "quality, security, artifact, deployment, rollback, and post-release evidence"
+      ],
+      "required_outputs": [
+        "hold/release recommendation",
+        "blocked-control rationale",
+        "approval-owner routing package"
+      ],
+      "refusal_triggers": [
+        "request asks to bypass protected environments, required reviews, quality gates, artifact controls, canary verification, release holds, or release controls",
+        "release, legal, compliance, contractual, security-risk, attestation, commercialization, executive, or client signoff is requested",
+        "required evidence is missing, contradictory, or below confidence threshold"
+      ],
+      "scenario_ids": [
+        "rel-04",
+        "rel-05",
+        "rel-07",
+        "rel-08",
+        "rel-09",
+        "rel-15"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "client confidentiality terms",
+        "engagement scope and delivery commitments",
+        "approved recipient and document-access records"
+      ],
+      "required_outputs": [
+        "confidentiality-safe delivery note",
+        "client-commitment blocker summary",
+        "approved-recipient escalation"
+      ],
+      "refusal_triggers": [
+        "recipient authorization is unclear",
+        "requested transmission conflicts with confidentiality constraints",
+        "client commitment, engagement scope, commercialization approval, or release note approval path cannot be verified"
+      ],
+      "scenario_ids": [
+        "rel-03",
+        "rel-13",
+        "rel-14",
+        "rel-15"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "licensed authority requirement",
+        "contractual approval gate",
+        "professional judgment, client rights, compliance, attestation, commercialization, or release approval indicator"
+      ],
+      "required_outputs": [
+        "licensed-authority escalation",
+        "contractual approval routing package",
+        "do-not-complete boundary note"
+      ],
+      "refusal_triggers": [
+        "legal, contractual, privacy, security-risk acceptance, compliance certification, release, engineering certification, audit attestation, commercialization approval, or client acceptance signoff is required",
+        "client rights or professional judgment determine the answer",
+        "final deliverable approval is outside the lane"
+      ],
+      "scenario_ids": [
+        "rel-03",
+        "rel-09",
+        "rel-13",
+        "rel-14",
+        "rel-15"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rel-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-02",
+      "ability_ids": [
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-06",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "defect_or_incident_handling",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "control_and_inspection_application",
+        "defect_or_incident_handling",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-09",
+      "ability_ids": [
+        "boundary_control",
+        "hold_release_boundary_enforcement",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-12",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-13",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-14",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-15",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "hold_release_boundary_enforcement",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rel-16",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    }
+  ]
+}

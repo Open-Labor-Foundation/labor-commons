@@ -1,0 +1,389 @@
+{
+  "agent_slug": "incident-coordination-data-center-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "request decision surface",
+        "adjacent specialist map",
+        "authority constraints"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary",
+        "handoff guardrails"
+      ],
+      "refusal_triggers": [
+        "request asks for runbook execution, failover, rollback, or direct remediation",
+        "request asks for legal or financial-authorization wording or policy-override authority",
+        "required tenant prerequisites are missing"
+      ],
+      "scenario_ids": [
+        "icdcs-05",
+        "icdcs-09",
+        "icdcs-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source baseline list",
+        "source precedence policy",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-applicability decision",
+        "evidence conflict summary",
+        "source freshness sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "source policy conflicts with tenant policy",
+        "public source context is stale for the decision"
+      ],
+      "scenario_ids": [
+        "icdcs-02",
+        "icdcs-08",
+        "icdcs-11",
+        "icdcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "telemetry and monitoring artifacts",
+        "incident and closure records",
+        "facility state evidence",
+        "handoff artifacts"
+      ],
+      "required_outputs": [
+        "evidence-sufficiency summary",
+        "missing-evidence checklist",
+        "artifact-to-output linkage"
+      ],
+      "refusal_triggers": [
+        "required monitoring or facility evidence is absent",
+        "evidence cannot be linked to requested routing step",
+        "required destination acceptance evidence is missing"
+      ],
+      "scenario_ids": [
+        "icdcs-02",
+        "icdcs-07",
+        "icdcs-10",
+        "icdcs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "owner registries",
+        "maintenance and change dependency state"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "owner collision log",
+        "blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "facility, platform, or CMDB source is unavailable",
+        "multiple teams claim same ownership without arbitration"
+      ],
+      "scenario_ids": [
+        "icdcs-04",
+        "icdcs-06",
+        "icdcs-08",
+        "icdcs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence and completeness signals",
+        "missing prerequisite flags",
+        "conflict indicators"
+      ],
+      "required_outputs": [
+        "confidence-and-escalation-notification",
+        "required follow-up artifact checklist"
+      ],
+      "refusal_triggers": [
+        "critical tenant context is missing",
+        "authority context is unresolved",
+        "evidence or schedule conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "icdcs-02",
+        "icdcs-12",
+        "icdcs-08",
+        "icdcs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent owner registry",
+        "handoff reason and artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff context package"
+      ],
+      "refusal_triggers": [
+        "request requires cyber/legal/financial authority outside lane",
+        "adjacent owner cannot be identified",
+        "execution-only request is presented"
+      ],
+      "scenario_ids": [
+        "icdcs-05",
+        "icdcs-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "handoff steps",
+        "owner map",
+        "artifact availability state"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "step-level ownership map"
+      ],
+      "refusal_triggers": [
+        "dependency sequence cannot be established",
+        "owner mapping is incomplete",
+        "step evidence is missing"
+      ],
+      "scenario_ids": [
+        "icdcs-01",
+        "icdcs-03",
+        "icdcs-04",
+        "icdcs-06",
+        "icdcs-10"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "prior owner context",
+        "destination owner context",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "handoff summary",
+        "owner continuity recommendation"
+      ],
+      "refusal_triggers": [
+        "prior owner context is absent",
+        "destination owner is not confirmed",
+        "handoff artifact set is incomplete"
+      ],
+      "scenario_ids": [
+        "icdcs-01",
+        "icdcs-03",
+        "icdcs-04",
+        "icdcs-10"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure criteria",
+        "open blockers",
+        "destination confirmation state"
+      ],
+      "required_outputs": [
+        "blocker log",
+        "closure confirmation conditions"
+      ],
+      "refusal_triggers": [
+        "closure attempted without destination artifacts",
+        "required owner or policy confirmation is missing",
+        "routing schedule conflict is unresolved"
+      ],
+      "scenario_ids": [
+        "icdcs-03",
+        "icdcs-10",
+        "icdcs-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "tenant glossary or facility terminology",
+        "data center artifact taxonomy",
+        "cloud tenancy and handoff artifacts"
+      ],
+      "required_outputs": [
+        "industry-aware routing status",
+        "terminology-to-output mapping"
+      ],
+      "refusal_triggers": [
+        "industry terms cannot be mapped to tenant artifacts",
+        "facility operational terms are missing",
+        "required tenant glossary is unavailable"
+      ],
+      "scenario_ids": [
+        "icdcs-01",
+        "icdcs-07",
+        "icdcs-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "icdcs-01",
+      "ability_ids": [
+        "dependency_tracking",
+        "handoff_execution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-03",
+      "ability_ids": [
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-06",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "source_selection_and_refresh",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-07",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "evidence_traceability",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-10",
+      "ability_ids": [
+        "blocker_and_closure_management",
+        "handoff_execution",
+        "dependency_tracking",
+        "evidence_traceability",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-11",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "icdcs-12",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    }
+  ]
+}

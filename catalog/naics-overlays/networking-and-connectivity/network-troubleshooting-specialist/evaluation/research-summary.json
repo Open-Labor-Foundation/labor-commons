@@ -1,0 +1,674 @@
+{
+  "agent_slug": "network-troubleshooting-specialist",
+  "agent_release": "v1.1.0",
+  "resolved_workflow_phase_group": "records-documentation-and-administration",
+  "industry_profile": "cross-industry",
+  "current_review_date": "2026-04-14",
+  "source_decay_policy": "review_required_after_interval_or_material_standard_provider_or_policy_change",
+  "authoritative_sources": [
+    {
+      "title": "RFC 9293 - Transmission Control Protocol (TCP)",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "IETF publishes the standards-track TCP specification that defines connection state, ports, acknowledgments, retransmission, and transport behavior central to L4 network troubleshooting.",
+      "workflow_stage": "packet-path triage, transport reachability review, connection-state failure analysis",
+      "practical_use_in_pack": [
+        "L4 failure terminology",
+        "root-cause ranking for connection setup and reset behavior",
+        "transport evidence expectations"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 1095,
+      "decay_policy": "review_required_after_interval_or_after_obsoleting_rfc"
+    },
+    {
+      "title": "RFC 1034 and RFC 1035 - Domain Names Concepts, Facilities, and Implementation",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "IETF DNS specifications define authoritative DNS terminology, resolver behavior, records, zones, and query response semantics used to distinguish DNS faults from packet-path faults.",
+      "workflow_stage": "DNS record intake, resolver evidence review, name-resolution troubleshooting",
+      "practical_use_in_pack": [
+        "DNS/DHCP evidence-chain scenario",
+        "required DNS artifacts and refusal when records are missing",
+        "source-backed DNS terminology"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 1095,
+      "decay_policy": "review_required_after_interval_or_after_obsoleting_dns_standard"
+    },
+    {
+      "title": "RFC 2131 - Dynamic Host Configuration Protocol",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "IETF DHCP specification defines lease and option behavior that determines address assignment, resolver options, and gateway configuration evidence for cross-subnet failures.",
+      "workflow_stage": "DHCP lease and option evidence review, address assignment troubleshooting",
+      "practical_use_in_pack": [
+        "DHCP scope and option prerequisite list",
+        "DNS/DHCP fault-chain scenario",
+        "evidence gaps for host renewal failures"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 1095,
+      "decay_policy": "review_required_after_interval_or_after_obsoleting_dhcp_standard"
+    },
+    {
+      "title": "RFC 826 - An Ethernet Address Resolution Protocol",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc826.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "IETF ARP specification defines local link address-resolution behavior required for neighbor, duplicate-address, and subnet-local reachability analysis.",
+      "workflow_stage": "local subnet evidence review, ARP and neighbor failure troubleshooting",
+      "practical_use_in_pack": [
+        "L2/L3 prerequisite evidence",
+        "local reachability failure terminology",
+        "edge-case packet-path analysis"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 1095,
+      "decay_policy": "review_required_after_interval_or_after_obsoleting_rfc"
+    },
+    {
+      "title": "RFC 1191 and RFC 8201 - Path MTU Discovery",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc8201.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "IETF PMTUD specifications define path MTU behavior and ICMP dependency patterns used for fragmentation, tunnel overhead, and large-payload failures.",
+      "workflow_stage": "MTU/fragmentation evidence review, tunnel path troubleshooting",
+      "practical_use_in_pack": [
+        "MTU edge-case scenario",
+        "packet-capture and ICMP evidence requirements",
+        "confidence limits for missing PMTUD signals"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 1095,
+      "decay_policy": "review_required_after_interval_or_after_obsoleting_pmtud_standard"
+    },
+    {
+      "title": "RFC 4271 - Border Gateway Protocol 4 (BGP-4)",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc4271.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "IETF BGP specification is the authoritative protocol reference for route exchange, peer state, and route propagation evidence in internet-edge and hybrid connectivity failures.",
+      "workflow_stage": "route-convergence review, route-policy evidence review, BGP fault isolation",
+      "practical_use_in_pack": [
+        "BGP route-churn scenario",
+        "route-policy evidence requirements",
+        "approval boundaries for route changes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 1095,
+      "decay_policy": "review_required_after_interval_or_after_obsoleting_bgp_standard"
+    },
+    {
+      "title": "Understand the Ping and Traceroute Commands",
+      "publisher": "Cisco",
+      "url": "https://www.cisco.com/c/en/us/support/docs/ip/routing-information-protocol-rip/13730-ext-ping-trace.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Cisco official operations documentation describes practical ping and traceroute use for IP reachability and path diagnostics in real network troubleshooting workflows.",
+      "workflow_stage": "diagnostic intake, reachability test interpretation, path isolation",
+      "practical_use_in_pack": [
+        "ping/traceroute evidence expectations",
+        "packet-path triage scenario",
+        "safe validation checklist language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_cisco_document_update"
+    },
+    {
+      "title": "What is Reachability Analyzer?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/reachability/what-is-reachability-analyzer.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "AWS official documentation defines provider-native reachability analysis workflow and modeled path evidence across VPC resources, security groups, network ACLs, gateways, route tables, and load balancers.",
+      "workflow_stage": "cloud reachability evidence intake, provider-native path analysis, remediation validation",
+      "practical_use_in_pack": [
+        "provider-native VPC troubleshooting scenario",
+        "cloud systems-of-record and evidence artifacts",
+        "provider-specific limitations and source precedence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval_or_after_aws_networking_feature_update"
+    },
+    {
+      "title": "VPC Flow Logs",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-flow-logs.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "AWS official documentation defines VPC flow telemetry used as a cloud network evidence source for accepted/rejected traffic, path behavior, and troubleshooting visibility.",
+      "workflow_stage": "flow telemetry review, rejected-path evidence, monitoring evidence packet",
+      "practical_use_in_pack": [
+        "flow-log source-of-truth examples",
+        "evidence traceability requirements",
+        "retention and sensitive artifact caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval_or_after_aws_flow_logs_update"
+    },
+    {
+      "title": "Azure Network Watcher connection troubleshooting and IP flow verification",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-overview",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Microsoft official documentation describes Azure network diagnostics workflows for connectivity, next-hop, NSG/IP flow, and Azure path evidence.",
+      "workflow_stage": "Azure diagnostic intake, next-hop and NSG evidence review, cloud path troubleshooting",
+      "practical_use_in_pack": [
+        "multi-provider evidence expectations",
+        "tenant-specific source selection",
+        "cloud diagnostics boundary language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval_or_after_azure_network_watcher_update"
+    },
+    {
+      "title": "Connectivity Tests overview",
+      "publisher": "Google Cloud",
+      "url": "https://docs.cloud.google.com/network-intelligence-center/docs/connectivity-tests/concepts/overview",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Google Cloud official documentation defines configuration analysis, live data-plane analysis, supported configurations, limitations, and cloud networking evidence for reachability tests.",
+      "workflow_stage": "Google Cloud reachability analysis, supported-path review, data-plane evidence handling",
+      "practical_use_in_pack": [
+        "provider-specific limitation handling",
+        "low-confidence escalation when modeled and live data conflict",
+        "cloud evidence packet terminology"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval_or_after_google_network_intelligence_update"
+    },
+    {
+      "title": "NIST SP 800-41 Rev. 1 - Guidelines on Firewalls and Firewall Policy",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/41/r1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST is a public standards body; SP 800-41 provides firewall policy and lifecycle guidance relevant to boundary controls, change impact, and evidence-backed firewall troubleshooting.",
+      "workflow_stage": "firewall/NAT evidence review, boundary-control impact analysis, change approval caveats",
+      "practical_use_in_pack": [
+        "firewall and live-change refusal boundaries",
+        "policy-impact tradeoff scenarios",
+        "evidence and approval requirements"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_nist_publication_update"
+    },
+    {
+      "title": "NIST SP 800-92 - Guide to Computer Security Log Management",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/92/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST SP 800-92 gives public guidance for log generation, transmission, storage, analysis, disposal, and policy, making it authoritative for network log evidence and retention handling.",
+      "workflow_stage": "log intake, evidence retention, audit trail, redaction and disposal caveats",
+      "practical_use_in_pack": [
+        "flow-log and firewall-log retention scenarios",
+        "packet and log evidence packet requirements",
+        "tenant policy conflict escalation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_nist_publication_update"
+    },
+    {
+      "title": "NIST SP 800-53 Rev. 5 - Security and Privacy Controls for Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST SP 800-53 is a recognized public control catalog for audit/accountability, configuration management, boundary protection, system monitoring, access control, incident response, and contingency evidence.",
+      "workflow_stage": "recordkeeping, audit trail, boundary protection, monitoring, exception handling",
+      "practical_use_in_pack": [
+        "record update and audit-trail scenarios",
+        "administrative boundary enforcement",
+        "permission and retention control"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_nist_control_update"
+    },
+    {
+      "title": "Current committed package baseline for network-troubleshooting-specialist",
+      "publisher": "olf-agents repository",
+      "url": "catalog/networking-and-connectivity/network-troubleshooting-specialist/",
+      "source_class": "Current package task baseline from network-troubleshooting-specialist",
+      "authority_rationale": "Repository-owned baseline defines prior supported tasks, common inputs, expected outputs, and refusal rules that this refreshed spec pack preserves where still valid and supersedes as source of truth.",
+      "workflow_stage": "legacy boundary comparison, task preservation, stale assumption replacement",
+      "practical_use_in_pack": [
+        "preserved packet-flow, DNS/DHCP, routing, firewall/NAT, design, and escalation focus",
+        "legacy scenario minimum retained and exceeded",
+        "refusal rules refined into explicit spec-first boundaries"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 0,
+      "decay_policy": "baseline_only_superseded_by_refreshed_spec_pack"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "record and document intake",
+      "description": "Collect request intent, affected path, topology, IPAM, route, DNS/DHCP, firewall/NAT, load-balancer, packet, flow-log, monitoring, incident, change, owner, retention, and tenant policy artifacts before making a final claim.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ],
+      "scenario_ids": [
+        "nts-01",
+        "nts-03",
+        "nts-12",
+        "nts-14",
+        "nts-16"
+      ]
+    },
+    {
+      "name": "validation and maintenance",
+      "description": "Validate packet path, name/address assignment, route selection, stateful filtering, NAT, health probing, and MTU behavior against source-of-truth records, then draft record updates only with owner approval.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ],
+      "scenario_ids": [
+        "nts-02",
+        "nts-03",
+        "nts-04",
+        "nts-06",
+        "nts-07",
+        "nts-08",
+        "nts-16"
+      ]
+    },
+    {
+      "name": "retention, handoff, or publication handling",
+      "description": "Package evidence with source IDs, timestamps, owners, redaction, classification, retention posture, publication caveats, and handoff routing.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane"
+      ],
+      "scenario_ids": [
+        "nts-09",
+        "nts-10",
+        "nts-11",
+        "nts-13",
+        "nts-18",
+        "nts-21"
+      ]
+    },
+    {
+      "name": "escalation for missing authority or conflicting records",
+      "description": "Stop confident synthesis and return to orchestrator when source-of-truth records conflict, authority is missing, production execution is requested, or legal/compliance/risk decisions are implied.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane"
+      ],
+      "scenario_ids": [
+        "nts-12",
+        "nts-13",
+        "nts-15",
+        "nts-17",
+        "nts-18",
+        "nts-20"
+      ]
+    },
+    {
+      "name": "industry-specific in-scope execution",
+      "description": "Use real network troubleshooting artifacts such as VPC Reachability Analyzer, flow logs, route tables, security groups, NACLs, target health, packet captures, and change records to produce provider-native evidence-backed guidance.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Named-industry operating guidance"
+      ],
+      "scenario_ids": [
+        "nts-01",
+        "nts-02",
+        "nts-16",
+        "nts-21"
+      ]
+    },
+    {
+      "name": "escalation when industry-specific authority or safety facts are missing",
+      "description": "Reject generic or unsafe handling when tenant network records, retention, legal, privacy, change-control, or live-change authority facts are missing.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane"
+      ],
+      "scenario_ids": [
+        "nts-14",
+        "nts-17",
+        "nts-19",
+        "nts-20"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "topology and dependency packet",
+      "examples": [
+        "network diagrams",
+        "VLAN and subnet inventory",
+        "route domain or VRF map",
+        "service dependency map used only as network path context"
+      ],
+      "systems_of_record": [
+        "network source-of-truth",
+        "CMDB",
+        "service catalog",
+        "IPAM"
+      ]
+    },
+    {
+      "name": "configuration and policy evidence",
+      "examples": [
+        "route tables",
+        "route policies",
+        "gateway configuration",
+        "security groups",
+        "network ACLs",
+        "firewall and NAT excerpts",
+        "load-balancer listener, health-check, and target records"
+      ],
+      "systems_of_record": [
+        "cloud network console",
+        "firewall manager",
+        "SD-WAN controller",
+        "load-balancer manager",
+        "change management system"
+      ]
+    },
+    {
+      "name": "diagnostic telemetry evidence",
+      "examples": [
+        "ping",
+        "traceroute or mtr",
+        "packet captures",
+        "flow logs",
+        "firewall traffic logs",
+        "provider reachability tests",
+        "monitoring alerts"
+      ],
+      "systems_of_record": [
+        "observability platform",
+        "packet-capture repository",
+        "cloud logging",
+        "firewall log store",
+        "evidence repository"
+      ]
+    },
+    {
+      "name": "name and address evidence",
+      "examples": [
+        "DNS zones and records",
+        "resolver configuration",
+        "query logs",
+        "DHCP lease exports",
+        "DHCP options",
+        "IPAM allocations",
+        "ARP or neighbor tables"
+      ],
+      "systems_of_record": [
+        "DNS management system",
+        "DHCP management system",
+        "IPAM",
+        "network device telemetry"
+      ]
+    },
+    {
+      "name": "administrative and audit artifacts",
+      "examples": [
+        "triage decision note",
+        "record update note",
+        "validation checklist",
+        "rollback sequence",
+        "exception summary",
+        "orchestrator handoff"
+      ],
+      "systems_of_record": [
+        "incident system",
+        "change system",
+        "runbook repository",
+        "audit evidence store",
+        "policy repository"
+      ]
+    }
+  ],
+  "systems_of_record": [
+    "network source-of-truth inventory",
+    "CMDB and service catalog",
+    "IPAM",
+    "DNS management system",
+    "DHCP management system",
+    "route and VRF inventory",
+    "firewall manager",
+    "SD-WAN controller",
+    "VPN gateway manager",
+    "load-balancer manager",
+    "cloud network console",
+    "provider reachability analysis service",
+    "flow-log and firewall-log store",
+    "packet-capture repository",
+    "observability and monitoring platform",
+    "incident management system",
+    "change management system",
+    "runbook repository",
+    "policy and retention repository",
+    "audit evidence store"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Rank network root-cause hypotheses with evidence and confidence.",
+      "Recommend bounded network validation, design, configuration, monitoring, and rollback steps.",
+      "Draft record update notes, evidence packets, runbook steps, exception summaries, and orchestrator handoffs.",
+      "Identify missing evidence, stale sources, conflicting records, owner gaps, and tenant policy constraints."
+    ],
+    "escalate": [
+      "Required topology, route, DNS/DHCP, firewall/NAT, load-balancer, packet, flow-log, monitoring, change, or policy evidence is missing.",
+      "Systems of record conflict and no source precedence or owner decision is available.",
+      "Public source guidance conflicts with tenant policy, contractual, regulated workload, privacy, retention, or change-freeze requirements.",
+      "A more specialized networking lane or adjacent endpoint, identity, application, security, legal, compliance, or human approval owner is primary."
+    ],
+    "refuse": [
+      "Endpoint OS patching, endpoint-only malware remediation, identity governance, application code, legal/compliance signoff, customer notification, risk acceptance, or incident-command decisions.",
+      "Live firewall, SD-WAN, router, switch, DNS, DHCP, load-balancer, cloud-network, or production change execution.",
+      "Backdating, deleting, silently overwriting, closing, publishing, or changing retention for official records without authority.",
+      "Treating the cross-industry networking profile as generic best practices without concrete network systems, records, evidence, and tenant constraints."
+    ]
+  },
+  "domain_failure_modes": [
+    {
+      "failure_mode": "plausible but incomplete evidence",
+      "why_it_matters": "Ping or an outage chart can appear decisive while topology, route, firewall, flow-log, packet, DNS/DHCP, or change evidence is absent.",
+      "mitigation": "Require source IDs, attachments, owners, and confidence labels before final root-cause claims.",
+      "scenario_ids": [
+        "nts-12",
+        "nts-14"
+      ]
+    },
+    {
+      "failure_mode": "asymmetric or stateful path behavior",
+      "why_it_matters": "Return traffic can bypass the firewall or NAT state owner, producing one-way failures that generic troubleshooting can misdiagnose.",
+      "mitigation": "Review bidirectional flow logs, route tables, NAT/firewall state, and gateway ownership.",
+      "scenario_ids": [
+        "nts-06"
+      ]
+    },
+    {
+      "failure_mode": "provider-modeled path differs from live data plane",
+      "why_it_matters": "Cloud reachability tools can model expected forwarding while ECMP, backends, unsupported features, or live dataplane behavior differ.",
+      "mitigation": "Record tool limitations, compare provider diagnostics with flow logs and monitoring, and escalate unresolved discrepancies.",
+      "scenario_ids": [
+        "nts-16",
+        "nts-20"
+      ]
+    },
+    {
+      "failure_mode": "DNS/DHCP ownership split",
+      "why_it_matters": "Name failures can arise from DHCP resolver options, stale records, delegation, TTL, resolver reachability, or IPAM mismatch, often with different owners.",
+      "mitigation": "Separate DNS, DHCP, IPAM, resolver, and network path evidence and route record changes to the correct owner.",
+      "scenario_ids": [
+        "nts-03"
+      ]
+    },
+    {
+      "failure_mode": "MTU and ICMP-filtering blind spots",
+      "why_it_matters": "Large-payload failures may be caused by PMTUD or tunnel overhead and can be obscured when ICMP is blocked.",
+      "mitigation": "Use packet captures, path tests, tunnel overhead review, and tenant ICMP policy before concluding.",
+      "scenario_ids": [
+        "nts-08",
+        "nts-21"
+      ]
+    },
+    {
+      "failure_mode": "authority drift into execution or attestation",
+      "why_it_matters": "Troubleshooting guidance can be mistaken for authority to change production, close incidents, alter records, or certify compliance.",
+      "mitigation": "Separate recommendation from approval/execution and route privileged or legal decisions to authorized owners.",
+      "scenario_ids": [
+        "nts-13",
+        "nts-17",
+        "nts-18"
+      ]
+    },
+    {
+      "failure_mode": "adjacent-lane collapse",
+      "why_it_matters": "Network symptoms may be endpoint, identity, application, database, or specialized networking ownership problems.",
+      "mitigation": "Use boundary controls and handoff packets with network return conditions.",
+      "scenario_ids": [
+        "nts-09",
+        "nts-10",
+        "nts-11",
+        "nts-19"
+      ]
+    }
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "scenario_ids": [
+        "nts-12",
+        "nts-14",
+        "nts-19",
+        "nts-21"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "scenario_ids": [
+        "nts-18",
+        "nts-19"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "scenario_ids": [
+        "nts-09",
+        "nts-10",
+        "nts-11",
+        "nts-17"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "design and configuration guidance",
+      "scenario_ids": [
+        "nts-01",
+        "nts-05"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "fault isolation and troubleshooting",
+      "scenario_ids": [
+        "nts-02",
+        "nts-04",
+        "nts-06",
+        "nts-07",
+        "nts-16"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "performance and availability tradeoffs",
+      "scenario_ids": [
+        "nts-05",
+        "nts-07"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "edge-case connectivity failures",
+      "scenario_ids": [
+        "nts-03",
+        "nts-06",
+        "nts-08"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "out-of-scope rejection",
+      "scenario_ids": [
+        "nts-09",
+        "nts-10",
+        "nts-11",
+        "nts-17",
+        "nts-18"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "low-confidence escalation",
+      "scenario_ids": [
+        "nts-12",
+        "nts-14",
+        "nts-15",
+        "nts-20"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "unauthorized or unsupported record change request",
+      "scenario_ids": [
+        "nts-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "conflicting records that require escalation",
+      "scenario_ids": [
+        "nts-15",
+        "nts-20"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "tenant-specific adaptation handling",
+      "scenario_ids": [
+        "nts-21"
+      ],
+      "covered": true
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "tenant-specific source precedence",
+      "status": "non_blocking_recorded_for_runtime",
+      "blocking": false,
+      "detail": "Public sources cannot determine tenant-specific precedence among CMDB, diagrams, live device state, cloud control plane, and incident records. Runtime must retrieve tenant policy and owner authority."
+    },
+    {
+      "topic": "jurisdictional retention and privacy obligations",
+      "status": "non_blocking_recorded_for_runtime",
+      "blocking": false,
+      "detail": "Packet captures, flow logs, DNS query logs, and user or device identifiers may be subject to tenant, contractual, legal, privacy, or residency rules. The spec escalates these instead of deciding final obligations."
+    },
+    {
+      "topic": "provider-specific unsupported diagnostic paths",
+      "status": "non_blocking_recorded_for_runtime",
+      "blocking": false,
+      "detail": "Cloud diagnostics differ by provider, feature, endpoint, and product release. The spec requires current official provider sources and low-confidence handling when tool limitations affect the path."
+    }
+  ],
+  "market_ready_research_conclusion": {
+    "blocking_unresolved_ambiguities": 0,
+    "conclusion": "The source set covers protocol terminology, operating workflow, provider diagnostics, evidence records, retention, audit controls, and failure handling. Remaining ambiguities are tenant-runtime facts and are represented as mandatory retrieval or escalation conditions."
+  }
+}

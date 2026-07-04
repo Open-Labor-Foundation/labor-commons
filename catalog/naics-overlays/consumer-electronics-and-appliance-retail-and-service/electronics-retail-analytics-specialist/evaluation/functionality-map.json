@@ -1,0 +1,419 @@
+{
+  "agent_slug": "electronics-retail-analytics-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "adjacent specialist registry",
+        "authority ownership map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for pricing, refund, fraud, safety, warranty, or disclosure signoff authority",
+        "request asks for unsupported causal, policy, or certainty claims",
+        "request asks to bypass source lineage, refresh, or customer-impact controls"
+      ],
+      "scenario_ids": [
+        "eras-05",
+        "eras-06",
+        "eras-09",
+        "eras-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness indicators",
+        "tenant source precedence"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "refresh risk marker",
+        "conflict summary"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources are stale and materially affect output reliability",
+        "public-source and tenant-policy interpretation materially conflict"
+      ],
+      "scenario_ids": [
+        "eras-02",
+        "eras-03",
+        "eras-11",
+        "eras-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "order, refund, and promotion identifiers",
+        "SKU, GTIN, model, serial, or IMEI records",
+        "inventory, service, and customer-impact artifacts"
+      ],
+      "required_outputs": [
+        "source-lineage map",
+        "evidence-linked metric summary",
+        "missing-evidence or conflict note"
+      ],
+      "refusal_triggers": [
+        "core order, product, inventory, or service records cannot be traced to named systems",
+        "evidence for the reported metric is incomplete or contradictory",
+        "published claim would exceed named evidence"
+      ],
+      "scenario_ids": [
+        "eras-01",
+        "eras-04",
+        "eras-07",
+        "eras-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "retrieval hooks",
+        "tenant context and owner map"
+      ],
+      "required_outputs": [
+        "dependency and system map",
+        "blocked-prerequisite note",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required system-of-record is unavailable",
+        "tenant retrieval path is unknown",
+        "channel, market, or reporting context needed for safe analysis is missing"
+      ],
+      "scenario_ids": [
+        "eras-03",
+        "eras-04",
+        "eras-07",
+        "eras-11",
+        "eras-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "conflict or ambiguity signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "metric denominator remains unresolved",
+        "source conflict materially changes the answer",
+        "confidence is too low to support publication"
+      ],
+      "scenario_ids": [
+        "eras-02",
+        "eras-03",
+        "eras-04",
+        "eras-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside electronics retail analytics ownership",
+        "request requires guest services, pricing, fraud/loss-prevention, operations, safety, or disclosure authority",
+        "policy or source conflict cannot be resolved in-lane"
+      ],
+      "scenario_ids": [
+        "eras-06",
+        "eras-08",
+        "eras-09",
+        "eras-10"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric request",
+        "source hierarchy",
+        "definition and denominator rules"
+      ],
+      "required_outputs": [
+        "metric definition summary",
+        "source hierarchy decision",
+        "refresh and caveat note"
+      ],
+      "refusal_triggers": [
+        "metric definition is ambiguous or disputed",
+        "source hierarchy is not defined",
+        "required definition inputs are missing"
+      ],
+      "scenario_ids": [
+        "eras-01",
+        "eras-02",
+        "eras-07",
+        "eras-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated metrics",
+        "source-lineage evidence",
+        "audience and disclosure context"
+      ],
+      "required_outputs": [
+        "analysis or reporting package",
+        "caveats and confidence notes",
+        "action-threshold summary"
+      ],
+      "refusal_triggers": [
+        "analysis would rely on incomplete or stale source data",
+        "cross-system conflict prevents trustworthy reporting",
+        "audience-facing disclosure cannot be supported"
+      ],
+      "scenario_ids": [
+        "eras-01",
+        "eras-03",
+        "eras-04",
+        "eras-06",
+        "eras-07",
+        "eras-08"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested claim",
+        "available evidence",
+        "publication or disclosure context"
+      ],
+      "required_outputs": [
+        "claim refusal or downgrade",
+        "evidence gap statement",
+        "safe next-step guidance"
+      ],
+      "refusal_triggers": [
+        "claim exceeds the evidence",
+        "causal or policy assertion is not supported",
+        "publication would imply certainty not present in the records"
+      ],
+      "scenario_ids": [
+        "eras-05",
+        "eras-06",
+        "eras-08"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue volume and promised service windows",
+        "order, pickup, delivery, and service queue states",
+        "store, channel, or regional throughput context"
+      ],
+      "required_outputs": [
+        "throughput-aware analysis package",
+        "queue-risk caveat note"
+      ],
+      "refusal_triggers": [
+        "queue state or promised window evidence is missing",
+        "high-volume handling would imply operational authority not held by the lane",
+        "surge conditions materially change interpretation and are not represented in the data"
+      ],
+      "scenario_ids": [
+        "eras-01",
+        "eras-07",
+        "eras-08"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "refund, appeasement, safety, or fraud exception context",
+        "customer-impact artifacts",
+        "approval-owner map"
+      ],
+      "required_outputs": [
+        "customer-impact escalation note",
+        "handoff package with evidence and unresolved questions"
+      ],
+      "refusal_triggers": [
+        "refund or pricing exception authority is required",
+        "customer harm, recall, or fraud sensitivity determines the answer",
+        "policy exception materially changes the reporting outcome"
+      ],
+      "scenario_ids": [
+        "eras-06",
+        "eras-08",
+        "eras-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "eras-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "high_volume_customer_workflow_handling"
+      ]
+    },
+    {
+      "scenario_id": "eras-02",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition"
+      ]
+    },
+    {
+      "scenario_id": "eras-03",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "eras-04",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "eras-05",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_claim_refusal"
+      ]
+    },
+    {
+      "scenario_id": "eras-06",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "analysis_or_reporting_package_assembly",
+        "unsupported_claim_refusal",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "eras-07",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "high_volume_customer_workflow_handling"
+      ]
+    },
+    {
+      "scenario_id": "eras-08",
+      "status": "covered",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "analysis_or_reporting_package_assembly",
+        "unsupported_claim_refusal",
+        "high_volume_customer_workflow_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "eras-09",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ]
+    },
+    {
+      "scenario_id": "eras-10",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "eras-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "eras-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition"
+      ]
+    }
+  ]
+}

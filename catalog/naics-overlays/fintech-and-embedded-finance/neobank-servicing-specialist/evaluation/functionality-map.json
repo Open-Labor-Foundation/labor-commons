@@ -1,0 +1,414 @@
+{
+  "agent_slug": "neobank-servicing-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and desired servicing outcome",
+        "specialty boundary",
+        "authority matrix for sponsor-bank approvals, fraud, AML, disputes, compliance, and legal decisions",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to approve manual credits, hold releases, account reopenings, or restriction removals",
+        "request asks for legal interpretation of FDIC coverage, Regulation E, or sponsor-bank obligations",
+        "request asks to disclose SAR posture or clear suspicious activity"
+      ],
+      "scenario_ids": [
+        "nss-03",
+        "nss-04",
+        "nss-11",
+        "nss-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "interagency bank-fintech and third-party deposit guidance",
+        "CFPB Regulation E source baseline",
+        "FDIC deposit-insurance source baseline",
+        "source freshness metadata",
+        "tenant and sponsor-bank policy hierarchy"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict note",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "program, product, or named-bank context is unknown",
+        "public guidance and tenant or sponsor-bank policy materially conflict"
+      ],
+      "scenario_ids": [
+        "nss-01",
+        "nss-07",
+        "nss-08",
+        "nss-09",
+        "nss-10",
+        "nss-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "sponsor-bank, program, and account identifiers",
+        "core, ledger, processor, dispute, and complaint artifacts",
+        "communication logs and servicing notes",
+        "deposit-insurance and disclosure records when relevant"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked request summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core neobank records are absent or contradictory",
+        "complaint or communication history cannot be matched to the account or transaction",
+        "insured-status or pass-through claims lack record support"
+      ],
+      "scenario_ids": [
+        "nss-01",
+        "nss-02",
+        "nss-05",
+        "nss-07",
+        "nss-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "sponsor-bank and processor retrieval hooks",
+        "tenant owner map",
+        "program and jurisdiction context"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required sponsor-bank core, ledger, processor, or complaint systems are unavailable or stale",
+        "product model, program, or named-bank mapping is missing",
+        "next owner or retrieval dependency cannot be established"
+      ],
+      "scenario_ids": [
+        "nss-02",
+        "nss-05",
+        "nss-09",
+        "nss-10",
+        "nss-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals",
+        "repeat-failure markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy conflict or repeat failure changes the safe answer"
+      ],
+      "scenario_ids": [
+        "nss-02",
+        "nss-05",
+        "nss-08",
+        "nss-10",
+        "nss-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package",
+        "next-owner assignment"
+      ],
+      "refusal_triggers": [
+        "request belongs to sponsor-bank operations, fraud, AML, disputes operations, compliance, or legal ownership",
+        "request requires final signoff outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "nss-04",
+        "nss-06",
+        "nss-08",
+        "nss-12"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative workflow status",
+        "required evidence set",
+        "owner and due-date context"
+      ],
+      "required_outputs": [
+        "resolution note",
+        "servicing or product-workflow summary",
+        "resolved or blocked disposition"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "nss-01",
+        "nss-07",
+        "nss-09"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "request resolution state",
+        "owner context"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority or finality",
+        "required disclosure or caveat is missing",
+        "message conflicts with documented policy or evidence"
+      ],
+      "scenario_ids": [
+        "nss-01",
+        "nss-04",
+        "nss-05",
+        "nss-07",
+        "nss-09"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround, discretionary exception, or policy override",
+        "approval owner is missing or outside the lane",
+        "exception would bypass sponsor-bank, dispute, complaint, fraud, or deposit-insurance controls"
+      ],
+      "scenario_ids": [
+        "nss-03",
+        "nss-05",
+        "nss-08",
+        "nss-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "sponsor-bank, FBO, and program artifacts",
+        "ledger, processor, dispute, and complaint records",
+        "deposit-insurance and disclosure artifacts",
+        "neobank terminology map"
+      ],
+      "required_outputs": [
+        "industry-aware case summary",
+        "artifact and authority checklist"
+      ],
+      "refusal_triggers": [
+        "industry terms cannot be mapped to required neobank artifacts",
+        "sponsor-bank, product-model, or account-structure context is missing",
+        "pass-through, digital-sign, or processor-state claims lack the required records"
+      ],
+      "scenario_ids": [
+        "nss-01",
+        "nss-07",
+        "nss-09",
+        "nss-10",
+        "nss-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "nss-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-03",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-06",
+      "ability_ids": [
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "nss-12",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    }
+  ],
+  "notes": [
+    "Functionality coverage includes all shared abilities, all service-support-and-resolution abilities, and the required cross-industry ability for this lane."
+  ]
+}

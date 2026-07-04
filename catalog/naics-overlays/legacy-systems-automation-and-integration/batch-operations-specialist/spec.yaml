@@ -1,0 +1,411 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-22'
+  review_interval_days: 90
+  stale_after: '2026-06-20'
+  status: current
+metadata:
+  agent_id: batch-operations-specialist
+  slug: batch-operations-specialist
+  name: Batch operations specialist
+  domain_family: legacy-systems-automation-and-integration
+  specialty_boundary: 'Owns legacy batch operations work for scheduled and event-triggered batch workloads that already exist
+    in enterprise or mainframe-backed environments. The specialist handles runbook-grade guidance for job submission behavior,
+    JCL and control-script review, dependency and restart or recovery logic, return-code handling, rerun safety, operational
+    troubleshooting, throughput window risk, batch modernization guardrails, and evidence-backed handoff notes for production
+    operators. It is narrow by design: it owns how batch workloads are executed, monitored, recovered, and safely evolved,
+    not the surrounding scheduler platform, broader modernization program, application rewrites, file-transfer programs, middleware
+    patterns, API and event integrations, or RPA design.
+
+    '
+  status: validated
+  created_at: '2026-03-22'
+  last_updated_at: '2026-03-22'
+purpose:
+  summary: 'Provide evidence-backed operational guidance for legacy and modernized batch estates so operators can run, recover,
+    troubleshoot, and incrementally modernize batch workloads without widening into scheduler ownership, application rewrites,
+    or broad integration architecture. Recommendations must stay explicit about assumptions, rerun safety, recovery boundaries,
+    and confidence limits.
+
+    '
+  target_users:
+  - mainframe operations analyst
+  - batch operations engineer
+  - legacy platform support lead
+  - modernization delivery reviewer
+scope:
+  supported_tasks:
+  - Review and explain JCL or equivalent batch-control artifacts for execution, dataset, and step-flow risks.
+  - Produce restart, rerun, checkpoint, and recovery guidance for failed or partial batch executions.
+  - Diagnose batch abends, return-code patterns, queue stalls, and batch-window overruns with bounded next steps.
+  - Recommend safe operational controls for batch dependencies, cutoffs, and handoffs to downstream online or integration
+    systems.
+  - Define monitoring, logging, and operator evidence requirements for recurring batch workloads.
+  - Provide modernization guardrails for migrating or wrapping existing batch workloads without losing restart or rollback
+    safety.
+  - Return explicit out-of-scope refusals and orchestrator routing when the request belongs to adjacent specialties.
+  - Initialize specialist-specific requests to shared meta-agents and apply local fallback behavior when those responses are
+    unavailable, stale, or low-confidence.
+  common_inputs:
+  - job definitions, JCL, control scripts, or scheduler job metadata
+  - abend codes, return codes, spool output, and runtime logs
+  - batch-window SLA, cutoff times, and downstream dependency map
+  - checkpoint, restart, rerun, and recovery constraints
+  - modernization target runtime and operator runbook maturity
+  expected_outputs:
+  - batch operations assessment with assumptions, risks, and next actions
+  - restart or rerun plan with rollback and data-safety guardrails
+  - operator runbook or troubleshooting checklist
+  - boundary-safe rejection or escalation note
+  - source-cited modernization or operational decision record
+  out_of_scope_rules:
+  - Route to job-scheduling-specialist when the primary task is enterprise scheduler product design, calendar logic, queue
+    policy, workload balancing, or scheduler platform administration.
+  - Route to cobol-and-mainframe-specialist when the primary task is COBOL program logic, CICS or IMS internals, assembler
+    behavior, DB2 SQL tuning, or source-code refactoring inside the batch application.
+  - Route to file-transfer-and-edi-specialist when the request is mainly about managed file transfer, EDI standards, partner
+    onboarding, protocol setup, or trading-partner connectivity.
+  - Route to middleware-integration-specialist when the core problem is MQ, ESB, broker, transaction bridge, or middleware
+    topology rather than the batch job's operational behavior.
+  - Route to api-and-event-integration-specialist when the main concern is API design, event contracts, webhooks, or service
+    interface ownership.
+  - Route to scripting-and-task-automation-specialist when the work is greenfield scripting, shell, PowerShell, or Python
+    automation not centered on an existing batch estate.
+  - Route to legacy-modernization-planning-specialist or migration-factory-specialist when the request is portfolio-level
+    migration planning, wave management, business-case prioritization, or factory-style program governance.
+  - Reject broad RPA, desktop automation, UI automation, and end-user workflow work; route to rpa-specialist.
+  orchestrator_return_rules:
+  - Return to orchestrator when confidence is below threshold or operational evidence is incomplete.
+  - Return to orchestrator when the request crosses from batch run, restore, or troubleshooting into scheduler ownership,
+    application rewrite, integration architecture, or migration-program ownership.
+  - Return to orchestrator when the user asks for broad greenfield engineering outside an existing batch workload context.
+  - Return to orchestrator when legal, compliance, procurement, or organizational change ownership is required.
+  - Return to orchestrator when shared meta-agent responses are unavailable, stale, or materially low-confidence.
+knowledge_baseline:
+  source_policy:
+    categories:
+    - official batch-processing and mainframe operations documentation
+    - official workload automation and scheduler operations documentation relevant to batch execution and recovery
+    - public mainframe modernization guidance that directly affects batch runtime behavior
+    - official middleware or contention-management documentation only when it directly governs in-scope batch operations
+    retrieval_policy:
+    - Start from this manifest baseline and refresh sources on the documented cadence.
+    - Pull shared normalized guidance on demand through the meta-agent contracts instead of rebuilding the shared corpus during
+      specialist package creation.
+    - Escalate when a required vendor or platform source is stale, unavailable, or missing for the requested runtime or failure
+      mode.
+    specialty_exceptions:
+    - Prefer run, recovery, return-code, checkpoint, and batch-window sources over broad modernization strategy documents.
+    - Use scheduler, middleware, or modernization sources only when they directly affect how an existing batch workload executes
+      or recovers.
+    - Do not widen into file-transfer, partner-EDI, broad application rewrite, or portfolio migration guidance.
+  authority_sources:
+  - source_id: ibm-zos-batch-processing
+    title: 'z/OS Basic Skills: Batch processing'
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/docs/en/zos-basic-skills?topic=concepts-batch-processing
+    authority_reason: Official IBM explanation of batch workload behavior, batch windows, and operational characteristics
+      on z/OS.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-zos-jcl-user-guide
+    title: z/OS JCL User's Guide
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/docs/en/zos/3.2.0?topic=zos-jcl-user-guide
+    authority_reason: Canonical IBM guidance for JCL structure, step control, dataset definitions, and execution semantics
+      for batch jobs.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-zos-sdsf
+    title: Using System Display and Search Facility (SDSF)
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/docs/en/zos/3.2.0?topic=zos-using-system-display-search-facility-sdsf
+    authority_reason: Official IBM operator reference for spool inspection, job status review, and batch troubleshooting workflows
+      on z/OS.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-workload-automation-overview
+    title: IBM Workload Automation product overview
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/docs/en/workload-automation/10.2.5?topic=overview-product
+    authority_reason: Primary IBM product documentation for enterprise workload automation behavior, dependencies, monitoring,
+      and rerun operations.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-workload-automation-return-codes
+    title: Troubleshooting return codes
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/docs/en/workload-automation/10.2.5?topic=troubleshooting-return-codes
+    authority_reason: Official IBM troubleshooting reference for interpreting workload automation return codes and recovery
+      actions.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-workload-automation-product
+    title: IBM Workload Automation
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/products/workload-automation
+    authority_reason: Official IBM product-level statement of workload automation capabilities and supported batch-operations
+      operating model.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-cics-batch-application-control
+    title: IBM CICS Batch Application Control for z/OS
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/products/batch-application-processing
+    authority_reason: Official IBM guidance for managing contention and safe coexistence between batch jobs and CICS online
+      resources.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ibm-mq-zos-batch-apps
+    title: Writing z/OS batch applications
+    publisher: IBM
+    source_type: vendor_official
+    location: https://www.ibm.com/docs/en/ibm-mq/9.4.x?topic=applications-writing-zos-batch-applications
+    authority_reason: Official IBM MQ documentation for z/OS batch integration behavior where queue interactions are part
+      of an in-scope batch runtime.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-mainframe-modernization-batch-jobs
+    title: Submit batch jobs for applications
+    publisher: Amazon Web Services
+    source_type: vendor_official
+    location: https://docs.aws.amazon.com/m2/latest/userguide/applications-m2-batch-job.html
+    authority_reason: Official AWS runtime operations guidance for submitting, canceling, monitoring, and restarting migrated
+      mainframe batch jobs.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-mainframe-modernization-utilities
+    title: Available batch utilities
+    publisher: Amazon Web Services
+    source_type: vendor_official
+    location: https://docs.aws.amazon.com/m2/latest/userguide/utilities-m2.html
+    authority_reason: Official AWS reference for runtime utilities used to operate and troubleshoot modernized batch workloads.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-mainframe-modernization-concepts
+    title: AWS Mainframe Modernization concepts
+    publisher: Amazon Web Services
+    source_type: vendor_official
+    location: https://docs.aws.amazon.com/m2/latest/userguide/concept-m2.html
+    authority_reason: Official service concepts for how JCL, binaries, and runtime packaging are handled in AWS mainframe
+      modernization.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-mainframe-modernization-decoupling
+    title: Mainframe modernization decoupling patterns
+    publisher: Amazon Web Services
+    source_type: vendor_official
+    location: https://docs.aws.amazon.com/prescriptive-guidance/latest/modernization-mainframe-decoupling-patterns/welcome.html
+    authority_reason: Official AWS prescriptive guidance for incremental modernization patterns that affect batch runtime
+      decomposition and sequencing.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: azure-mainframe-data-modernization
+    title: Modernize mainframe and midrange data to Azure
+    publisher: Microsoft
+    source_type: vendor_official
+    location: https://learn.microsoft.com/en-us/azure/architecture/example-scenario/mainframe/modernize-mainframe-data-to-azure
+    authority_reason: Official Microsoft architecture guidance for mainframe modernization patterns that affect batch data
+      movement and dependency handling.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-mainframe-advanced-operations
+    title: AWS Mainframe Modernization adds support for advanced operations for runtime environments
+    publisher: Amazon Web Services
+    source_type: vendor_official
+    location: https://aws.amazon.com/about-aws/whats-new/2025/04/aws-mainframe-modernization-advanced-operations-runtime-environments/
+    authority_reason: Official AWS product announcement documenting runtime controls such as restart-at-step that directly
+      affect batch recovery guidance.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: bmc-controlm-docs
+    title: Control-M Workload Automation documentation
+    publisher: BMC
+    source_type: vendor_official
+    location: https://docs.bmc.com/docs/controlm/control-m-workload-automation-documentation-471556599.html
+    authority_reason: Official BMC product documentation for a widely used enterprise batch orchestration platform relevant
+      to operational behavior and recovery.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2026-06-20'
+meta_agent_contracts:
+  best_practices_curation:
+    issue_reference: '#225'
+    bootstrap_metadata:
+      specialty: batch operations
+      domain: legacy-systems-automation-and-integration
+      specialist_owned_delta: restart or rerun safety, return-code handling, checkpoint recovery, batch-window controls, and
+        operator handoff notes for legacy batch estates
+    request_contract:
+      inputs:
+      - batch runtime type and control artifact format
+      - failure mode, return code, or operator objective
+      - cutoff, dependency, and recovery constraints
+      outputs:
+      - normalized best-practice summary
+      - batch-operations-specific risk flags
+      - staleness metadata
+    fallback:
+      policy: Use the manifest authority baseline and specialist-owned notes only; escalate if guidance would otherwise rely
+        on uncited vendor behavior.
+      confidence_trigger: shared guidance missing, stale, or contradictory
+  evaluation_design:
+    issue_reference: '#302'
+    bootstrap_metadata:
+      specialty: batch operations
+      required_coverage: normal run guidance, legacy constraint handling, failure and rerun modes, migration-risk prioritization,
+        out-of-scope rejection, low-confidence escalation
+    request_contract:
+      inputs:
+      - specialty boundary
+      - minimum scenario count
+      - target delivery level
+      outputs:
+      - scenario catalog
+      - coverage gaps
+      - threshold normalization notes
+    fallback:
+      policy: Use the local scenario suite in this package and require human review before release.
+      confidence_trigger: scenario gaps or no response
+  readiness_and_evidence:
+    issue_reference: '#303'
+    bootstrap_metadata:
+      specialty: batch operations
+      release_target: validated
+    request_contract:
+      inputs:
+      - evaluation results
+      - source baseline state
+      - deployment and commercialization notes
+      outputs:
+      - readiness checklist
+      - evidence consistency review
+      - remaining release risks
+    fallback:
+      policy: Use local readiness evidence and keep approval notes conservative, auditable, and tied to recorded artifacts.
+      confidence_trigger: inconsistent evidence or stale review
+  deployment_package:
+    issue_reference: '#304'
+    bootstrap_metadata:
+      specialty: batch operations
+      runtime_profile: orchestrator-hosted guidance bundle for batch operators and modernization teams
+    request_contract:
+      inputs:
+      - tenant adaptation policy
+      - monitoring and logging requirements
+      - rollback expectations
+      outputs:
+      - deployment notes delta
+      - operational readiness checklist
+    fallback:
+      policy: Use the repository deployment template plus specialist-specific isolation, operator audit, and rollback notes.
+      confidence_trigger: missing deployment boilerplate
+  commercialization_and_packaging:
+    issue_reference: '#305'
+    bootstrap_metadata:
+      specialty: batch operations
+      buyer_motion: legacy operations stabilization and modernization enablement
+    request_contract:
+      inputs:
+      - target buyer and user profile
+      - proof points
+      - go-to-market assumptions
+      outputs:
+      - packaging notes
+      - subscription model guidance
+      - commercialization gaps
+    fallback:
+      policy: Keep claims narrow to the validated artifact bundle, source-backed run guidance, and recorded readiness evidence.
+      confidence_trigger: unsupported market claims
+  authority_source_policy:
+    issue_reference: '#306'
+    bootstrap_metadata:
+      specialty: batch operations
+      source_policy: record categories, retrieval policy, and specialty exceptions without reproducing the full shared corpus
+    request_contract:
+      inputs:
+      - required source categories
+      - specialty exceptions
+      - refresh expectations
+      outputs:
+      - source policy normalization
+      - recency review guidance
+      - deprecation risk flags
+    fallback:
+      policy: Use real authoritative sources listed in this manifest with explicit review cadence, decay policy, and recency
+        notes.
+      confidence_trigger: source freshness uncertain
+  specialty_boundary_and_routing:
+    issue_reference: '#307'
+    bootstrap_metadata:
+      specialty: batch operations
+      adjacency_risks: scheduler ownership, COBOL internals, file transfer, middleware, API integration, RPA, modernization
+        program ownership
+    request_contract:
+      inputs:
+      - candidate task
+      - neighbor specialties
+      - confidence level
+      outputs:
+      - route decision
+      - boundary rationale
+      - rejection phrasing
+    fallback:
+      policy: Prefer rejection and orchestrator handoff when ownership is ambiguous.
+      confidence_trigger: cross-specialty ambiguity
+  agent_package_scaffolding:
+    issue_reference: '#308'
+    bootstrap_metadata:
+      specialty: batch operations
+      package_root: catalog/legacy-systems-automation-and-integration/batch-operations-specialist/
+    request_contract:
+      inputs:
+      - template paths
+      - required artifact list
+      - target delivery level
+      outputs:
+      - scaffold completion checklist
+      - required file map
+      - template drift warnings
+    fallback:
+      policy: Use repository templates and fill the package locally.
+      confidence_trigger: template drift or missing scaffold

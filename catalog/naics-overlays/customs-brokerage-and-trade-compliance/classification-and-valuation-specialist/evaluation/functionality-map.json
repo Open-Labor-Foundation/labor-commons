@@ -1,0 +1,395 @@
+{
+  "agent_slug": "classification-and-valuation-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "adjacent specialist matrix",
+        "tenant approval and authority rules"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "escalation or handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation or final customs signoff",
+        "request seeks policy override or approval authority outside the lane",
+        "request bypasses mandatory customs evidence review"
+      ],
+      "scenario_ids": [
+        "cvs-04",
+        "cvs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative customs source set",
+        "source freshness and precedence rules",
+        "tenant policy precedence guidance"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "authority conflict summary",
+        "source freshness status"
+      ],
+      "refusal_triggers": [
+        "required customs authority source is missing",
+        "public source and tenant rules materially conflict",
+        "stale source usage would change the answer"
+      ],
+      "scenario_ids": [
+        "cvs-01",
+        "cvs-03",
+        "cvs-08"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "classification artifacts",
+        "valuation records",
+        "entry and communication history"
+      ],
+      "required_outputs": [
+        "criteria-to-evidence record",
+        "missing-evidence checklist",
+        "artifact-to-finding linkage"
+      ],
+      "refusal_triggers": [
+        "critical product or valuation artifacts are missing",
+        "records cannot be tied to the reviewed transaction",
+        "evidence contradictions remain unresolved"
+      ],
+      "scenario_ids": [
+        "cvs-01",
+        "cvs-02",
+        "cvs-06",
+        "cvs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant retrieval hooks",
+        "owner and approver map"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "retrieval prerequisite map",
+        "system-aware routing package"
+      ],
+      "refusal_triggers": [
+        "critical system of record is unavailable",
+        "tenant authority source is unknown",
+        "required evidence repository is inaccessible"
+      ],
+      "scenario_ids": [
+        "cvs-06",
+        "cvs-07",
+        "cvs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing facts or records",
+        "authority conflicts",
+        "risk uncertainty flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "tenant context is insufficient",
+        "authority conflict is unresolved",
+        "evidence sufficiency cannot be established"
+      ],
+      "scenario_ids": [
+        "cvs-02",
+        "cvs-07",
+        "cvs-08"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff context",
+        "adjacent-lane owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "responsibility transfer summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, fraud, transfer-pricing, or final signoff authority",
+        "request requires protest strategy or regulator-facing advocacy",
+        "request needs unsupported downstream approval authority"
+      ],
+      "scenario_ids": [
+        "cvs-04",
+        "cvs-05",
+        "cvs-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_assessment",
+      "ability_name": "Evidence assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "review criteria",
+        "classification and valuation evidence bundle",
+        "prior authority references"
+      ],
+      "required_outputs": [
+        "assessment finding",
+        "criteria-to-evidence record",
+        "pass, fail, or unclear conclusion"
+      ],
+      "refusal_triggers": [
+        "review criteria cannot be applied because evidence is incomplete",
+        "authority source gap materially changes the assessment"
+      ],
+      "scenario_ids": [
+        "cvs-01",
+        "cvs-02",
+        "cvs-03",
+        "cvs-09"
+      ]
+    },
+    {
+      "ability_id": "findings_and_follow_up_management",
+      "ability_name": "Findings and follow-up management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open findings list",
+        "remediation owner state",
+        "resubmission or correction path"
+      ],
+      "required_outputs": [
+        "follow-up note",
+        "remediation tracker",
+        "next-step ownership summary"
+      ],
+      "refusal_triggers": [
+        "findings cannot be assigned to an owner",
+        "required corrective action path is unresolved",
+        "closure is requested before open findings are cleared"
+      ],
+      "scenario_ids": [
+        "cvs-06",
+        "cvs-11",
+        "cvs-12"
+      ]
+    },
+    {
+      "ability_id": "final_signoff_refusal",
+      "ability_name": "Final-signoff refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request for final signoff",
+        "requested authority scope",
+        "owner approval map"
+      ],
+      "required_outputs": [
+        "refusal note",
+        "signoff routing package"
+      ],
+      "refusal_triggers": [
+        "request asks for final legal or licensed customs signoff",
+        "request asks for final approval despite missing evidence",
+        "request exceeds documented tenant authority for the lane"
+      ],
+      "scenario_ids": [
+        "cvs-04",
+        "cvs-10"
+      ]
+    },
+    {
+      "ability_id": "regulated_transaction_evidence_handling",
+      "ability_name": "Regulated-transaction evidence handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "entry and transaction truth-set references",
+        "invoice and payment records",
+        "reconciliation artifacts"
+      ],
+      "required_outputs": [
+        "transaction evidence sufficiency statement",
+        "entry-to-financial-record alignment summary"
+      ],
+      "refusal_triggers": [
+        "entry truth set is incomplete",
+        "financial tie-out disagreement is unresolved",
+        "required transaction-supporting disclosure artifacts are absent"
+      ],
+      "scenario_ids": [
+        "cvs-01",
+        "cvs-06",
+        "cvs-12"
+      ]
+    },
+    {
+      "ability_id": "fraud_and_consumer_protection_escalation",
+      "ability_name": "Fraud and consumer-protection escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "fraud or TBML indicators",
+        "payment and related-party anomalies",
+        "customer or importer impact context"
+      ],
+      "required_outputs": [
+        "fraud escalation summary",
+        "risk and impact routing package",
+        "do-not-complete boundary note"
+      ],
+      "refusal_triggers": [
+        "fraud or AML indicators indicate unresolved material risk",
+        "suspicious valuation facts require formal review",
+        "customer or importer impact risk cannot be resolved in-lane"
+      ],
+      "scenario_ids": [
+        "cvs-05",
+        "cvs-06"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cvs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "evidence_assessment",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "evidence_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "final_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-05",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "findings_and_follow_up_management",
+        "regulated_transaction_evidence_handling",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-09",
+      "ability_ids": [
+        "evidence_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-10",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "final_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-11",
+      "ability_ids": [
+        "evidence_traceability",
+        "findings_and_follow_up_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cvs-12",
+      "ability_ids": [
+        "findings_and_follow_up_management",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

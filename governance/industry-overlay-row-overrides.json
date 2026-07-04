@@ -1,0 +1,1838 @@
+{
+  "version": "2026-04-08",
+  "row_overrides": {
+    "healthcare::care-coordination-operations-specialist": {
+      "primary_job_to_be_done": "Coordinate patient movement, follow-up, and barrier resolution across care settings so transitions do not stall between discharge, referral, scheduling, utilization, and outreach workflows.",
+      "core_artifacts": [
+        "Care plans, discharge summaries, transition-of-care notes, and referral packets.",
+        "Authorization status, scheduling requests, outreach logs, and unresolved barrier trackers.",
+        "Utilization review notes, case-management tasks, and readmission-risk or escalation flags."
+      ],
+      "systems_of_record": [
+        "EHR care-management and transition-of-care work queues.",
+        "Referral management, scheduling, CRM, and patient outreach systems.",
+        "Utilization review, case management, and payer communication tools."
+      ],
+      "decision_types": [
+        "Decide which follow-up owner should receive the next handoff based on care stage, blocker type, and required artifact set.",
+        "Determine when a transition is blocked on missing authorizations, missing discharge details, or unresolved social barriers.",
+        "Escalate coordination failures that create readmission, delay, or patient-safety risk."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires setting a clinical care plan, medication instruction, or treatment decision.",
+        "The request asks the lane to override discharge, referral, or authorization requirements without responsible-owner approval."
+      ],
+      "adjacent_specialists": [
+        "Clinical review or licensed clinician specialist.",
+        "Patient access, utilization management, social work, and referral management specialists.",
+        "Revenue cycle and healthcare privacy specialists."
+      ],
+      "required_output_shapes": [
+        "Transition-of-care handoff summary with next owner, missing artifacts, and time-sensitive risks.",
+        "Barrier escalation note covering authorization, transport, social needs, or follow-up failure.",
+        "Closed-loop coordination log proving the receiving team accepted ownership."
+      ],
+      "must_pass_scenario_families": [
+        "Discharge follow-up is blocked because the receiving setting lacks required records.",
+        "Referral or authorization expires during coordination and needs escalation.",
+        "A patient-safety or readmission-risk signal appears and requires clinician review."
+      ],
+      "source_classes": [
+        "CMS transition-of-care, discharge planning, care coordination, and utilization-management guidance.",
+        "Public provider and payer workflow references for referrals, authorizations, and care-transition documentation."
+      ],
+      "tenant_required_facts": [
+        "Care setting, payer, service line, discharge destination, and follow-up timeframe.",
+        "Assigned care team roles, escalation SLAs, and patient communication constraints."
+      ],
+      "success_measures": [
+        "Closed-loop handoffs are explicit and measurable.",
+        "Authorization, referral, and discharge blockers are surfaced before transitions fail."
+      ]
+    },
+    "healthcare::clinical-workflow-coordination-specialist": {
+      "primary_job_to_be_done": "Keep clinical-administrative workflows moving by coordinating orders, referrals, results follow-up, and queue ownership without implying clinical judgment.",
+      "core_artifacts": [
+        "Orders, referrals, result notifications, encounter tasks, and inbox messages.",
+        "Follow-up instructions, scheduling tasks, escalation notes, and unresolved queue items."
+      ],
+      "systems_of_record": [
+        "EHR in-basket, tasking, results, and referral workflows.",
+        "Scheduling, referral management, and clinical messaging systems."
+      ],
+      "decision_types": [
+        "Determine the correct destination queue or owner for orders, results, and follow-up tasks.",
+        "Identify when required documentation or order context is missing before downstream action can proceed.",
+        "Escalate stale, conflicting, or safety-sensitive workflow states to clinical owners."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires altering a clinician order, interpreting a result, or deciding treatment.",
+        "The request asks the lane to close a clinical loop without documented receiving-owner acceptance."
+      ],
+      "adjacent_specialists": [
+        "Licensed clinician, nursing, referral management, and patient access specialists.",
+        "Healthcare IT systems and healthcare privacy specialists."
+      ],
+      "required_output_shapes": [
+        "Workflow routing note with owner, due time, and missing prerequisites.",
+        "Results or referral escalation summary showing why clinical follow-up is still open."
+      ],
+      "must_pass_scenario_families": [
+        "A result or referral arrives without enough context to route safely.",
+        "Multiple teams appear to own the same follow-up action.",
+        "An urgent task implies clinical judgment and must be escalated immediately."
+      ],
+      "tenant_required_facts": [
+        "Service line, urgency tier, owner roles, and required turnaround expectations."
+      ]
+    },
+    "healthcare::healthcare-analytics-specialist": {
+      "primary_job_to_be_done": "Turn healthcare access, utilization, claims, and operational records into trustworthy analysis that supports operational decisions without overstating causal or regulatory conclusions.",
+      "core_artifacts": [
+        "Encounter, scheduling, referral, authorization, charge, claim, remittance, and denial extracts.",
+        "Operational KPI definitions, quality measure logic, and exception logs."
+      ],
+      "systems_of_record": [
+        "Enterprise data warehouse, BI tools, EHR reporting, and revenue-cycle reporting systems.",
+        "Quality reporting, utilization review, and scheduling analytics platforms."
+      ],
+      "decision_types": [
+        "Choose the authoritative metric definition, source hierarchy, and refresh window for the requested analysis.",
+        "Determine whether data quality or denominator logic is good enough to publish a result.",
+        "Escalate when disclosure, public reporting, or payer interpretation risk changes the answer."
+      ],
+      "adjacent_specialists": [
+        "Healthcare quality reporting, revenue cycle management, compliance, and operational leadership specialists."
+      ],
+      "required_output_shapes": [
+        "Metric specification with numerator, denominator, exclusions, and source tables.",
+        "Analytical summary with caveats, confidence limits, and recommended next questions.",
+        "Data-quality exception register for missing or conflicting source inputs."
+      ],
+      "must_pass_scenario_families": [
+        "A stakeholder asks for a metric with ambiguous inclusion or exclusion rules.",
+        "Claims and encounter data disagree on the same operational outcome.",
+        "A requested statement would look regulatory or public-facing but lacks support."
+      ],
+      "source_classes": [
+        "CMS quality measurement, public reporting, utilization, and reimbursement references.",
+        "ONC, NCQA, and recognized healthcare analytics or measure-specification guidance."
+      ],
+      "success_measures": [
+        "Every reported metric is traceable to documented measure logic.",
+        "The pack distinguishes descriptive reporting from policy or clinical interpretation."
+      ]
+    },
+    "healthcare::healthcare-billing-specialist": {
+      "primary_job_to_be_done": "Convert provider-side service documentation into clean healthcare billing, claims follow-up, and reconciliation outputs while surfacing coding, authorization, and payer exceptions early.",
+      "core_artifacts": [
+        "Charge tickets, encounter documentation, coverage details, authorization records, and claim forms.",
+        "Remittance advice, EOBs, denial reasons, payer correspondence, and adjustment logs."
+      ],
+      "systems_of_record": [
+        "Practice management, billing, clearinghouse, and payer portal systems.",
+        "EHR charge capture, claim scrubber, and denial-management workflows."
+      ],
+      "decision_types": [
+        "Determine whether documentation and coverage support claim generation or posting activity.",
+        "Classify a variance as coding, registration, authorization, medical-necessity, or payer-processing driven.",
+        "Escalate denials, appeals, and unsupported write-off requests to the correct owner."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires assigning final clinical codes or rewriting the medical record.",
+        "The request asks for an unsupported adjustment, waiver, or payer-policy interpretation."
+      ],
+      "adjacent_specialists": [
+        "Healthcare coding coordination, patient access, payer operations, and compliance specialists.",
+        "Revenue cycle management and collections specialists."
+      ],
+      "required_output_shapes": [
+        "Claim-readiness summary with missing documentation, coverage, or authorization issues.",
+        "Remittance and denial reconciliation note with categorized root cause.",
+        "Escalation packet for appeal, coding, or payer-policy follow-up."
+      ],
+      "must_pass_scenario_families": [
+        "A charge is present but documentation or authorization is insufficient to bill.",
+        "A payer denial requires correct routing between coding, access, and billing owners.",
+        "A user asks to force a financial adjustment not supported by policy or evidence."
+      ],
+      "source_classes": [
+        "CMS claims processing manuals, NCCI or coding-adjacent reimbursement guidance, and public payer billing policies.",
+        "Public remittance, coordination-of-benefits, and revenue-cycle workflow references."
+      ],
+      "tenant_required_facts": [
+        "Payer, plan, place of service, authorization status, filing limit, and denial inventory context."
+      ],
+      "success_measures": [
+        "Claims are traceable to valid source documentation and coverage rules.",
+        "Denials are categorized early enough to prevent avoidable rework and leakage."
+      ]
+    },
+    "healthcare::healthcare-coding-coordination-specialist": {
+      "primary_job_to_be_done": "Coordinate coding-related workflows by keeping encounter documentation, coder queries, CDI follow-up, and billing dependencies aligned without claiming independent code assignment authority.",
+      "core_artifacts": [
+        "Encounter notes, coder queries, CDI notes, charge review tasks, and denial worklists.",
+        "Coding backlog queues, documentation deficiency notes, and payer edit findings."
+      ],
+      "systems_of_record": [
+        "EHR documentation workflows, coding work queues, encoder or CAC systems, and RCM denial queues."
+      ],
+      "decision_types": [
+        "Determine whether a chart is ready for coding follow-up or blocked on missing provider documentation.",
+        "Prioritize query, CDI, or billing escalation based on revenue impact and documentation risk.",
+        "Route disagreements or coding-impacting denials to the correct coding, CDI, or compliance owner."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires assigning, changing, or approving final diagnostic or procedure codes without the designated coding owner.",
+        "The request asks for backfilling unsupported documentation."
+      ],
+      "adjacent_specialists": [
+        "Certified coding, CDI, billing, revenue integrity, and compliance specialists."
+      ],
+      "required_output_shapes": [
+        "Coding-readiness coordination note showing blockers, next owner, and revenue risk.",
+        "Coder-query escalation summary with required documentation follow-up."
+      ],
+      "must_pass_scenario_families": [
+        "A claim edit suggests a coding problem but source documentation is ambiguous.",
+        "Provider response to a coder query is incomplete or late.",
+        "Billing attempts to proceed before coding dependencies are resolved."
+      ],
+      "source_classes": [
+        "Public coding workflow, CDI, and revenue-integrity guidance plus payer edit references."
+      ]
+    },
+    "healthcare::healthcare-compliance-specialist": {
+      "primary_job_to_be_done": "Translate healthcare operational obligations into monitoring, evidence, remediation, and escalation workflows that support compliance program execution without substituting for legal counsel.",
+      "core_artifacts": [
+        "Policies, audit plans, monitoring logs, hotline or incident reports, sanction-screening records, and corrective-action plans.",
+        "Training attestations, exclusion checks, billing audit findings, and compliance committee materials."
+      ],
+      "systems_of_record": [
+        "Compliance case management, policy management, training, and audit-tracking systems.",
+        "EHR, billing, and access-log systems used as evidence sources."
+      ],
+      "decision_types": [
+        "Map obligations to controls, evidence owners, and review cadence.",
+        "Determine whether a finding is a documentation gap, control failure, or possible legal issue requiring escalation.",
+        "Prepare remediation tracking without closing legal or regulator-facing decisions independently."
+      ],
+      "hard_refusal_triggers": [
+        "The request seeks legal advice, privileged investigation conclusions, or direct regulator negotiation.",
+        "The request asks the lane to sign off that a billing, privacy, or fraud issue is legally resolved."
+      ],
+      "adjacent_specialists": [
+        "Healthcare privacy, revenue integrity, legal, billing, coding, and clinical leadership specialists."
+      ],
+      "required_output_shapes": [
+        "Obligation-to-control matrix with evidence owner and review cadence.",
+        "Compliance finding summary with root cause, severity, and remediation owner.",
+        "Escalation note for legal, fraud, privacy, or regulator-sensitive issues."
+      ],
+      "must_pass_scenario_families": [
+        "Audit evidence is incomplete for a required control.",
+        "Policy language conflicts with operational practice or payer guidance.",
+        "A possible compliance issue crosses into legal or fraud territory."
+      ],
+      "source_classes": [
+        "OIG, CMS, HHS, OCR, and state regulator healthcare compliance guidance.",
+        "Public compliance-program and healthcare audit framework references."
+      ]
+    },
+    "healthcare::healthcare-documentation-specialist": {
+      "primary_job_to_be_done": "Maintain healthcare documentation integrity by tracking record completeness, release, amendment, and deficiency workflows without authoring or changing clinical content.",
+      "core_artifacts": [
+        "Encounter notes, consents, amendments, release-of-information requests, and documentation deficiency queues.",
+        "Record completion audits, attestation status, and external request logs."
+      ],
+      "systems_of_record": [
+        "EHR documentation and HIM workflows.",
+        "Document management, ROI, and record-completion tracking systems."
+      ],
+      "decision_types": [
+        "Determine whether the record set is complete enough for release, coding, or audit use.",
+        "Route amendment, attestation, or deficiency requests to the correct record owner.",
+        "Escalate privacy, legal-hold, or incomplete-record problems."
+      ],
+      "hard_refusal_triggers": [
+        "The request asks the lane to add, rewrite, or infer clinical documentation content.",
+        "The request seeks disclosure of records without proper authorization or legal basis."
+      ],
+      "adjacent_specialists": [
+        "HIM, privacy, coding, billing, and clinician-owner specialists."
+      ],
+      "required_output_shapes": [
+        "Record-completeness summary with missing signatures, deficiencies, and next owner.",
+        "ROI or amendment routing note with authorization status and access constraints."
+      ],
+      "must_pass_scenario_families": [
+        "A requested release lacks valid authorization or minimum-necessary support.",
+        "Coding or billing depends on documentation that is incomplete or unsigned.",
+        "A record amendment request conflicts with record-integrity rules."
+      ]
+    },
+    "healthcare::healthcare-it-systems-specialist": {
+      "workflow_phase_group": "service-support-and-resolution",
+      "primary_job_to_be_done": "Keep healthcare application and integration workflows usable by triaging system issues, access problems, interface failures, and change-readiness work without crossing into clinical or security exception authority.",
+      "core_artifacts": [
+        "IT service tickets, access requests, downtime procedures, interface error logs, and change requests.",
+        "Application configuration notes, vendor cases, and outage communications."
+      ],
+      "systems_of_record": [
+        "ITSM, EHR application administration, integration engine, identity and access, and monitoring systems."
+      ],
+      "decision_types": [
+        "Classify incidents by application, interface, access, or workflow impact and route them to the right resolver.",
+        "Determine whether a change or fix is blocked on testing, approval, or patient-safety review.",
+        "Escalate issues that affect medication, results, order flow, PHI, or high-severity operational continuity."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires direct clinical workflow changes, treatment decisions, or unauthorized production changes.",
+        "The request asks for security, privacy, or access exceptions outside policy."
+      ],
+      "adjacent_specialists": [
+        "Clinical informatics, identity/security, integration, vendor management, and clinical operations specialists."
+      ],
+      "required_output_shapes": [
+        "Incident triage summary with impact, suspected component, and assigned owner.",
+        "Change-readiness checklist with testing, rollback, and approval dependencies.",
+        "Downtime or patient-safety escalation note."
+      ],
+      "must_pass_scenario_families": [
+        "An interface failure breaks orders, charges, or results flow across systems.",
+        "An access request conflicts with role-based access or privacy constraints.",
+        "A system fix is requested without approved testing or rollback evidence."
+      ],
+      "source_classes": [
+        "ONC, CMS interoperability references, public healthcare downtime guidance, and recognized healthcare IT operations practices."
+      ],
+      "tenant_required_facts": [
+        "Application owner, environment, integration points, access role, and patient-safety impact."
+      ],
+      "success_measures": [
+        "System issues are triaged with explicit operational and patient-safety impact.",
+        "Production changes never bypass testing, rollback, and approval expectations."
+      ]
+    },
+    "healthcare::healthcare-operations-specialist": {
+      "primary_job_to_be_done": "Run day-to-day healthcare operational workflows across access, throughput, staffing, and exception handling while escalating anything that depends on licensed clinical judgment.",
+      "core_artifacts": [
+        "Daily huddle notes, throughput trackers, staffing rosters, bed or capacity boards, and escalation logs.",
+        "Service-line operating checklists, clinic or unit issue trackers, and downtime procedures."
+      ],
+      "systems_of_record": [
+        "EHR operational dashboards, scheduling systems, bed or capacity management tools, and ITSM or issue trackers."
+      ],
+      "decision_types": [
+        "Prioritize operational issues based on throughput, staffing, access, and downstream impact.",
+        "Determine when capacity, staffing, or system blockers require escalation to clinical or executive owners."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires changing clinical protocols, staffing licensure decisions, or patient-specific treatment direction."
+      ],
+      "adjacent_specialists": [
+        "Patient access, care coordination, healthcare IT systems, revenue cycle management, and clinical leadership specialists."
+      ],
+      "required_output_shapes": [
+        "Operational exception summary with owner, service impact, and required next step.",
+        "Daily throughput or capacity status update with escalations."
+      ],
+      "must_pass_scenario_families": [
+        "Capacity constraints create downstream delays across multiple teams.",
+        "An operational issue appears clinical but only parts are within administrative scope.",
+        "A system or staffing blocker prevents completion of scheduled work."
+      ]
+    },
+    "healthcare::healthcare-privacy-specialist": {
+      "primary_job_to_be_done": "Manage healthcare privacy obligations across access, disclosure, breach triage, and minimum-necessary workflows without substituting for legal determinations.",
+      "core_artifacts": [
+        "Disclosure logs, authorization forms, access audit logs, breach intake records, and amendment or restriction requests.",
+        "Privacy investigations, incident notes, and training or policy attestations."
+      ],
+      "systems_of_record": [
+        "Privacy incident management, EHR audit logging, identity and access, ROI, and case management systems."
+      ],
+      "decision_types": [
+        "Determine whether a disclosure or access request is complete enough for privacy review.",
+        "Classify incidents for privacy investigation, workforce follow-up, or legal escalation.",
+        "Route minimum-necessary, accounting-of-disclosures, and breach-sensitive issues to the correct owner."
+      ],
+      "hard_refusal_triggers": [
+        "The request asks for legal advice, final breach determination, or unsupported disclosure approval.",
+        "The request requires waiving minimum-necessary or identity-verification controls."
+      ],
+      "adjacent_specialists": [
+        "Legal, HIM, security, patient access, and compliance specialists."
+      ],
+      "required_output_shapes": [
+        "Privacy-review intake summary with disclosure basis, missing requirements, and next owner.",
+        "Incident triage note with severity, evidence needs, and escalation path."
+      ],
+      "must_pass_scenario_families": [
+        "A disclosure request lacks valid authorization or identity proofing.",
+        "An access event may be a breach but evidence is incomplete.",
+        "Operational convenience conflicts with minimum-necessary handling."
+      ],
+      "source_classes": [
+        "OCR HIPAA privacy and breach-notification guidance plus public identity-verification and disclosure workflow references."
+      ]
+    },
+    "healthcare::healthcare-program-administration-specialist": {
+      "primary_job_to_be_done": "Keep healthcare program administration work organized by managing rosters, deadlines, program documents, reporting inputs, and administrative follow-up across internal and external stakeholders.",
+      "core_artifacts": [
+        "Program charters, rosters, enrollment lists, policy packets, reporting calendars, and status trackers.",
+        "Meeting actions, contract or grant-administration documents, and compliance deadlines."
+      ],
+      "systems_of_record": [
+        "Program management, CRM, case management, document management, and reporting tracker systems."
+      ],
+      "decision_types": [
+        "Determine whether required program records, deadlines, and submissions are complete or blocked.",
+        "Route missing approvals, reporting inputs, or participant data to the correct owner."
+      ],
+      "adjacent_specialists": [
+        "Program leadership, compliance, finance, and documentation specialists."
+      ],
+      "required_output_shapes": [
+        "Program-administration status note with due dates, blockers, and owners.",
+        "Submission-readiness checklist for recurring program obligations."
+      ],
+      "must_pass_scenario_families": [
+        "A required program submission is missing owner input or evidence.",
+        "Administrative requests spill into policy approval or regulated judgment.",
+        "Roster or participant data conflicts across systems."
+      ]
+    },
+    "healthcare::healthcare-quality-reporting-specialist": {
+      "workflow_phase_group": "analytics-reporting-and-disclosure",
+      "primary_job_to_be_done": "Transform clinical and claims records into healthcare quality-measure reporting packages that are spec-accurate, evidence-backed, and ready for internal or external submission.",
+      "core_artifacts": [
+        "Quality measure specifications, abstraction files, numerator and denominator extracts, exclusion logic, and submission files.",
+        "Encounter, claims, lab, and registry data used for quality measurement."
+      ],
+      "systems_of_record": [
+        "Quality reporting platforms, EHR abstraction tools, BI systems, and payer or regulator submission portals."
+      ],
+      "decision_types": [
+        "Determine which measure specification version, inclusion rules, and data hierarchy govern the report.",
+        "Identify abstraction, mapping, or completeness gaps that prevent reliable submission.",
+        "Escalate questions that require formal quality-program, clinical, or compliance signoff."
+      ],
+      "hard_refusal_triggers": [
+        "The request asks the lane to certify unsupported quality results or override official measure logic.",
+        "The request depends on clinical interpretation not documented in the source record."
+      ],
+      "adjacent_specialists": [
+        "Healthcare analytics, quality improvement, clinical abstraction, compliance, and operational leadership specialists."
+      ],
+      "required_output_shapes": [
+        "Measure-specification summary with version, source hierarchy, and caveats.",
+        "Submission-readiness note with exclusions, missing abstraction, and validation findings.",
+        "Quality-report exception register for disputed measure logic or missing evidence."
+      ],
+      "must_pass_scenario_families": [
+        "Measure specification changes mid-reporting cycle.",
+        "Clinical abstraction is incomplete or conflicts with claim data.",
+        "A stakeholder asks for a quality statement not supported by official measure logic."
+      ],
+      "source_classes": [
+        "CMS, NCQA, Joint Commission, or other public quality-measure and submission guidance.",
+        "Public healthcare quality abstraction and reporting workflow references."
+      ],
+      "success_measures": [
+        "Measure outputs are tied to explicit specification versions and evidence sources.",
+        "Submission packages surface abstraction and denominator risk before reporting deadlines."
+      ]
+    },
+    "healthcare::patient-access-specialist": {
+      "primary_job_to_be_done": "Validate and prepare healthcare access workflows by handling registration, scheduling, eligibility, referrals, authorizations, and upfront intake constraints before service delivery.",
+      "core_artifacts": [
+        "Demographics, insurance cards, referral orders, authorization records, price estimates, and scheduling requests.",
+        "Registration edits, pre-service checklists, and patient communication notes."
+      ],
+      "systems_of_record": [
+        "Registration, scheduling, real-time eligibility, authorization, and payer portal systems.",
+        "EHR pre-access workflows and patient communication tools."
+      ],
+      "decision_types": [
+        "Determine whether the patient can be scheduled, registered, or cleared for service based on access prerequisites.",
+        "Identify whether the blocker is demographic, coverage, referral, authorization, or benefit-estimate related."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires medical necessity judgment, clinical triage, or ignoring payer access requirements.",
+        "The request asks the lane to schedule or clear service despite unresolved authorization or identity problems."
+      ],
+      "adjacent_specialists": [
+        "Clinical review, billing, revenue cycle management, care coordination, and privacy specialists."
+      ],
+      "required_output_shapes": [
+        "Pre-service clearance summary with eligibility, authorization, and missing items.",
+        "Scheduling or registration escalation note for unresolved access blockers."
+      ],
+      "must_pass_scenario_families": [
+        "Coverage is active but referral or authorization requirements are still missing.",
+        "The patient identity or demographics conflict across systems.",
+        "A scheduling request pressures the lane to bypass access controls."
+      ],
+      "source_classes": [
+        "CMS and public payer patient-access, price-transparency, eligibility, and authorization guidance."
+      ]
+    },
+    "healthcare::payer-operations-specialist": {
+      "primary_job_to_be_done": "Process payer-side operational workflows across authorizations, claims, provider inquiries, and member-impacting work queues while maintaining evidence-backed dispositions.",
+      "core_artifacts": [
+        "Authorization requests, claim inventory, provider inquiries, appeals, policy notices, and operational queue states.",
+        "Member or provider correspondence, benefit records, and exception logs."
+      ],
+      "systems_of_record": [
+        "Payer core administration, claims processing, authorization management, provider portal, and case management systems."
+      ],
+      "decision_types": [
+        "Classify operational work into normal processing, pend, exception, or escalation paths.",
+        "Determine which missing evidence, provider response, or policy dependency prevents completion.",
+        "Escalate work that crosses into medical necessity, legal interpretation, or formal appeal authority."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires medical-necessity adjudication, final appeal determination, or unsupported benefit interpretation."
+      ],
+      "adjacent_specialists": [
+        "Utilization management, provider network operations, compliance, member service, and finance specialists."
+      ],
+      "required_output_shapes": [
+        "Operational disposition note with queue state, evidence gap, and next owner.",
+        "Provider or member issue escalation summary."
+      ],
+      "must_pass_scenario_families": [
+        "A payer work item is missing required clinical or provider-side evidence.",
+        "Provider complaint, authorization, and claims handling overlap and need correct routing.",
+        "A user asks the lane to force an adjudication outcome without authority."
+      ]
+    },
+    "healthcare::provider-network-operations-specialist": {
+      "primary_job_to_be_done": "Operate the provider-network lifecycle by coordinating roster, directory, onboarding, termination, issue management, and operational follow-up across provider entities and internal teams.",
+      "core_artifacts": [
+        "Provider roster files, credentialing status, contract metadata, directory records, ticket logs, and onboarding or termination packets."
+      ],
+      "systems_of_record": [
+        "Provider network management, credentialing, contract, directory publishing, CRM, and case management systems."
+      ],
+      "decision_types": [
+        "Determine whether a provider issue is roster, credentialing, contract, directory, or access related.",
+        "Route provider lifecycle work to contracting, credentialing, payer operations, or support owners."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires contract approval, credentialing committee signoff, or unsupported directory exceptions."
+      ],
+      "adjacent_specialists": [
+        "Credentialing, contracting, payer operations, provider relations, and compliance specialists."
+      ],
+      "required_output_shapes": [
+        "Provider-issue disposition note with affected provider entity, dependency, and next owner.",
+        "Roster or directory correction summary with publication and evidence status."
+      ],
+      "must_pass_scenario_families": [
+        "Roster, credentialing, and directory data disagree across systems.",
+        "A provider onboarding or termination step is blocked on missing approvals.",
+        "A request seeks to publish unsupported provider status changes."
+      ]
+    },
+    "healthcare::revenue-cycle-management-specialist": {
+      "primary_job_to_be_done": "Orchestrate front-, middle-, and back-end revenue cycle priorities by identifying constraint points, sequencing corrective work, and aligning access, coding, billing, denial, and collections owners.",
+      "core_artifacts": [
+        "Access, coding, billing, denial, AR, cash-posting, and work-queue performance reports.",
+        "Payer mix, productivity, aging, leakage, and root-cause summaries."
+      ],
+      "systems_of_record": [
+        "RCM command-center dashboards, practice management, coding, billing, denial, and collections systems."
+      ],
+      "decision_types": [
+        "Prioritize revenue cycle work based on aging, denial trends, cash impact, and upstream blocker type.",
+        "Determine which lane owns a variance and whether it is best solved in access, coding, billing, or payer follow-up.",
+        "Escalate tradeoffs involving staffing, policy exception, or financial risk beyond lane authority."
+      ],
+      "adjacent_specialists": [
+        "Patient access, healthcare billing, coding coordination, payer operations, compliance, and finance specialists."
+      ],
+      "required_output_shapes": [
+        "RCM prioritization brief with queue ordering, root-cause split, and expected impact.",
+        "Cross-lane escalation note showing which upstream dependency must move first."
+      ],
+      "must_pass_scenario_families": [
+        "Denial growth is being caused by a front-end issue rather than billing execution.",
+        "Two revenue lanes disagree about ownership of a variance.",
+        "A high-impact revenue fix would require unsupported policy or staffing approval."
+      ],
+      "source_classes": [
+        "CMS, public payer, HFMA-style public revenue-cycle workflow guidance, and reimbursement operations references."
+      ],
+      "success_measures": [
+        "RCM priorities clearly identify upstream versus downstream root cause.",
+        "Escalations focus on cross-lane constraint removal, not generic status reporting."
+      ]
+    },
+    "accommodation-and-travel-services::front-office-specialist": {
+      "primary_job_to_be_done": "Control front-office intake by handling arrivals, identity checks, booking verification, room or itinerary readiness, and guest-routing before service execution begins.",
+      "core_artifacts": [
+        "Reservations, folios, check-in records, guest profiles, payment guarantees, and room-status or itinerary notes."
+      ],
+      "systems_of_record": [
+        "PMS, booking engine, CRM, payment preauthorization, and front-desk operations systems."
+      ],
+      "decision_types": [
+        "Determine whether a guest or traveler can be checked in, verified, or routed based on reservation and payment status.",
+        "Identify whether the blocker is room readiness, booking mismatch, payment guarantee, or identity issue."
+      ],
+      "required_output_shapes": [
+        "Front-office disposition note with check-in status, blocker, and next owner.",
+        "Guest-arrival escalation summary for reservation, payment, or room-readiness exceptions."
+      ],
+      "must_pass_scenario_families": [
+        "Arrival record and reservation data do not match.",
+        "Check-in is attempted before room, payment, or itinerary prerequisites are satisfied.",
+        "The lane is pressed to override policy for VIP or exception handling."
+      ]
+    },
+    "accommodation-and-travel-services::guest-communications-specialist": {
+      "primary_job_to_be_done": "Handle guest-facing communications across booking, stay, disruption, and recovery workflows with clear policy-aware messaging and escalation discipline.",
+      "core_artifacts": [
+        "Guest messages, service tickets, reservation notes, disruption notices, and recovery offers or complaint logs."
+      ],
+      "systems_of_record": [
+        "CRM, PMS, contact-center, messaging, and service-recovery workflow systems."
+      ],
+      "decision_types": [
+        "Determine whether the communication can be resolved directly or needs a handoff to operations, front office, or revenue owners.",
+        "Classify whether the issue is informational, complaint-driven, disruption-related, or policy-exception sensitive."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires pricing, refund, compensation, or safety exception authority outside documented policy."
+      ],
+      "required_output_shapes": [
+        "Guest communication summary with issue, response, and unresolved action owner.",
+        "Service-recovery escalation note for complaints, safety, or policy exceptions."
+      ]
+    },
+    "accommodation-and-travel-services::hospitality-compliance-specialist": {
+      "primary_job_to_be_done": "Translate hospitality operating obligations into controls, evidence, and remediation workflows covering guest safety, payments, privacy, and property-specific compliance handling.",
+      "core_artifacts": [
+        "Policies, incident logs, payment-control evidence, privacy complaints, safety inspection records, and remediation plans."
+      ],
+      "systems_of_record": [
+        "Compliance tracking, PMS audit logs, incident management, safety inspection, and payment-control systems."
+      ],
+      "adjacent_specialists": [
+        "Front office, guest communications, revenue management, safety/security, and property operations specialists."
+      ],
+      "must_pass_scenario_families": [
+        "Guest-service practice conflicts with payment, privacy, or safety policy.",
+        "An incident requires escalation to legal, safety, or security owners.",
+        "A property seeks informal workaround instead of documented compliance handling."
+      ]
+    },
+    "accommodation-and-travel-services::hotel-operations-specialist": {
+      "primary_job_to_be_done": "Run day-of-stay hotel workflows spanning occupancy, service recovery, staffing coordination, and operational exception handling without bypassing safety or revenue controls.",
+      "core_artifacts": [
+        "Occupancy boards, room-status reports, staffing rosters, service tickets, and incident or outage logs."
+      ],
+      "systems_of_record": [
+        "PMS, housekeeping systems, work-order tools, staffing systems, and service ticket platforms."
+      ],
+      "required_output_shapes": [
+        "Operations status update with occupancy, blockers, and priority actions.",
+        "Exception summary for room, staffing, service, or outage disruptions."
+      ]
+    },
+    "accommodation-and-travel-services::housekeeping-coordination-specialist": {
+      "primary_job_to_be_done": "Coordinate room-turn, inspection, linen, maintenance, and front-desk dependencies so housekeeping handoffs happen with full readiness context.",
+      "core_artifacts": [
+        "Room-turn queues, inspection notes, maintenance tickets, lost-and-found records, and VIP or rush cleaning priorities."
+      ],
+      "systems_of_record": [
+        "PMS room-status workflows, housekeeping systems, work-order systems, and dispatch tools."
+      ],
+      "decision_types": [
+        "Determine the next owner when cleaning, inspection, maintenance, or front-office readiness conflicts.",
+        "Identify whether a room is blocked on housekeeping, maintenance, or quality inspection."
+      ],
+      "required_output_shapes": [
+        "Room-turn handoff summary with status, next owner, and missing prerequisites.",
+        "Escalation note for delayed readiness affecting arrivals or revenue."
+      ]
+    },
+    "accommodation-and-travel-services::lodging-revenue-specialist": {
+      "primary_job_to_be_done": "Convert lodging reservations, folios, rates, and stay events into accurate posting, reconciliation, and revenue exception handling across nightly audit and guest-account workflows.",
+      "core_artifacts": [
+        "Folio transactions, rate plans, reservation changes, package components, payment records, and night-audit exceptions."
+      ],
+      "systems_of_record": [
+        "PMS folio systems, payment gateways, revenue audit tools, and accounting interfaces."
+      ],
+      "required_output_shapes": [
+        "Folio reconciliation summary with disputed charges, posting gaps, and next owner.",
+        "Night-audit or revenue exception note with root cause and correction path."
+      ],
+      "must_pass_scenario_families": [
+        "Folio charges conflict with reservation, package, or payment records.",
+        "A refund or rate override is requested without documented authority.",
+        "Night audit finds unresolved posting or tax exceptions."
+      ]
+    },
+    "accommodation-and-travel-services::multi-property-operations-specialist": {
+      "workflow_phase_group": "planning-scheduling-and-allocation",
+      "primary_job_to_be_done": "Coordinate multi-property priorities, staffing, overflow, and disruption handling across locations without collapsing into a single-property operator role.",
+      "core_artifacts": [
+        "Property dashboards, overflow plans, staffing allocations, incident summaries, and performance comparisons across sites."
+      ],
+      "systems_of_record": [
+        "Portfolio operations dashboards, PMS rollups, staffing systems, and cross-property issue trackers."
+      ],
+      "required_output_shapes": [
+        "Cross-property allocation or escalation brief.",
+        "Portfolio disruption summary with affected properties, constraints, and required decisions."
+      ],
+      "must_pass_scenario_families": [
+        "Demand, outage, or staffing disruption requires cross-property reallocation.",
+        "One property requests a local exception that creates portfolio-level impact.",
+        "A decision appears to require budget or executive approval outside the lane."
+      ]
+    },
+    "accommodation-and-travel-services::reservation-analytics-specialist": {
+      "workflow_phase_group": "analytics-reporting-and-disclosure",
+      "primary_job_to_be_done": "Turn reservation, occupancy, channel, and cancellation records into actionable booking analytics that support pricing, staffing, and service decisions without overstating forecast certainty.",
+      "core_artifacts": [
+        "Reservation pace reports, occupancy history, cancellation patterns, channel mix, lead-time data, and no-show trends."
+      ],
+      "systems_of_record": [
+        "PMS analytics, booking engine reports, CRS, channel manager, and BI systems."
+      ],
+      "required_output_shapes": [
+        "Reservation analytics brief with metric definitions, caveats, and trend drivers.",
+        "Channel or booking-pattern exception note for unusual pacing or cancellation behavior."
+      ],
+      "must_pass_scenario_families": [
+        "Reservation metrics conflict across PMS, CRS, and channel sources.",
+        "A stakeholder asks for forecast conclusions not supported by the data.",
+        "Cancellation or no-show spikes imply operational action but root cause is unclear."
+      ]
+    },
+    "accommodation-and-travel-services::tour-operations-specialist": {
+      "primary_job_to_be_done": "Run day-of-tour execution by coordinating itinerary readiness, guides, transport, ticketing, and guest exceptions across scheduled tour operations.",
+      "core_artifacts": [
+        "Tour manifests, departure lists, transport confirmations, tickets, guide assignments, and guest exception logs."
+      ],
+      "systems_of_record": [
+        "Tour booking, dispatch, ticketing, CRM, and operations run-of-show systems."
+      ],
+      "required_output_shapes": [
+        "Tour-departure readiness summary with missing tickets, transport issues, and owner handoffs.",
+        "Guest-impact exception note for delays, substitutions, or capacity failures."
+      ]
+    },
+    "accommodation-and-travel-services::travel-bookings-specialist": {
+      "primary_job_to_be_done": "Validate and complete travel bookings by handling itinerary creation, booking changes, prerequisites, confirmations, and traveler-facing exception routing before travel begins.",
+      "core_artifacts": [
+        "Traveler profiles, itinerary requests, booking confirmations, fare rules, payment guarantees, and change logs."
+      ],
+      "systems_of_record": [
+        "Booking engine, GDS or reservation systems, CRM, payment workflows, and traveler communications systems."
+      ],
+      "required_output_shapes": [
+        "Booking confirmation or pending-summary with missing prerequisites and deadlines.",
+        "Change or disruption escalation note for repricing, rebooking, or traveler-impact events."
+      ],
+      "must_pass_scenario_families": [
+        "Booking prerequisites, traveler identity, or payment guarantee are incomplete.",
+        "A repricing or rebooking request exceeds the lane's policy authority.",
+        "Supplier disruption creates itinerary conflicts across multiple bookings."
+      ]
+    },
+    "accounting-tax-and-audit-services::accounting-services-analytics-specialist": {
+      "workflow_phase_group": "analytics-reporting-and-disclosure",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Turn accounting service records into decision-grade analytics on close quality, client workload, exception patterns, and financial workflow performance without blurring into attestation or advisory conclusions.",
+      "core_artifacts": [
+        "GL detail, reconciliation inventories, close calendars, exception logs, engagement metrics, and client service KPIs."
+      ],
+      "systems_of_record": [
+        "ERP, GL, close management, reconciliation, workflow, and BI systems."
+      ],
+      "required_output_shapes": [
+        "Accounting analytics brief with metric definitions, source logic, and caveats.",
+        "Exception trend summary covering close delays, reconciliation failures, or client workload risk."
+      ]
+    },
+    "accounting-tax-and-audit-services::assurance-workflow-specialist": {
+      "workflow_phase_group": "review-assessment-and-inspection",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Coordinate assurance workpapers, review criteria, testing status, and findings follow-up so assurance workflows remain evidence-backed and review-ready.",
+      "core_artifacts": [
+        "Workpapers, testing plans, review notes, sampling records, findings logs, and signoff checklists."
+      ],
+      "systems_of_record": [
+        "Audit or assurance workflow tools, document management, testing workpapers, and review tracking systems."
+      ],
+      "required_output_shapes": [
+        "Assurance findings summary with criteria, evidence gaps, and next reviewer.",
+        "Review-readiness note covering open testing, unresolved findings, and signoff blockers."
+      ],
+      "must_pass_scenario_families": [
+        "Workpaper evidence is incomplete for a planned review.",
+        "Findings status conflicts across reviewer notes and workpaper trackers.",
+        "A user asks the lane to mark assurance work complete without reviewer evidence."
+      ]
+    },
+    "accounting-tax-and-audit-services::audit-engagement-specialist": {
+      "workflow_phase_group": "coordination-handoffs-and-routing",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Coordinate audit engagement logistics across client requests, PBC tracking, reviewer handoffs, issue escalation, and closeout readiness without issuing audit opinions.",
+      "core_artifacts": [
+        "Engagement letters, PBC lists, request trackers, issue logs, workpaper status, and client communications."
+      ],
+      "systems_of_record": [
+        "Engagement management, audit workflow, document request, and client collaboration systems."
+      ],
+      "required_output_shapes": [
+        "Audit engagement status summary with request inventory, blockers, and next owner.",
+        "Client-follow-up escalation for overdue evidence or unresolved engagement risks."
+      ],
+      "must_pass_scenario_families": [
+        "Client evidence is late or incomplete against the PBC list.",
+        "Ownership of an open issue is unclear between client service, reviewer, and preparer lanes.",
+        "The lane is asked to sign off on audit conclusions rather than coordinate the engagement."
+      ]
+    },
+    "accounting-tax-and-audit-services::bookkeeping-services-specialist": {
+      "workflow_phase_group": "execution-processing-and-fulfillment",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Process recurring bookkeeping workflows across transaction posting, categorization, cash activity, and close-prep hygiene with strong traceability to source records.",
+      "core_artifacts": [
+        "Bank feeds, invoices, bills, receipts, journals, ledgers, and reconciliation support."
+      ],
+      "systems_of_record": [
+        "ERP, GL, AP/AR, bank-feed, expense, and bookkeeping workflow systems."
+      ],
+      "required_output_shapes": [
+        "Posting and reconciliation status summary with exceptions and missing support.",
+        "Close-prep exception note for uncategorized, unmatched, or unsupported entries."
+      ]
+    },
+    "accounting-tax-and-audit-services::client-accounting-services-specialist": {
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Manage client-facing accounting service workflows by translating requests into the right accounting, close, reporting, or escalation actions while preserving scope and evidence discipline.",
+      "core_artifacts": [
+        "Client requests, close checklists, reconciliations, reporting packages, and service issue logs."
+      ],
+      "systems_of_record": [
+        "Practice management, ERP, close management, CRM, and client collaboration systems."
+      ],
+      "required_output_shapes": [
+        "Client-accounting service summary with request type, status, and next owner.",
+        "Escalation note for out-of-scope advisory, tax, or audit-sensitive requests."
+      ]
+    },
+    "accounting-tax-and-audit-services::compliance-reporting-accounting-specialist": {
+      "workflow_phase_group": "analytics-reporting-and-disclosure",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Prepare compliance-oriented accounting reports, disclosures, and regulator-facing schedules using documented reporting logic, source reconciliation, and escalation for interpretation risk.",
+      "core_artifacts": [
+        "Disclosure schedules, regulator templates, supporting ledgers, workpapers, reconciliations, and review notes."
+      ],
+      "systems_of_record": [
+        "ERP, reporting, close, disclosure management, and document review systems."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires legal interpretation, attestation, or unsupported disclosure certification."
+      ],
+      "required_output_shapes": [
+        "Compliance-reporting package with source tie-outs, review caveats, and missing support.",
+        "Disclosure-risk escalation note for interpretation, completeness, or reconciliation conflicts."
+      ]
+    },
+    "accounting-tax-and-audit-services::payroll-services-specialist": {
+      "workflow_phase_group": "execution-processing-and-fulfillment",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Run payroll service workflows across input validation, payroll processing, tax withholdings, remittance preparation, and exception handling without bypassing approval or tax-control rules.",
+      "core_artifacts": [
+        "Timesheets, pay-rate changes, withholding forms, payroll registers, tax filings, and exception logs."
+      ],
+      "systems_of_record": [
+        "Payroll systems, timekeeping, HRIS, tax-filing, and payment systems."
+      ],
+      "required_output_shapes": [
+        "Payroll-run readiness or completion summary with blocked items and tax exceptions.",
+        "Escalation note for missing approvals, pay variances, or filing issues."
+      ],
+      "must_pass_scenario_families": [
+        "Payroll inputs are incomplete or conflict with approved records.",
+        "A pay change or correction lacks required authorization.",
+        "Tax or remittance timing creates unresolved compliance risk."
+      ]
+    },
+    "accounting-tax-and-audit-services::practice-management-accounting-specialist": {
+      "workflow_phase_group": "planning-scheduling-and-allocation",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Plan accounting-practice workload, close calendars, staffing, and client delivery priorities across recurring accounting services without claiming partner-level approval authority.",
+      "core_artifacts": [
+        "Close calendars, staffing plans, engagement schedules, capacity reports, and client-priority trackers."
+      ],
+      "systems_of_record": [
+        "Practice management, scheduling, ERP workflow, and resource planning systems."
+      ],
+      "required_output_shapes": [
+        "Practice allocation or close-priority recommendation.",
+        "Capacity-risk escalation note for client deadlines, staffing gaps, or control bottlenecks."
+      ]
+    },
+    "accounting-tax-and-audit-services::tax-operations-specialist": {
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Process tax workflow operations across data gathering, return-prep readiness, filing logistics, notice handling, and exception routing while separating operations from tax advice.",
+      "core_artifacts": [
+        "Tax organizers, source documents, return statuses, filing confirmations, notices, and extension trackers."
+      ],
+      "systems_of_record": [
+        "Tax workflow, document collection, e-file, notice management, and client collaboration systems."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires tax advice, legal interpretation, or unsupported filing positions."
+      ],
+      "required_output_shapes": [
+        "Tax workflow status summary with missing documents, filing dependencies, and due dates.",
+        "Escalation note for notice response, filing block, or advisory question."
+      ]
+    },
+    "accounting-tax-and-audit-services::tax-resolution-specialist": {
+      "workflow_phase_group": "service-support-and-resolution",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Resolve tax notices, disputes, payment-plan workflows, and authority correspondence handoffs with evidence discipline while escalating any position that requires tax advisory judgment.",
+      "core_artifacts": [
+        "Tax notices, correspondence logs, payment-plan records, protest or response drafts, and supporting tax documents."
+      ],
+      "systems_of_record": [
+        "Tax notice management, workflow, document management, and authority correspondence systems."
+      ],
+      "required_output_shapes": [
+        "Tax-resolution case summary with notice type, response status, and next authority interaction.",
+        "Escalation note for advisory, settlement, or legal-risk questions."
+      ],
+      "must_pass_scenario_families": [
+        "A tax notice response lacks supporting documents or position rationale.",
+        "A client asks the lane to negotiate or settle beyond documented authority.",
+        "Authority deadlines conflict with unresolved advisory questions."
+      ]
+    },
+    "apparel-textiles-and-footwear::sample-room-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run apparel sample-room workflows so design, merchandising, sourcing, and sales teams can request, track, review, and return physical samples without losing traceability.",
+      "core_artifacts": [
+        "Sample requests, style and SKU sheets, fit comments, sample check-in logs, shipping records, and return or pull sheets."
+      ],
+      "systems_of_record": [
+        "PLM, merchandising, sample-room inventory trackers, courier logs, and showroom request systems."
+      ],
+      "required_output_shapes": [
+        "Sample-room status summary with location, requester, due date, and missing returns.",
+        "Escalation note for missing samples, shipping delays, or conflicting priority pulls."
+      ],
+      "must_pass_scenario_families": [
+        "A critical sample cannot be located when a review or shoot is due.",
+        "Multiple teams request the same sample with conflicting deadlines."
+      ]
+    },
+    "government-and-public-sector::interagency-operations-specialist": {
+      "workflow_phase_group": "coordination-handoffs-and-routing",
+      "domain_profile_id": "government-and-public-sector",
+      "primary_job_to_be_done": "Coordinate interagency workflow dependencies, approvals, and evidence handoffs so public-sector work does not stall between agencies, offices, or jurisdictions.",
+      "core_artifacts": [
+        "Memoranda, referral packets, case files, approval trackers, correspondence logs, and interagency handoff checklists."
+      ],
+      "systems_of_record": [
+        "Case management, document management, correspondence tracking, and shared government workflow systems."
+      ],
+      "required_output_shapes": [
+        "Interagency handoff summary with current owner, receiving agency, and missing prerequisites.",
+        "Escalation note for blocked approvals, jurisdiction conflicts, or missing records."
+      ],
+      "must_pass_scenario_families": [
+        "An upstream agency sends incomplete records to a downstream owner.",
+        "Two agencies claim different ownership or approval authority for the same workflow."
+      ]
+    },
+    "life-sciences-and-biotechnology::biotech-operations-specialist": {
+      "domain_profile_id": "healthcare-and-care-delivery",
+      "primary_job_to_be_done": "Run biotech operating workflows across lab support, sample handling, documentation readiness, and production-adjacent coordination while preserving protocol and quality boundaries.",
+      "core_artifacts": [
+        "Batch or run records, sample logs, deviation notes, SOP references, equipment status, and material readiness trackers."
+      ],
+      "systems_of_record": [
+        "LIMS, QMS, MES, document control, and regulated inventory systems."
+      ],
+      "required_output_shapes": [
+        "Biotech operations status summary with blocked run dependencies, sample status, and documentation gaps.",
+        "Escalation note for deviation, contamination, or protocol-readiness concerns."
+      ],
+      "must_pass_scenario_families": [
+        "A run or sample move is requested without complete supporting records.",
+        "A deviation or contamination signal appears and requires formal quality review."
+      ]
+    },
+    "metals-machinery-and-industrial-equipment-manufacturing::metals-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run metals and heavy-equipment shop-floor workflows across work orders, material readiness, machine state, and downstream handoffs without bypassing quality or safety controls.",
+      "core_artifacts": [
+        "Work orders, routings, machine schedules, heat or lot traceability records, inspection holds, and material issue logs."
+      ],
+      "systems_of_record": [
+        "ERP, MES, maintenance systems, quality systems, and production scheduling tools."
+      ],
+      "required_output_shapes": [
+        "Metals operations status summary with work-center state, material blockers, and quality dependencies.",
+        "Escalation note for machine downtime, traceability gaps, or release holds."
+      ],
+      "must_pass_scenario_families": [
+        "Material traceability is incomplete for a job already in process.",
+        "A work order is pushed forward despite unresolved equipment or inspection issues."
+      ]
+    },
+    "nonprofit-and-associations::grant-management-nonprofit-specialist": {
+      "domain_profile_id": "government-and-public-sector",
+      "primary_job_to_be_done": "Manage nonprofit grant workflows across opportunity intake, application readiness, award tracking, reporting deadlines, and restricted-fund compliance without replacing finance or legal review.",
+      "core_artifacts": [
+        "Grant calendars, application checklists, award letters, budgets, reporting schedules, restriction trackers, and grant correspondence."
+      ],
+      "systems_of_record": [
+        "Grant management, CRM, document management, budgeting, and reporting systems."
+      ],
+      "required_output_shapes": [
+        "Grant portfolio status summary with deadline risk, owner, and missing submission artifacts.",
+        "Escalation note for budget variance, reporting noncompliance, or grant-condition conflicts."
+      ],
+      "must_pass_scenario_families": [
+        "A grant report is due but supporting program or financial evidence is incomplete.",
+        "A requested spend or change conflicts with grant restrictions or award terms."
+      ]
+    },
+    "parcel-courier-and-last-mile-delivery::delivery-exception-specialist": {
+      "workflow_phase_group": "service-support-and-resolution",
+      "domain_profile_id": "transportation-and-logistics",
+      "primary_job_to_be_done": "Resolve parcel and last-mile delivery exceptions by classifying failure modes, routing ownership, and coordinating corrective action before packages are written off or misclosed.",
+      "core_artifacts": [
+        "Tracking events, proof-of-delivery images, exception codes, address-correction requests, claim records, and driver notes."
+      ],
+      "systems_of_record": [
+        "TMS, parcel tracking systems, route management, customer service platforms, and claims portals."
+      ],
+      "required_output_shapes": [
+        "Delivery exception case summary with failure code, current location, and next owner.",
+        "Escalation note for loss, fraud risk, address conflict, or repeated service failure."
+      ],
+      "must_pass_scenario_families": [
+        "Tracking events conflict and package custody is unclear.",
+        "A user asks to close an exception without proof, scan support, or owner acceptance."
+      ]
+    },
+    "pharmaceutical-and-medtech::pharmaceutical-operations-specialist": {
+      "domain_profile_id": "healthcare-and-care-delivery",
+      "primary_job_to_be_done": "Run pharmaceutical operating workflows across batch support, controlled documentation, inventory readiness, and deviation routing without bypassing GMP, quality, or release controls.",
+      "core_artifacts": [
+        "Batch records, deviation logs, controlled documents, material status labels, training records, and release or quarantine trackers."
+      ],
+      "systems_of_record": [
+        "MES, ERP, QMS, document control, training, and warehouse systems."
+      ],
+      "required_output_shapes": [
+        "Pharmaceutical operations summary with batch status, documentation blockers, and quality dependencies.",
+        "Escalation note for deviation, release hold, or training/readiness gap."
+      ],
+      "must_pass_scenario_families": [
+        "A batch step is requested without complete controlled documentation.",
+        "Material or product is moved despite quarantine, deviation, or release uncertainty."
+      ]
+    },
+    "pharmacy-and-diagnostics::diagnostic-imaging-operations-specialist": {
+      "domain_profile_id": "healthcare-and-care-delivery",
+      "primary_job_to_be_done": "Run diagnostic imaging operational workflows across order readiness, scheduling dependencies, modality throughput, and follow-up routing without interpreting clinical results.",
+      "core_artifacts": [
+        "Imaging orders, modality schedules, prep instructions, authorization records, technologist worklists, and no-show or downtime logs."
+      ],
+      "systems_of_record": [
+        "RIS, PACS, EHR imaging queues, scheduling systems, and authorization trackers."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires reading images, changing a clinical order, or giving clinical advice."
+      ],
+      "required_output_shapes": [
+        "Imaging operations status summary with modality capacity, prep blockers, and reschedule risk.",
+        "Escalation note for missing orders, authorization gaps, or equipment downtime."
+      ],
+      "must_pass_scenario_families": [
+        "An imaging slot is requested without the required prep or authorization support.",
+        "A study follow-up issue crosses into clinical interpretation or urgent care escalation."
+      ]
+    },
+    "ports-inland-terminals-and-intermodal::intermodal-operations-specialist": {
+      "workflow_phase_group": "coordination-handoffs-and-routing",
+      "domain_profile_id": "transportation-and-logistics",
+      "primary_job_to_be_done": "Coordinate intermodal moves across terminal, rail, drayage, and warehouse handoffs so containers and trailers transition with complete status, paperwork, and timing control.",
+      "core_artifacts": [
+        "Load plans, container and trailer statuses, gate transactions, appointment slots, release numbers, and exception logs."
+      ],
+      "systems_of_record": [
+        "TMS, terminal operating systems, yard management, appointment scheduling, and visibility platforms."
+      ],
+      "required_output_shapes": [
+        "Intermodal move summary with current leg, next handoff, and missing release or appointment dependencies.",
+        "Escalation note for misrouted freight, missed cutoffs, or custody ambiguity."
+      ],
+      "must_pass_scenario_families": [
+        "A handoff is attempted without release, appointment, or customs support.",
+        "Terminal, rail, and drayage records disagree on asset status or location."
+      ]
+    },
+    "post-acute-and-long-term-care::skilled-nursing-operations-specialist": {
+      "domain_profile_id": "healthcare-and-care-delivery",
+      "primary_job_to_be_done": "Run skilled-nursing facility workflows across admissions readiness, census movement, resident service coordination, and documentation follow-through without making clinical care decisions.",
+      "core_artifacts": [
+        "Admission packets, payer authorizations, census logs, care-transition notes, therapy schedules, and incident or staffing exception logs."
+      ],
+      "systems_of_record": [
+        "EHR, SNF census systems, scheduling, billing, and authorization tracking tools."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires changing a resident care plan, medication instruction, or clinician order."
+      ],
+      "required_output_shapes": [
+        "Skilled-nursing operations summary with admission blockers, census risks, and service handoff gaps.",
+        "Escalation note for payer, staffing, discharge, or resident-safety concerns."
+      ],
+      "must_pass_scenario_families": [
+        "An admission or continued stay lacks required payer or documentation support.",
+        "An operational issue becomes a resident-safety or clinical judgment problem and must be escalated."
+      ]
+    },
+    "professional-services::consulting-operations-specialist": {
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Run consulting delivery operations across staffing, engagement setup, project controls, and internal follow-through so client work proceeds with clear ownership and margin discipline.",
+      "core_artifacts": [
+        "Statements of work, resource plans, project trackers, milestone logs, utilization reports, and dependency registers."
+      ],
+      "systems_of_record": [
+        "PSA, CRM, project management, timekeeping, billing, and knowledge systems."
+      ],
+      "required_output_shapes": [
+        "Consulting operations summary with engagement setup status, staffing gaps, and delivery blockers.",
+        "Escalation note for scope drift, staffing conflicts, or client-commitment risk."
+      ],
+      "must_pass_scenario_families": [
+        "Project commitments exceed available staffing or approved scope.",
+        "A delivery dependency is stalled between sales, delivery, and finance ownership."
+      ]
+    },
+    "professional-services::time-and-utilization-specialist": {
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Run time capture and utilization workflows so billable, nonbillable, and capacity records are complete enough for forecasting, billing, and performance management.",
+      "core_artifacts": [
+        "Timesheets, charge codes, project assignments, utilization reports, correction requests, and approval logs."
+      ],
+      "systems_of_record": [
+        "PSA, timekeeping, ERP, project accounting, and resource-planning systems."
+      ],
+      "required_output_shapes": [
+        "Time and utilization status summary with missing entries, approval gaps, and charge-code conflicts.",
+        "Escalation note for late time, utilization anomalies, or billing-impacting corrections."
+      ],
+      "must_pass_scenario_families": [
+        "Submitted time conflicts with project assignment or approval rules.",
+        "Utilization metrics are requested before late or corrected time is resolved."
+      ]
+    },
+    "pulp-paper-packaging-and-print-manufacturing::converting-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run converting workflows across press, finishing, packaging, and material changeovers with strong attention to throughput, waste, and release-readiness constraints.",
+      "core_artifacts": [
+        "Production orders, run sheets, setup parameters, material issue logs, waste records, and quality holds."
+      ],
+      "systems_of_record": [
+        "MES, ERP, scheduling, maintenance, and quality systems."
+      ],
+      "required_output_shapes": [
+        "Converting operations summary with line status, changeover blockers, and material dependencies.",
+        "Escalation note for waste spikes, setup failure, or quality-release delays."
+      ],
+      "must_pass_scenario_families": [
+        "A run proceeds with unresolved material, setup, or quality issues.",
+        "Waste or defect patterns rise beyond expected control levels."
+      ]
+    },
+    "pulp-paper-packaging-and-print-manufacturing::paper-mill-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run paper-mill workflows across production readiness, machine state, quality targets, and downstream reel or batch handoffs without bypassing safety or quality controls.",
+      "core_artifacts": [
+        "Shift logs, machine conditions, batch or reel records, lab checks, maintenance notes, and downtime logs."
+      ],
+      "systems_of_record": [
+        "MES, historian or process systems, ERP, maintenance, and quality systems."
+      ],
+      "required_output_shapes": [
+        "Paper-mill status summary with machine state, quality concerns, and downstream release blockers.",
+        "Escalation note for downtime, process instability, or out-of-spec output."
+      ],
+      "must_pass_scenario_families": [
+        "Process conditions drift beyond acceptable range before release decisions are made.",
+        "A downstream move is requested while quality or equipment evidence remains unresolved."
+      ]
+    },
+    "renewable-energy-and-distributed-energy::ppa-administration-specialist": {
+      "domain_profile_id": "industrial-and-regulated-operations",
+      "primary_job_to_be_done": "Administer power-purchase agreement workflows across contract milestones, invoice support, settlement inputs, and notice obligations without interpreting legal terms independently.",
+      "core_artifacts": [
+        "PPAs, pricing schedules, generation statements, settlement support, notice logs, and contract obligation trackers."
+      ],
+      "systems_of_record": [
+        "Contract management, settlement, billing, document management, and renewable-asset reporting systems."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires legal interpretation of contract language or approval of a nonstandard settlement position."
+      ],
+      "required_output_shapes": [
+        "PPA administration summary with milestone status, invoice support, and notice deadlines.",
+        "Escalation note for missing generation support, disputed calculations, or contract-interpretation issues."
+      ],
+      "must_pass_scenario_families": [
+        "A settlement or invoice request lacks the underlying generation or contract support.",
+        "A counterparty question turns into legal or commercial interpretation beyond documented authority."
+      ]
+    },
+    "rental-leasing-and-equipment-services::branch-operations-rental-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Run branch rental workflows across reservation fulfillment, asset turnaround, counter documentation, and exception handling so equipment and vehicles move through branch operations cleanly.",
+      "core_artifacts": [
+        "Rental contracts, reservations, check-in and check-out records, asset availability logs, inspection sheets, and damage reports."
+      ],
+      "systems_of_record": [
+        "Rental management, POS, fleet or asset systems, scheduling, and maintenance tools."
+      ],
+      "required_output_shapes": [
+        "Branch rental operations summary with reservation fulfillment, asset status, and open exceptions.",
+        "Escalation note for unavailable units, damage disputes, or documentation gaps."
+      ],
+      "must_pass_scenario_families": [
+        "An asset is committed without inspection, turnaround, or documentation support.",
+        "A damage or late-return issue is closed without the required evidence trail."
+      ]
+    },
+    "residential-construction::homebuilding-operations-specialist": {
+      "domain_profile_id": "construction-and-field-services",
+      "primary_job_to_be_done": "Run homebuilding workflows across lot readiness, schedule coordination, trade handoffs, and punch-list follow-through so residential builds move without undocumented blockers.",
+      "core_artifacts": [
+        "Build schedules, lot files, trade scopes, permit status, option selections, inspection results, and punch lists."
+      ],
+      "systems_of_record": [
+        "Construction scheduling, ERP, document management, purchasing, and warranty systems."
+      ],
+      "required_output_shapes": [
+        "Homebuilding operations summary with lot status, trade blockers, and permit or inspection dependencies.",
+        "Escalation note for schedule slippage, missing selections, or unresolved field issues."
+      ],
+      "must_pass_scenario_families": [
+        "A trade or phase handoff is attempted before prerequisites are complete.",
+        "Inspection, permit, or option-selection gaps threaten the build sequence."
+      ]
+    },
+    "residential-construction::residential-purchasing-specialist": {
+      "domain_profile_id": "construction-and-field-services",
+      "primary_job_to_be_done": "Manage residential purchasing workflows across vendor commitments, takeoffs, option changes, and material timing so field starts and closings are not disrupted.",
+      "core_artifacts": [
+        "Purchase orders, takeoffs, vendor bids, option selections, release schedules, and variance logs."
+      ],
+      "systems_of_record": [
+        "ERP, purchasing, estimating, vendor management, and build scheduling systems."
+      ],
+      "required_output_shapes": [
+        "Residential purchasing summary with committed vendors, release dates, and unresolved option impacts.",
+        "Escalation note for pricing variance, vendor shortfall, or start-date risk."
+      ],
+      "must_pass_scenario_families": [
+        "A material or trade release is requested before scope, selection, or pricing is final.",
+        "Vendor capacity or lead time threatens a scheduled start or close."
+      ]
+    },
+    "retail-and-e-commerce::marketplace-operations-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Run online marketplace workflows across listing health, order exceptions, seller compliance, and fulfillment dependencies so channel performance stays stable.",
+      "core_artifacts": [
+        "Marketplace listings, catalog attributes, order feeds, seller scorecards, compliance notices, and return or claim records."
+      ],
+      "systems_of_record": [
+        "Marketplace seller portals, OMS, PIM, WMS, and customer-service tools."
+      ],
+      "required_output_shapes": [
+        "Marketplace operations summary with listing status, order blockers, and seller-performance risks.",
+        "Escalation note for policy violations, channel suspensions, or fulfillment breakdowns."
+      ],
+      "must_pass_scenario_families": [
+        "A listing or order issue spans catalog, fulfillment, and marketplace-policy ownership.",
+        "A seller or operator asks to bypass channel rules without supporting approval."
+      ]
+    },
+    "retail-and-e-commerce::promotion-execution-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Execute retail and e-commerce promotion workflows across offer setup, launch readiness, channel coordination, and post-launch exception handling.",
+      "core_artifacts": [
+        "Promotion calendars, offer rules, creative assets, price files, launch checklists, and exception logs."
+      ],
+      "systems_of_record": [
+        "Promotion management, CMS, e-commerce platform, POS, pricing, and campaign systems."
+      ],
+      "required_output_shapes": [
+        "Promotion execution summary with launch readiness, channel dependencies, and pricing conflicts.",
+        "Escalation note for broken offers, channel mismatch, or unsupported promo overrides."
+      ],
+      "must_pass_scenario_families": [
+        "A promotion is scheduled to launch with missing price, content, or channel setup.",
+        "A user requests an offer override that conflicts with approved campaign rules."
+      ]
+    },
+    "scientific-testing-inspection-and-certification-services::sample-management-specialist": {
+      "workflow_phase_group": "execution-processing-and-fulfillment",
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Manage sample intake, custody, storage, routing, and disposition workflows so testing and certification work proceeds with defensible sample traceability.",
+      "core_artifacts": [
+        "Chain-of-custody forms, sample receipts, storage logs, accession IDs, testing requests, and disposal records."
+      ],
+      "systems_of_record": [
+        "LIMS, sample accessioning, document management, and courier tracking systems."
+      ],
+      "required_output_shapes": [
+        "Sample-management summary with custody state, routing, and missing support.",
+        "Escalation note for chain-of-custody breaks, storage issues, or unmatched requests."
+      ],
+      "must_pass_scenario_families": [
+        "A sample arrives without complete chain-of-custody or test instructions.",
+        "Sample identity, storage condition, or disposition status becomes unclear."
+      ]
+    },
+    "security-guarding-and-investigations::guard-services-operations-specialist": {
+      "domain_profile_id": "government-and-public-sector",
+      "primary_job_to_be_done": "Run guard-service workflows across post coverage, incident follow-up, schedule continuity, and client communication without bypassing safety, legal, or escalation rules.",
+      "core_artifacts": [
+        "Post orders, shift rosters, incident reports, patrol logs, escalation records, and coverage exceptions."
+      ],
+      "systems_of_record": [
+        "Scheduling, incident management, workforce management, and client communication systems."
+      ],
+      "required_output_shapes": [
+        "Guard-services operations summary with post coverage, open incidents, and staffing gaps.",
+        "Escalation note for safety threats, use-of-force issues, or uncovered posts."
+      ],
+      "must_pass_scenario_families": [
+        "A post loses coverage and requires immediate rerouting or escalation.",
+        "An incident workflow becomes safety-sensitive or legally sensitive beyond routine operations."
+      ]
+    },
+    "semiconductor-and-electronics-manufacturing::cleanroom-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run cleanroom workflows across access discipline, contamination control, tool readiness, and lot movement so sensitive manufacturing stays within environmental requirements.",
+      "core_artifacts": [
+        "Lot travelers, gowning records, contamination logs, tool status, maintenance notes, and environmental monitoring results."
+      ],
+      "systems_of_record": [
+        "MES, cleanroom monitoring, maintenance, access-control, and quality systems."
+      ],
+      "required_output_shapes": [
+        "Cleanroom operations summary with lot movement blockers, environmental status, and tool constraints.",
+        "Escalation note for contamination risk, environmental excursion, or access-control breakdown."
+      ],
+      "must_pass_scenario_families": [
+        "Lot movement is requested during an unresolved contamination or excursion event.",
+        "Tool or cleanroom status records disagree on whether work can proceed."
+      ]
+    },
+    "semiconductor-and-electronics-manufacturing::semiconductor-fab-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run fab operations across tool state, lot progress, dispatch priorities, and engineering or maintenance dependencies without bypassing hold or quality controls.",
+      "core_artifacts": [
+        "Lot travelers, tool states, WIP queues, dispatch priorities, hold codes, and maintenance or engineering requests."
+      ],
+      "systems_of_record": [
+        "MES, dispatch systems, equipment monitoring, maintenance, and quality systems."
+      ],
+      "required_output_shapes": [
+        "Fab operations summary with tool availability, WIP constraints, and lot blockers.",
+        "Escalation note for hold codes, queue conflicts, or equipment outages."
+      ],
+      "must_pass_scenario_families": [
+        "A lot is pushed forward despite an unresolved hold or equipment dependency.",
+        "Dispatch priorities conflict across engineering, production, and maintenance owners."
+      ]
+    },
+    "semiconductor-and-electronics-manufacturing::test-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run semiconductor and electronics test workflows across fixture readiness, lot sequencing, result handling, and failure routing without overriding formal disposition authority.",
+      "core_artifacts": [
+        "Test plans, lot queues, tester configurations, result files, failure logs, and retest requests."
+      ],
+      "systems_of_record": [
+        "Test execution systems, MES, quality systems, and equipment maintenance tools."
+      ],
+      "required_output_shapes": [
+        "Test operations summary with queue state, tester readiness, and failure handling status.",
+        "Escalation note for abnormal failure rates, tester downtime, or retest disputes."
+      ],
+      "must_pass_scenario_families": [
+        "A retest or release is requested without the required failure review.",
+        "Tester configuration or result evidence is incomplete for the requested action."
+      ]
+    },
+    "semiconductor-and-electronics-manufacturing::yield-management-specialist": {
+      "workflow_phase_group": "analytics-reporting-and-disclosure",
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Turn fab and test yield signals into actionable yield-management summaries that separate statistical insight from formal engineering disposition or root-cause signoff.",
+      "core_artifacts": [
+        "Yield reports, defect paretos, lot histories, SPC views, excursion logs, and engineering follow-up trackers."
+      ],
+      "systems_of_record": [
+        "MES, yield analytics, SPC, defect management, and engineering review systems."
+      ],
+      "required_output_shapes": [
+        "Yield-management brief with loss drivers, affected lots, and confidence caveats.",
+        "Escalation note for excursion patterns or engineering review dependencies."
+      ],
+      "must_pass_scenario_families": [
+        "A stakeholder asks for a root-cause conclusion that the evidence does not yet support.",
+        "Yield data disagrees across fab, test, or inspection systems."
+      ]
+    },
+    "social-services-and-community-care::nonclinical-support-services-specialist": {
+      "domain_profile_id": "healthcare-and-care-delivery",
+      "primary_job_to_be_done": "Deliver nonclinical community-support workflows across benefits navigation, referrals, transportation, housing, and service follow-through without implying licensed social-work or clinical authority.",
+      "core_artifacts": [
+        "Service referrals, benefits applications, outreach logs, transportation requests, housing-resource notes, and barrier trackers."
+      ],
+      "systems_of_record": [
+        "Case management, referral management, CRM, scheduling, and community-resource systems."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires clinical counseling, licensed social-work judgment, or legal advice."
+      ],
+      "required_output_shapes": [
+        "Support-services case summary with open barriers, referrals, and next owner.",
+        "Escalation note for safety risk, eligibility conflict, or unsupported community resource request."
+      ],
+      "must_pass_scenario_families": [
+        "A client need exceeds the lane's nonclinical authority and requires licensed review.",
+        "A referral or benefits workflow is blocked on missing eligibility or third-party response."
+      ]
+    },
+    "social-services-and-community-care::social-services-operations-specialist": {
+      "domain_profile_id": "healthcare-and-care-delivery",
+      "primary_job_to_be_done": "Run social-service operating workflows across case movement, referral intake, program eligibility tracking, and service coordination with clear escalation when licensed or legal judgment is required.",
+      "core_artifacts": [
+        "Case files, eligibility checklists, referral packets, outreach logs, service authorizations, and program rosters."
+      ],
+      "systems_of_record": [
+        "Case management, eligibility, referral, document management, and provider network systems."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires licensed social-work evaluation, legal interpretation, or protected-program eligibility approval beyond documented authority."
+      ],
+      "required_output_shapes": [
+        "Social-services operations summary with case status, referral blockers, and program-capacity issues.",
+        "Escalation note for safety, legal, or licensed-review questions."
+      ],
+      "must_pass_scenario_families": [
+        "A case action requires licensed or legal review rather than operational handling.",
+        "Program eligibility or provider availability conflicts block the requested service."
+      ]
+    },
+    "space-systems-and-satellite-operations::payload-integration-specialist": {
+      "domain_profile_id": "industrial-and-regulated-operations",
+      "primary_job_to_be_done": "Coordinate payload integration workflows across interface readiness, documentation, test sequencing, and handoff control so integration work proceeds with configuration discipline.",
+      "core_artifacts": [
+        "Interface control documents, integration checklists, test plans, nonconformance logs, and configuration records."
+      ],
+      "systems_of_record": [
+        "PLM, configuration management, test management, issue tracking, and schedule systems."
+      ],
+      "required_output_shapes": [
+        "Payload integration summary with interface readiness, test dependencies, and unresolved discrepancies.",
+        "Escalation note for configuration conflicts, test readiness gaps, or signoff dependencies."
+      ],
+      "must_pass_scenario_families": [
+        "Integration proceeds without complete interface or configuration support.",
+        "A discrepancy affects test or launch-readiness and needs formal engineering ownership."
+      ]
+    },
+    "sports-leagues-and-live-entertainment::fan-experience-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Resolve fan-facing service workflows across ticketing issues, venue experience, communications, and recovery actions with clear limits on compensation or security decisions.",
+      "core_artifacts": [
+        "Tickets, account records, venue incident notes, service requests, compensation logs, and event communications."
+      ],
+      "systems_of_record": [
+        "Ticketing, CRM, venue operations, customer-service, and loyalty systems."
+      ],
+      "required_output_shapes": [
+        "Fan-experience case summary with issue type, action taken, and open follow-up.",
+        "Escalation note for refund authority, safety incident, or VIP service exception."
+      ],
+      "must_pass_scenario_families": [
+        "A fan issue spans ticketing, venue, and security ownership.",
+        "A requested recovery or compensation exceeds documented service authority."
+      ]
+    },
+    "sports-leagues-and-live-entertainment::league-administration-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Administer league workflows across schedules, rosters, compliance records, and competition documentation so governing activities remain complete and auditable.",
+      "core_artifacts": [
+        "Schedules, roster submissions, credential records, league notices, policy acknowledgments, and competition logs."
+      ],
+      "systems_of_record": [
+        "League management, credentialing, scheduling, document management, and communications systems."
+      ],
+      "required_output_shapes": [
+        "League administration summary with roster, schedule, and submission status.",
+        "Escalation note for missing league records, policy conflicts, or governance deadlines."
+      ],
+      "must_pass_scenario_families": [
+        "Required roster or credential records are incomplete before competition activity.",
+        "A league governance request implies a rules interpretation beyond administrative authority."
+      ]
+    },
+    "sports-leagues-and-live-entertainment::sports-operations-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Run sports-operations workflows across event readiness, team logistics, equipment coordination, and day-of-game execution so competition support stays synchronized.",
+      "core_artifacts": [
+        "Event run sheets, practice and game schedules, credential lists, equipment inventories, and operations checklists."
+      ],
+      "systems_of_record": [
+        "Event operations, credentialing, scheduling, travel, and equipment systems."
+      ],
+      "required_output_shapes": [
+        "Sports-operations summary with event readiness, logistics blockers, and ownership gaps.",
+        "Escalation note for venue, travel, credential, or competition-support conflicts."
+      ],
+      "must_pass_scenario_families": [
+        "Event-day readiness is blocked by unresolved logistics or credential issues.",
+        "Two operational owners assume the other is handling a critical competition support task."
+      ]
+    },
+    "sports-leagues-and-live-entertainment::team-services-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Deliver team-service workflows across travel, hospitality, credentialing, and support requests so teams receive complete operational support without hidden gaps.",
+      "core_artifacts": [
+        "Travel itineraries, hotel and ground bookings, credentials, support tickets, and service recovery logs."
+      ],
+      "systems_of_record": [
+        "Travel management, CRM, credentialing, venue operations, and service systems."
+      ],
+      "required_output_shapes": [
+        "Team-services case summary with service request, committed support, and open blockers.",
+        "Escalation note for travel disruption, credential failure, or support request outside policy."
+      ],
+      "must_pass_scenario_families": [
+        "A team support request spans travel, venue, and credential ownership.",
+        "A requested accommodation exceeds approved service or spend authority."
+      ]
+    },
+    "staffing-recruiting-and-contingent-labor::recruiting-operations-specialist": {
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Run recruiting operations across requisition readiness, candidate movement, interview coordination, and compliance tracking so hiring workflows stay measurable and complete.",
+      "core_artifacts": [
+        "Requisitions, candidate records, interview schedules, offer approvals, compliance checklists, and activity SLAs."
+      ],
+      "systems_of_record": [
+        "ATS, CRM, scheduling, background-check, and onboarding systems."
+      ],
+      "required_output_shapes": [
+        "Recruiting operations summary with req status, candidate-stage blockers, and SLA risk.",
+        "Escalation note for requisition ambiguity, approval delay, or compliance breakdown."
+      ],
+      "must_pass_scenario_families": [
+        "A candidate advances without the required documentation or approvals.",
+        "Hiring activity stalls because ownership between recruiter, manager, and coordinator is unclear."
+      ]
+    },
+    "staffing-recruiting-and-contingent-labor::vms-and-msp-specialist": {
+      "domain_profile_id": "professional-and-information-services",
+      "primary_job_to_be_done": "Run VMS and MSP workflows across job release, supplier coordination, worker onboarding, and spend-control exceptions with clear separation from final client approval authority.",
+      "core_artifacts": [
+        "Job orders, supplier submissions, onboarding packets, rate cards, timesheets, and compliance records."
+      ],
+      "systems_of_record": [
+        "VMS, MSP workflow tools, onboarding, timekeeping, and supplier management systems."
+      ],
+      "required_output_shapes": [
+        "VMS or MSP workflow summary with supplier status, onboarding blockers, and spend issues.",
+        "Escalation note for unsupported rate changes, worker compliance gaps, or client approval delays."
+      ],
+      "must_pass_scenario_families": [
+        "A worker is advanced without complete onboarding or supplier compliance support.",
+        "A rate, tenure, or spend request exceeds documented client program rules."
+      ]
+    },
+    "transportation-and-logistics::shipment-visibility-specialist": {
+      "domain_profile_id": "transportation-and-logistics",
+      "primary_job_to_be_done": "Maintain shipment visibility across carriers, milestones, and exception signals so customers and operators have an accurate view of location, timing, and risk.",
+      "core_artifacts": [
+        "Tracking events, carrier updates, milestone exceptions, ETA changes, POD records, and communication logs."
+      ],
+      "systems_of_record": [
+        "Visibility platforms, TMS, carrier portals, EDI feeds, and customer communication systems."
+      ],
+      "required_output_shapes": [
+        "Shipment-visibility summary with current milestone, exception risk, and next update owner.",
+        "Escalation note for event gaps, ETA conflict, or custody uncertainty."
+      ],
+      "must_pass_scenario_families": [
+        "Carrier, EDI, and customer records disagree on shipment status.",
+        "A shipment is reported delivered, delayed, or lost without enough evidence support."
+      ]
+    },
+    "transportation-and-logistics::transportation-operations-specialist": {
+      "domain_profile_id": "transportation-and-logistics",
+      "primary_job_to_be_done": "Run transportation workflows across load planning, dispatch follow-through, carrier execution, and service exception handling so freight moves with clear operational control.",
+      "core_artifacts": [
+        "Load tenders, dispatch instructions, route plans, carrier updates, PODs, and service exception logs."
+      ],
+      "systems_of_record": [
+        "TMS, carrier portals, dispatch systems, appointment scheduling, and visibility tools."
+      ],
+      "required_output_shapes": [
+        "Transportation operations summary with load status, carrier execution issues, and downstream delivery risk.",
+        "Escalation note for missed appointments, capacity shortfall, or service breakdown."
+      ],
+      "must_pass_scenario_families": [
+        "A load is committed without confirmed capacity or appointment readiness.",
+        "Carrier execution breaks down and ownership for recovery is unclear."
+      ]
+    },
+    "utilities::metering-operations-specialist": {
+      "domain_profile_id": "industrial-and-regulated-operations",
+      "primary_job_to_be_done": "Run utility metering workflows across reads, service changes, exceptions, and field-to-billing handoffs so usage records remain traceable and dispute-ready.",
+      "core_artifacts": [
+        "Meter reads, exception codes, service orders, field notes, installation records, and billing handoff logs."
+      ],
+      "systems_of_record": [
+        "MDM, CIS, field service, outage, and billing systems."
+      ],
+      "required_output_shapes": [
+        "Metering operations summary with read completeness, exception backlog, and service-order dependencies.",
+        "Escalation note for estimated-read risk, tamper concerns, or billing-impacting data conflicts."
+      ],
+      "must_pass_scenario_families": [
+        "Meter data is missing or inconsistent with field-service evidence.",
+        "A metering issue could trigger disputed billing or regulatory complaint risk."
+      ]
+    },
+    "vehicle-retail-and-dealership-operations::dealership-operations-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Run dealership workflows across inventory readiness, deal flow, service coordination, and paperwork completion so retail operations stay synchronized across departments.",
+      "core_artifacts": [
+        "Deal jackets, inventory statuses, repair orders, title documents, appointment logs, and exception trackers."
+      ],
+      "systems_of_record": [
+        "DMS, CRM, inventory, service scheduling, and title or lender systems."
+      ],
+      "required_output_shapes": [
+        "Dealership operations summary with inventory, deal, and service blockers.",
+        "Escalation note for paperwork gaps, lender issues, or cross-department ownership conflicts."
+      ],
+      "must_pass_scenario_families": [
+        "A vehicle or customer transaction advances with incomplete paperwork or status support.",
+        "Sales, F&I, and service ownership overlaps create dropped work or missed commitments."
+      ]
+    },
+    "vehicle-retail-and-dealership-operations::f-and-i-operations-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Run finance-and-insurance workflows across deal packet completeness, lender routing, product documentation, and funding follow-up without making unauthorized credit or compliance decisions.",
+      "core_artifacts": [
+        "Credit applications, deal jackets, lender stipulations, product menus, funding packets, and compliance checklists."
+      ],
+      "systems_of_record": [
+        "DMS, lender portals, menu systems, document management, and compliance tools."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires changing credit terms, compliance disclosures, or funded deal status without authorized approval."
+      ],
+      "required_output_shapes": [
+        "F&I operations summary with packet completeness, lender status, and funding blockers.",
+        "Escalation note for stipulation gaps, disclosure concerns, or unsupported deal changes."
+      ],
+      "must_pass_scenario_families": [
+        "A deal is pushed to funding without complete lender or disclosure support.",
+        "A requested deal change creates compliance or credit-approval risk."
+      ]
+    },
+    "vehicle-retail-and-dealership-operations::service-appointment-specialist": {
+      "workflow_phase_group": "planning-scheduling-and-allocation",
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Manage dealership service appointments across slotting, labor readiness, parts dependencies, and customer communication so service lanes are scheduled realistically.",
+      "core_artifacts": [
+        "Appointments, repair concerns, technician capacity, parts reservations, loaner status, and no-show or delay logs."
+      ],
+      "systems_of_record": [
+        "Service scheduling, DMS, parts inventory, technician planning, and CRM systems."
+      ],
+      "required_output_shapes": [
+        "Service appointment readiness summary with slot availability, parts dependencies, and customer commitments.",
+        "Escalation note for overbooked capacity, missing parts, or priority service conflicts."
+      ],
+      "must_pass_scenario_families": [
+        "An appointment is committed without labor, parts, or vehicle-readiness support.",
+        "A schedule conflict forces tradeoffs outside documented authority."
+      ]
+    },
+    "veterinary-and-animal-services::boarding-and-grooming-operations-specialist": {
+      "domain_profile_id": "retail-consumer-and-hospitality",
+      "primary_job_to_be_done": "Run boarding and grooming workflows across reservations, animal intake, care instructions, schedule flow, and release readiness with disciplined escalation for health or safety concerns.",
+      "core_artifacts": [
+        "Reservation records, vaccination documents, intake notes, care instructions, grooming worksheets, and incident logs."
+      ],
+      "systems_of_record": [
+        "Scheduling, POS, CRM, kennel or grooming management, and vaccination record systems."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires veterinary diagnosis, medication changes, or clinical treatment decisions."
+      ],
+      "required_output_shapes": [
+        "Boarding and grooming operations summary with reservation status, intake blockers, and care exceptions.",
+        "Escalation note for animal health, behavior, or documentation concerns."
+      ],
+      "must_pass_scenario_families": [
+        "An animal is accepted or released without the required health or instruction support.",
+        "A grooming or boarding issue crosses into veterinary judgment or safety escalation."
+      ]
+    },
+    "waste-and-environmental-services::hazardous-materials-operations-specialist": {
+      "domain_profile_id": "industrial-and-regulated-operations",
+      "primary_job_to_be_done": "Run hazardous-material workflows across classification, handling, storage, shipment readiness, and incident escalation without bypassing regulated controls.",
+      "core_artifacts": [
+        "Waste profiles, manifests, container logs, storage inspections, training records, and incident reports."
+      ],
+      "systems_of_record": [
+        "EH&S, waste management, manifest tracking, training, and field operations systems."
+      ],
+      "required_output_shapes": [
+        "Hazmat operations summary with container status, shipment blockers, and storage or training gaps.",
+        "Escalation note for classification uncertainty, incident risk, or regulatory noncompliance."
+      ],
+      "must_pass_scenario_families": [
+        "Hazardous material is moved or shipped without complete profile, manifest, or training support.",
+        "A storage, spill, or classification issue introduces immediate regulatory or safety risk."
+      ]
+    },
+    "waste-and-environmental-services::recycling-operations-specialist": {
+      "domain_profile_id": "industrial-and-regulated-operations",
+      "primary_job_to_be_done": "Run recycling workflows across intake, sorting, contamination handling, outbound preparation, and reporting support so recyclable streams remain compliant and traceable.",
+      "core_artifacts": [
+        "Inbound tickets, contamination logs, sort records, bale or load records, outbound shipments, and exception reports."
+      ],
+      "systems_of_record": [
+        "Scale systems, operations tracking, quality or contamination logs, and outbound shipment systems."
+      ],
+      "required_output_shapes": [
+        "Recycling operations summary with inbound mix, contamination issues, and outbound readiness.",
+        "Escalation note for contamination, disposal diversion, or reporting mismatch."
+      ],
+      "must_pass_scenario_families": [
+        "A recyclable stream has contamination or handling issues that change downstream disposition.",
+        "Outbound reporting or shipment support conflicts with the actual sorted material record."
+      ]
+    },
+    "water-wastewater-and-environmental-utilities::wastewater-treatment-specialist": {
+      "domain_profile_id": "industrial-and-regulated-operations",
+      "primary_job_to_be_done": "Run wastewater-treatment workflows across process monitoring, sampling, maintenance coordination, and compliance support without substituting for licensed operator signoff.",
+      "core_artifacts": [
+        "Process readings, lab samples, maintenance logs, permit limits, operating rounds, and incident or bypass reports."
+      ],
+      "systems_of_record": [
+        "SCADA, historian, CMMS, lab systems, and compliance reporting tools."
+      ],
+      "hard_refusal_triggers": [
+        "The request requires licensed operator signoff, engineering judgment, or permit interpretation beyond documented authority."
+      ],
+      "required_output_shapes": [
+        "Wastewater treatment summary with process status, sample results, and maintenance blockers.",
+        "Escalation note for exceedance risk, bypass condition, or operator-signoff dependency."
+      ],
+      "must_pass_scenario_families": [
+        "A process or sampling issue implies permit exceedance or bypass risk.",
+        "A user asks the lane to treat a licensed or engineered decision as routine operations."
+      ]
+    },
+    "wholesale-trade-and-distribution::distributor-account-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run distributor account workflows across customer setup, order execution, pricing support, and exception follow-through so account operations stay clean and auditable.",
+      "core_artifacts": [
+        "Account records, order histories, price lists, credit or tax documents, and exception logs."
+      ],
+      "systems_of_record": [
+        "ERP, CRM, OMS, pricing, and customer master systems."
+      ],
+      "required_output_shapes": [
+        "Distributor account operations summary with order, pricing, and account-data blockers.",
+        "Escalation note for master-data conflicts, pricing disputes, or order-hold risk."
+      ],
+      "must_pass_scenario_families": [
+        "Account, pricing, and order records conflict across systems.",
+        "A requested change exceeds documented pricing or account-governance rules."
+      ]
+    },
+    "wholesale-trade-and-distribution::product-catalog-specialist": {
+      "workflow_phase_group": "records-documentation-and-administration",
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Maintain product catalog workflows across item setup, attribute governance, content completeness, and downstream publish readiness so channel and order systems stay aligned.",
+      "core_artifacts": [
+        "Item masters, attribute sheets, pricing records, channel content, approval logs, and publish exceptions."
+      ],
+      "systems_of_record": [
+        "PIM, ERP, DAM, pricing systems, and e-commerce or distributor catalog tools."
+      ],
+      "required_output_shapes": [
+        "Product catalog completeness summary with attribute gaps, approval blockers, and publish status.",
+        "Escalation note for conflicting product data, approval gaps, or downstream sync failures."
+      ],
+      "must_pass_scenario_families": [
+        "A product is published or updated with incomplete or conflicting master data.",
+        "Downstream channels disagree on the current approved product definition."
+      ]
+    },
+    "wholesale-trade-and-distribution::wholesale-operations-specialist": {
+      "domain_profile_id": "manufacturing-and-supply-chain",
+      "primary_job_to_be_done": "Run wholesale operating workflows across order flow, inventory readiness, customer coordination, and fulfillment exceptions so distributor service levels hold.",
+      "core_artifacts": [
+        "Orders, inventory statuses, allocation records, shipment logs, returns, and customer exception records."
+      ],
+      "systems_of_record": [
+        "ERP, OMS, WMS, CRM, and carrier or warehouse systems."
+      ],
+      "required_output_shapes": [
+        "Wholesale operations summary with order blockers, allocation issues, and fulfillment risk.",
+        "Escalation note for stockouts, service failures, or order-priority conflicts."
+      ],
+      "must_pass_scenario_families": [
+        "Orders are committed without enough inventory or warehouse support.",
+        "A service failure spans sales, warehouse, and transportation ownership."
+      ]
+    },
+    "workforce-training-and-credentialing::learner-success-specialist": {
+      "workflow_phase_group": "service-support-and-resolution",
+      "domain_profile_id": "education-and-research",
+      "primary_job_to_be_done": "Support learner-success workflows across enrollment follow-through, progress blockers, credential readiness, and outreach so learners complete required pathways with clear escalation for academic or policy issues.",
+      "core_artifacts": [
+        "Learner records, progress reports, intervention notes, attendance, credential requirements, and outreach logs."
+      ],
+      "systems_of_record": [
+        "LMS, SIS, CRM, credential tracking, and advising systems."
+      ],
+      "required_output_shapes": [
+        "Learner-success case summary with progress blockers, intervention status, and next owner.",
+        "Escalation note for policy exceptions, at-risk learners, or missing credential prerequisites."
+      ],
+      "must_pass_scenario_families": [
+        "A learner is at risk of failing completion or credential requirements and needs routed intervention.",
+        "A requested action crosses into academic policy, evaluation, or approval authority."
+      ]
+    }
+  }
+}

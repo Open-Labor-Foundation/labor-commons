@@ -1,0 +1,422 @@
+{
+  "agent_slug": "animal-production-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority matrix",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for veterinary treatment authority",
+        "request asks for environmental permit or legal interpretation",
+        "request asks for financial, pricing, or policy override authority"
+      ],
+      "scenario_ids": [
+        "aps-05",
+        "aps-08",
+        "aps-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public regulatory and guidance source set",
+        "tenant policy precedence",
+        "source refresh signals"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "source conflict log",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "source set stale relative to workflow",
+        "public and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "aps-01",
+        "aps-09",
+        "aps-11",
+        "aps-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "lot, pen, and livestock identifiers",
+        "field and pasture records",
+        "quality or hold evidence",
+        "traceability records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing evidence list",
+        "traceability blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical records absent",
+        "lot or pen IDs are inconsistent",
+        "completion evidence cannot be tied to the completion claim"
+      ],
+      "scenario_ids": [
+        "aps-02",
+        "aps-03",
+        "aps-04",
+        "aps-06",
+        "aps-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks",
+        "land, farm, environmental, production, and traceability maps"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "retrieval blocker list",
+        "next owner requirement"
+      ],
+      "refusal_triggers": [
+        "farm or land repository unavailable",
+        "environmental or readiness system dependency is unresolved",
+        "adjacent owner cannot be determined"
+      ],
+      "scenario_ids": [
+        "aps-01",
+        "aps-02",
+        "aps-06",
+        "aps-10",
+        "aps-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence signals",
+        "missing-fact indicators",
+        "conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-step list"
+      ],
+      "refusal_triggers": [
+        "required facts absent and unresolved",
+        "source or policy conflict not resolvable without review",
+        "evidence gap would materially change completion"
+      ],
+      "scenario_ids": [
+        "aps-02",
+        "aps-09",
+        "aps-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope decision",
+        "adjacent specialist registry",
+        "handoff evidence summary"
+      ],
+      "required_outputs": [
+        "adjacent-lane handoff note",
+        "handoff owner and artifacts"
+      ],
+      "refusal_triggers": [
+        "request belongs to veterinary, environmental permitting, or legal interpretation",
+        "request requires grant or finance authority",
+        "owner routing cannot be resolved from context"
+      ],
+      "scenario_ids": [
+        "aps-05",
+        "aps-08",
+        "aps-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "stage prerequisites",
+        "blocking artifacts"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "next-stage recommendation",
+        "state rationale"
+      ],
+      "refusal_triggers": [
+        "state transition is not evidence-backed",
+        "missing prerequisites",
+        "control hold remains active"
+      ],
+      "scenario_ids": [
+        "aps-01",
+        "aps-02",
+        "aps-04",
+        "aps-10"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception classification",
+        "blocking factors",
+        "remediation owner map"
+      ],
+      "required_outputs": [
+        "exception-queue note",
+        "rework route"
+      ],
+      "refusal_triggers": [
+        "exception would be closed without owner and evidence",
+        "exception owner is ambiguous",
+        "rework would bypass required approvals"
+      ],
+      "scenario_ids": [
+        "aps-04",
+        "aps-07",
+        "aps-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "completion artifacts",
+        "quality or hold releases",
+        "approval records"
+      ],
+      "required_outputs": [
+        "completion record",
+        "closure evidence checklist",
+        "residual risk note"
+      ],
+      "refusal_triggers": [
+        "completion artifacts are incomplete",
+        "required quality/environmental signoff missing",
+        "open holds remain unresolved"
+      ],
+      "scenario_ids": [
+        "aps-01",
+        "aps-03",
+        "aps-04"
+      ]
+    },
+    {
+      "ability_id": "seasonal_and_field_dependency_handling",
+      "ability_name": "Seasonal and field dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "seasonal context",
+        "weather and forage indicators",
+        "cycle-stage constraints"
+      ],
+      "required_outputs": [
+        "production status summary",
+        "throughput posture update",
+        "seasonal mitigation note"
+      ],
+      "refusal_triggers": [
+        "environmental shift changes safety or welfare assumptions",
+        "throughput target conflicts with seasonal constraints",
+        "land use data is stale"
+      ],
+      "scenario_ids": [
+        "aps-07",
+        "aps-10",
+        "aps-12"
+      ]
+    },
+    {
+      "ability_id": "environmental_and_food_safety_escalation",
+      "ability_name": "Environmental and food-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "lot/pen movement records",
+        "land and transport records",
+        "environmental or food-safety dependency signals"
+      ],
+      "required_outputs": [
+        "traceability-gap note",
+        "throughput-material-release escalation"
+      ],
+      "refusal_triggers": [
+        "traceability evidence conflict persists",
+        "external dependency prevents safe completion",
+        "release-related hold cannot be confirmed"
+      ],
+      "scenario_ids": [
+        "aps-06",
+        "aps-07",
+        "aps-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "aps-01",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-06",
+      "ability_ids": [
+        "environmental_and_food_safety_escalation",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-07",
+      "ability_ids": [
+        "environmental_and_food_safety_escalation",
+        "exception_queue_handling",
+        "seasonal_and_field_dependency_handling",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-09",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-10",
+      "ability_ids": [
+        "seasonal_and_field_dependency_handling",
+        "lifecycle_state_progression",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "environmental_and_food_safety_escalation",
+        "adjacent_lane_routing",
+        "dependency_and_system_awareness",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "aps-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "seasonal_and_field_dependency_handling",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    }
+  ],
+  "notes": [
+    "Functionality coverage includes all shared, execution-processing-and-fulfillment, and agriculture-and-natural-resources abilities required by the package contract.",
+    "All defined scenarios are represented in scenario_coverage and each required ability has scenario linkage."
+  ]
+}

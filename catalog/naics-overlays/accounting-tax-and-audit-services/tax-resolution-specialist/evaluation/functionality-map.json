@@ -1,0 +1,430 @@
+{
+  "agent_slug": "tax-resolution-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "engagement scope",
+        "authorization status",
+        "authority ownership map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for tax advice, tax-position decision, legal interpretation, settlement authority, or discretionary financial approval",
+        "request asks the lane to represent the taxpayer or contact a tax authority without documented authorization",
+        "request asks to imply client, contractual, professional, or authority approval without explicit scope"
+      ],
+      "scenario_ids": [
+        "trss-03",
+        "trss-05",
+        "trss-06"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "notice and transcript refresh dates",
+        "tenant policy precedence",
+        "jurisdiction and tax period"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "freshness or conflict marker",
+        "public-baseline and tenant-adaptation note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "notice, transcript, payment, or correspondence source freshness materially affects the answer",
+        "public guidance, authority records, and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "trss-01",
+        "trss-07",
+        "trss-11",
+        "trss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tax notice or authority letter",
+        "tax return and transcript records",
+        "supporting documents and workpapers",
+        "correspondence and submission logs"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "source-linked case summary",
+        "missing-evidence or conflict note"
+      ],
+      "refusal_triggers": [
+        "notice response lacks supporting tax documents or workpaper support",
+        "case records cannot be tied to named tax periods, notices, transcripts, payments, or correspondence",
+        "requested claim exceeds available evidence or reviewer rationale"
+      ],
+      "scenario_ids": [
+        "trss-01",
+        "trss-02",
+        "trss-07",
+        "trss-09",
+        "trss-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems-of-record availability",
+        "retrieval hooks",
+        "taxpayer, jurisdiction, period, and notice context",
+        "approval and escalation owner map"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocked-prerequisite note",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required tax notice, transcript, return, payment, correspondence, or authorization records are unavailable",
+        "tenant retrieval path cannot establish notice or account truth",
+        "jurisdiction, tax period, response due date, engagement scope, or approval owner is unknown"
+      ],
+      "scenario_ids": [
+        "trss-04",
+        "trss-06",
+        "trss-07",
+        "trss-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "deadline and risk posture",
+        "source conflict signals",
+        "professional judgment and authorization constraints"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "confidence is too low to support authority correspondence",
+        "source conflict materially changes the taxpayer status or liability",
+        "professional judgment, client rights, or deadline risk determine the answer"
+      ],
+      "scenario_ids": [
+        "trss-02",
+        "trss-05",
+        "trss-07",
+        "trss-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements",
+        "engagement owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside tax-resolution operational support ownership",
+        "request requires tax advisory, legal, licensed representative, QA, delivery, account, or financial approval authority",
+        "policy, source, confidentiality, or approval conflict cannot be resolved in-lane"
+      ],
+      "scenario_ids": [
+        "trss-03",
+        "trss-05",
+        "trss-08",
+        "trss-09"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "notice or collection workflow status",
+        "required evidence set",
+        "documented service rules"
+      ],
+      "required_outputs": [
+        "service or support disposition",
+        "resolution or blocked-status note",
+        "next authority interaction summary"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "notice, payment-plan, protest, or correspondence status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "trss-01",
+        "trss-04",
+        "trss-10"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "case status",
+        "confidentiality and authorization posture"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers and next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority, finality, or tax advice",
+        "required authorization, approval, caveat, or evidence is missing",
+        "client-facing message conflicts with documented policy or evidence"
+      ],
+      "scenario_ids": [
+        "trss-01",
+        "trss-04",
+        "trss-06",
+        "trss-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "deadline and client-rights context",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround or discretionary exception",
+        "approval owner is missing or outside the lane",
+        "exception would bypass professional review, taxpayer authorization, or authority workflow controls"
+      ],
+      "scenario_ids": [
+        "trss-02",
+        "trss-03",
+        "trss-05",
+        "trss-09"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "taxpayer data sensitivity",
+        "engagement scope and statement of work",
+        "authorized audience",
+        "client approval and communication rules"
+      ],
+      "required_outputs": [
+        "confidentiality-safe case package",
+        "client-commitment caveat note",
+        "redaction or authorization request"
+      ],
+      "refusal_triggers": [
+        "output would disclose taxpayer, notice, transcript, workpaper, or client information outside authorized scope",
+        "client commitment or authority-facing delivery approval is unresolved",
+        "requested reuse lacks authorization or approved de-identification rules"
+      ],
+      "scenario_ids": [
+        "trss-06",
+        "trss-08",
+        "trss-11",
+        "trss-12"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "license or professional authority requirement",
+        "contractual commitment map",
+        "engagement owner and approver map",
+        "requested signoff or advice"
+      ],
+      "required_outputs": [
+        "licensed-authority escalation note",
+        "contractual-signoff handoff package",
+        "boundary-safe refusal"
+      ],
+      "refusal_triggers": [
+        "tax advice, tax-position decision, practice-before-authority, settlement, legal, or representation authority is required",
+        "contractual approval, client commitment, or policy override is required",
+        "client rights or professional judgment determine the answer"
+      ],
+      "scenario_ids": [
+        "trss-03",
+        "trss-05",
+        "trss-06",
+        "trss-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "trss-01",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ]
+    },
+    {
+      "scenario_id": "trss-02",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "unsupported_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "trss-03",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "licensed_or_contractual_authority_escalation"
+      ]
+    },
+    {
+      "scenario_id": "trss-04",
+      "status": "covered",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ]
+    },
+    {
+      "scenario_id": "trss-05",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "licensed_or_contractual_authority_escalation"
+      ]
+    },
+    {
+      "scenario_id": "trss-06",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "stakeholder_communication",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ]
+    },
+    {
+      "scenario_id": "trss-07",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "trss-08",
+      "status": "covered",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "confidentiality_and_client_commitment_handling"
+      ]
+    },
+    {
+      "scenario_id": "trss-09",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "trss-10",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "supported_request_resolution"
+      ]
+    },
+    {
+      "scenario_id": "trss-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "confidentiality_and_client_commitment_handling"
+      ]
+    },
+    {
+      "scenario_id": "trss-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "stakeholder_communication",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ]
+    }
+  ]
+}

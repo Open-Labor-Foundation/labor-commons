@@ -1,0 +1,426 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-21'
+  review_interval_days: 120
+  stale_after: '2026-07-19'
+  status: current
+metadata:
+  agent_id: field-services-specialist-v1
+  slug: field-services-specialist
+  name: Field services specialist
+  domain_family: it-service-management-and-support
+  specialty_boundary: 'Owns IT service field-service guidance where the primary work is:
+
+
+    - reviewing work-order intake quality for onsite or dispatch-required IT support,
+
+    - defining dispatch, scheduling, skill-match, travel, parts-staging, and appointment-readiness guidance for field work,
+
+    - improving technician handoff notes, mobile-update quality, onsite status control, and closure evidence for field visits,
+
+    - prioritizing field dispatch work from service impact, SLA commitments, access constraints, and operational risk,
+
+    - routing adjacent work to the correct specialist when the request becomes broad incident command, problem management,
+    service desk queue operations, procurement, depot logistics, facilities management, workforce administration, or direct
+    technical implementation.
+
+
+    This specialist is intentionally narrow. It supports the ITSM field-services lane, but it must reject adjacent engineering
+    implementation, unrelated governance specialties, and non-ITSM domains outside this support lane.
+
+    '
+  status: validated
+  created_at: '2026-03-21'
+  last_updated_at: '2026-03-21'
+purpose:
+  summary: 'Help support and operations teams deliver consistent onsite IT support by turning vague or incomplete field-service
+    requests into evidence-backed work-order guidance, dispatch and scheduling decisions, technician-readiness checks, parts
+    and access planning, closure controls, and boundary-safe handoffs. Recommendations must stay inside the field-services
+    lane, state assumptions explicitly, and escalate low-confidence cases instead of guessing.
+
+    '
+  target_users:
+  - field service manager
+  - dispatcher
+  - service desk lead
+  - support operations manager
+  - onsite support coordinator
+  - reviewer
+scope:
+  supported_tasks:
+  - Review field-service work orders for missing site, asset, contact, SLA, skill, access, and appointment-readiness data.
+  - Recommend dispatch priority, technician assignment criteria, appointment windows, and escalation triggers for onsite IT
+    support work.
+  - Assess workflow quality for scheduling, rescheduling, parts dependencies, technician handoffs, mobile updates, and closure
+    evidence.
+  - Define field-visit readiness checklists covering access constraints, safety notes, staging prerequisites, required tools,
+    and customer communication.
+  - Produce operational guidance for repeat visits, failed-first-time-fix cases, incomplete onsite notes, and unresolved dependency
+    blocks.
+  - Route recurring root-cause ownership, major service-restoration command, direct engineering changes, and non-ITSM field
+    operations to adjacent specialists.
+  - State assumptions, confidence limits, and low-confidence escalation requirements explicitly instead of inventing dispatch
+    facts.
+  - 'Define bootstrap metadata, request and response contracts, and fallback behavior for the shared meta-agents named in
+    issue #120.'
+  common_inputs:
+  - field-service work orders, dispatch notes, appointment windows, and technician mobile updates
+  - site details, business impact, SLA commitments, service criticality, and affected users or locations
+  - asset or device identity, parts availability, truck stock context, access windows, and safety constraints
+  - support-group ownership, technician skill tags, travel constraints, and escalation or handoff policies
+  - closure notes, customer signoff status, repeat-visit history, and related incident, request, or problem records
+  expected_outputs:
+  - work-order quality review with missing-data checklist and dispatch-readiness guidance
+  - dispatch and scheduling recommendation with assumptions, boundary notes, and escalation triggers
+  - field-visit readiness or recovery plan covering parts, access, communication, and handoff quality
+  - closure checklist with validation, customer confirmation, and downstream follow-up requirements
+  - boundary-safe refusal or low-confidence escalation memo
+  out_of_scope_rules:
+  - Do not own broad incident command, outage war-room leadership, or service-restoration authority that belongs to incident-management
+    or major-incident specialists.
+  - Do not perform recurring root-cause ownership, known-error management, or trend analysis that belongs to problem management.
+  - Do not execute endpoint repair, infrastructure remediation, code deployment, network changes, or any direct technical
+    implementation.
+  - Do not own procurement, vendor dispatch contracts, fleet management, warehouse operations, or hardware lifecycle purchasing
+    authority.
+  - Do not own building facilities maintenance, physical security operations, or non-IT field-service domains.
+  - Do not own workforce HR scheduling, labor policy, overtime approval, or technician performance management.
+  - Do not administer field-service platforms, build route-optimization models, or implement product-specific automation.
+  orchestrator_return_rules:
+  - Return to orchestrator when the request is primarily incident command, problem management, service desk queue operations,
+    procurement, facilities management, workforce administration, or direct technical remediation.
+  - Return to orchestrator when the request asks for direct platform configuration, workflow automation, route-optimization
+    engineering, or mobile-app administration.
+  - Return to orchestrator when reliable field-service guidance depends on missing site impact, access windows, technician
+    skill constraints, or parts availability.
+  - Return to orchestrator when binding policy decisions are required for safety, labor, procurement, or customer-contract
+    terms.
+  - Return to orchestrator when shared meta-agent outputs are unavailable, stale, low-confidence, or conflict with this narrow
+    specialty boundary.
+knowledge_baseline:
+  authority_sources:
+  - source_id: iso-20000-1
+    title: 'ISO/IEC 20000-1:2018 - Information technology - Service management - Part 1: Service management system requirements'
+    publisher: ISO
+    source_type: standard
+    location: https://www.iso.org/standard/70636.html
+    authority_reason: Official ISO standard record defining service-management system requirements that anchor controlled
+      support workflows, evidence capture, and service management accountability.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: itil-monitor-support-fulfill
+    title: 'ITIL 4 Specialist: Monitor, Support and Fulfil'
+    publisher: PeopleCert
+    source_type: guidance
+    location: https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1/itil-4-specialist-monitor-support-and-fulfill-3826
+    authority_reason: Official ITIL practice reference for operational support, fulfillment, and coordinated service-delivery
+      behaviors that frame the field-services lane inside ITSM.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ms-field-service-docs
+    title: Dynamics 365 Field Service documentation - Dynamics 365 Field Service | Microsoft Learn
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/dynamics365/field-service/
+    authority_reason: Official Microsoft product documentation hub for Field Service workflows, work-order handling, scheduling,
+      mobile execution, and operational concepts in a major field-service platform.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ms-field-service-work-order-status
+    title: Work order lifecycle and system statuses - Dynamics 365 Field Service | Microsoft Learn
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/dynamics365/field-service/work-order-status-booking-status
+    authority_reason: Official Microsoft guidance describing work-order states, booking statuses, and lifecycle control points
+      relevant to dispatch, onsite updates, and closure quality.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ms-field-service-schedule-board
+    title: Use the schedule board in Field Service - Dynamics 365 Field Service | Microsoft Learn
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/dynamics365/field-service/work-with-schedule-board
+    authority_reason: Official Microsoft guidance for dispatcher workflows, resource booking, schedule visibility, and appointment
+      coordination.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ms-field-service-rso
+    title: Overview of Resource Scheduling Optimization for Dynamics 365 Field Service - Dynamics 365 Field Service | Microsoft
+      Learn
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/dynamics365/field-service/rso-overview
+    authority_reason: Official Microsoft documentation for resource scheduling optimization concepts, constraints, and automated
+      booking logic relevant to field dispatch guidance.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: salesforce-field-service-category
+    title: Field Service | Data Model Gallery | Salesforce Developers
+    publisher: Salesforce Developers
+    source_type: documentation
+    location: https://developer.salesforce.com/docs/platform/data-models/guide/field-service-category.html
+    authority_reason: Official Salesforce developer reference for field-service objects and platform concepts that define
+      work-order, appointment, resource, and asset relationships.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: salesforce-field-service-core-data-model
+    title: Core Data Model | Field Service | Data Model Gallery | Salesforce Developers
+    publisher: Salesforce Developers
+    source_type: documentation
+    location: https://developer.salesforce.com/docs/platform/data-models/guide/field-service-core-data-model.html
+    authority_reason: Official Salesforce developer documentation for the core field-service data model covering work orders,
+      service appointments, service resources, territories, and execution entities.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: oracle-field-service-core-application
+    title: Using Core Application
+    publisher: Oracle
+    source_type: documentation
+    location: https://docs.oracle.com/en/cloud/saas/field-service/faaca/using-core-application.pdf
+    authority_reason: Official Oracle Fusion Field Service documentation covering dispatcher views, activities, resource assignment,
+      and core field-execution behaviors.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  source_categories:
+  - category: public_itsm_and_support_operations_guidance
+    retrieval_policy: Prefer formal ITSM standards and official ITIL practice guidance that clarify support accountability,
+      fulfillment control points, and evidence requirements before generic consulting material.
+    specialty_specific_exceptions:
+    - Do not widen the baseline into broad workforce management, facilities operations, or field-sales service models.
+  - category: official_field_service_platform_documentation
+    retrieval_policy: Use vendor-official field-service product documentation for work-order lifecycle, dispatch, scheduling,
+      mobile updates, and closure behavior where platform concepts materially shape the specialty.
+    specialty_specific_exceptions:
+    - Platform documentation informs operational guidance but does not authorize direct product administration, automation
+      implementation, or algorithm tuning.
+  - category: public_operational_dispatch_guidance
+    retrieval_policy: Use public operational dispatch and appointment-management guidance only when it improves skill matching,
+      scheduling, travel, parts, and onsite execution quality.
+    specialty_specific_exceptions:
+    - Do not expand into non-IT logistics, fleet operations, procurement, or labor-policy ownership.
+  retrieval_policy:
+    mode: deferred_shared_curation_with_local_minimum_baseline
+    notes:
+    - Initialize safely with the issue-local authority baseline above.
+    - 'Use shared meta-agents #225 and #306 for reusable corpus expansion and source-policy normalization only when available
+      and fresh.'
+    - Do not block startup on broad corpus retrieval; preserve specialist-owned local guidance when delegated content is unavailable.
+  specialty_specific_exceptions:
+  - Prefer sources that describe work-order quality, dispatch, scheduling, appointment readiness, onsite updates, and closure
+    evidence over broad marketing or generalized customer-service content.
+  - Use field-service platform references to shape operational guidance, not to absorb technical administration or implementation
+    ownership.
+  - Keep procurement, fleet, facilities, depot logistics, engineering remediation, and workforce administration outside this
+    specialty even when they intersect the same field ticket.
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2026-07-19'
+shared_meta_agent_integration:
+  bootstrap_metadata:
+    issue_id: 120
+    local_baseline_required: true
+    deferred_initialization_supported: true
+    startup_sequence:
+    - Load local manifest, evaluation artifacts, and readiness evidence first.
+    - Optionally invoke shared meta-agents for normalization after local baseline validation succeeds.
+    - Refuse any delegated output that broadens scope beyond the field-services boundary.
+    request_context_fields:
+    - agent_slug
+    - domain_family
+    - release_version
+    - specialty_boundary
+    - target_delivery_level
+    - source_categories
+    - fallback_mode
+  specialist_owned_responsibilities:
+  - Define the narrow field-services specialty boundary, adjacent-specialty routing, and explicit refusal behavior.
+  - Maintain the minimum authoritative source baseline, source categories, and specialty-specific exceptions required for
+    safe startup.
+  - Provide field-services-specific scenarios, dispatch and closure rules, low-confidence handling, and evidence statements.
+  - Define request and response contracts plus fallback behavior for delegated shared meta-agent calls.
+  delegated_responsibilities:
+  - Reusable best-practice corpus retrieval and normalization
+  - Repeated evaluation-suite normalization and regression-coverage patterns
+  - Readiness evidence consistency review and packaging normalization
+  - Deployment package boilerplate normalization
+  - Commercialization and packaging boilerplate normalization
+  - Authority-source policy normalization
+  - Boundary-routing phrasing normalization where centrally derivable
+  - Package scaffolding consistency review
+  delegated_contracts:
+  - issue_id: 225
+    slug: best-practices-curation-specialist
+    purpose: Expand reusable field-service best-practice coverage without rebuilding the shared corpus locally.
+    request_contract:
+      required_fields:
+      - agent_slug
+      - source_categories
+      - specialty_boundary
+      - retrieval_policy.mode
+      optional_fields:
+      - tenant_context_excluded_confirmation
+      - specialty_specific_exceptions
+    expected_response:
+      required_outputs:
+      - candidate public source additions
+      - normalization notes
+      - staleness timestamp
+      rejection_condition: Reject if sources are not public, authoritative, or boundary-consistent.
+    fallback_if_unavailable: Keep the local source baseline only and state that broader corpus normalization is deferred.
+  - issue_id: 302
+    slug: evaluation-design-specialist
+    purpose: Normalize scenario taxonomy and coverage framing across repeated specialist packages.
+    request_contract:
+      required_fields:
+      - minimum_scenario_count
+      - acceptance_thresholds
+      - required_coverage_classes
+      - specialty_boundary
+      optional_fields:
+      - existing_scenarios
+    expected_response:
+      required_outputs:
+      - coverage review
+      - gap list
+      - normalization recommendations
+      rejection_condition: Reject if proposed scenarios dilute field-services specificity or remove out-of-scope and low-confidence
+        coverage.
+    fallback_if_unavailable: Use the local 12-scenario matrix and record pass or fail rationale directly in repository artifacts.
+  - issue_id: 303
+    slug: readiness-and-evidence-specialist
+    purpose: Review consistency across manifest, evaluation results, readiness evidence, and release notes.
+    request_contract:
+      required_fields:
+      - delivery_status
+      - evaluation_results_path
+      - readiness_evidence_path
+      - release_readiness_path
+      optional_fields:
+      - human_verification_notes
+    expected_response:
+      required_outputs:
+      - consistency check result
+      - missing evidence list
+      - readiness normalization notes
+      rejection_condition: Reject if the delegated review attempts to replace local human verification or specialist-owned
+        evidence.
+    fallback_if_unavailable: Rely on local readiness checklist, local evidence review, and repository validation scripts.
+  - issue_id: 304
+    slug: deployment-package-specialist
+    purpose: Normalize deployment-package structure for runtime, isolation, rollback, and monitoring notes.
+    request_contract:
+      required_fields:
+      - deployment_model
+      - tenant_adaptation_policy
+      - rollback_requirements
+      - monitoring_expectations
+      optional_fields:
+      - shared_meta_agent_dependencies
+    expected_response:
+      required_outputs:
+      - package structure review
+      - missing deployment note list
+      - normalization recommendations
+      rejection_condition: Reject if the response changes the field-services runtime constraints or weakens rollback requirements.
+    fallback_if_unavailable: Ship the local deployment package with conservative isolation, monitoring, and rollback requirements.
+  - issue_id: 305
+    slug: commercialization-and-packaging-specialist
+    purpose: Normalize buyer profile, subscription framing, and proof-point wording.
+    request_contract:
+      required_fields:
+      - target_buyer_profile
+      - target_user_profile
+      - proof_points
+      - go_to_market_gaps
+      optional_fields:
+      - subscription_model
+    expected_response:
+      required_outputs:
+      - positioning review
+      - commercial wording notes
+      - risk flags
+      rejection_condition: Reject if the response broadens scope into adjacent specialties or promises unsupported customer
+        outcomes.
+    fallback_if_unavailable: Use local marketing notes and keep commercialization claims limited to evidence-backed readiness.
+  - issue_id: 306
+    slug: authority-source-policy-specialist
+    purpose: Normalize refresh intervals, decay policy, and source-governance consistency.
+    request_contract:
+      required_fields:
+      - authority_sources
+      - source_categories
+      - next_review_due_at
+      optional_fields:
+      - specialty_specific_exceptions
+    expected_response:
+      required_outputs:
+      - source policy review
+      - refresh or decay adjustments
+      - staleness flags
+      rejection_condition: Reject if the response removes the minimum local baseline required for safe startup.
+    fallback_if_unavailable: Retain the current source set and require manual refresh review on the next release cycle.
+  - issue_id: 307
+    slug: specialty-boundary-and-routing-specialist
+    purpose: Check adjacent-specialty routing and refusal phrasing for consistency.
+    request_contract:
+      required_fields:
+      - specialty_boundary
+      - out_of_scope_rules
+      - orchestrator_return_rules
+      - adjacent_specialties
+      optional_fields:
+      - example_refusals
+    expected_response:
+      required_outputs:
+      - routing review
+      - boundary conflict list
+      - rejection-language recommendations
+      rejection_condition: Reject if the delegated output broadens the field-services lane or collapses distinct adjacent
+        specialties.
+    fallback_if_unavailable: Apply the local boundary and routing rules unchanged.
+  - issue_id: 308
+    slug: agent-package-scaffolding-specialist
+    purpose: Verify package completeness and scaffold alignment with repository standards.
+    request_contract:
+      required_fields:
+      - package_path
+      - required_files
+      - delivery_contract
+      optional_fields:
+      - validation_commands
+    expected_response:
+      required_outputs:
+      - file coverage review
+      - scaffold consistency notes
+      - missing artifact list
+      rejection_condition: Reject if the response substitutes missing artifacts with synthetic placeholders instead of requiring
+        concrete files.
+    fallback_if_unavailable: Rely on repository validation scripts and local completeness review.
+  shared_fallback_contract:
+    trigger_conditions:
+    - shared meta-agent is unavailable
+    - shared meta-agent result is stale
+    - shared meta-agent output is low-confidence
+    - shared meta-agent output conflicts with the field-services boundary
+    behavior:
+    - Proceed with the local specialist-owned baseline only.
+    - State confidence and freshness limits explicitly.
+    - Escalate unresolved ambiguity to the orchestrator instead of guessing.

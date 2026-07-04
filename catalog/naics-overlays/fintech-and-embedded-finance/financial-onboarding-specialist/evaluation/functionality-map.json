@@ -1,0 +1,381 @@
+{
+  "agent_slug": "financial-onboarding-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and desired outcome",
+        "financial onboarding specialty boundary",
+        "adjacent specialist registry and approval matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff rationale"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, licensing judgment, AML or sanctions adjudication, fraud review, or underwriting approval",
+        "request asks for sponsor-bank, processor, or policy-override approval outside the lane",
+        "request asks the lane to treat fintech onboarding as generic provisioning without financial onboarding records"
+      ],
+      "scenario_ids": [
+        "finon-04",
+        "finon-07",
+        "finon-08",
+        "finon-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative fintech source set",
+        "tenant source precedence and product context",
+        "source freshness and conflict indicators"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "conflict disposition",
+        "refresh or staleness risk marker"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "FFIEC, FinCEN, NIST, OFAC, sponsor-bank, or tenant policy materially conflict",
+        "source freshness no longer supports a reliable onboarding decision"
+      ],
+      "scenario_ids": [
+        "finon-06",
+        "finon-09",
+        "finon-10",
+        "finon-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "onboarding artifact bundle",
+        "system-of-record identifiers",
+        "subject and product context"
+      ],
+      "required_outputs": [
+        "artifact-to-readiness linkage",
+        "missing-evidence escalation packet",
+        "evidence-backed disposition summary"
+      ],
+      "refusal_triggers": [
+        "required KYB, KYC, beneficial-ownership, screening, access, or setup evidence is missing",
+        "artifacts cannot be tied to the subject in scope",
+        "document and system evidence materially conflict"
+      ],
+      "scenario_ids": [
+        "finon-01",
+        "finon-03",
+        "finon-06",
+        "finon-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "owner map across onboarding, compliance, access, and launch support",
+        "dependency and blocker signals"
+      ],
+      "required_outputs": [
+        "dependency readiness matrix",
+        "system or owner blocker summary"
+      ],
+      "refusal_triggers": [
+        "required source system is unavailable or contradictory",
+        "critical owner or approver is unknown",
+        "dependency state cannot be retrieved from tenant systems"
+      ],
+      "scenario_ids": [
+        "finon-01",
+        "finon-03",
+        "finon-05",
+        "finon-11",
+        "finon-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "source or policy conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption log",
+        "required-facts checklist"
+      ],
+      "refusal_triggers": [
+        "critical financial onboarding facts remain unknown",
+        "policy or source conflict is unresolved",
+        "high-impact readiness claim lacks required tenant evidence"
+      ],
+      "scenario_ids": [
+        "finon-02",
+        "finon-09",
+        "finon-10",
+        "finon-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope and boundary outcome",
+        "adjacent owner registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and required artifacts"
+      ],
+      "refusal_triggers": [
+        "request is outside financial onboarding ownership",
+        "legal, compliance, AML, fraud, underwriting, or steady-state operations authority is required",
+        "handoff destination or required artifact set is missing"
+      ],
+      "scenario_ids": [
+        "finon-04",
+        "finon-08",
+        "finon-09"
+      ]
+    },
+    {
+      "ability_id": "onboarding_readiness_validation",
+      "ability_name": "Onboarding readiness validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "subject and product context",
+        "core identity and approval artifacts",
+        "setup and launch prerequisites"
+      ],
+      "required_outputs": [
+        "onboarding checklist",
+        "readiness disposition",
+        "hard-blocker list"
+      ],
+      "refusal_triggers": [
+        "core onboarding prerequisites are missing",
+        "fintech-specific evidence is incomplete",
+        "required approval ownership is unresolved"
+      ],
+      "scenario_ids": [
+        "finon-01",
+        "finon-02",
+        "finon-06"
+      ]
+    },
+    {
+      "ability_id": "setup_and_permission_tracking",
+      "ability_name": "Setup and permission tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "role grants and access requests",
+        "training and enablement records",
+        "setup work-item status"
+      ],
+      "required_outputs": [
+        "setup status summary",
+        "permission readiness matrix",
+        "setup exception route"
+      ],
+      "refusal_triggers": [
+        "permissions are absent, excessive, or uncertain",
+        "required access approvals are missing",
+        "training or setup evidence is stale or incomplete"
+      ],
+      "scenario_ids": [
+        "finon-02",
+        "finon-05",
+        "finon-10"
+      ]
+    },
+    {
+      "ability_id": "go_live_handoff_control",
+      "ability_name": "Go-live handoff control",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "readiness summary",
+        "open blockers and deferred items",
+        "go-live owner and approval chain"
+      ],
+      "required_outputs": [
+        "go-live handoff note",
+        "deferred-scope matrix",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "go-live evidence is incomplete",
+        "open blockers remain unresolved",
+        "handoff owner or approval confirmation is missing"
+      ],
+      "scenario_ids": [
+        "finon-01",
+        "finon-03",
+        "finon-04",
+        "finon-10"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "sponsor-bank, processor, or licensed-entity records",
+        "CIP, KYC, KYB, beneficial-ownership, sanctions, and disclosure artifacts",
+        "settlement, FBO, access, and launch-readiness dependencies"
+      ],
+      "required_outputs": [
+        "industry-aware readiness summary",
+        "artifact and boundary checklist"
+      ],
+      "refusal_triggers": [
+        "fintech-specific artifacts are missing from request context",
+        "the request attempts to flatten fintech onboarding into generic onboarding terminology",
+        "industry artifacts indicate a higher-risk legal, AML, fraud, or launch-control boundary"
+      ],
+      "scenario_ids": [
+        "finon-01",
+        "finon-06",
+        "finon-07",
+        "finon-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "finon-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "onboarding_readiness_validation",
+        "go_live_handoff_control",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-02",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "onboarding_readiness_validation",
+        "setup_and_permission_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "go_live_handoff_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "go_live_handoff_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-05",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "setup_and_permission_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "onboarding_readiness_validation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-07",
+      "ability_ids": [
+        "boundary_control",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-09",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "setup_and_permission_tracking",
+        "go_live_handoff_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "finon-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

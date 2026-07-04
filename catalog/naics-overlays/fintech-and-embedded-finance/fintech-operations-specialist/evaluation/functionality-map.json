@@ -1,0 +1,392 @@
+{
+  "agent_slug": "fintech-operations-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested operational action",
+        "lane scope and adjacent authority map",
+        "tenant approval-owner registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or correction note"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, fraud, AML, KYC, policy-override, or approval authority outside the lane",
+        "request asks to treat fintech operations as generic support without the governing product and program context",
+        "request asks for customer-impacting action without the documented owner"
+      ],
+      "scenario_ids": [
+        "fops-07",
+        "fops-09",
+        "fops-11",
+        "fops-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source list",
+        "product, rail, program, and jurisdiction context",
+        "source recency and decay metadata"
+      ],
+      "required_outputs": [
+        "applicable source map",
+        "source conflict or refresh marker",
+        "blocked-source-context summary"
+      ],
+      "refusal_triggers": [
+        "required public baseline cannot be narrowed to the actual product and rail",
+        "tenant or sponsor-bank policy materially conflicts with the public baseline",
+        "source freshness no longer supports a confident servicing result"
+      ],
+      "scenario_ids": [
+        "fops-02",
+        "fops-08",
+        "fops-09",
+        "fops-10",
+        "fops-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "work-item identifiers and requested action",
+        "ledger, processor, settlement, communication, and approval artifacts",
+        "exception and history records"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "traceable servicing summary",
+        "missing-evidence escalation packet"
+      ],
+      "refusal_triggers": [
+        "authoritative ledger or processor records are incomplete or contradictory",
+        "approval or customer-notice linkage is missing for a high-impact action",
+        "completion or exception handling is requested without traceable source evidence"
+      ],
+      "scenario_ids": [
+        "fops-01",
+        "fops-02",
+        "fops-03",
+        "fops-05",
+        "fops-06"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "source-of-truth precedence rules",
+        "record-location and retrieval hooks"
+      ],
+      "required_outputs": [
+        "system dependency matrix",
+        "blocked-state summary with missing systems or owner dependencies"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable",
+        "source-of-truth precedence cannot be determined",
+        "approval owner or retrieval path is unknown for the requested action"
+      ],
+      "scenario_ids": [
+        "fops-02",
+        "fops-04",
+        "fops-08",
+        "fops-09",
+        "fops-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact flags",
+        "authority-gap indicators",
+        "policy and source conflict markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption and uncertainty log"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact is missing",
+        "authority ownership is unclear for a customer-impacting step",
+        "public baseline and tenant policy remain materially unresolved"
+      ],
+      "scenario_ids": [
+        "fops-04",
+        "fops-08",
+        "fops-10",
+        "fops-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with evidence references and next owner"
+      ],
+      "refusal_triggers": [
+        "request crosses into legal, fraud, AML, compliance, KYC, or approval authority",
+        "request requires a formal determination rather than operational handling",
+        "request requires human review because the current lane cannot own the next step"
+      ],
+      "scenario_ids": [
+        "fops-07",
+        "fops-08",
+        "fops-11",
+        "fops-12"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "requested next action",
+        "supporting evidence and approval state"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "next-state recommendation with blockers or next owner"
+      ],
+      "refusal_triggers": [
+        "requested next state is not supported by the retrieved evidence",
+        "approval-dependent step lacks approval confirmation",
+        "state transition would skip required blocked or rework handling"
+      ],
+      "scenario_ids": [
+        "fops-01",
+        "fops-04",
+        "fops-05",
+        "fops-06"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception category",
+        "missing or contradictory artifact list",
+        "rework or escalation ownership"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "rework or escalation action list",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "exception cause cannot be tied to a named record or system",
+        "required rework owner is unknown",
+        "request tries to bypass exception handling despite unresolved evidence or approval gaps"
+      ],
+      "scenario_ids": [
+        "fops-02",
+        "fops-04",
+        "fops-05",
+        "fops-10",
+        "fops-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "final state confirmation",
+        "action log and approval references",
+        "customer-impact and communication artifacts"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure rationale with traceable support"
+      ],
+      "refusal_triggers": [
+        "final state cannot be confirmed from the controlling system",
+        "required approval or communication evidence is missing",
+        "request attempts to close work while exceptions remain unresolved"
+      ],
+      "scenario_ids": [
+        "fops-01",
+        "fops-03",
+        "fops-05",
+        "fops-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "fintech product, rail, and program model context",
+        "sponsor-bank, processor, ledger, settlement, and approval artifacts",
+        "fintech and embedded-finance terminology set"
+      ],
+      "required_outputs": [
+        "industry-aware workflow summary",
+        "artifact completeness checklist",
+        "industry-specific escalation or closure guidance"
+      ],
+      "refusal_triggers": [
+        "request tries to substitute generic support notes or CRM artifacts for required fintech operational records",
+        "program-model differences are ignored instead of being recorded explicitly"
+      ],
+      "scenario_ids": [
+        "fops-01",
+        "fops-02",
+        "fops-06",
+        "fops-09",
+        "fops-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "fops-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-09",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fops-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

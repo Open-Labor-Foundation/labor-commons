@@ -1,0 +1,381 @@
+{
+  "agent_slug": "intake-and-triage-behavioral-health-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and lane scope",
+        "tenant authority and approval map",
+        "behavioral-health safety and privacy boundary policy"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff rationale"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, level-of-care, medical-necessity, or admission authority",
+        "request asks for crisis counseling or safety disposition ownership",
+        "request asks for disclosure or approval authority outside privacy, clinical, or payer rules"
+      ],
+      "scenario_ids": [
+        "itbhs-03",
+        "itbhs-05",
+        "itbhs-10",
+        "itbhs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source list",
+        "source precedence policy",
+        "tenant source-priority and jurisdiction context"
+      ],
+      "required_outputs": [
+        "source applicability map",
+        "conflict disposition",
+        "refresh or staleness risk marker"
+      ],
+      "refusal_triggers": [
+        "required privacy, payer, or jurisdiction source context is missing",
+        "public source and tenant policy materially conflict",
+        "source freshness no longer supports a decisive intake output"
+      ],
+      "scenario_ids": [
+        "itbhs-06",
+        "itbhs-09",
+        "itbhs-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "identity and contact records",
+        "consent, referral, and documented screening artifacts",
+        "payer, program, and authorization evidence"
+      ],
+      "required_outputs": [
+        "intake evidence matrix",
+        "missing-evidence escalation packet",
+        "record linkage status"
+      ],
+      "refusal_triggers": [
+        "required identity or consent evidence is missing",
+        "protected record provenance cannot be verified",
+        "screening, referral, or authorization artifacts do not link to the person or request"
+      ],
+      "scenario_ids": [
+        "itbhs-01",
+        "itbhs-02",
+        "itbhs-06",
+        "itbhs-07",
+        "itbhs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "system-of-record availability",
+        "payer, crisis, and program dependency map",
+        "owner and routing registry"
+      ],
+      "required_outputs": [
+        "dependency and ownership map",
+        "intake blocker summary"
+      ],
+      "refusal_triggers": [
+        "required EHR, payer, consent, or crisis system is unavailable",
+        "critical approval or downstream owner is unknown",
+        "program-capacity, catchment, or reservation path cannot be retrieved"
+      ],
+      "scenario_ids": [
+        "itbhs-02",
+        "itbhs-04",
+        "itbhs-08",
+        "itbhs-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "policy conflict and safety signals"
+      ],
+      "required_outputs": [
+        "escalation packet",
+        "assumption and uncertainty log"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite is unknown",
+        "immediate-safety facts change the lane posture",
+        "policy conflict cannot be resolved without human review"
+      ],
+      "scenario_ids": [
+        "itbhs-05",
+        "itbhs-06",
+        "itbhs-09",
+        "itbhs-10",
+        "itbhs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff artifact requirements",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside behavioral-health intake scope",
+        "request requires crisis, licensed-clinical, privacy, or utilization-management ownership",
+        "request requires longitudinal care coordination instead of bounded intake validation"
+      ],
+      "scenario_ids": [
+        "itbhs-03",
+        "itbhs-05",
+        "itbhs-12"
+      ]
+    },
+    {
+      "ability_id": "intake_prerequisite_validation",
+      "ability_name": "Intake prerequisite validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requestor role and identity context",
+        "program or service-line context",
+        "core intake and consent artifacts"
+      ],
+      "required_outputs": [
+        "intake preconditions status",
+        "acceptance or block condition"
+      ],
+      "refusal_triggers": [
+        "core intake artifacts are missing",
+        "identity, consent, or referral prerequisites cannot be validated",
+        "requested path does not match behavioral-health intake context"
+      ],
+      "scenario_ids": [
+        "itbhs-01",
+        "itbhs-02",
+        "itbhs-07",
+        "itbhs-08"
+      ]
+    },
+    {
+      "ability_id": "eligibility_authorization_decisioning",
+      "ability_name": "Eligibility and authorization decisioning",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "eligibility criteria",
+        "authorization map",
+        "approval, referral, and reservation state"
+      ],
+      "required_outputs": [
+        "eligibility decision summary",
+        "authorization requirement list",
+        "block reason and owner"
+      ],
+      "refusal_triggers": [
+        "required authorization is missing",
+        "payer, catchment, or program rules conflict with the requested action",
+        "reservation, referral, or enrollment prerequisites are unsatisfied"
+      ],
+      "scenario_ids": [
+        "itbhs-02",
+        "itbhs-04",
+        "itbhs-09",
+        "itbhs-11"
+      ]
+    },
+    {
+      "ability_id": "pre_execution_routing",
+      "ability_name": "Pre-execution routing",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "intake dependency closure state",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "routing outcome",
+        "handoff summary",
+        "entry and exit criteria"
+      ],
+      "refusal_triggers": [
+        "request attempts to move past pre-execution checks",
+        "routing owner is unavailable or inappropriate",
+        "intake blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "itbhs-02",
+        "itbhs-03",
+        "itbhs-04",
+        "itbhs-05",
+        "itbhs-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "behavioral-health-specific intake artifact schema",
+        "industry terminology",
+        "privacy and crisis labels"
+      ],
+      "required_outputs": [
+        "industry terminology-aware intake summary",
+        "artifact completeness checklist"
+      ],
+      "refusal_triggers": [
+        "generic scheduling language replaces behavioral-health records and controls",
+        "required behavioral-health artifact types are unknown",
+        "tenant artifact conventions are missing for crisis, ROI, or Part 2 handling"
+      ],
+      "scenario_ids": [
+        "itbhs-07",
+        "itbhs-08"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "itbhs-01",
+      "ability_ids": [
+        "intake_prerequisite_validation",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-02",
+      "ability_ids": [
+        "intake_prerequisite_validation",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-05",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-07",
+      "ability_ids": [
+        "intake_prerequisite_validation",
+        "evidence_traceability",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-08",
+      "ability_ids": [
+        "intake_prerequisite_validation",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "eligibility_authorization_decisioning",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-11",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "eligibility_authorization_decisioning",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "itbhs-12",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    }
+  ]
+}

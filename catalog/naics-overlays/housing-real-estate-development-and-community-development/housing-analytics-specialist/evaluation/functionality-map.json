@@ -1,0 +1,416 @@
+{
+  "agent_slug": "housing-analytics-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "adjacent specialist registry",
+        "housing authority ownership map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for eligibility, fair-housing, legal, grant compliance, LIHTC compliance, lending compliance, underwriting, appraisal, funding, project approval, certification, or public disclosure authority",
+        "request asks for unsupported causal, benchmark, forecast, policy, displacement, neighborhood-stabilization, or certainty claims",
+        "request treats housing as cosmetic and removes housing-specific records, workflow, or authority constraints"
+      ],
+      "scenario_ids": [
+        "has-06",
+        "has-07",
+        "has-08",
+        "has-12",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "tenant source-precedence policy",
+        "source freshness indicators",
+        "jurisdiction, program, property, project, geography, funder, reporting period, and audience"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "refresh risk marker",
+        "definition, vintage, lag, or conflict summary"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources are stale and materially affect output reliability",
+        "public guidance, funder rules, local policy, source vintages, or tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "has-01",
+        "has-02",
+        "has-03",
+        "has-04",
+        "has-09",
+        "has-11",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "HMIS, HDX, PIT, HIC, SPM, IDIS, DRGR, CAPER, CHAS, ACS, LIHTC, HMDA, FHFA HPI, property, pipeline, finance, GIS, and BI artifacts",
+        "program year, geography, property, project, cohort, household, unit, and reporting period context",
+        "metric definition, source table, extraction, and owner references"
+      ],
+      "required_outputs": [
+        "source-lineage map",
+        "evidence-linked metric summary",
+        "missing-evidence or conflict note"
+      ],
+      "refusal_triggers": [
+        "core housing records cannot be traced to named systems",
+        "evidence for the reported metric is incomplete, stale, privacy-blocked, low-cell, or contradictory",
+        "published or operational claim would exceed named evidence"
+      ],
+      "scenario_ids": [
+        "has-01",
+        "has-03",
+        "has-04",
+        "has-05",
+        "has-10",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "retrieval hooks",
+        "tenant context and owner map",
+        "jurisdiction, program, property, project, source hierarchy, geography, vintage, privacy, suppression, approval, and publication dependencies"
+      ],
+      "required_outputs": [
+        "dependency and system map",
+        "blocked-prerequisite note",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable",
+        "tenant retrieval path is unknown",
+        "jurisdiction, program, property, project, geography, source hierarchy, data-sharing, suppression, or approval facts needed for safe analysis are missing"
+      ],
+      "scenario_ids": [
+        "has-03",
+        "has-04",
+        "has-05",
+        "has-09",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "source conflict or ambiguity signals",
+        "privacy, low-cell, program compliance, fair-housing, funding, or disclosure risk signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "metric denominator, source hierarchy, geography, vintage, or publication approval remains unresolved",
+        "source conflict materially changes the answer",
+        "confidence is too low to support publication, funding action, compliance posture, or operational decision"
+      ],
+      "scenario_ids": [
+        "has-02",
+        "has-03",
+        "has-04",
+        "has-05",
+        "has-09",
+        "has-12",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements",
+        "authority owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside housing analytics ownership",
+        "request requires eligibility, fair housing, legal, program compliance, grant reporting certification, LIHTC compliance, lending compliance, underwriting, appraisal, funding, project approval, privacy, data governance, or public disclosure authority",
+        "policy or source conflict cannot be resolved in-lane"
+      ],
+      "scenario_ids": [
+        "has-06",
+        "has-08",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric request",
+        "source hierarchy",
+        "numerator, denominator, exclusion, AMI or income-limit vintage, geography, program year, project status, action threshold, and refresh rules"
+      ],
+      "required_outputs": [
+        "metric definition summary",
+        "source hierarchy decision",
+        "refresh, geography, vintage, and caveat note"
+      ],
+      "refusal_triggers": [
+        "metric definition is ambiguous or disputed",
+        "source hierarchy is not defined",
+        "required definition inputs are missing"
+      ],
+      "scenario_ids": [
+        "has-01",
+        "has-02",
+        "has-10",
+        "has-11",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated metrics",
+        "source-lineage evidence",
+        "audience, cadence, privacy, suppression, disclosure, and signoff context"
+      ],
+      "required_outputs": [
+        "analysis or reporting package",
+        "caveats and confidence notes",
+        "action thresholds and next-evidence requests"
+      ],
+      "refusal_triggers": [
+        "metrics are not validated",
+        "evidence lineage is incomplete",
+        "audience or disclosure posture makes publication unsafe"
+      ],
+      "scenario_ids": [
+        "has-01",
+        "has-05",
+        "has-10",
+        "has-11"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "claim text or requested conclusion",
+        "supporting evidence set",
+        "methodology, benchmark, geography, model, and approval context"
+      ],
+      "required_outputs": [
+        "unsupported-claim refusal",
+        "descriptive alternative",
+        "required evidence or approval list"
+      ],
+      "refusal_triggers": [
+        "claim asserts unsupported causality, forecast, benchmark, compliance, fair-housing, displacement, stabilization, eligibility, funding, or disclosure conclusion",
+        "methodology, comparability, model validation, or approval evidence is missing",
+        "source quality or source conflict prevents confident synthesis"
+      ],
+      "scenario_ids": [
+        "has-06",
+        "has-12",
+        "has-13"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "housing workflow context",
+        "named housing artifacts",
+        "program, property, project, geography, and reporting vocabulary"
+      ],
+      "required_outputs": [
+        "housing-specific artifact map",
+        "terminology-normalized analysis context",
+        "generic-overreach refusal when housing context is absent"
+      ],
+      "refusal_triggers": [
+        "request cannot identify the housing workflow, record set, program, geography, or artifact family",
+        "output would treat the housing industry name as cosmetic",
+        "analysis would omit housing-specific authority boundaries"
+      ],
+      "scenario_ids": [
+        "has-01",
+        "has-07",
+        "has-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "has-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-07",
+      "ability_ids": [
+        "boundary_control",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-12",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "unsupported_claim_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "has-13",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "metric_and_source_definition",
+        "unsupported_claim_refusal"
+      ],
+      "status": "covered"
+    }
+  ]
+}

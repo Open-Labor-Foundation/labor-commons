@@ -1,0 +1,420 @@
+{
+  "agent_slug": "air-cargo-coordination-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended air cargo coordination action",
+        "air cargo coordination specialty boundary",
+        "dispatch, customs, cargo security, dangerous-goods, maintenance, safety, financial, and execution authority context"
+      ],
+      "required_outputs": [
+        "regulated-authority-boundary-refusal",
+        "routing-confirmation-note"
+      ],
+      "refusal_triggers": [
+        "request asks for dispatch authority, customs release, cargo screening certification, dangerous-goods acceptance, safety signoff, maintenance release, financial approval, or physical cargo movement",
+        "request attempts to close air cargo work without required source-system and destination-owner evidence"
+      ],
+      "scenario_ids": [
+        "accs-05",
+        "accs-07",
+        "accs-08",
+        "accs-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CBP, eCFR, TSA, PHMSA, IATA, and Cargo iQ baseline sources",
+        "source freshness indicators",
+        "tenant station, carrier, forwarder, broker, screening, DG, SLA, and system overlays"
+      ],
+      "required_outputs": [
+        "source-grounded coordination judgment",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "public sources and tenant policies conflict materially on customs, screening, DG, custody, route, or closure handling"
+      ],
+      "scenario_ids": [
+        "accs-10",
+        "accs-11",
+        "accs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "booking, MAWB, HAWB, e-AWB, FWB, FHL, cargo manifest, and customs records",
+        "warehouse acceptance, ULD, build-up, ramp transfer, flight, arrival, delivery, POD, and custody scan records",
+        "screening, DG declaration, NOTOC, equipment, maintenance, dispatch-reference, and service logs"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing-evidence checklist",
+        "chain-of-custody-or-documentation-break-summary"
+      ],
+      "refusal_triggers": [
+        "critical shipment, custody, handoff, customs, screening, DG, route, equipment, or completion evidence is absent or contradictory",
+        "record-of-truth systems materially disagree on current cargo movement, custody, route, or closure state"
+      ],
+      "scenario_ids": [
+        "accs-02",
+        "accs-04",
+        "accs-06",
+        "accs-09",
+        "accs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "shipper, forwarder, carrier, ground handler, warehouse, ramp, dispatch, customs, security, DG, maintenance, and customer operations owner map",
+        "dependency status across TMS, WMS, cargo booking, cargo management, dispatch, customs, screening, ULD, telematics, fleet, maintenance, customer operations, and service systems"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "blocker summary",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on shipment, route, custody, equipment, documentation, or closure state"
+      ],
+      "scenario_ids": [
+        "accs-01",
+        "accs-03",
+        "accs-06",
+        "accs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy and source conflict indicators"
+      ],
+      "required_outputs": [
+        "blocked-dependency-escalation-note",
+        "missing-information checklist",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source or policy conflict prevents safe synthesis",
+        "customs, screening, DG, dispatch, safety, maintenance, or movement authority is unclear"
+      ],
+      "scenario_ids": [
+        "accs-02",
+        "accs-10",
+        "accs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary and destination owner"
+      ],
+      "required_outputs": [
+        "routing-confirmation-note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to dispatch, customs/compliance, cargo security, dangerous goods, maintenance, warehouse, ramp, airline operations, airport operations, customer operations, legal, financial, or safety ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "accs-03",
+        "accs-05",
+        "accs-07",
+        "accs-08",
+        "accs-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "air cargo task dependencies",
+        "artifact availability state",
+        "owner assignments and stale-owner indicators"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "handoff blocker summary"
+      ],
+      "refusal_triggers": [
+        "dependency map cannot be established",
+        "handoff artifact set is incomplete",
+        "duplicated or stale ownership would cause work to be dropped"
+      ],
+      "scenario_ids": [
+        "accs-01",
+        "accs-02",
+        "accs-03",
+        "accs-06",
+        "accs-10"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "prior owner context",
+        "destination owner",
+        "required air cargo artifact checklist",
+        "source-system and acknowledgement evidence"
+      ],
+      "required_outputs": [
+        "handoff-summary",
+        "handoff-status-summary"
+      ],
+      "refusal_triggers": [
+        "prior owner is unknown",
+        "destination owner or acceptance proof is absent",
+        "required cargo, customs, screening, DG, custody, equipment, or service-level records are missing"
+      ],
+      "scenario_ids": [
+        "accs-01",
+        "accs-02",
+        "accs-04",
+        "accs-12"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open blockers",
+        "closure criteria",
+        "destination owner acceptance status",
+        "residual customs, screening, DG, route, custody, safety, or service-level risk"
+      ],
+      "required_outputs": [
+        "closure-confirmation",
+        "blocked-dependency-escalation-note"
+      ],
+      "refusal_triggers": [
+        "closure criteria are not met",
+        "destination owner acceptance is missing",
+        "source-system evidence is incomplete",
+        "customs, screening, DG, custody, route, safety, or service-level blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "accs-04",
+        "accs-08",
+        "accs-09",
+        "accs-11"
+      ]
+    },
+    {
+      "ability_id": "movement_and_chain_of_custody_handling",
+      "ability_name": "Movement and chain-of-custody handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "shipment, route, flight, truck, ULD, load, warehouse, ramp, arrival, delivery, POD, and handoff records",
+        "custody scans or reconciliation evidence",
+        "route or schedule disruption context"
+      ],
+      "required_outputs": [
+        "chain-of-custody-or-documentation-break-summary",
+        "route-or-schedule-compliance-impact-note",
+        "movement blocker summary"
+      ],
+      "refusal_triggers": [
+        "custody or handoff evidence is missing or contradictory",
+        "movement status depends on dispatch, customs, security, DG, maintenance, or safety approval",
+        "route or schedule disruption changes compliant movement posture"
+      ],
+      "scenario_ids": [
+        "accs-01",
+        "accs-04",
+        "accs-06",
+        "accs-08",
+        "accs-09"
+      ]
+    },
+    {
+      "ability_id": "safety_and_clearance_escalation",
+      "ability_name": "Safety and clearance escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "safety, screening, customs, DG, dispatch, maintenance, or movement-approval boundary facts",
+        "authoritative records and owner map",
+        "tenant station, security, DG, broker, carrier, and local procedure context"
+      ],
+      "required_outputs": [
+        "blocked-dependency-escalation-note",
+        "regulated-authority-boundary-refusal",
+        "blocked-prerequisite checklist"
+      ],
+      "refusal_triggers": [
+        "movement depends on regulated or safety-critical approval",
+        "request asks the lane to imply dispatch, customs, cargo screening, dangerous-goods, maintenance, financial, or safety authority",
+        "required safety, customs, screening, DG, dispatch, maintenance, or movement approval evidence is missing"
+      ],
+      "scenario_ids": [
+        "accs-05",
+        "accs-06",
+        "accs-08",
+        "accs-09",
+        "accs-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "accs-01",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "dependency_tracking",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "dependency_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "handoff_execution",
+        "blocker_and_closure_management",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "blocker_and_closure_management",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-09",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "blocker_and_closure_management",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "dependency_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "blocker_and_closure_management",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "accs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    }
+  ]
+}

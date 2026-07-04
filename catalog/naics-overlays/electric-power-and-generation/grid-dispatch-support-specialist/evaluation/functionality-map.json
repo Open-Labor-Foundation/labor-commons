@@ -1,0 +1,363 @@
+{
+  "agent_slug": "grid-dispatch-support-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "user request",
+        "scope of authority",
+        "adjacent specialist list",
+        "tenant safety and approval boundaries"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "adjacent-routing recommendation"
+      ],
+      "refusal_triggers": [
+        "request for dispatch setpoints",
+        "request for control-room action",
+        "request for final dispatch approval",
+        "operational emergency override request"
+      ],
+      "scenario_ids": [
+        "gds-05",
+        "gds-06"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public coordination references",
+        "region-specific dispatch references",
+        "tenant source map"
+      ],
+      "required_outputs": [
+        "source precedence summary",
+        "confidence-ranked coordination guidance"
+      ],
+      "refusal_triggers": [
+        "missing tenant policy source",
+        "conflicting public and tenant source language",
+        "stale source version"
+      ],
+      "scenario_ids": [
+        "gds-01",
+        "gds-07",
+        "gds-08",
+        "gds-09"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "schedule handoff package",
+        "intertie or commitment artifacts",
+        "ownership evidence"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "handoff rejection notes"
+      ],
+      "refusal_triggers": [
+        "missing required evidence",
+        "insufficient handoff logs",
+        "unverified telemetry context"
+      ],
+      "scenario_ids": [
+        "gds-01",
+        "gds-04",
+        "gds-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "ticket dependencies",
+        "system-of-record references",
+        "owner matrix"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "missing-artifact list"
+      ],
+      "refusal_triggers": [
+        "missing ticket context",
+        "unidentified owner for critical dependency",
+        "stale schedule or telemetry systems"
+      ],
+      "scenario_ids": [
+        "gds-01",
+        "gds-02",
+        "gds-07"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "incomplete policy references",
+        "unverified tenant constraints",
+        "conflicting records"
+      ],
+      "required_outputs": [
+        "low-confidence-escalation-note",
+        "conflicting-source-escalation-note"
+      ],
+      "refusal_triggers": [
+        "insufficient confidence for safe recommendation",
+        "tenant policy ambiguity",
+        "high-impact source conflict"
+      ],
+      "scenario_ids": [
+        "gds-07",
+        "gds-08"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "owner role requirements",
+        "handoff request context",
+        "adjacent specialist catalog"
+      ],
+      "required_outputs": [
+        "adjacent-routing note",
+        "routing confirmation",
+        "escalation package"
+      ],
+      "refusal_triggers": [
+        "request falls to operations-control execution",
+        "request needs engineering/legal/financial authority",
+        "unresolved ownership conflict"
+      ],
+      "scenario_ids": [
+        "gds-03",
+        "gds-05",
+        "gds-06",
+        "gds-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "dependency artifacts",
+        "team owner confirmations",
+        "handoff deadlines"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "routing confirmation note"
+      ],
+      "refusal_triggers": [
+        "dependency owner missing",
+        "dependency deadline cannot be validated",
+        "critical artifact omitted"
+      ],
+      "scenario_ids": [
+        "gds-01",
+        "gds-02",
+        "gds-03",
+        "gds-04",
+        "gds-09"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "prior owner",
+        "next owner",
+        "required artifacts",
+        "handoff rationale"
+      ],
+      "required_outputs": [
+        "handoff summary",
+        "routing confirmation note",
+        "closure confirmation"
+      ],
+      "refusal_triggers": [
+        "missing recipient confirmation",
+        "no routing decision point",
+        "handoff required without prerequisite context"
+      ],
+      "scenario_ids": [
+        "gds-02",
+        "gds-03",
+        "gds-04",
+        "gds-09",
+        "gds-10"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open blockers",
+        "owner readiness state",
+        "completion prerequisites"
+      ],
+      "required_outputs": [
+        "closure confirmation",
+        "blocker and dependency log"
+      ],
+      "refusal_triggers": [
+        "closure attempted without confirmation",
+        "critical blocker unresolved",
+        "recipient ownership unknown"
+      ],
+      "scenario_ids": [
+        "gds-02",
+        "gds-03",
+        "gds-08",
+        "gds-10"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "dispatch scheduling artifacts",
+        "regional or tenant dispatch context",
+        "interchange and coordination vocabulary"
+      ],
+      "required_outputs": [
+        "assumption-and-context-handoff-note",
+        "handoff summary",
+        "industry-specific blocker log"
+      ],
+      "refusal_triggers": [
+        "asset-specific or market-specific assumption omitted",
+        "industry artifact missing",
+        "tenancy context required to avoid overgeneralization"
+      ],
+      "scenario_ids": [
+        "gds-01",
+        "gds-04",
+        "gds-09"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "gds-01",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "evidence_traceability",
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-02",
+      "ability_ids": [
+        "blocker_and_closure_management",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-03",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "blocker_and_closure_management",
+        "dependency_tracking",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-04",
+      "ability_ids": [
+        "dependency_tracking",
+        "evidence_traceability",
+        "handoff_execution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-05",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-06",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-08",
+      "ability_ids": [
+        "blocker_and_closure_management",
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-09",
+      "ability_ids": [
+        "dependency_tracking",
+        "evidence_traceability",
+        "handoff_execution",
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gds-10",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "blocker_and_closure_management",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    }
+  ]
+}

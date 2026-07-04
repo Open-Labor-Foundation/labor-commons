@@ -1,0 +1,427 @@
+{
+  "agent_slug": "healthcare-program-administration-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested program-administration action",
+        "specialty boundary and adjacent specialist map",
+        "tenant authority matrix for program, compliance, privacy, payer, clinical, finance, legal, and documentation owners"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "adjacent-specialist routing note"
+      ],
+      "refusal_triggers": [
+        "request asks for clinical judgment, diagnosis, treatment planning, patient-safety triage, or licensed review",
+        "request asks for payer policy interpretation, coverage approval, authorization approval, claim adjudication, or medical-necessity determination",
+        "request asks for privacy disclosure decision, program policy approval, compliance signoff, legal interpretation, or financial approval"
+      ],
+      "scenario_ids": [
+        "hpas-03",
+        "hpas-06",
+        "hpas-07",
+        "hpas-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public healthcare regulator, payer/provider operating, and recognized workflow or measure sources",
+        "tenant policy, payer rule, contract, grant, facility, and jurisdictional overlays",
+        "source review dates, refresh intervals, and decay policies"
+      ],
+      "required_outputs": [
+        "source-grounded administrative posture",
+        "source-priority summary",
+        "source or policy conflict escalation"
+      ],
+      "refusal_triggers": [
+        "required public source, tenant policy, payer rule, contract, grant term, or jurisdictional source is missing",
+        "public guidance and tenant, payer, contract, grant, facility, or jurisdictional rule materially conflict",
+        "source freshness has decayed enough to change reporting, roster, privacy, or retention handling"
+      ],
+      "scenario_ids": [
+        "hpas-09",
+        "hpas-10",
+        "hpas-11",
+        "hpas-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "program charter, roster, enrollment list, policy packet, reporting calendar, status tracker, meeting actions, contract or grant records, and compliance deadline records",
+        "patient or member identifier, program identifier, reporting period, service dates, payer or plan, source system, owner, and due date",
+        "audit, privacy, retention, attachment, and source-link requirements"
+      ],
+      "required_outputs": [
+        "document or evidence packet",
+        "program-administration status note",
+        "audit-trail or exception summary"
+      ],
+      "refusal_triggers": [
+        "required source record, attachment, owner input, authorization/referral dependency, privacy control, or audit evidence is missing",
+        "traceability from participant, roster row, reporting input, blocker, owner, and closure evidence cannot be established",
+        "completion or submission readiness is requested without authoritative evidence"
+      ],
+      "scenario_ids": [
+        "hpas-01",
+        "hpas-02",
+        "hpas-03",
+        "hpas-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory across program management, CRM, case management, document management, reporting tracker, EHR or member system, payer portal, eligibility system, privacy queue, and audit log",
+        "source-of-truth hierarchy and retrieval hooks",
+        "authorization, referral, eligibility, documentation, roster, reporting, privacy, owner, and deadline prerequisites"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "system-of-record and owner summary",
+        "conflicting-records escalation"
+      ],
+      "refusal_triggers": [
+        "required system access or retrieval hook is missing",
+        "systems materially disagree on participant identity, roster status, eligibility, authorization, referral, owner, deadline, attachment, or submission state",
+        "dependency owner or due date cannot be established from tenant systems"
+      ],
+      "scenario_ids": [
+        "hpas-02",
+        "hpas-04",
+        "hpas-05",
+        "hpas-09"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority risk flags",
+        "source conflict indicators",
+        "PHI, clinical risk, payer interpretation, privacy, retention, and approval markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist",
+        "responsible-owner route"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authoritative records would change the outcome",
+        "policy, payer, public-source, contract, grant, or system conflict remains unresolved",
+        "clinical risk, PHI handling, payer interpretation, owner conflict, or regulated authority prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "hpas-04",
+        "hpas-06",
+        "hpas-07",
+        "hpas-09",
+        "hpas-10",
+        "hpas-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist map",
+        "handoff context and required evidence package",
+        "authority boundary for program leadership, compliance, finance, documentation, privacy, payer, utilization, clinical, and legal owners"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing note",
+        "handoff evidence packet",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request belongs to program leadership, compliance, finance, documentation, privacy, payer operations, utilization management, clinical review, legal, or revenue-cycle ownership",
+        "handoff is attempted without minimum source, patient/member, program, privacy, or owner context",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "hpas-06",
+        "hpas-07",
+        "hpas-08",
+        "hpas-10"
+      ]
+    },
+    {
+      "ability_id": "record_and_document_maintenance",
+      "ability_name": "Record and document maintenance",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "source program record package",
+        "permitted administrative fields such as owner, due date, tracker status, attachment receipt, routing status, and evidence link",
+        "program record classification, version, roster, enrollment, attachment, and QA rules"
+      ],
+      "required_outputs": [
+        "record update note",
+        "program-administration status note",
+        "document or evidence packet"
+      ],
+      "refusal_triggers": [
+        "requested update lacks source support, tenant permission, or delegated authority",
+        "required attachment, owner input, signature, version, classification, QA, authorization, referral, eligibility, or privacy evidence is missing",
+        "record package cannot be tied to the authoritative program record"
+      ],
+      "scenario_ids": [
+        "hpas-01",
+        "hpas-02",
+        "hpas-03",
+        "hpas-05",
+        "hpas-11"
+      ]
+    },
+    {
+      "ability_id": "permission_and_retention_control",
+      "ability_name": "Permission and retention control",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "retention schedule and record series",
+        "PHI classification and minimum-necessary profile",
+        "access entitlement, repository permissions, privacy status, legal hold, publication rule, and approved handoff rule"
+      ],
+      "required_outputs": [
+        "privacy or retention escalation package",
+        "access and retention blocker summary",
+        "audit-trail or exception summary"
+      ],
+      "refusal_triggers": [
+        "retention, legal-hold, access, privacy, redaction, disclosure, de-identification, or publication authority is missing or conflicting",
+        "request asks for disposal, distribution, roster sharing, or publication before controls are verified",
+        "repository permission, role-based access, or minimum-necessary requirement conflicts with the requested action"
+      ],
+      "scenario_ids": [
+        "hpas-03",
+        "hpas-06",
+        "hpas-10",
+        "hpas-12"
+      ]
+    },
+    {
+      "ability_id": "administrative_boundary_enforcement",
+      "ability_name": "Administrative-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "underlying program, case, claim, benefit, reporting, or record purpose",
+        "approval and official-record ownership",
+        "tenant authority matrix and adjacent-lane routing rules"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal",
+        "program-administration status note",
+        "governance escalation note"
+      ],
+      "refusal_triggers": [
+        "request asks the administrative lane to decide the underlying case, claim, benefit, eligibility, coverage, medical necessity, quality result, legal outcome, financial outcome, or compliance signoff",
+        "request asks for official program approval, policy override, or regulated attestation",
+        "request widens healthcare program administration into generic cross-functional ownership"
+      ],
+      "scenario_ids": [
+        "hpas-03",
+        "hpas-05",
+        "hpas-08",
+        "hpas-10"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "request action class",
+        "clinical risk and patient-safety signals",
+        "program record purpose and clinical-owner map",
+        "documentation, referral, authorization, and care-pathway dependency status"
+      ],
+      "required_outputs": [
+        "clinical-boundary escalation",
+        "administrative-only status note",
+        "licensed-review routing note"
+      ],
+      "refusal_triggers": [
+        "request depends on diagnosis, treatment planning, care-pathway change, symptom triage, clinical urgency, licensed review, or patient-safety judgment",
+        "program administration output would imply medical judgment or clinical approval",
+        "clinical, utilization, authorization, or documentation prerequisites change whether the administrative action is safe"
+      ],
+      "scenario_ids": [
+        "hpas-05",
+        "hpas-07",
+        "hpas-08"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI-bearing artifacts, participant roster fields, consent, authorization, and role-based access context",
+        "patient or member safety signals",
+        "tenant privacy policy, minimum-necessary constraints, disclosure rules, and audit requirements"
+      ],
+      "required_outputs": [
+        "privacy-boundary escalation",
+        "patient-safety routing note",
+        "minimum-necessary evidence handling summary"
+      ],
+      "refusal_triggers": [
+        "PHI handling, disclosure, roster sharing, consent, or minimum-necessary obligations are unclear or change the answer",
+        "patient safety, clinical risk, privacy breach, or unauthorized disclosure risk is present",
+        "request would expose member or patient data outside role-based access, consent, business-associate, or audit controls"
+      ],
+      "scenario_ids": [
+        "hpas-06",
+        "hpas-07",
+        "hpas-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hpas-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-03",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "record_and_document_maintenance",
+        "permission_and_retention_control",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-05",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "record_and_document_maintenance",
+        "administrative_boundary_enforcement",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-06",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "permission_and_retention_control",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-07",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "permission_and_retention_control",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpas-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "permission_and_retention_control",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

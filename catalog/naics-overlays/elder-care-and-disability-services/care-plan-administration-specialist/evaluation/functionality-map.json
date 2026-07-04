@@ -1,0 +1,348 @@
+{
+  "agent_slug": "care-plan-administration-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control and non-overreach",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and action class",
+        "specialty boundary rules",
+        "authority map"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal",
+        "adjacent-lane routing"
+      ],
+      "refusal_triggers": [
+        "request for clinical/diagnostic or legal adjudication",
+        "request for policy-override safety exception",
+        "request to certify final legal sufficiency of care outcome"
+      ],
+      "scenario_ids": [
+        "cpas-01",
+        "cpas-05",
+        "cpas-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Authoritative source selection and freshness checks",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public sources",
+        "tenant policy context",
+        "source refresh metadata"
+      ],
+      "required_outputs": [
+        "applicable-source decision",
+        "staleness or conflict warning",
+        "escalation reason"
+      ],
+      "refusal_triggers": [
+        "missing jurisdiction or program-source context",
+        "irreconcilable policy source conflict",
+        "missing source refresh evidence"
+      ],
+      "scenario_ids": [
+        "cpas-06",
+        "cpas-03",
+        "cpas-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability and artifact validation",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "care-plan version and artifact IDs",
+        "consent records",
+        "assessment and authorization documents"
+      ],
+      "required_outputs": [
+        "mandatory evidence checklist",
+        "artifact sufficiency summary"
+      ],
+      "refusal_triggers": [
+        "missing assessment or consent attachment",
+        "missing authorized-signature record",
+        "unsupported or stale artifact metadata"
+      ],
+      "scenario_ids": [
+        "cpas-02",
+        "cpas-04",
+        "cpas-07",
+        "cpas-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and systems-of-record awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems list",
+        "record ownership map",
+        "retrieval hooks"
+      ],
+      "required_outputs": [
+        "system dependency map",
+        "retrieval blocker list"
+      ],
+      "refusal_triggers": [
+        "required systems unavailable",
+        "missing care-plan owner mapping",
+        "uncertain source-of-truth hierarchy"
+      ],
+      "scenario_ids": [
+        "cpas-02",
+        "cpas-03",
+        "cpas-06"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence handling and escalation",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence indicators",
+        "missing required tenant facts",
+        "conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation packet",
+        "owner route"
+      ],
+      "refusal_triggers": [
+        "jurisdictional context missing",
+        "policy conflict unresolved",
+        "insufficient confidence for completion"
+      ],
+      "scenario_ids": [
+        "cpas-06",
+        "cpas-10",
+        "cpas-03"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "routing matrix",
+        "request type class",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "handoff owner",
+        "adjacent-lane routing note"
+      ],
+      "refusal_triggers": [
+        "request outside administration ownership",
+        "requires legal/clinical/funding owner",
+        "missing or unknown routing target"
+      ],
+      "scenario_ids": [
+        "cpas-05",
+        "cpas-09",
+        "cpas-10"
+      ]
+    },
+    {
+      "ability_id": "care_plan_scope_validation",
+      "ability_name": "Care-plan request scope validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request details",
+        "plan lifecycle stage",
+        "tenant jurisdiction"
+      ],
+      "required_outputs": [
+        "scope decision",
+        "administrative status note"
+      ],
+      "refusal_triggers": [
+        "incomplete scope definition",
+        "unsupported workflow action",
+        "scope mismatch with care-plan domain"
+      ],
+      "scenario_ids": [
+        "cpas-01",
+        "cpas-04",
+        "cpas-05"
+      ]
+    },
+    {
+      "ability_id": "care_plan_update_preparation",
+      "ability_name": "Care-plan update preparation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "required care-plan artifacts",
+        "signature and approval inputs",
+        "retention and privacy constraints"
+      ],
+      "required_outputs": [
+        "record update note",
+        "evidence packet"
+      ],
+      "refusal_triggers": [
+        "missing mandatory artifact",
+        "signature/authority gap",
+        "retention policy blocked update"
+      ],
+      "scenario_ids": [
+        "cpas-02",
+        "cpas-04",
+        "cpas-07"
+      ]
+    },
+    {
+      "ability_id": "record_retention_and_audit_packaging",
+      "ability_name": "Retention, handoff, and audit packaging",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "outcome state",
+        "audit requirements",
+        "handoff target"
+      ],
+      "required_outputs": [
+        "audit-trail summary",
+        "administrative status note"
+      ],
+      "refusal_triggers": [
+        "missing audit metadata",
+        "unclear owner chain",
+        "cannot preserve retention rationale"
+      ],
+      "scenario_ids": [
+        "cpas-04",
+        "cpas-03",
+        "cpas-09"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry artifact and terminology mapping",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "industry terminology",
+        "tenant artifact map",
+        "program-specific plan semantics"
+      ],
+      "required_outputs": [
+        "artifact mapping",
+        "industry-specific validation note"
+      ],
+      "refusal_triggers": [
+        "unmapped industry term",
+        "tenant-specific term conflict",
+        "missing industry artifact dependencies"
+      ],
+      "scenario_ids": [
+        "cpas-08",
+        "cpas-10",
+        "cpas-02"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cpas-01",
+      "ability_ids": [
+        "boundary_control",
+        "care_plan_scope_validation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "care_plan_update_preparation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "record_retention_and_audit_packaging"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-04",
+      "ability_ids": [
+        "care_plan_scope_validation",
+        "care_plan_update_preparation",
+        "record_retention_and_audit_packaging"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "care_plan_scope_validation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "boundary_control",
+        "care_plan_update_preparation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-08",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "care_plan_scope_validation",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "record_retention_and_audit_packaging"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cpas-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

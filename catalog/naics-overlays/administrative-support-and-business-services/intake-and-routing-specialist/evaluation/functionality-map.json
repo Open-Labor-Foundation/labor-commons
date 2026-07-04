@@ -1,0 +1,396 @@
+{
+  "agent_slug": "intake-and-routing-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested outcome",
+        "specialty boundary and adjacent-lane registry",
+        "service catalog, SOW scope, and routing matrix",
+        "downstream approval and authority owner map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return or routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to approve downstream work, grant access, waive eligibility, or override policy",
+        "request belongs to legal, finance, HR, privacy, security, compliance, safety, or client approval ownership",
+        "request treats administrative support as ownership of the client's complete business process"
+      ],
+      "scenario_ids": [
+        "irs-03",
+        "irs-04",
+        "irs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "source review dates and decay policy",
+        "tenant service catalog and SOW overlays",
+        "jurisdiction, client, and policy context"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "freshness or conflict summary",
+        "confidence state"
+      ],
+      "refusal_triggers": [
+        "required public source, tenant policy, or SOW context is missing",
+        "source freshness materially affects intake, authorization, access, or routing handling",
+        "public guidance, tenant policy, service catalog, and client SOW conflict materially"
+      ],
+      "scenario_ids": [
+        "irs-09",
+        "irs-10",
+        "irs-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "intake source record and channel metadata",
+        "required attachments and authorization evidence",
+        "system-of-record links",
+        "queue history and audit log requirements"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked disposition or blocker summary",
+        "handoff evidence bundle"
+      ],
+      "refusal_triggers": [
+        "required intake field, attachment, authorization, source record, or audit event is missing",
+        "intake disposition cannot be traced to authoritative systems",
+        "source systems disagree on scope, approval, queue owner, or routing state"
+      ],
+      "scenario_ids": [
+        "irs-01",
+        "irs-02",
+        "irs-06",
+        "irs-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks",
+        "CRM, case, service desk, workflow, contact center, and document repository records",
+        "IAM, retention, GRC, and audit systems",
+        "queue owner and escalation matrix"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "system-readiness blocker summary",
+        "next-record retrieval requirements"
+      ],
+      "refusal_triggers": [
+        "authoritative system or record location is unknown",
+        "required retrieval hook is unavailable",
+        "current owner, queue state, or source hierarchy cannot be identified"
+      ],
+      "scenario_ids": [
+        "irs-01",
+        "irs-07",
+        "irs-08",
+        "irs-09"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "policy or source conflict indicators",
+        "confidence threshold",
+        "authority owner map"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical tenant facts or authoritative records remain unknown",
+        "SOW, service catalog, access, authorization, queue, or source conflict remains unresolved",
+        "authority boundary changes the safe intake disposition"
+      ],
+      "scenario_ids": [
+        "irs-07",
+        "irs-09",
+        "irs-10"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff artifact requirements",
+        "decision owner map"
+      ],
+      "required_outputs": [
+        "routing confirmation note",
+        "handoff owner and artifact map",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, finance, HR, compliance, privacy, security, records governance, or client approval ownership",
+        "adjacent owner cannot be uniquely identified",
+        "handoff evidence is incomplete or current owner is not accountable"
+      ],
+      "scenario_ids": [
+        "irs-04",
+        "irs-07",
+        "irs-08",
+        "irs-12"
+      ]
+    },
+    {
+      "ability_id": "intake_prerequisite_validation",
+      "ability_name": "Intake prerequisite validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "intake form, ticket, call, message, email, webform, or work-order record",
+        "required field checklist",
+        "service catalog and SOW scope",
+        "source record and attachment requirements"
+      ],
+      "required_outputs": [
+        "intake disposition note",
+        "prerequisite checklist",
+        "missing-item blocker summary"
+      ],
+      "refusal_triggers": [
+        "required intake data, service catalog item, SOW basis, attachment, source record, or owner is missing",
+        "request is duplicate, stale, unsupported, or lacks a current queue state",
+        "intake facts are insufficient to decide acceptance, rejection, pend, or route"
+      ],
+      "scenario_ids": [
+        "irs-01",
+        "irs-02",
+        "irs-03",
+        "irs-09"
+      ]
+    },
+    {
+      "ability_id": "eligibility_authorization_decisioning",
+      "ability_name": "Eligibility and authorization decisioning",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requester identity",
+        "client or account master record",
+        "authorization matrix",
+        "eligibility or service prerequisite rules",
+        "access role and approval evidence"
+      ],
+      "required_outputs": [
+        "eligibility or authorization checklist",
+        "access or authorization escalation",
+        "blocked intake disposition"
+      ],
+      "refusal_triggers": [
+        "requester identity, authorization, eligibility, approval, or access evidence is missing or contradictory",
+        "request asks the lane to waive prerequisites or approve access",
+        "authorization owner must interpret a policy exception"
+      ],
+      "scenario_ids": [
+        "irs-02",
+        "irs-03",
+        "irs-05",
+        "irs-10"
+      ]
+    },
+    {
+      "ability_id": "pre_execution_routing",
+      "ability_name": "Pre-execution routing",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "routing matrix",
+        "work type and queue taxonomy",
+        "current queue state",
+        "owner assignment and duplicate-check results",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "routing or escalation summary",
+        "handoff status summary",
+        "blocked-dependency escalation note"
+      ],
+      "refusal_triggers": [
+        "correct next owner cannot be identified",
+        "handoff is attempted without required context or artifact set",
+        "routing would bypass access, authorization, eligibility, or queue controls"
+      ],
+      "scenario_ids": [
+        "irs-04",
+        "irs-06",
+        "irs-07",
+        "irs-08"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "NAICS 561 administrative and business support context",
+        "service catalog, SOW, queue, contact center, document preparation, mailroom, or shared-services artifacts",
+        "tenant vocabulary and alias map",
+        "contract or fee-basis service boundary"
+      ],
+      "required_outputs": [
+        "industry terminology mapping",
+        "administrative support artifact map",
+        "support-service boundary summary"
+      ],
+      "refusal_triggers": [
+        "industry label is treated as cosmetic and no administrative support artifact set is identified",
+        "request crosses from support-service intake into complete client operations or downstream approval",
+        "tenant terminology cannot be mapped without changing the intake disposition"
+      ],
+      "scenario_ids": [
+        "irs-06",
+        "irs-11",
+        "irs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "irs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "intake_prerequisite_validation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-03",
+      "ability_ids": [
+        "boundary_control",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-05",
+      "ability_ids": [
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "pre_execution_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "intake_prerequisite_validation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "irs-12",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

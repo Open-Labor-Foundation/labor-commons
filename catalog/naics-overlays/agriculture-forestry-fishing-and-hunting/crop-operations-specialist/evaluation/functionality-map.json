@@ -1,0 +1,415 @@
+{
+  "agent_slug": "crop-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope",
+        "intended decision",
+        "authority ownership"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "handoff owner map"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, agronomic, veterinary, or permit signoff",
+        "request bypasses required evidentiary gates"
+      ],
+      "scenario_ids": [
+        "cos-08",
+        "cos-09",
+        "cos-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "applicable public sources",
+        "jurisdiction",
+        "refresh status"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "source conflict note",
+        "refresh checkpoint"
+      ],
+      "refusal_triggers": [
+        "required source context missing",
+        "tenant-policy conflict unresolved",
+        "authoritative rule context conflicts with missing facts"
+      ],
+      "scenario_ids": [
+        "cos-01",
+        "cos-03",
+        "cos-10",
+        "cos-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "field logs",
+        "land/lot records",
+        "traceability lineage",
+        "custody events"
+      ],
+      "required_outputs": [
+        "traceability readiness note",
+        "artifact mismatch log",
+        "owner-linked evidence list"
+      ],
+      "refusal_triggers": [
+        "critical records are missing",
+        "records are contradictory across systems"
+      ],
+      "scenario_ids": [
+        "cos-01",
+        "cos-03",
+        "cos-10",
+        "cos-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "system-of-truth inventory",
+        "owner matrix",
+        "data extraction path"
+      ],
+      "required_outputs": [
+        "dependency list",
+        "retrieval map",
+        "handoff prerequisites"
+      ],
+      "refusal_triggers": [
+        "source systems are unknown",
+        "owner routing context is missing"
+      ],
+      "scenario_ids": [
+        "cos-02",
+        "cos-04",
+        "cos-03",
+        "cos-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing evidence",
+        "policy mismatch",
+        "confidence score indicators"
+      ],
+      "required_outputs": [
+        "escalation note",
+        "required follow-up",
+        "next-step queue state"
+      ],
+      "refusal_triggers": [
+        "low-confidence completion request",
+        "policy-source conflict remains open",
+        "risk posture changes under missing facts"
+      ],
+      "scenario_ids": [
+        "cos-02",
+        "cos-07",
+        "cos-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent scope map",
+        "scope outcome",
+        "routing reason"
+      ],
+      "required_outputs": [
+        "routing note",
+        "handoff artifact set",
+        "owner recommendation"
+      ],
+      "refusal_triggers": [
+        "agronomy authority required",
+        "veterinary decision required",
+        "environmental permitting interpretation required"
+      ],
+      "scenario_ids": [
+        "cos-08",
+        "cos-09",
+        "cos-11",
+        "cos-12"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "scope decision",
+        "dependency status",
+        "blocker conditions"
+      ],
+      "required_outputs": [
+        "state transition",
+        "next action",
+        "state rationale"
+      ],
+      "refusal_triggers": [
+        "state progression attempted while blocked",
+        "completion attempted in incomplete state"
+      ],
+      "scenario_ids": [
+        "cos-01",
+        "cos-02",
+        "cos-04",
+        "cos-07"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception trigger",
+        "risk profile",
+        "asset or lot identifier"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "rework requirements",
+        "risk-ranked queue item"
+      ],
+      "refusal_triggers": [
+        "critical exception cannot be resolved without specialist escalation",
+        "conflicting traceability remains unresolved"
+      ],
+      "scenario_ids": [
+        "cos-03",
+        "cos-05",
+        "cos-06",
+        "cos-11",
+        "cos-12"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "final artifact set",
+        "closure blockers",
+        "handoff owner list"
+      ],
+      "required_outputs": [
+        "completion-and-fulfillment record",
+        "evidence completeness table",
+        "final blocker status"
+      ],
+      "refusal_triggers": [
+        "required evidence missing",
+        "traceability integrity uncertain",
+        "final owner context unknown"
+      ],
+      "scenario_ids": [
+        "cos-01",
+        "cos-06",
+        "cos-07",
+        "cos-11"
+      ]
+    },
+    {
+      "ability_id": "seasonal_and_field_dependency_handling",
+      "ability_name": "Seasonal and field-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "season window",
+        "field and land constraints",
+        "weather or condition flags"
+      ],
+      "required_outputs": [
+        "seasonal blocker note",
+        "field dependency matrix",
+        "reschedule recommendation"
+      ],
+      "refusal_triggers": [
+        "critical seasonal or environmental condition missing",
+        "land dependency conflicts with plan"
+      ],
+      "scenario_ids": [
+        "cos-04",
+        "cos-09",
+        "cos-10",
+        "cos-12"
+      ]
+    },
+    {
+      "ability_id": "environmental_and_food_safety_escalation",
+      "ability_name": "Environmental and food-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "environmental advisories",
+        "food-safety controls",
+        "risk indicators"
+      ],
+      "required_outputs": [
+        "escalation note",
+        "risk owner",
+        "required mitigation actions"
+      ],
+      "refusal_triggers": [
+        "environmental risk may change outcomes",
+        "food-safety control missing",
+        "runoff, contamination, or WPS blocker unresolved"
+      ],
+      "scenario_ids": [
+        "cos-05",
+        "cos-06",
+        "cos-11",
+        "cos-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cos-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-04",
+      "ability_ids": [
+        "seasonal_and_field_dependency_handling",
+        "lifecycle_state_progression",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-05",
+      "ability_ids": [
+        "environmental_and_food_safety_escalation",
+        "exception_queue_handling",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-06",
+      "ability_ids": [
+        "completion_evidence_capture",
+        "exception_queue_handling",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-07",
+      "ability_ids": [
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-09",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "boundary_control",
+        "seasonal_and_field_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "seasonal_and_field_dependency_handling",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-11",
+      "ability_ids": [
+        "environmental_and_food_safety_escalation",
+        "completion_evidence_capture",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cos-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "seasonal_and_field_dependency_handling",
+        "adjacent_lane_routing",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "agent_slug": "product-protection-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for pricing override, goodwill approval, or insurer or manufacturer adjudication",
+        "request asks the lane to waive deductibles or ignore recall or safety posture",
+        "request asks the lane to make a fraud finding or legal interpretation"
+      ],
+      "scenario_ids": [
+        "pps-05",
+        "pps-06",
+        "pps-08",
+        "pps-10",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative FTC, NAIC, CFPB, and CPSC source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "date-aware policy posture",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdiction or source freshness materially changes the answer",
+        "public guidance and tenant or program policy materially conflict"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-04",
+        "pps-11",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "receipt and order identifiers",
+        "contract and claim identifiers",
+        "serial and diagnostic records",
+        "payment, deductible, and completion records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked execution summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core records are absent or contradictory",
+        "contract, serial, diagnostic, or payment evidence cannot be tied to the case",
+        "completion evidence is missing"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-03",
+        "pps-04",
+        "pps-06",
+        "pps-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "contract and service constraints"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required POS, CRM, claims, service, contract, payment, or inventory systems are unavailable",
+        "required tenant policy or authority mapping is missing",
+        "next owner or prerequisite dependency is unknown"
+      ],
+      "scenario_ids": [
+        "pps-02",
+        "pps-04",
+        "pps-07",
+        "pps-11",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "pps-02",
+        "pps-08",
+        "pps-11",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to pricing, guest recovery, front office, fraud investigation, insurer adjudication, or safety ownership",
+        "request requires formal approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "pps-05",
+        "pps-06",
+        "pps-08",
+        "pps-10"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current execution state",
+        "required stage prerequisites",
+        "completion or rework criteria"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "next-action decision",
+        "accepted, blocked, rework, or completed disposition"
+      ],
+      "refusal_triggers": [
+        "stage prerequisites are incomplete",
+        "requested state transition is not supported by evidence",
+        "the next state would bypass a policy or safety control"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-02",
+        "pps-07",
+        "pps-09"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception class",
+        "blocking evidence",
+        "owner-routing rules"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or escalation package",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "exception would be silently skipped or closed without evidence",
+        "required owner for the exception is unknown",
+        "exception requires approval outside the lane"
+      ],
+      "scenario_ids": [
+        "pps-03",
+        "pps-04",
+        "pps-05",
+        "pps-06",
+        "pps-08"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "repair, replacement, or cancellation confirmation",
+        "customer-notification and financial evidence",
+        "required closure artifacts"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure decision",
+        "audit-ready evidence list"
+      ],
+      "refusal_triggers": [
+        "completion artifacts are missing, unsigned, or inconsistent",
+        "work is claimed complete while exceptions remain open",
+        "closure would overstate claim, repair, replacement, or refund success"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-03",
+        "pps-07",
+        "pps-09"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer-workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue volume indicators",
+        "channel and claim mix",
+        "priority and SLA rules"
+      ],
+      "required_outputs": [
+        "triage summary",
+        "queue-state classification",
+        "customer-safe next-step package"
+      ],
+      "refusal_triggers": [
+        "volume pressure would skip contract, deductible, or diagnostic checks",
+        "customer workflow cannot be prioritized safely without prerequisites",
+        "queue handling would collapse distinct exception classes into generic closure"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-07",
+        "pps-09"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "policy-exception request",
+        "customer-impact facts",
+        "safety or fraud signals"
+      ],
+      "required_outputs": [
+        "policy-aware escalation note",
+        "customer-impact summary",
+        "correct owner routing"
+      ],
+      "refusal_triggers": [
+        "request would override refund, pricing, deductible, or safety policy without authority",
+        "customer harm, fraud, or safety implications determine the answer",
+        "guest-recovery or exception authority is required"
+      ],
+      "scenario_ids": [
+        "pps-05",
+        "pps-06",
+        "pps-08",
+        "pps-10",
+        "pps-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "pps-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-06",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-08",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-09",
+      "ability_ids": [
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

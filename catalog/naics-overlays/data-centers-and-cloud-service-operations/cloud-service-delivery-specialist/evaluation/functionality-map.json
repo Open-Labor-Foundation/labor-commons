@@ -1,0 +1,369 @@
+{
+  "agent_slug": "cloud-service-delivery-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and action intent",
+        "policy boundaries and refusal policy",
+        "adjacent specialist registry",
+        "tenant authorization constraints"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal or handoff guidance",
+        "scope verdict",
+        "owner routing summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, financial, or policy-override authority",
+        "request asks for safety-critical engineering signoff",
+        "request asks for final approval outside specialist scope"
+      ],
+      "scenario_ids": [
+        "csd-01",
+        "csd-04",
+        "csd-05",
+        "csd-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative cloud and operations source list",
+        "tenant policy precedence map",
+        "source freshness metadata",
+        "conflict indicators"
+      ],
+      "required_outputs": [
+        "source-priority selection",
+        "source conflict summary",
+        "refresh sufficiency decision"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "source or tenant policy conflicts on material boundary",
+        "source freshness cannot be validated"
+      ],
+      "scenario_ids": [
+        "csd-02",
+        "csd-07",
+        "csd-09",
+        "csd-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "service tickets and incident logs",
+        "access and entitlement records",
+        "change request and rollback evidence",
+        "interface dependency artifacts"
+      ],
+      "required_outputs": [
+        "evidence sufficiency summary",
+        "missing-evidence packet",
+        "artifact-to-outcome linkage"
+      ],
+      "refusal_triggers": [
+        "required change-readiness evidence is missing",
+        "testing or rollback artifacts are absent",
+        "artifacts cannot be linked to request scope"
+      ],
+      "scenario_ids": [
+        "csd-02",
+        "csd-03",
+        "csd-07",
+        "csd-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "integration and interface dependency map",
+        "service ownership map",
+        "system health and availability signals"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "system owner routing note"
+      ],
+      "refusal_triggers": [
+        "critical dependency system is unavailable",
+        "required owner for dependent system is missing",
+        "dependency state blocks safe resolution"
+      ],
+      "scenario_ids": [
+        "csd-03",
+        "csd-06",
+        "csd-08",
+        "csd-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence score indicators",
+        "missing-fact and missing-artifact flags",
+        "policy-conflict state"
+      ],
+      "required_outputs": [
+        "low-confidence escalation packet",
+        "assumptions and missing-facts list"
+      ],
+      "refusal_triggers": [
+        "critical tenant facts are missing",
+        "source-policy conflict unresolved",
+        "same failure recurs without new evidence"
+      ],
+      "scenario_ids": [
+        "csd-02",
+        "csd-06",
+        "csd-08",
+        "csd-10"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent lane registry",
+        "handoff owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff packet"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, finance, safety, or engineering lane",
+        "policy override authority is required but missing",
+        "adjacent owner cannot be determined"
+      ],
+      "scenario_ids": [
+        "csd-04",
+        "csd-05",
+        "csd-08",
+        "csd-10"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated scope",
+        "tenant policy and priority",
+        "evidence sufficiency state",
+        "dependency and owner context"
+      ],
+      "required_outputs": [
+        "service-resolution note",
+        "resolution state and next-step disposition"
+      ],
+      "refusal_triggers": [
+        "request is out of scope",
+        "required evidence remains missing",
+        "approval conditions are unresolved"
+      ],
+      "scenario_ids": [
+        "csd-03",
+        "csd-09"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "outcome and residual risk state",
+        "assumptions and unresolved items",
+        "owner and escalation context"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "handoff communications"
+      ],
+      "refusal_triggers": [
+        "outcome is uncertain and unresolved",
+        "policy conflict requires human confirmation",
+        "confidence below threshold for direct completion"
+      ],
+      "scenario_ids": [
+        "csd-01",
+        "csd-03",
+        "csd-04",
+        "csd-06"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception pattern",
+        "policy and approval constraints",
+        "requested bypass conditions"
+      ],
+      "required_outputs": [
+        "exception escalation package",
+        "bypass refusal rationale"
+      ],
+      "refusal_triggers": [
+        "request attempts workaround or bypass of gates",
+        "testing/rollback/approvals are intentionally skipped",
+        "discretionary change is requested without authority"
+      ],
+      "scenario_ids": [
+        "csd-05",
+        "csd-09"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "data-center and cloud service terminology",
+        "tenant artifact taxonomy",
+        "service boundary glossary"
+      ],
+      "required_outputs": [
+        "artifact-aware interpretation",
+        "industry-specific readiness mapping"
+      ],
+      "refusal_triggers": [
+        "industry terms cannot be mapped to required artifacts",
+        "tenant-specific policy context changes artifact interpretation",
+        "terminology conflict would alter in-scope decision"
+      ],
+      "scenario_ids": [
+        "csd-03",
+        "csd-07",
+        "csd-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "csd-01",
+      "ability_ids": [
+        "boundary_control",
+        "stakeholder_communication",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-03",
+      "ability_ids": [
+        "supported_request_resolution",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-05",
+      "ability_ids": [
+        "unsupported_exception_escalation",
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-06",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "dependency_and_system_awareness",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-07",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "evidence_traceability",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-09",
+      "ability_ids": [
+        "supported_request_resolution",
+        "unsupported_exception_escalation",
+        "evidence_traceability",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csd-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "industry_specific_artifact_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

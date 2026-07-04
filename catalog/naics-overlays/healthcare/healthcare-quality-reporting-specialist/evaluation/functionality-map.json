@@ -1,0 +1,450 @@
+{
+  "agent_slug": "healthcare-quality-reporting-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "adjacent specialist registry",
+        "quality-program authority owner map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for quality result certification, official submission, public disclosure approval, or operational leadership approval",
+        "request asks to override official measure logic or unsupported abstraction",
+        "request depends on clinical, payer-policy, coding, privacy, or compliance authority"
+      ],
+      "scenario_ids": [
+        "hqrs-06",
+        "hqrs-07",
+        "hqrs-08",
+        "hqrs-13"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "measure specification version",
+        "program year and measurement period",
+        "tenant source-precedence policy"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "measure-version and refresh risk marker",
+        "specification conflict summary"
+      ],
+      "refusal_triggers": [
+        "official measure specification or program year is missing",
+        "specification freshness materially affects report reliability",
+        "public guidance, tenant policy, or submission guide materially conflicts"
+      ],
+      "scenario_ids": [
+        "hqrs-01",
+        "hqrs-02",
+        "hqrs-09",
+        "hqrs-11",
+        "hqrs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "EHR abstraction, claims, labs, registry, quality platform, BI, QRDA, HEDIS, and portal artifacts",
+        "patient/member, encounter, claim, service date, and measurement period identifiers",
+        "measure numerator, denominator, exclusion, value-set, and validation references"
+      ],
+      "required_outputs": [
+        "source-lineage map",
+        "evidence-linked reporting package",
+        "missing-evidence or conflict note"
+      ],
+      "refusal_triggers": [
+        "quality measure output cannot be traced to named systems or records",
+        "evidence for numerator, denominator, exclusion, or validation status is incomplete or contradictory",
+        "reported quality statement would exceed documented evidence"
+      ],
+      "scenario_ids": [
+        "hqrs-01",
+        "hqrs-03",
+        "hqrs-10",
+        "hqrs-11",
+        "hqrs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "retrieval hooks",
+        "quality program and submission portal context",
+        "eligibility, referral, authorization, payer, patient/member, and service-setting dependencies"
+      ],
+      "required_outputs": [
+        "dependency and system map",
+        "blocked-prerequisite note",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required quality reporting system or source record is unavailable",
+        "tenant retrieval path or signoff owner is unknown",
+        "payer, plan, authorization, referral, eligibility, patient/member, service date, or facility facts needed for safe reporting are missing"
+      ],
+      "scenario_ids": [
+        "hqrs-01",
+        "hqrs-04",
+        "hqrs-09",
+        "hqrs-10",
+        "hqrs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "source conflict signals",
+        "specification ambiguity signals",
+        "privacy, clinical, payer, disclosure, or submission-risk signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "measure denominator, numerator, exclusion, or source hierarchy remains unresolved",
+        "source conflict materially changes reportability",
+        "confidence is too low to support submission readiness or publication"
+      ],
+      "scenario_ids": [
+        "hqrs-02",
+        "hqrs-03",
+        "hqrs-04",
+        "hqrs-09",
+        "hqrs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements",
+        "authority owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside healthcare quality reporting ownership",
+        "request requires clinical, payer-policy, coding, privacy, legal, compliance, quality-program attestation, registry/accreditation, or operational leadership authority",
+        "policy or source conflict cannot be resolved in-lane"
+      ],
+      "scenario_ids": [
+        "hqrs-03",
+        "hqrs-07",
+        "hqrs-08",
+        "hqrs-13"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "quality measure request",
+        "official measure specification and version",
+        "source hierarchy",
+        "numerator, denominator, exclusion, value-set, data-completeness, and refresh rules"
+      ],
+      "required_outputs": [
+        "measure-specification summary",
+        "source hierarchy decision",
+        "version, caveat, and refresh note"
+      ],
+      "refusal_triggers": [
+        "measure definition is ambiguous, stale, or disputed",
+        "source hierarchy is not defined",
+        "required numerator, denominator, exclusion, or measurement-period inputs are missing"
+      ],
+      "scenario_ids": [
+        "hqrs-01",
+        "hqrs-02",
+        "hqrs-10",
+        "hqrs-11",
+        "hqrs-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated measure definitions",
+        "source-lineage evidence",
+        "abstraction status",
+        "validation reports",
+        "audience, cadence, PHI, disclosure, and signoff context"
+      ],
+      "required_outputs": [
+        "metric or reporting package",
+        "submission-readiness note",
+        "caveat or reconciliation note",
+        "quality-report exception register"
+      ],
+      "refusal_triggers": [
+        "package would rely on incomplete or stale source data",
+        "cross-system or abstraction conflict prevents reliable reporting",
+        "submission or audience-facing disclosure cannot be supported"
+      ],
+      "scenario_ids": [
+        "hqrs-01",
+        "hqrs-03",
+        "hqrs-04",
+        "hqrs-05",
+        "hqrs-10",
+        "hqrs-11"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested quality claim",
+        "available measure evidence",
+        "benchmark, public-reporting, submission, clinical, payer, policy, or causal context"
+      ],
+      "required_outputs": [
+        "claim refusal or downgrade",
+        "evidence gap statement",
+        "safe next-step guidance"
+      ],
+      "refusal_triggers": [
+        "quality claim exceeds official measure logic or documented evidence",
+        "causal, policy, payer, clinical, medical-necessity, regulatory, benchmark, or safety assertion is unsupported",
+        "publication would imply certainty not present in records or signoff"
+      ],
+      "scenario_ids": [
+        "hqrs-06",
+        "hqrs-07",
+        "hqrs-08",
+        "hqrs-12",
+        "hqrs-13"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "requested healthcare decision",
+        "clinical, administrative, payer, privacy, and operational context",
+        "licensed-review owner map"
+      ],
+      "required_outputs": [
+        "clinical-versus-administrative boundary verdict",
+        "licensed-review or administrative handoff note"
+      ],
+      "refusal_triggers": [
+        "request depends on diagnosis, treatment planning, medical necessity, patient safety, or licensed clinical judgment",
+        "quality reporting output would be used as clinical clearance",
+        "clinical risk changes the answer"
+      ],
+      "scenario_ids": [
+        "hqrs-03",
+        "hqrs-07",
+        "hqrs-08",
+        "hqrs-13"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI and consent context",
+        "minimum-necessary basis",
+        "patient/member safety risk signals",
+        "privacy, compliance, and clinical escalation owner map"
+      ],
+      "required_outputs": [
+        "privacy and patient-safety risk note",
+        "controlled handling or escalation packet"
+      ],
+      "refusal_triggers": [
+        "PHI handling, consent, or minimum-necessary basis is missing",
+        "low-volume or identifiable patient/member output lacks approval",
+        "patient or member safety risk requires licensed or compliance review"
+      ],
+      "scenario_ids": [
+        "hqrs-04",
+        "hqrs-05",
+        "hqrs-07",
+        "hqrs-13"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hqrs-01",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-02",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-03",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "analysis_or_reporting_package_assembly",
+        "clinical_vs_administrative_boundary"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-04",
+      "status": "covered",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-05",
+      "status": "covered",
+      "ability_ids": [
+        "analysis_or_reporting_package_assembly",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-06",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_claim_refusal"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-07",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-08",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "clinical_vs_administrative_boundary"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-09",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-10",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition",
+        "unsupported_claim_refusal"
+      ]
+    },
+    {
+      "scenario_id": "hqrs-13",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ]
+    }
+  ]
+}

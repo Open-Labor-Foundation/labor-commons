@@ -1,0 +1,426 @@
+{
+  "agent_slug": "restaurant-reporting-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "requested claim or output shape",
+        "adjacent specialist owner map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation note",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "request asks for pricing, refund, fraud, safety, or disclosure signoff authority",
+        "request seeks guest-service exception authority instead of reporting support",
+        "request asks the lane to publish unsupported certainty or policy conclusions"
+      ],
+      "scenario_ids": [
+        "rrs-05",
+        "rrs-08",
+        "rrs-09",
+        "rrs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source recency metadata",
+        "tenant source-precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "staleness or conflict note",
+        "source sufficiency disposition"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public source and tenant policy materially conflict",
+        "source freshness no longer supports confident publication"
+      ],
+      "scenario_ids": [
+        "rrs-02",
+        "rrs-03",
+        "rrs-06",
+        "rrs-11",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "order, reservation, and payment identifiers",
+        "refund, comp, void, promotion, and inventory records",
+        "guest-impact and service-recovery artifacts"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "artifact-to-report linkage",
+        "traceability confidence note"
+      ],
+      "refusal_triggers": [
+        "required records are missing or stale",
+        "evidence cannot be tied to the claimed reporting period or scope",
+        "reported claim would exceed the named evidence set"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-04",
+        "rrs-06",
+        "rrs-07",
+        "rrs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks and owner map",
+        "tenant context and reporting prerequisites"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "retrieval prerequisite map",
+        "reroute or handoff package"
+      ],
+      "refusal_triggers": [
+        "critical system of record is unavailable",
+        "reporting cadence, service model, or location scope is unresolved",
+        "required evidence source cannot be retrieved"
+      ],
+      "scenario_ids": [
+        "rrs-03",
+        "rrs-04",
+        "rrs-06",
+        "rrs-07",
+        "rrs-11",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence-impacting conflicts",
+        "changed-condition or submission-risk signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown",
+        "source conflict remains unresolved",
+        "confidence is too low to support publication"
+      ],
+      "scenario_ids": [
+        "rrs-02",
+        "rrs-03",
+        "rrs-04",
+        "rrs-06",
+        "rrs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist owner map",
+        "handoff evidence"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing note",
+        "owner and artifact handoff package",
+        "responsibility transfer summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to guest services, front office, pricing or revenue, fraud or loss-prevention, operations, safety, legal, or disclosure authority",
+        "request requires regulator-facing or formal signoff action",
+        "reporting conclusion depends on unsupported downstream authority"
+      ],
+      "scenario_ids": [
+        "rrs-08",
+        "rrs-09",
+        "rrs-10"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric request and definitions",
+        "source tables and date windows",
+        "tenant metric dictionary"
+      ],
+      "required_outputs": [
+        "metric-definition summary",
+        "data-source mapping",
+        "definition-consistency decision"
+      ],
+      "refusal_triggers": [
+        "metric definition is ambiguous or disputed",
+        "required source columns are missing",
+        "tenant definitions conflict with the public baseline without precedence"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-02",
+        "rrs-07",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric and evidence summaries",
+        "audience and reporting cadence",
+        "risk and caveat policy"
+      ],
+      "required_outputs": [
+        "analysis or reporting package",
+        "submission logic summary",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "submission inputs are incomplete",
+        "required caveat language cannot be resolved",
+        "requested audience requires unsupported authority statements"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-03",
+        "rrs-04",
+        "rrs-06",
+        "rrs-07"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested claim",
+        "available evidence",
+        "publication or disclosure context"
+      ],
+      "required_outputs": [
+        "claim refusal or downgrade",
+        "evidence gap statement",
+        "safe next-step guidance"
+      ],
+      "refusal_triggers": [
+        "claim exceeds the evidence",
+        "causal or policy assertion is not supported",
+        "publication would imply certainty not present in the records"
+      ],
+      "scenario_ids": [
+        "rrs-05",
+        "rrs-08",
+        "rrs-10"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue volume and promised service windows",
+        "order, reservation, and service queue states",
+        "location, channel, or event throughput context"
+      ],
+      "required_outputs": [
+        "throughput-aware reporting package",
+        "queue-risk caveat note"
+      ],
+      "refusal_triggers": [
+        "queue state or promised window evidence is missing",
+        "high-volume handling would imply operational authority not held by the lane",
+        "surge conditions materially change interpretation and are not represented in the data"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-07",
+        "rrs-08"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "refund, appeasement, pricing, safety, or fraud exception context",
+        "customer-impact artifacts",
+        "approval-owner map"
+      ],
+      "required_outputs": [
+        "customer-impact escalation note",
+        "handoff package with evidence and unresolved questions"
+      ],
+      "refusal_triggers": [
+        "refund or pricing exception authority is required",
+        "customer harm, safety, or fraud sensitivity determines the answer",
+        "policy exception materially changes the reporting outcome"
+      ],
+      "scenario_ids": [
+        "rrs-05",
+        "rrs-08",
+        "rrs-09",
+        "rrs-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rrs-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "high_volume_customer_workflow_handling"
+      ]
+    },
+    {
+      "scenario_id": "rrs-02",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition"
+      ]
+    },
+    {
+      "scenario_id": "rrs-03",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "rrs-04",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "rrs-05",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_claim_refusal",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "rrs-06",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "rrs-07",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "high_volume_customer_workflow_handling"
+      ]
+    },
+    {
+      "scenario_id": "rrs-08",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "high_volume_customer_workflow_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "rrs-09",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "rrs-10",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "customer_harm_and_policy_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "rrs-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "rrs-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition"
+      ]
+    }
+  ]
+}

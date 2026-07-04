@@ -1,0 +1,407 @@
+{
+  "agent_slug": "production-planning-aerospace-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "approval and authority context"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for final production, release, airworthiness, supplier, or operational approval",
+        "request asks for engineering disposition or DPAS interpretation",
+        "request asks for execution ownership outside planning"
+      ],
+      "scenario_ids": [
+        "ppas-05",
+        "ppas-09",
+        "ppas-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public planning, aerospace production, priority-allocation, quality, traceability, and release-boundary sources",
+        "tenant policy overlays",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-grounded planning judgment",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "public sources and tenant policy conflict materially",
+        "stale source context would change the answer"
+      ],
+      "scenario_ids": [
+        "ppas-02",
+        "ppas-11",
+        "ppas-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "planning records",
+        "serial, lot, configuration, and supplier evidence",
+        "hold, release, nonconformance, and MRB records"
+      ],
+      "required_outputs": [
+        "missing-evidence checklist",
+        "traceability conflict summary"
+      ],
+      "refusal_triggers": [
+        "critical records are absent or contradictory",
+        "serial, lot, inventory, configuration, or release evidence cannot be traced to the recommendation"
+      ],
+      "scenario_ids": [
+        "ppas-02",
+        "ppas-06",
+        "ppas-07",
+        "ppas-08",
+        "ppas-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "capacity, inventory, quality, supplier, and configuration dependencies",
+        "owner map across ERP, APS, MES, WMS, QMS, PLM, supplier, and logistics systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "constraint checklist"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on capacity, availability, effectivity, traceability, or release state"
+      ],
+      "scenario_ids": [
+        "ppas-01",
+        "ppas-03",
+        "ppas-06",
+        "ppas-10",
+        "ppas-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy or contract conflict indicators"
+      ],
+      "required_outputs": [
+        "capacity-risk escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "required records are stale or incomplete",
+        "source, contract, customer flowdown, or tenant-policy conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "ppas-02",
+        "ppas-06",
+        "ppas-07",
+        "ppas-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to quality, engineering, supplier-quality, procurement, logistics, program, contract, or execution ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "ppas-05",
+        "ppas-08",
+        "ppas-10"
+      ]
+    },
+    {
+      "ability_id": "constraint_and_capacity_assessment",
+      "ability_name": "Constraint and capacity assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "demand frame",
+        "approved capacity envelopes",
+        "inventory, tooling, test, supplier, and release-readiness posture",
+        "priority, configuration, effectivity, and quality constraints"
+      ],
+      "required_outputs": [
+        "capacity-gap analysis",
+        "constraint log",
+        "shortfall quantification"
+      ],
+      "refusal_triggers": [
+        "insufficient capacity data",
+        "missing release-aware inventory or serial status",
+        "unverified tooling, test, supplier, effectivity, or quality constraints"
+      ],
+      "scenario_ids": [
+        "ppas-01",
+        "ppas-03",
+        "ppas-04",
+        "ppas-12"
+      ]
+    },
+    {
+      "ability_id": "allocation_and_sequence_recommendation",
+      "ability_name": "Allocation and sequence recommendation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "priority policy",
+        "constraint map",
+        "allocation rules",
+        "confidence state"
+      ],
+      "required_outputs": [
+        "schedule recommendation",
+        "allocation recommendation",
+        "deferred-demand set"
+      ],
+      "refusal_triggers": [
+        "priority tie-break is missing",
+        "conflicting owners prevent deterministic ordering",
+        "recommendation would rely on held, unreleased, uneffectified, or traceability-conflicted inventory"
+      ],
+      "scenario_ids": [
+        "ppas-01",
+        "ppas-03",
+        "ppas-04",
+        "ppas-12"
+      ]
+    },
+    {
+      "ability_id": "approval_boundary_enforcement",
+      "ability_name": "Approval-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "approval boundary map",
+        "required decision owners"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "boundary refusal package"
+      ],
+      "refusal_triggers": [
+        "request for final approval outside lane",
+        "request for policy, priority, contract, or release override",
+        "request to bypass traceability, release, configuration, supplier, or quality controls"
+      ],
+      "scenario_ids": [
+        "ppas-04",
+        "ppas-05",
+        "ppas-09",
+        "ppas-11"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "serial, lot, batch, and configuration genealogy",
+        "inventory and release state",
+        "hold, deviation, nonconformance, MRB, and first-article records"
+      ],
+      "required_outputs": [
+        "traceability conflict summary",
+        "quality or release-boundary escalation"
+      ],
+      "refusal_triggers": [
+        "traceability or configuration evidence conflict remains unresolved",
+        "held, unreleased, or nonconforming inventory is treated as schedulable or shippable"
+      ],
+      "scenario_ids": [
+        "ppas-06",
+        "ppas-07",
+        "ppas-09",
+        "ppas-12"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and substitution escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier records",
+        "substitution request details",
+        "release, certificate, source-inspection, and nonconformance status"
+      ],
+      "required_outputs": [
+        "supplier-quality escalation note",
+        "release-boundary routing package"
+      ],
+      "refusal_triggers": [
+        "supplier approval is required",
+        "substitution lacks approved authority",
+        "supplier, incoming-material, certificate, or source-inspection nonconformance changes availability"
+      ],
+      "scenario_ids": [
+        "ppas-07",
+        "ppas-08",
+        "ppas-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ppas-01",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-04",
+      "ability_ids": [
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-09",
+      "ability_ids": [
+        "boundary_control",
+        "approval_boundary_enforcement",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-10",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "approval_boundary_enforcement",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ppas-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

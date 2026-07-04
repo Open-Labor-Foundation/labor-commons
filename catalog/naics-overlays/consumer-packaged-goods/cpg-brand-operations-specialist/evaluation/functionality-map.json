@@ -1,0 +1,416 @@
+{
+  "agent_slug": "cpg-brand-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "specialty boundary",
+        "approval-authority context",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "scope verdict",
+        "routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for engineering, formulation, final supplier approval, or final QA release authority",
+        "request asks to bypass traceability, hold, release, or quality controls to protect service level or customer commitments"
+      ],
+      "scenario_ids": [
+        "cbo-03",
+        "cbo-05",
+        "cbo-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative FDA, eCFR, CPSC, and GS1 source list",
+        "tenant source precedence policy",
+        "source review metadata",
+        "conflict signals"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "evidence freshness status",
+        "conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public guidance and tenant policy conflict materially",
+        "source freshness exceeds allowed decay policy"
+      ],
+      "scenario_ids": [
+        "cbo-02",
+        "cbo-07",
+        "cbo-08",
+        "cbo-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "production order and brand SKU records",
+        "batch, lot, and inventory history",
+        "quality or completion records",
+        "supplier or co-manufacturer evidence"
+      ],
+      "required_outputs": [
+        "artifact-state linkage",
+        "traceability conflict memo",
+        "completion evidence sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required lot, inventory, or completion evidence is missing",
+        "traceability records conflict across systems of record",
+        "completion is requested without authoritative closure records"
+      ],
+      "scenario_ids": [
+        "cbo-01",
+        "cbo-02",
+        "cbo-04",
+        "cbo-05",
+        "cbo-06",
+        "cbo-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "plant or co-manufacturer dependency map",
+        "owner and escalation path"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "production status summary",
+        "handoff note"
+      ],
+      "refusal_triggers": [
+        "required ERP, MES, WMS, QMS, or supplier records are unavailable",
+        "critical dependency owner is unresolved",
+        "required release authority map is missing"
+      ],
+      "scenario_ids": [
+        "cbo-01",
+        "cbo-04",
+        "cbo-05",
+        "cbo-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority confidence signals",
+        "tenant policy confidence",
+        "source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist"
+      ],
+      "refusal_triggers": [
+        "critical tenant release rules, approved supplier records, or system-of-record context are missing",
+        "source or policy conflict remains unresolved",
+        "evidence sufficiency cannot be determined safely"
+      ],
+      "scenario_ids": [
+        "cbo-02",
+        "cbo-07",
+        "cbo-08"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist directory"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to engineering, quality disposition, supplier-quality approval, procurement approval, or logistics release ownership",
+        "approval ownership ambiguity remains unresolved"
+      ],
+      "scenario_ids": [
+        "cbo-03",
+        "cbo-08",
+        "cbo-09",
+        "cbo-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle stage",
+        "artifact completion status",
+        "throughput or readiness constraints",
+        "approval and handoff readiness"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition recommendation"
+      ],
+      "refusal_triggers": [
+        "state change requested without required evidence",
+        "quality or release blocker unresolved",
+        "job is requested to move to complete without closure criteria"
+      ],
+      "scenario_ids": [
+        "cbo-01",
+        "cbo-02",
+        "cbo-05",
+        "cbo-10",
+        "cbo-11"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "owner resolution context"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework and unblock plan"
+      ],
+      "refusal_triggers": [
+        "evidence gap remains unresolved",
+        "policy conflict remains unresolved",
+        "dependency cannot be cleared without external owners"
+      ],
+      "scenario_ids": [
+        "cbo-02",
+        "cbo-04",
+        "cbo-05",
+        "cbo-07",
+        "cbo-08",
+        "cbo-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure checklist",
+        "reconciliation records",
+        "acceptance or signoff records",
+        "handoff and inventory artifacts"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "case disposition summary"
+      ],
+      "refusal_triggers": [
+        "completion attempted without reconciliation, inventory, or signoff evidence",
+        "approval or signoff records are absent",
+        "open hold or traceability blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "cbo-01",
+        "cbo-04",
+        "cbo-05",
+        "cbo-06"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "batch, lot, and inventory history",
+        "quality hold or release records",
+        "co-manufacturer and warehouse evidence"
+      ],
+      "required_outputs": [
+        "traceability conflict memo",
+        "release dependency summary",
+        "hold or rework escalation package"
+      ],
+      "refusal_triggers": [
+        "traceability or inventory evidence conflict remains unresolved",
+        "hold or release evidence does not support progression or completion"
+      ],
+      "scenario_ids": [
+        "cbo-04",
+        "cbo-05",
+        "cbo-06",
+        "cbo-11"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier records",
+        "substitution or deviation details",
+        "quality or change-control requirements"
+      ],
+      "required_outputs": [
+        "supplier-quality escalation note",
+        "conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "request to approve alternate supplier, substitute material, or continued execution without authority",
+        "request to continue despite unresolved supplier-quality or release issues"
+      ],
+      "scenario_ids": [
+        "cbo-03",
+        "cbo-08",
+        "cbo-09"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cbo-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "completion_evidence_capture",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-05",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cbo-11",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

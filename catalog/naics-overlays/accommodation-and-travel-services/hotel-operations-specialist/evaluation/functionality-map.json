@@ -1,0 +1,456 @@
+{
+  "agent_slug": "hotel-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and operating context",
+        "hotel operations specialty boundary",
+        "approval authority map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for pricing, refund, compensation, oversell, walk-strategy, safety, fraud, legal, engineering, or executive approval authority",
+        "request asks the lane to override front-office room control, identity, payment guarantee, accessible-room, or key-control rules",
+        "request asks the lane to close room, incident, outage, or service work without required evidence"
+      ],
+      "scenario_ids": [
+        "hos-03",
+        "hos-05",
+        "hos-06",
+        "hos-08",
+        "hos-09",
+        "hos-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative BLS, O*NET, AHLA, OpenTravel, FTC, CFPB, DOJ, CDC, CISA, NIST, PCI SSC, and FTC Red Flags source set",
+        "source freshness metadata",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "freshness or staleness note",
+        "conflict or confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdiction, brand, labor, processor, or property policy materially changes the answer",
+        "public guidance and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "hos-01",
+        "hos-04",
+        "hos-08",
+        "hos-11",
+        "hos-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "PMS occupancy and room-status records",
+        "housekeeping board, inspection, and room-turn records",
+        "work-order, staffing, service-ticket, incident, outage, and approval records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked operations summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core PMS, housekeeping, work-order, staffing, ticketing, incident, or approval records are absent or contradictory",
+        "completion cannot be tied to authoritative systems of record",
+        "operations summary would overstate what the records prove"
+      ],
+      "scenario_ids": [
+        "hos-01",
+        "hos-02",
+        "hos-04",
+        "hos-05",
+        "hos-06",
+        "hos-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "operating dependency map",
+        "authority matrix"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required PMS, housekeeping, work-order, staffing, ticketing, incident, or outage records are unavailable",
+        "tenant room-readiness, staffing, safety, payment, or service-recovery policy mapping is missing",
+        "next owner or retrieval dependency is unknown"
+      ],
+      "scenario_ids": [
+        "hos-01",
+        "hos-02",
+        "hos-04",
+        "hos-07",
+        "hos-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals",
+        "approval-owner map"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "hos-02",
+        "hos-04",
+        "hos-08",
+        "hos-09",
+        "hos-11",
+        "hos-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to front office, guest services, lodging revenue, fraud investigation, safety or security, compliance, housekeeping coordination, property maintenance, or executive ownership",
+        "request requires final approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "hos-03",
+        "hos-05",
+        "hos-08",
+        "hos-09",
+        "hos-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "occupancy, room-status, and service-ticket state",
+        "blocker and approval context",
+        "completion criteria"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition recommendation",
+        "held, reworked, escalated, or completed disposition"
+      ],
+      "refusal_triggers": [
+        "state change requested without required evidence",
+        "safety, room-control, staffing, or approval blocker remains unresolved",
+        "work is requested to move to complete without closure criteria"
+      ],
+      "scenario_ids": [
+        "hos-01",
+        "hos-02",
+        "hos-05",
+        "hos-06",
+        "hos-10",
+        "hos-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "guest-impact severity",
+        "owner resolution context"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework and unblock plan",
+        "escalation package"
+      ],
+      "refusal_triggers": [
+        "evidence gap remains unresolved",
+        "policy conflict remains unresolved",
+        "dependency cannot be cleared without external owners",
+        "guest-impact severity requires safety, fraud, pricing, or executive authority"
+      ],
+      "scenario_ids": [
+        "hos-02",
+        "hos-04",
+        "hos-05",
+        "hos-07",
+        "hos-08",
+        "hos-09",
+        "hos-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure checklist",
+        "PMS, housekeeping, work-order, staffing, service-ticket, incident, and approval records",
+        "timestamps and accountable owner",
+        "open blocker inventory"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "case disposition summary",
+        "open-exception register"
+      ],
+      "refusal_triggers": [
+        "completion attempted without authoritative status updates or inspection evidence",
+        "approval, incident, safety, or signoff records are absent",
+        "open operational blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "hos-01",
+        "hos-05",
+        "hos-06",
+        "hos-10"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue segmentation rules",
+        "arrival, room-readiness, and service-ticket class inventory",
+        "record-readiness indicators",
+        "service-level expectations"
+      ],
+      "required_outputs": [
+        "high-volume triage summary",
+        "priority and owner routing map",
+        "blocked-versus-ready queue split"
+      ],
+      "refusal_triggers": [
+        "queue handling would skip evidence checks or boundary rules",
+        "request classes are blended in a way that hides safety, fraud, policy-exception, or completion-evidence work",
+        "service-level pressure is being used to justify unsupported decisions"
+      ],
+      "scenario_ids": [
+        "hos-01",
+        "hos-07",
+        "hos-10"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "guest-impact severity",
+        "customer-harm indicators",
+        "policy-exception thresholds",
+        "fraud, safety, and revenue escalation owner map"
+      ],
+      "required_outputs": [
+        "harm-aware escalation packet",
+        "policy-exception rationale",
+        "next owner and response deadline"
+      ],
+      "refusal_triggers": [
+        "customer harm, fraud, or policy exception determines the answer",
+        "the case requires safety, refund, compensation, pricing, accessibility exception, or fraud authority",
+        "repeat or high-impact failure materially changes whether routine handling is safe"
+      ],
+      "scenario_ids": [
+        "hos-03",
+        "hos-08",
+        "hos-09",
+        "hos-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hos-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-05",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-06",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-08",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-09",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hos-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    }
+  ]
+}

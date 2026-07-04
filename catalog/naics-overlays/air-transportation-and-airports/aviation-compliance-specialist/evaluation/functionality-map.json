@@ -1,0 +1,492 @@
+{
+  "agent_slug": "aviation-compliance-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 12,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "aviation compliance specialty boundary",
+        "dispatch, customs, security, safety, maintenance, airport, and legal authority matrix",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for dispatch release, customs clearance, cargo screening certification, dangerous-goods acceptance, safety signoff, maintenance release, legal advice, regulator negotiation, or formal certification",
+        "request asks the lane to override security, customs, maintenance, route, service-level, or evidence controls",
+        "request belongs to dispatch, customs, maintenance, warehouse, customer operations, safety, security, airport operations, or legal owners"
+      ],
+      "scenario_ids": [
+        "avcs-04",
+        "avcs-07",
+        "avcs-09",
+        "avcs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FAA, TSA, CBP, PHMSA/DOT, IATA, and tenant source baseline",
+        "source freshness indicators",
+        "jurisdiction, route, security-program, and policy precedence map"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "source freshness statement",
+        "policy or source conflict note"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdiction, airport, route, security, customs, or dangerous-goods source context materially changes the answer",
+        "public baseline and tenant policy, security program, customs instruction, airport procedure, carrier rule, or service commitment conflict without resolution"
+      ],
+      "scenario_ids": [
+        "avcs-01",
+        "avcs-03",
+        "avcs-04",
+        "avcs-11",
+        "avcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "air waybill, booking, dispatch, load, manifest, custody, screening, customs, dangerous-goods, equipment, maintenance, route, safety, and service-level records",
+        "control or obligation references",
+        "evidence owner and system-of-record mapping"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked readiness summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core aviation evidence is absent, stale, contradictory, or not tied to a system of record",
+        "movement, custody, route, customs, screening, equipment, maintenance, or safety state cannot be linked to the request",
+        "output would overstate what evidence proves"
+      ],
+      "scenario_ids": [
+        "avcs-01",
+        "avcs-02",
+        "avcs-05",
+        "avcs-06",
+        "avcs-08",
+        "avcs-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant retrieval hooks",
+        "airport, station, flight, shipment, route, and jurisdiction context",
+        "approval owner matrix"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required TMS, WMS, booking, dispatch, cargo, customs, security, dangerous-goods, maintenance, fleet, airport, safety, or document-control system is unavailable",
+        "record location or evidence owner is unknown",
+        "tenant policy, security program, customs broker instruction, route, airport, service-level, or approval dependency is missing"
+      ],
+      "scenario_ids": [
+        "avcs-02",
+        "avcs-05",
+        "avcs-08",
+        "avcs-11",
+        "avcs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "source, record, or policy conflict signals",
+        "confidence rubric",
+        "human owner routing"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical tenant, jurisdiction, route, station, shipment, asset, source, or authority prerequisite remains unknown",
+        "source-of-truth conflict remains unresolved",
+        "authority boundary is unclear for dispatch, customs, security, safety, dangerous goods, maintenance, airport operations, legal, or customer commitment handling"
+      ],
+      "scenario_ids": [
+        "avcs-03",
+        "avcs-05",
+        "avcs-07",
+        "avcs-11",
+        "avcs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent lane registry",
+        "handoff package requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to dispatch, customs, maintenance, warehouse, customer operations, safety, security, airport operations, ground handling, dangerous-goods, or legal specialists",
+        "request requires final approval or licensed judgment outside the lane",
+        "lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "avcs-04",
+        "avcs-07",
+        "avcs-08",
+        "avcs-10"
+      ]
+    },
+    {
+      "ability_id": "obligation_and_control_mapping",
+      "ability_name": "Obligation and control mapping",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "aviation obligations and policy references",
+        "public regulator or standards baseline",
+        "tenant control catalog",
+        "evidence owner and cadence expectations"
+      ],
+      "required_outputs": [
+        "control or obligation matrix",
+        "policy gap and overlap matrix",
+        "review cadence mapping"
+      ],
+      "refusal_triggers": [
+        "required aviation obligation or control references are missing",
+        "public source, tenant policy, security program, customs instruction, airport procedure, carrier rule, or jurisdiction conflict materially changes interpretation",
+        "requested mapping would imply legal, dispatch, customs, security, safety, maintenance, or formal signoff authority"
+      ],
+      "scenario_ids": [
+        "avcs-01",
+        "avcs-02",
+        "avcs-03",
+        "avcs-06",
+        "avcs-09",
+        "avcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_and_review_management",
+      "ability_name": "Evidence and review management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "control completion evidence",
+        "review findings",
+        "artifact locations",
+        "approval and remediation status"
+      ],
+      "required_outputs": [
+        "evidence readiness or gap summary",
+        "review-preparation packet",
+        "closure blocker list"
+      ],
+      "refusal_triggers": [
+        "review evidence is incomplete, stale, or unverifiable",
+        "required approvals are absent",
+        "artifact integrity or system-of-record linkage cannot be validated"
+      ],
+      "scenario_ids": [
+        "avcs-01",
+        "avcs-02",
+        "avcs-05",
+        "avcs-08",
+        "avcs-11",
+        "avcs-12"
+      ]
+    },
+    {
+      "ability_id": "exception_and_remediation_handling",
+      "ability_name": "Exception and remediation handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "identified control gaps",
+        "policy conflicts or informal workaround details",
+        "remediation options",
+        "owner assignments"
+      ],
+      "required_outputs": [
+        "exception escalation note",
+        "remediation routing and deadline expectation",
+        "control-gap owner map"
+      ],
+      "refusal_triggers": [
+        "exception cannot be assigned to an authorized owner",
+        "remediation path is missing or conflicts with policy",
+        "source, policy, record, or authority ambiguity persists"
+      ],
+      "scenario_ids": [
+        "avcs-03",
+        "avcs-05",
+        "avcs-06",
+        "avcs-08",
+        "avcs-09"
+      ]
+    },
+    {
+      "ability_id": "unauthorized_signoff_refusal",
+      "ability_name": "Unauthorized signoff refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested signoff or approval action",
+        "authority matrix",
+        "evidence and source limitations"
+      ],
+      "required_outputs": [
+        "unauthorized-signoff refusal",
+        "authorized owner routing",
+        "evidence handoff packet"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, regulator response, formal certification, dispatch release, customs clearance, TSA screening certification, dangerous-goods acceptance, safety signoff, maintenance release, airport-command approval, financial approval, or policy override",
+        "approval owner is absent or disputed",
+        "required evidence is incomplete or in conflict"
+      ],
+      "scenario_ids": [
+        "avcs-04",
+        "avcs-07",
+        "avcs-08",
+        "avcs-09"
+      ]
+    },
+    {
+      "ability_id": "movement_and_chain_of_custody_handling",
+      "ability_name": "Movement and chain-of-custody handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "shipment, booking, air waybill, load, route, dispatch, custody, handoff, and service-level records",
+        "movement status and exception details",
+        "custody owner and system-of-record mapping"
+      ],
+      "required_outputs": [
+        "movement documentation checklist",
+        "chain-of-custody gap summary",
+        "handoff or disruption owner map"
+      ],
+      "refusal_triggers": [
+        "movement, custody, route, dispatch, or handoff records conflict",
+        "screening, customs, dangerous-goods, or equipment prerequisites are missing",
+        "request would authorize movement without approved dispatch, customs, security, safety, or maintenance owner action"
+      ],
+      "scenario_ids": [
+        "avcs-01",
+        "avcs-02",
+        "avcs-05",
+        "avcs-06",
+        "avcs-09"
+      ]
+    },
+    {
+      "ability_id": "safety_and_clearance_escalation",
+      "ability_name": "Safety and clearance escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "safety, customs, security, dangerous-goods, maintenance, airport, route, and clearance signals",
+        "authority owner matrix",
+        "risk and evidence limitations"
+      ],
+      "required_outputs": [
+        "safety or clearance escalation note",
+        "blocked-movement rationale",
+        "authorized owner routing package"
+      ],
+      "refusal_triggers": [
+        "movement depends on dispatch release, customs clearance, TSA security determination, dangerous-goods acceptance, maintenance return-to-service, airworthiness release, airport operations command, or safety-critical approval",
+        "hazard, security hold, customs hold, dangerous-goods issue, airport condition, or equipment status materially affects movement",
+        "authority source or tenant approval boundary is unclear"
+      ],
+      "scenario_ids": [
+        "avcs-04",
+        "avcs-06",
+        "avcs-07",
+        "avcs-08",
+        "avcs-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "avcs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping",
+        "exception_and_remediation_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-04",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "exception_and_remediation_handling",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-07",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "unauthorized_signoff_refusal",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-09",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "exception_and_remediation_handling",
+        "unauthorized_signoff_refusal",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "evidence_and_review_management",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "avcs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_declared": true,
+    "all_results_scenarios_represented": true,
+    "minimum_scenario_count_met": true,
+    "notes": [
+      "All shared abilities, compliance-controls-and-governance abilities, and transportation-and-logistics abilities are declared and mapped to one or more passing scenario IDs.",
+      "Every scenario in evaluation/results.json is represented in scenario_coverage.",
+      "Coverage emphasizes missing evidence, chain-of-custody breaks, route disruption, safety and clearance escalation, unauthorized signoff refusal, adjacent-lane routing, and tenant-specific adaptation."
+    ]
+  }
+}

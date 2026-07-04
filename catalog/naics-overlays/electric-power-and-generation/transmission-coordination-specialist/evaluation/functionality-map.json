@@ -1,0 +1,377 @@
+{
+  "agent_slug": "transmission-coordination-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended action",
+        "specialty boundary",
+        "authority map for RC, TOP, BA, TSP, compliance, engineering, and control-room owners"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for outage approval, switching authority, curtailment approval, emergency declaration, tariff interpretation, engineering signoff, or compliance signoff",
+        "request attempts to bypass transmission-specific blocker or authority checks"
+      ],
+      "scenario_ids": [
+        "tcs-04",
+        "tcs-05",
+        "tcs-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FERC transmission-access guidance",
+        "NERC TOP standards and functional references",
+        "NAESB WEQ workflow references",
+        "tenant procedures and regional manuals"
+      ],
+      "required_outputs": [
+        "source-grounded routing criteria",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required tenant or regional source context is missing",
+        "public guidance and tenant policy conflict materially on the outcome"
+      ],
+      "scenario_ids": [
+        "tcs-06",
+        "tcs-08",
+        "tcs-09"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "outage scheduler records",
+        "OASIS or reservation references",
+        "e-Tag or interchange details",
+        "operator communications and notification evidence"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing-evidence checklist",
+        "record-linked blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical outage, reservation, interchange, notification, or operator evidence is absent or contradictory"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-07",
+        "tcs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "owner map",
+        "dependency status across outage scheduler, OASIS, e-Tag, EMS or SCADA, and ticketing systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical owner or system of record is unresolved",
+        "systems materially disagree on work state or destination owner"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-03",
+        "tcs-06",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy or source conflict indicators"
+      ],
+      "required_outputs": [
+        "blocked-dependency escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source, tariff, regional, or policy conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "tcs-06",
+        "tcs-08",
+        "tcs-09"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing confirmation note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to control-room operations, compliance, engineering, regulatory, or restoration ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "tcs-04",
+        "tcs-05",
+        "tcs-11",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "task dependencies",
+        "artifact availability state",
+        "owner assignments"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "handoff blocker summary"
+      ],
+      "refusal_triggers": [
+        "dependency map cannot be established",
+        "handoff artifact set is incomplete"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-03",
+        "tcs-10",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "prior owner context",
+        "destination owner",
+        "required artifact checklist"
+      ],
+      "required_outputs": [
+        "handoff summary",
+        "handoff status summary"
+      ],
+      "refusal_triggers": [
+        "prior owner is unknown",
+        "destination owner or acceptance proof is absent",
+        "required records are missing"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-07",
+        "tcs-09",
+        "tcs-10"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open blockers",
+        "closure criteria",
+        "destination owner acceptance status"
+      ],
+      "required_outputs": [
+        "closure confirmation",
+        "blocked-dependency escalation note"
+      ],
+      "refusal_triggers": [
+        "closure criteria are not met",
+        "destination owner acceptance is missing",
+        "ownership or evidence blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "tcs-02",
+        "tcs-03",
+        "tcs-08",
+        "tcs-10",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "transmission outage, reservation, and interchange artifacts",
+        "regional or tenant transmission context",
+        "bulk-power coordination vocabulary"
+      ],
+      "required_outputs": [
+        "industry-specific handoff note",
+        "routing confirmation",
+        "artifact-aware blocker log"
+      ],
+      "refusal_triggers": [
+        "industry artifact set is missing",
+        "bulk-power terminology or system context is required to avoid overgeneralization",
+        "tenant context is needed to distinguish transmission coordination from generic coordination"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-07",
+        "tcs-09"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "tcs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "blocker_and_closure_management",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "handoff_execution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "handoff_execution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-12",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "dependency_tracking",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    }
+  ]
+}

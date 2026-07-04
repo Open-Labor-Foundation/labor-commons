@@ -1,0 +1,409 @@
+{
+  "agent_slug": "housing-finance-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended housing finance action",
+        "specialty boundary and adjacent-owner map",
+        "funding stack, approval matrix, and authority context"
+      ],
+      "required_outputs": [
+        "unsupported-adjustment-refusal",
+        "adjacent-specialist-routing-note",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request asks for rent, subsidy, HAP, HOME draw, development draw, LIHTC, accounting, tax, legal, write-off, owner distribution, reserve release, lender, audit, or financial approval authority",
+        "request asks the lane to alter official certifications, voucher records, draw records, ledgers, GL, audit records, or compliance records without authority and traceability"
+      ],
+      "scenario_ids": [
+        "hfhfs-04",
+        "hfhfs-06",
+        "hfhfs-11",
+        "hfhfs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "HUD, eCFR, IRS, 2 CFR Part 200, GAO, HFA, lender, and tenant source set",
+        "source freshness metadata",
+        "tenant source hierarchy and program overlay"
+      ],
+      "required_outputs": [
+        "source-grounded financial posture",
+        "source freshness caveat",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required authoritative housing finance source context is missing",
+        "stale source context would change charge, HAP, draw, posting, reconciliation, or exception handling",
+        "public sources, tenant policy, lender instructions, or program manuals conflict materially"
+      ],
+      "scenario_ids": [
+        "hfhfs-07",
+        "hfhfs-08",
+        "hfhfs-09",
+        "hfhfs-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "leases, certifications, HAP, TRACS, ledger, GL, bank, HOME, IDIS, draw, LIHTC, FASS, and audit artifacts",
+        "systems-of-record links and retrieval hooks",
+        "financial artifact checklist and acceptance evidence"
+      ],
+      "required_outputs": [
+        "source-linked billing or posting summary",
+        "housing finance reconciliation note",
+        "missing-evidence checklist"
+      ],
+      "refusal_triggers": [
+        "critical official records or audit trails are absent, stale, or contradictory",
+        "billing, posting, draw, or adjustment support cannot be traced to authoritative housing records",
+        "destination-owner acceptance and artifact completeness cannot be established"
+      ],
+      "scenario_ids": [
+        "hfhfs-01",
+        "hfhfs-02",
+        "hfhfs-03",
+        "hfhfs-05",
+        "hfhfs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "owner map across property management, subsidy, grants, development accounting, lender, compliance, tax, accounting, legal, and audit systems",
+        "posting, reconciliation, approval, blocker, close, and escalation criteria"
+      ],
+      "required_outputs": [
+        "system-readiness blocker summary",
+        "owner and retrieval requirements",
+        "tenant adaptation assumption log"
+      ],
+      "refusal_triggers": [
+        "authoritative system or record location is unknown",
+        "critical dependency owner is unresolved",
+        "systems materially disagree on certification, HAP, tenant ledger, draw, grant, lender, tax-credit, bank, GL, or close state"
+      ],
+      "scenario_ids": [
+        "hfhfs-03",
+        "hfhfs-05",
+        "hfhfs-07",
+        "hfhfs-09",
+        "hfhfs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing tenant fact flags",
+        "source and policy conflict indicators",
+        "authority completeness signals",
+        "variance and denial indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "missing-information checklist",
+        "revenue exception escalation note"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authoritative records would change the financial output",
+        "source, policy, accounting, tax, legal, lender, subsidy, grant, compliance, or owner conflict prevents safe synthesis",
+        "correct adjacent owner or approving authority cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "hfhfs-03",
+        "hfhfs-05",
+        "hfhfs-07",
+        "hfhfs-09",
+        "hfhfs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist registry",
+        "handoff prerequisites and artifact requirements",
+        "decision owner map",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "adjacent-specialist-routing-note",
+        "next-owner evidence package",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to occupancy compliance, subsidy contract administration, asset management, grant management, development accounting, lender servicing, LIHTC compliance, tax, legal, controller, audit, or HUD/PHA approval ownership",
+        "adjacent owner cannot be uniquely identified",
+        "handoff evidence is incomplete or current owner is not accountable"
+      ],
+      "scenario_ids": [
+        "hfhfs-04",
+        "hfhfs-06",
+        "hfhfs-09",
+        "hfhfs-11",
+        "hfhfs-12"
+      ]
+    },
+    {
+      "ability_id": "financial_trigger_and_source_traceability",
+      "ability_name": "Financial-trigger and source traceability",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "housing finance trigger such as rent charge, HAP voucher, grant draw, reserve release, development invoice, receivable posting, adjustment, denial, or close blocker",
+        "source records and systems that establish the trigger",
+        "coding, chart-of-account, period, amount, property, project, tenant, unit, grant, or lender context"
+      ],
+      "required_outputs": [
+        "billing-readiness-summary",
+        "billing-or-posting-summary",
+        "source traceability table"
+      ],
+      "refusal_triggers": [
+        "financial trigger is not supported by authoritative housing records",
+        "coding, classification, period, property, project, tenant, grant, or source hierarchy is missing",
+        "requested trigger depends on approval or interpretation outside the lane"
+      ],
+      "scenario_ids": [
+        "hfhfs-01",
+        "hfhfs-02",
+        "hfhfs-05",
+        "hfhfs-08",
+        "hfhfs-12"
+      ]
+    },
+    {
+      "ability_id": "reconciliation_and_exception_resolution",
+      "ability_name": "Reconciliation and exception resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "matched and unmatched financial records across housing systems",
+        "variance, denial, reject, dispute, aging, close blocker, and exception state",
+        "root-cause categories and escalation criteria"
+      ],
+      "required_outputs": [
+        "housing-finance-reconciliation-note",
+        "root-cause-reconciliation-summary",
+        "financial-exception-escalation-packet"
+      ],
+      "refusal_triggers": [
+        "variance cannot be reconciled to authoritative records",
+        "denial, reject, dispute, write-off, draw, or close blocker requires another owner",
+        "systems materially disagree and no approved source hierarchy resolves the difference"
+      ],
+      "scenario_ids": [
+        "hfhfs-01",
+        "hfhfs-03",
+        "hfhfs-05",
+        "hfhfs-09",
+        "hfhfs-10"
+      ]
+    },
+    {
+      "ability_id": "unsupported_financial_change_refusal",
+      "ability_name": "Unsupported financial-change refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested financial change, adjustment, write-off, override, draw, distribution, or accounting treatment",
+        "source support and approval evidence",
+        "tenant policy and authority matrix"
+      ],
+      "required_outputs": [
+        "unsupported-adjustment-refusal",
+        "financial exception escalation packet",
+        "adjacent-specialist routing note"
+      ],
+      "refusal_triggers": [
+        "requested change lacks authoritative source support",
+        "requested change requires financial approval, accounting, tax, legal, lender, grantor, HUD, PHA, or compliance authority",
+        "request asks to bypass documented controls, source hierarchy, or audit trail"
+      ],
+      "scenario_ids": [
+        "hfhfs-02",
+        "hfhfs-04",
+        "hfhfs-06",
+        "hfhfs-11",
+        "hfhfs-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "housing-specific terminology, funding stack, program type, and artifact set",
+        "official records from subsidy, property, grant, development, lender, tax-credit, GL, bank, and audit systems",
+        "tenant source hierarchy and public baseline source context"
+      ],
+      "required_outputs": [
+        "housing artifact map",
+        "source-system and owner map",
+        "tenant adaptation assumption log"
+      ],
+      "refusal_triggers": [
+        "industry-specific housing artifacts are missing or treated as cosmetic labels",
+        "request cannot be grounded in actual housing records and systems",
+        "tenant-specific labels cannot be mapped to the public baseline without assumptions"
+      ],
+      "scenario_ids": [
+        "hfhfs-01",
+        "hfhfs-07",
+        "hfhfs-08",
+        "hfhfs-10",
+        "hfhfs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hfhfs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "financial_trigger_and_source_traceability",
+        "reconciliation_and_exception_resolution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "financial_trigger_and_source_traceability",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "reconciliation_and_exception_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "financial_trigger_and_source_traceability",
+        "reconciliation_and_exception_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "financial_trigger_and_source_traceability",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "reconciliation_and_exception_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "reconciliation_and_exception_resolution",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-11",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hfhfs-12",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "financial_trigger_and_source_traceability",
+        "unsupported_financial_change_refusal",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_complete": true
+}

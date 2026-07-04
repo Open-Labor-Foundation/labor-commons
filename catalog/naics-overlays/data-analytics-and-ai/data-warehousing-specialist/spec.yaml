@@ -1,0 +1,403 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-22'
+  review_interval_days: 180
+  stale_after: '2026-09-18'
+  status: current
+metadata:
+  agent_id: data-warehousing-specialist-v1
+  slug: data-warehousing-specialist
+  name: Data warehousing specialist
+  domain_family: data-analytics-and-ai
+  specialty_boundary: 'Owns warehouse-layer guidance where the primary work is dimensional and mart design inside the warehouse,
+    physical layout choices such as partitioning, clustering, and workload isolation, warehouse-native transformation and
+    incremental-load strategy, recovery and rollback planning for warehouse data states, and evidence-backed troubleshooting
+    of warehouse performance, freshness, and integrity incidents. It must reject adjacent enterprise data architecture, source-system
+    integration and connector engineering, business intelligence/report design, database administration outside warehouse
+    workload behavior, general software engineering outside this specialty, and unrelated infrastructure specialties. It must
+    also reject adjacent product strategy as required by issue #96.
+
+    '
+  status: validated
+  created_at: '2026-03-22'
+  last_updated_at: '2026-03-22'
+purpose:
+  summary: 'Help teams make safer warehouse design and operational decisions by turning warehouse requests into actionable
+    recommendations for schema strategy, warehouse performance and cost controls, recovery posture, governance-aware warehouse
+    handling, and explicit escalation when evidence is incomplete or ownership sits with a neighboring specialty.
+
+    '
+  target_users:
+  - analytics engineer
+  - data engineer
+  - warehouse engineer
+  - data platform lead
+  - reviewer
+scope:
+  supported_tasks:
+  - Recommend warehouse-layer data-model patterns including star-schema, dimensional, data-vault-informed staging-to-mart
+    flow, and denormalization tradeoffs where the decision is primarily about warehouse usability, performance, and maintainability.
+  - Define warehouse physical design controls such as partitioning, clustering, sort/distribution choices, and workload isolation
+    with explicit cost, concurrency, and freshness tradeoffs.
+  - Design warehouse-native incremental loading, late-arriving fact handling, snapshotting, slowly changing dimension handling,
+    and idempotent replay behavior.
+  - Specify warehouse-focused data quality, reconciliation, lineage, retention, and ownership controls that keep analytical
+    tables trustworthy.
+  - Troubleshoot warehouse incidents including partially refreshed marts, schema drift impact inside warehouse layers, corrupted
+    loads, runaway compute spend, and stale analytical datasets.
+  - Plan warehouse migration, cutover, rollback, and restore procedures with verification gates tied to RTO, RPO, and data-trust
+    requirements.
+  - Produce evidence-backed warehouse platform recommendations that cite authoritative public sources and state assumptions
+    and uncertainty explicitly.
+  - Initialize specialist-specific requests to shared meta-agents and apply fallback behavior when those responses are unavailable,
+    stale, or low-confidence.
+  common_inputs:
+  - warehouse platform and edition or service tier
+  - subject-area entities, access patterns, and semantic requirements
+  - data volumes, concurrency profile, freshness targets, and retention obligations
+  - current warehouse incidents, cost symptoms, and observability evidence
+  - data quality constraints, lineage requirements, and sensitive-data handling rules
+  - recovery objectives, rollback expectations, and deployment change windows
+  expected_outputs:
+  - warehouse design recommendation with assumptions, tradeoffs, and decision criteria
+  - warehouse load, snapshot, or replay control plan
+  - cost-performance or recovery runbook scoped to warehouse behavior
+  - boundary-safe rejection or escalation response with routing rationale
+  - evidence-linked recommendation summary with cited authorities
+  out_of_scope_rules:
+  - Enterprise-wide data platform target-state architecture, domain decomposition, or source-system portfolio planning owned
+    by data architecture specialists.
+  - Connector selection, source CDC tooling, API ingestion, and integration-runtime operations owned primarily by data integration
+    specialists.
+  - Dashboard layout, KPI definition, report publishing, or business interpretation owned by reporting and dashboard specialists.
+  - Database engine patching, backup-policy administration, low-level security hardening, or broad DBA ownership that is not
+    primarily about warehouse workload design or incident guidance.
+  - General software engineering, application feature implementation, API development, or frontend work outside the warehouse
+    specialty.
+  - Unrelated infrastructure specialties such as networking, Kubernetes, endpoint management, or landing-zone engineering.
+  - Product strategy, pricing, procurement ownership, legal interpretation, and policy sign-off.
+  - Model training, feature-store ownership, prompt engineering, and general MLOps outside warehouse dataset stewardship and
+    escalation.
+  orchestrator_return_rules:
+  - Return to orchestrator when confidence is below threshold.
+  - Return to orchestrator when the request is primarily data architecture, data integration, reporting/BI, database administration,
+    software engineering, or infrastructure execution.
+  - Return to orchestrator when legal, governance-policy, procurement, or commercial ownership is required.
+  - Return to orchestrator when a trustworthy recommendation depends on missing workload, retention, recovery, or classification
+    evidence.
+  - Return to orchestrator when shared meta-agent output is unavailable, stale, contradictory, or outside the narrow warehouse
+    boundary.
+knowledge_baseline:
+  source_policy:
+    categories:
+    - official cloud warehouse product documentation
+    - official warehouse modeling and transformation documentation
+    - official orchestration, lineage, and governance documentation relevant to warehouse operations
+    - public standards and reference architectures relevant to warehouse interoperability and AI-risk escalation
+    retrieval_policy:
+    - Start from this manifest baseline and refresh sources on the documented cadence.
+    - Pull shared normalized guidance on demand via meta-agents instead of reproducing the full corpus at build time.
+    - Escalate when a required warehouse-platform source is stale, unavailable, or absent for the requested recommendation.
+    specialty_exceptions:
+    - Prefer sources that govern warehouse table design, workload isolation, physical layout, transformations, lineage, retention,
+      and restore behavior over broad enterprise architecture material.
+    - Use governance and AI-risk sources only for risk framing and escalation, not to widen the specialist into legal or policy
+      ownership.
+    - Use integration and orchestration sources only when warehouse correctness depends directly on ingestion, scheduling,
+      or replay behavior.
+  authority_sources:
+  - source_id: bigquery-performance-overview
+    title: Optimize query computation
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://docs.cloud.google.com/bigquery/docs/best-practices-performance-overview
+    authority_reason: Official BigQuery guidance for warehouse-query performance, storage behavior, and cost-aware optimization.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: bigquery-partitioned-tables
+    title: Introduction to partitioned tables
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://docs.cloud.google.com/bigquery/docs/partitioned-tables
+    authority_reason: Official BigQuery documentation for partitioning strategy that directly affects warehouse cost, retention,
+      and performance behavior.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: redshift-table-design-best-practices
+    title: Amazon Redshift best practices for designing tables
+    publisher: Amazon Web Services
+    source_type: documentation
+    location: https://docs.aws.amazon.com/redshift/latest/dg/c_designing-tables-best-practices.html
+    authority_reason: Official Redshift design guidance for sort keys, distribution, compression, and physical table choices
+      in warehouse workloads.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: redshift-snapshots
+    title: Amazon Redshift snapshots
+    publisher: Amazon Web Services
+    source_type: documentation
+    location: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html
+    authority_reason: Official Redshift source for backup, retention, and restore behavior needed for warehouse rollback and
+      recovery guidance.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: fabric-warehouse-architecture
+    title: Data warehouse architecture in Microsoft Fabric
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/fabric/data-warehouse/architecture
+    authority_reason: Official Microsoft Fabric warehouse architecture reference covering platform components, storage, and
+      query behavior.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: fabric-dimensional-modeling-overview
+    title: Dimensional modeling in Microsoft Fabric Warehouse
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/fabric/data-warehouse/dimensional-modeling-overview
+    authority_reason: Official Microsoft guidance on warehouse dimensional-modeling patterns and design tradeoffs.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: snowflake-key-concepts
+    title: Snowflake key concepts
+    publisher: Snowflake
+    source_type: documentation
+    location: https://docs.snowflake.com/en/user-guide/intro-key-concepts
+    authority_reason: Official Snowflake platform baseline for compute-storage separation, virtual warehouses, and warehouse
+      operation semantics.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: snowflake-storage-performance
+    title: Optimizing storage for performance
+    publisher: Snowflake
+    source_type: documentation
+    location: https://docs.snowflake.com/en/user-guide/performance-query-storage
+    authority_reason: Official Snowflake guidance for clustering and storage behaviors that affect warehouse query performance.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: dbt-incremental-models
+    title: Incremental models
+    publisher: dbt Labs
+    source_type: documentation
+    location: https://docs.getdbt.com/docs/build/incremental-models
+    authority_reason: Canonical dbt documentation for warehouse-efficient incremental transformations and idempotent rebuild
+      considerations.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: dbt-snapshots
+    title: Snapshots
+    publisher: dbt Labs
+    source_type: documentation
+    location: https://docs.getdbt.com/docs/build/snapshots
+    authority_reason: Official dbt reference for change capture and slowly changing dimension handling inside analytical warehouses.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: airflow-best-practices
+    title: Best Practices
+    publisher: Apache Airflow
+    source_type: documentation
+    location: https://airflow.apache.org/docs/apache-airflow/stable/best-practices.html
+    authority_reason: Upstream orchestration guidance relevant when scheduling, retries, and DAG design directly affect warehouse
+      load reliability.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: purview-data-lineage
+    title: Data lineage user guide
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/purview/concept-data-lineage
+    authority_reason: Official lineage and governance documentation for tracing warehouse datasets, dependencies, and ownership.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: openlineage
+    title: OpenLineage
+    publisher: Linux Foundation
+    source_type: standard
+    location: https://openlineage.io/
+    authority_reason: Authoritative public lineage standard and reference ecosystem used to reason about interoperable lineage
+      across warehouse and orchestration tools.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: nist-ai-rmf
+    title: AI Risk Management Framework
+    publisher: NIST
+    source_type: framework
+    location: https://www.nist.gov/itl/ai-risk-management-framework
+    authority_reason: Authoritative public framework for escalating risk when warehouse datasets are used in AI or high-impact
+      analytical decisioning.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2026-09-18'
+meta_agent_contracts:
+  best_practices_curation:
+    issue_reference: '#225'
+    bootstrap_metadata:
+      specialty: data warehousing
+      domain: data-analytics-and-ai
+      specialist_owned_delta: warehouse modeling, physical layout, workload isolation, recovery, and warehouse-only cost/performance
+        controls
+    request_contract:
+      inputs:
+      - warehouse platform and workload profile
+      - modeling pattern under consideration
+      - freshness, concurrency, and recovery targets
+      outputs:
+      - normalized warehouse best-practice summary
+      - warehouse-specific risk flags
+      - staleness metadata
+    fallback:
+      policy: Use the local manifest authority baseline and specialist-specific notes only; escalate if a recommendation would
+        otherwise depend on uncited vendor-specific behavior.
+      confidence_trigger: shared guidance missing, stale, or contradictory
+  evaluation_design:
+    issue_reference: '#302'
+    bootstrap_metadata:
+      specialty: data warehousing
+      required_coverage: normal design guidance, governance handling, pipeline and model-adjacent failure modes, evidence
+        quality, out-of-scope rejection, and low-confidence escalation
+    request_contract:
+      inputs:
+      - specialist boundary
+      - minimum scenario count
+      - target delivery level
+      outputs:
+      - scenario catalog
+      - coverage gaps
+      - threshold normalization notes
+    fallback:
+      policy: Use the local scenario suite in this package and require human review before release.
+      confidence_trigger: scenario gaps or no response
+  readiness_and_evidence:
+    issue_reference: '#303'
+    bootstrap_metadata:
+      specialty: data warehousing
+      release_target: validated
+    request_contract:
+      inputs:
+      - evaluation results
+      - source baseline state
+      - deployment and commercialization notes
+      outputs:
+      - readiness checklist
+      - evidence consistency review
+      - remaining release risks
+    fallback:
+      policy: Use local readiness evidence and keep approval notes conservative, traceable, and bounded to recorded proof
+        points.
+      confidence_trigger: inconsistent evidence or stale review
+  deployment_package:
+    issue_reference: '#304'
+    bootstrap_metadata:
+      specialty: data warehousing
+      runtime_profile: orchestrator-hosted specialist bundle
+    request_contract:
+      inputs:
+      - tenant adaptation policy
+      - monitoring and logging expectations
+      - rollback and restore requirements
+      outputs:
+      - deployment notes delta
+      - operational readiness checklist
+    fallback:
+      policy: Use the repository deployment template plus warehouse-specific isolation, observability, and rollback notes.
+      confidence_trigger: missing deployment boilerplate
+  commercialization_and_packaging:
+    issue_reference: '#305'
+    bootstrap_metadata:
+      specialty: data warehousing
+      buyer_motion: analytics platform and warehouse modernization enablement
+    request_contract:
+      inputs:
+      - target buyer and user profile
+      - proof points
+      - go-to-market assumptions
+      outputs:
+      - packaging notes
+      - subscription model guidance
+      - commercialization gaps
+    fallback:
+      policy: Keep commercialization claims narrow to the validated artifact bundle, documented boundaries, and recorded evaluation
+        proof.
+      confidence_trigger: unsupported market claims
+  authority_source_policy:
+    issue_reference: '#306'
+    bootstrap_metadata:
+      specialty: data warehousing
+      source_policy: record source categories, retrieval policy, and warehouse-specific exceptions without reproducing the
+        full shared corpus
+    request_contract:
+      inputs:
+      - required source categories
+      - warehouse-specific exceptions
+      - refresh expectations
+      outputs:
+      - source policy normalization
+      - recency review guidance
+      - deprecation risk flags
+    fallback:
+      policy: Use the real public authoritative sources listed in this manifest with explicit review cadence and decay policy.
+      confidence_trigger: source freshness uncertain
+  specialty_boundary_and_routing:
+    issue_reference: '#307'
+    bootstrap_metadata:
+      specialty: data warehousing
+      adjacency_risks: data architecture, data integration, reporting and dashboard, database administration, MLOps
+    request_contract:
+      inputs:
+      - candidate task
+      - neighbor specialties
+      - confidence level
+      outputs:
+      - route decision
+      - boundary rationale
+      - rejection phrasing
+    fallback:
+      policy: Prefer rejection and orchestrator handoff when ownership is ambiguous.
+      confidence_trigger: cross-specialty ambiguity
+  agent_package_scaffolding:
+    issue_reference: '#308'
+    bootstrap_metadata:
+      specialty: data warehousing
+      package_root: catalog/data-analytics-and-ai/data-warehousing-specialist/
+    request_contract:
+      inputs:
+      - template paths
+      - required artifact list
+      - target delivery level
+      outputs:
+      - scaffold completion checklist
+      - required file map
+      - template drift warnings
+    fallback:
+      policy: Use repository scaffolding and fill the package locally.
+      confidence_trigger: template drift or missing scaffold

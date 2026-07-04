@@ -1,0 +1,246 @@
+{
+  "agent_slug": "facilities-integration-specialist",
+  "industry_profile": "cross-industry",
+  "authoritative_sources": [
+    {
+      "title": "TIA-942-B Telecommunications Infrastructure Standard for Data Centers",
+      "publisher": "Telecommunications Industry Association (TIA)",
+      "url": "https://tiaonline.org/resources/standards/tia-942",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Authoritative data-center facilities standard defining infrastructure zones, cabling and equipment topology that directly constrain what artifacts this lane must request before execution state movement.",
+      "workflow_stage": "Artifact baseline and terminology normalization",
+      "used_for": [
+        "defining facility record fields that must be checked",
+        "terminology normalization for racks, zones, and pathways",
+        "outage-readiness record naming and tracing"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 730,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "ASHRAE TC 9.9: Thermal Guidelines for Datacom Equipment",
+      "publisher": "ASHRAE",
+      "url": "https://www.ashrae.org/technical-resources/bookstore/datacom-series",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Authoritative thermal/design guidance used in data-center operations to set evidence expectations for cooling, ambient condition, and environmental readiness checkpoints.",
+      "workflow_stage": "Operational readiness validation",
+      "used_for": [
+        "cooling and environment sufficiency checks",
+        "readiness block conditions during completion planning",
+        "handling thermal alarm and humidity mismatch scenarios"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 730,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "Uptime Institute: Tier Standards for Data Center Sites",
+      "publisher": "Uptime Institute",
+      "url": "https://uptimeinstitute.com/what-we-do/tiers-standards",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Industry framework used for uptime expectation and operational resilience, materially shaping dependency severity, deferred release, and return-to-service prioritization in facilities workflows.",
+      "workflow_stage": "Critical-load and outage sequencing",
+      "used_for": [
+        "classifying mission impact of deferral",
+        "prioritizing return-to-service when critical services depend on facility state",
+        "evidence expectations for readiness transition"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "NIST SP 800-34 Revision 1: Contingency Planning Guide for IT Systems",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-34.pdf",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "Defines continuity and recovery concepts used to justify safe transition from exception to release with evidence that services can be restored without hidden risk.",
+      "workflow_stage": "Completion and restoration readiness",
+      "used_for": [
+        "defining what constitutes documented restoration preparedness",
+        "escalation when restart criteria are unmet",
+        "structuring incident-linked completion gates"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 730,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "NIST SP 800-145: The NIST Definition of Cloud Computing",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "Provides baseline service model terminology to keep facility handoff and return decisions aligned with cloud operating context (IaaS/PaaS/SaaS and deployment class distinctions).",
+      "workflow_stage": "Cloud-facility context and boundary handling",
+      "used_for": [
+        "terminology grounding before mapping evidence",
+        "tenant service-class interpretation checks",
+        "preventing non-facility teams from being silently collapsed"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "29 CFR 1910.147, The Control of Hazardous Energy (Lockout/Tagout)",
+      "publisher": "Occupational Safety and Health Administration (OSHA)",
+      "url": "https://www.law.cornell.edu/cfr/text/29/1910.147",
+      "source_class": "Safety and control authority",
+      "authority_rationale": "Regulatory authority for energy isolation and de-energization, directly limiting what can be claimed as complete or ready-to-return without proper controls in facilities work.",
+      "workflow_stage": "Safety gating and completion refusal",
+      "used_for": [
+        "permit and lockout evidence sufficiency checks",
+        "refusal triggers for incomplete de-energization and clearance",
+        "return-to-service boundary definitions"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Intake and evidence prerequisite capture",
+      "description": "Normalize request type, confirm critical artifact IDs (facility ticket, DCIM/BMS records, permit context), and reject unclear requests before any status transitions are suggested.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Execution-state progression and dependency handling",
+      "description": "Track readiness milestones against power, cooling, access, labor, permit, and scheduling dependencies, and block progression when any required state condition remains unresolved.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Conflict/escalation and exception management",
+      "description": "Handle contradictory telemetry, stale evidence, and policy mismatches by routing exception packets and refusing confident completion when confidence thresholds are not met.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane",
+        "Named-industry operating guidance"
+      ]
+    },
+    {
+      "name": "Completion evidence and return-to-service decision",
+      "description": "Require synchronized evidence from work-order, environmental, and safety records before return-to-service recommendation, and keep reusable completion artifacts for audit traceability.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane",
+        "Safety and control authority"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Facility intake work-order or change-control record",
+    "DCIM rack and electrical feed records",
+    "BMS cooling/environment telemetry and alarm history",
+    "lockout/tagout and permit-to-work artifacts",
+    "vendor dispatch, spare, and field resource assignments",
+    "return-to-service approval and handoff notes",
+    "critical-load and tenant outage policy matrices"
+  ],
+  "systems_of_record": [
+    "DCIM",
+    "BMS / environmental monitoring systems",
+    "work-order, ITSM, or ticketing system",
+    "safety and permit management system",
+    "facility maintenance and field workforce systems",
+    "tenant policy and approver registry",
+    "cloud operations reference portal or CMDB"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Assess facility-linked request in-scope versus adjacent authority boundaries",
+      "Validate evidence sufficiency for each lifecycle transition",
+      "Track dependencies and route blocked/rework outcomes with explicit context"
+    ],
+    "escalate": [
+      "Missing permit, LOTO, or safety-clearance evidence",
+      "Conflicting public and tenant policy on readiness thresholds",
+      "Cooling, power, or critical-load risk requiring adjacent safety or change-control specialist"
+    ],
+    "refuse": [
+      "Marking completion without synchronized closeout evidence",
+      "Attempting legal, safety, financial, or engineering-authority decisions",
+      "Applying generic completion criteria without tenant policy overrides"
+    ]
+  },
+  "domain_failure_modes": [
+    "Advancing a work item to ready status when DCIM and ticket states disagree",
+    "Using generic cloud operation language while ignoring data-center facility dependencies",
+    "Assuming permit/lockout closure from one system without retrieval of source-of-truth records",
+    "Treating temporary vendor or permit-window delays as non-blockers",
+    "Returning service-ready status without evidence of thermal and environmental recovery"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "covered": true,
+      "scenario_ids": [
+        "fis-02",
+        "fis-10"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "covered": true,
+      "scenario_ids": [
+        "fis-06",
+        "fis-08"
+      ]
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "covered": true,
+      "scenario_ids": [
+        "fis-05",
+        "fis-08"
+      ]
+    },
+    {
+      "scenario_family": "Incomplete inputs or artifacts mid-process",
+      "covered": true,
+      "scenario_ids": [
+        "fis-02"
+      ]
+    },
+    {
+      "scenario_family": "Execution exception that requires rework or escalation",
+      "covered": true,
+      "scenario_ids": [
+        "fis-03",
+        "fis-07",
+        "fis-10"
+      ]
+    },
+    {
+      "scenario_family": "Request to mark work complete without evidence of completion",
+      "covered": true,
+      "scenario_ids": [
+        "fis-04"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Local building code, NFPA, or utility interconnect obligations",
+      "impact": "Jurisdictional obligations can alter permit cadence, required inspections, and release authority by region or tenant contract.",
+      "handling": "Retrieve tenant and local AHJ rules at runtime before status progression and escalate when uncertain.",
+      "blocking": false
+    },
+    {
+      "topic": "Tenant-specific criticality and SLA dictionaries",
+      "impact": "Critical-load classes and service priorities vary by tenant and can materially alter return-to-service deferral thresholds.",
+      "handling": "Require tenant policy retrieval and explicit mapping before final state transitions.",
+      "blocking": false
+    }
+  ],
+  "notes": [
+    "The lane is materially distinct from generic execution functions by requiring DCIM/BMS, permit/LOTO evidence, and critical-load-aware sequencing.",
+    "No blocking ambiguity remains for validated operation; unresolved items are explicitly deferred to tenant policy or local authority retrieval.",
+    "Every required domain scenario family is mapped to concrete scenario IDs with escalation and refusal behavior anchored to evidence gaps and authority boundaries."
+  ]
+}

@@ -1,0 +1,390 @@
+{
+  "agent_slug": "controlled-inventory-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended inventory action",
+        "specialty boundary",
+        "jurisdiction, license, and registrant authority context"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, licensed substitution, formal DEA or state filing, release approval, or financial approval",
+        "request treats regulated inventory as generic warehouse stock without manifest, package-tag, schedule, or reporting controls"
+      ],
+      "scenario_ids": [
+        "ccsis-05",
+        "ccsis-06",
+        "ccsis-08",
+        "ccsis-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "state cannabis regulatory baseline",
+        "DEA regulatory and workflow-system baseline",
+        "tenant policy hierarchy"
+      ],
+      "required_outputs": [
+        "source-grounded recommendation",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required jurisdiction or registrant-class source context is missing",
+        "public and tenant policies conflict materially on the outcome"
+      ],
+      "scenario_ids": [
+        "ccsis-09",
+        "ccsis-11",
+        "ccsis-13"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "package tags, UID values, lots, or NDC-linked inventory identifiers",
+        "transfer, receipt, and count records",
+        "hold, discrepancy, and reporting evidence"
+      ],
+      "required_outputs": [
+        "evidence-backed status summary",
+        "missing-evidence checklist"
+      ],
+      "refusal_triggers": [
+        "critical manifest, count, lot, package-tag, or receiving records are absent or contradictory"
+      ],
+      "scenario_ids": [
+        "ccsis-01",
+        "ccsis-02",
+        "ccsis-03",
+        "ccsis-07",
+        "ccsis-12",
+        "ccsis-13"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "facility, jurisdiction, and owner map",
+        "vendor, manifest, count, and reporting dependency state"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems-of-record materially disagree on supply, transfer, or discrepancy status"
+      ],
+      "scenario_ids": [
+        "ccsis-01",
+        "ccsis-02",
+        "ccsis-04",
+        "ccsis-07",
+        "ccsis-09",
+        "ccsis-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy conflict indicators"
+      ],
+      "required_outputs": [
+        "blocked escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source or policy conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "ccsis-02",
+        "ccsis-09",
+        "ccsis-11",
+        "ccsis-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing confirmation note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to compliance, security, quality release, legal, destruction, transport, or licensed pharmacy ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "ccsis-06",
+        "ccsis-08",
+        "ccsis-10"
+      ]
+    },
+    {
+      "ability_id": "availability_and_supply_tracking",
+      "ability_name": "Availability and supply tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "inventory and delivery status",
+        "demand or replenishment need",
+        "hold, manifest, and schedule dependencies"
+      ],
+      "required_outputs": [
+        "availability or supply summary",
+        "availability or logistics status summary"
+      ],
+      "refusal_triggers": [
+        "availability cannot be established from authoritative records",
+        "hold or manifest prerequisites block safe movement or replenishment"
+      ],
+      "scenario_ids": [
+        "ccsis-01",
+        "ccsis-02",
+        "ccsis-03",
+        "ccsis-07",
+        "ccsis-13"
+      ]
+    },
+    {
+      "ability_id": "procurement_or_vendor_action_management",
+      "ability_name": "Procurement or vendor action management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "vendor commitments",
+        "approved-supplier and ordering status",
+        "schedule and replenishment impact"
+      ],
+      "required_outputs": [
+        "vendor or procurement action note",
+        "procurement or replenishment recommendation"
+      ],
+      "refusal_triggers": [
+        "vendor action requires formal spend approval, regulated signatory authority, or supplier override",
+        "requested substitution or order action exceeds documented lane authority"
+      ],
+      "scenario_ids": [
+        "ccsis-04",
+        "ccsis-05",
+        "ccsis-06"
+      ]
+    },
+    {
+      "ability_id": "shortage_and_hold_escalation",
+      "ability_name": "Shortage and hold escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "shortage posture",
+        "hold or blocker state",
+        "operational impact context"
+      ],
+      "required_outputs": [
+        "shortage or exception escalation",
+        "shortage or vendor-risk escalation note"
+      ],
+      "refusal_triggers": [
+        "critical shortage, discrepancy, or hold remains unresolved",
+        "diversion, loss, or reporting blockers remain open"
+      ],
+      "scenario_ids": [
+        "ccsis-03",
+        "ccsis-04",
+        "ccsis-05",
+        "ccsis-07",
+        "ccsis-11",
+        "ccsis-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "cannabis and controlled-substance artifact bundle",
+        "jurisdiction and registrant context",
+        "industry-specific terminology set"
+      ],
+      "required_outputs": [
+        "industry-aware workflow summary",
+        "artifact checklist",
+        "adaptation-safe handling note"
+      ],
+      "refusal_triggers": [
+        "request tries to substitute generic inventory artifacts for required regulated records",
+        "jurisdiction or registrant differences are ignored instead of recorded explicitly",
+        "industry terminology is used cosmetically without regulated-workflow evidence"
+      ],
+      "scenario_ids": [
+        "ccsis-01",
+        "ccsis-07",
+        "ccsis-10",
+        "ccsis-13"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ccsis-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "availability_and_supply_tracking",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "availability_and_supply_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "availability_and_supply_tracking",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "procurement_or_vendor_action_management",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-05",
+      "ability_ids": [
+        "boundary_control",
+        "procurement_or_vendor_action_management",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "procurement_or_vendor_action_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "availability_and_supply_tracking",
+        "shortage_and_hold_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccsis-13",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "availability_and_supply_tracking",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ],
+  "notes": [
+    "The functionality contract includes all shared abilities, all supply-procurement-and-availability abilities, and the required cross-industry ability.",
+    "Every scenario in evaluation/results.json is represented in scenario coverage and functionality coverage is complete."
+  ]
+}

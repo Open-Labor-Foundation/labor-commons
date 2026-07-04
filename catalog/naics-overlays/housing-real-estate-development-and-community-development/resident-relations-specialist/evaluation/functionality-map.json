@@ -1,0 +1,431 @@
+{
+  "agent_slug": "resident-relations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "resident request intent and requested action",
+        "resident relations specialty boundary",
+        "tenant authority matrix",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, fair housing, VAWA, accommodation, grievance, eviction, eligibility, rent, subsidy, maintenance completion, inspection, safety, financial, or policy-override authority",
+        "request asks the lane to represent a resident issue as resolved without authoritative evidence",
+        "request treats resident relations as generic customer service and ignores housing records or resident rights"
+      ],
+      "scenario_ids": [
+        "rrs-03",
+        "rrs-04",
+        "rrs-06",
+        "rrs-07",
+        "rrs-08",
+        "rrs-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "HUD, eCFR, FHEO, VAWA, privacy, NSPIRE, and service coordination source set",
+        "source review metadata",
+        "tenant source-precedence rules",
+        "jurisdiction, program, property, and lease context"
+      ],
+      "required_outputs": [
+        "applicable source decision",
+        "freshness and decay status",
+        "source conflict or escalation note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "source freshness exceeds the allowed decay window for a material decision",
+        "public source, lease, house rule, tenant policy, local law, agency requirement, or system record materially conflicts"
+      ],
+      "scenario_ids": [
+        "rrs-02",
+        "rrs-08",
+        "rrs-09",
+        "rrs-11",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "property, unit, resident, lease, and case identifiers",
+        "work-order, inspection, complaint, grievance, accommodation, VAWA, and communication artifacts",
+        "source-system links, timestamps, owners, and retrieval hooks"
+      ],
+      "required_outputs": [
+        "evidence-linked resident relations summary",
+        "artifact-to-output mapping",
+        "missing or contradictory evidence list"
+      ],
+      "refusal_triggers": [
+        "required property, unit, resident, lease, work-order, inspection, complaint, grievance, accommodation, VAWA, or policy evidence is absent",
+        "record lineage cannot be tied to the named resident, unit, property, case, or reporting period",
+        "requested output would overstate what the records prove"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-02",
+        "rrs-04",
+        "rrs-05",
+        "rrs-07",
+        "rrs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "property management, CRM, work-order, inspection, document, compliance, policy, and approval retrieval hooks",
+        "owner map and escalation chain"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required resident relations system of record is unavailable or unidentified",
+        "record-of-truth hierarchy is unknown",
+        "approval owner, privacy owner, resident communication owner, or retrieval dependency is undefined"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-02",
+        "rrs-05",
+        "rrs-10",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "policy, source, jurisdiction, privacy, safety, or record conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts, resident records, authority source, or system access are missing",
+        "conflicting policy or source materially changes the answer",
+        "confidence remains below threshold for resident-facing communication, resolution confirmation, or escalation disposition"
+      ],
+      "scenario_ids": [
+        "rrs-02",
+        "rrs-07",
+        "rrs-10",
+        "rrs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist registry",
+        "handoff artifact requirements",
+        "owner and approver map"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing note",
+        "handoff package with owner and blockers",
+        "orchestrator return rationale"
+      ],
+      "refusal_triggers": [
+        "request belongs to leasing, compliance, fair housing, legal, VAWA, accommodation, grievance, maintenance, inspection, safety, rent, subsidy, service coordination, finance, or executive approval ownership",
+        "safe downstream owner is required before work can proceed",
+        "handoff requires official authority outside lane scope"
+      ],
+      "scenario_ids": [
+        "rrs-03",
+        "rrs-05",
+        "rrs-06",
+        "rrs-07",
+        "rrs-08",
+        "rrs-11"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated resident request type",
+        "authoritative housing records",
+        "confidence state and service disposition criteria"
+      ],
+      "required_outputs": [
+        "resolution note",
+        "request-resolution summary",
+        "service or support disposition"
+      ],
+      "refusal_triggers": [
+        "supported resolution cannot be grounded in authoritative records",
+        "required prerequisites are missing or contradictory",
+        "resolution would imply legal, safety, inspection, fair housing, accommodation, VAWA, grievance, rent, subsidy, or policy approval"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-02",
+        "rrs-04",
+        "rrs-05",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "resident or stakeholder audience context",
+        "housing-specific status and artifact vocabulary",
+        "approved communication boundary and privacy posture"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "resident-safe next-step explanation",
+        "unresolved-item list"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority or certainty",
+        "required audience-safe wording depends on missing policy",
+        "communication would disclose resident-sensitive information beyond minimum necessary rules"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-06",
+        "rrs-07",
+        "rrs-09",
+        "rrs-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported resident request or complaint record",
+        "exception threshold and approval map",
+        "evidence bundle and resident impact summary"
+      ],
+      "required_outputs": [
+        "exception communication escalation note",
+        "complaint or exception escalation package",
+        "next-owner routing"
+      ],
+      "refusal_triggers": [
+        "request needs policy override, compensation approval, transfer approval, legal interpretation, or executive remediation authority",
+        "repeat failure, safety indicator, fair housing indicator, VAWA-sensitive issue, or grievance trigger requires a higher owner",
+        "unsupported workaround would hide or alter source evidence"
+      ],
+      "scenario_ids": [
+        "rrs-03",
+        "rrs-04",
+        "rrs-05",
+        "rrs-07",
+        "rrs-08",
+        "rrs-11"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "named housing records and systems",
+        "resident, lease, unit, complaint, maintenance, grievance, fair housing, VAWA, tenant participation, and policy artifacts",
+        "tenant-specific operating context"
+      ],
+      "required_outputs": [
+        "housing-specific artifact checklist",
+        "resident relations evidence map",
+        "non-generic communication or escalation package"
+      ],
+      "refusal_triggers": [
+        "request attempts to resolve resident relations without housing-specific records",
+        "industry name is treated as cosmetic rather than constraining records, systems, rights, and authority",
+        "required artifact set is missing or conflicts"
+      ],
+      "scenario_ids": [
+        "rrs-01",
+        "rrs-05",
+        "rrs-06",
+        "rrs-07",
+        "rrs-08",
+        "rrs-09",
+        "rrs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rrs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-04",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "supported_request_resolution",
+        "unsupported_exception_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-07",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "unsupported_exception_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-08",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-09",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_declared": true,
+    "all_scenarios_covered": true,
+    "shared_abilities_covered": true,
+    "workflow_phase_abilities_covered": true,
+    "industry_profile_abilities_covered": true
+  }
+}

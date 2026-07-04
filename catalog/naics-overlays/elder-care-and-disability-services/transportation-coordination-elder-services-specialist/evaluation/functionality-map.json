@@ -1,0 +1,338 @@
+{
+  "agent_slug": "transportation-coordination-elder-services-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "user request",
+        "package scope context",
+        "decision boundary rules"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing return-to-orchestrator instruction"
+      ],
+      "refusal_triggers": [
+        "request for clinical transport authorization",
+        "request for legal authority or adjudication",
+        "request to perform dispatch or execution actions"
+      ],
+      "scenario_ids": [
+        "tces-03",
+        "tces-06"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CMS transport guidance",
+        "tenant policy references",
+        "DOT or state coordination references"
+      ],
+      "required_outputs": [
+        "source-grounded handoff decision"
+      ],
+      "refusal_triggers": [
+        "missing jurisdictional policy",
+        "conflicting transport or compliance sources",
+        "missing source context for routing decision"
+      ],
+      "scenario_ids": [
+        "tces-07",
+        "tces-09",
+        "tces-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authorization artifacts",
+        "consent and eligibility records",
+        "trip and transfer artifacts"
+      ],
+      "required_outputs": [
+        "dependency or blocker log",
+        "handoff evidence checklist"
+      ],
+      "refusal_triggers": [
+        "missing authorization",
+        "missing consent",
+        "missing trip status evidence"
+      ],
+      "scenario_ids": [
+        "tces-01",
+        "tces-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "mobility request context",
+        "case system ownership map",
+        "provider and dispatch system state"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "missing artifact list"
+      ],
+      "refusal_triggers": [
+        "missing prerequisite records",
+        "unknown queue ownership",
+        "unstable dispatcher handoff state"
+      ],
+      "scenario_ids": [
+        "tces-01",
+        "tces-04",
+        "tces-08"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence signals",
+        "missing source context",
+        "missing tenant policy"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register"
+      ],
+      "refusal_triggers": [
+        "insufficient evidence",
+        "conflicting authority guidance",
+        "missing tenant-specific routing rules"
+      ],
+      "scenario_ids": [
+        "tces-07",
+        "tces-09"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent owner map",
+        "request class",
+        "authorization boundary context"
+      ],
+      "required_outputs": [
+        "handoff destination note",
+        "adjacent owner assignment summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to transport execution owner",
+        "request belongs to clinical safety or legal owner"
+      ],
+      "scenario_ids": [
+        "tces-02",
+        "tces-03",
+        "tces-06",
+        "tces-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "handoff queue",
+        "owner readiness checklist",
+        "prerequisite list"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "handoff status summary"
+      ],
+      "refusal_triggers": [
+        "handoff attempted without required context",
+        "owner chain incomplete"
+      ],
+      "scenario_ids": [
+        "tces-04",
+        "tces-02"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated prerequisite packet",
+        "prior owner confirmation",
+        "next owner and artifact set"
+      ],
+      "required_outputs": [
+        "handoff summary",
+        "routing confirmation note"
+      ],
+      "refusal_triggers": [
+        "missing prior owner record",
+        "missing next-owner acceptance",
+        "routing context incomplete"
+      ],
+      "scenario_ids": [
+        "tces-05",
+        "tces-04"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "blocker state map",
+        "closure criteria",
+        "owner conflict indicators"
+      ],
+      "required_outputs": [
+        "blocked dependency escalation note",
+        "closure confirmation note"
+      ],
+      "refusal_triggers": [
+        "mandatory prerequisite absent",
+        "conflicting ownership unresolved",
+        "unresolved compliance conflict"
+      ],
+      "scenario_ids": [
+        "tces-01",
+        "tces-07",
+        "tces-08",
+        "tces-09"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "elder mobility request shape",
+        "caregiver and family constraints",
+        "service-level and safety tags"
+      ],
+      "required_outputs": [
+        "industry-aware handoff summary",
+        "adapted dependency tracker"
+      ],
+      "refusal_triggers": [
+        "request treated as generic coordination despite industry specifics",
+        "missing elder-specific evidence fields"
+      ],
+      "scenario_ids": [
+        "tces-05",
+        "tces-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "tces-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-02",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "dependency_tracking",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-05",
+      "ability_ids": [
+        "handoff_execution",
+        "industry_specific_artifact_awareness",
+        "dependency_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-09",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tces-10",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    }
+  ]
+}

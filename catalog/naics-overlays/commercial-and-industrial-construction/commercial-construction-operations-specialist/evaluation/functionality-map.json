@@ -1,0 +1,432 @@
+{
+  "agent_slug": "commercial-construction-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested action",
+        "specialty boundary",
+        "authority and approval context"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request asks for permit approval, code interpretation, occupancy approval, or regulator-facing commitment",
+        "request asks for licensed trade, engineering, or final safety signoff",
+        "request asks for financial approval or policy override outside lane scope"
+      ],
+      "scenario_ids": [
+        "ccos-08",
+        "ccos-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "source freshness metadata",
+        "tenant source-precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "source conflict summary",
+        "refresh sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources conflict materially on the outcome",
+        "source freshness exceeds the allowed decay window for a material decision"
+      ],
+      "scenario_ids": [
+        "ccos-02",
+        "ccos-09",
+        "ccos-11",
+        "ccos-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "work-order and project identifiers",
+        "permit and inspection artifacts",
+        "daily reports, rework records, and closeout evidence"
+      ],
+      "required_outputs": [
+        "evidence-linked execution summary",
+        "artifact-to-output mapping",
+        "missing-evidence note"
+      ],
+      "refusal_triggers": [
+        "required artifacts are missing, stale, or contradictory",
+        "evidence cannot be tied to the named site, work order, or completion decision"
+      ],
+      "scenario_ids": [
+        "ccos-01",
+        "ccos-03",
+        "ccos-05",
+        "ccos-07",
+        "ccos-12",
+        "ccos-13"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location hooks",
+        "tenant owner and routing map"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required work-order, project, permitting, inspection, or safety records are unavailable",
+        "record-of-truth hierarchy is unknown",
+        "required owner or approval chain is undefined"
+      ],
+      "scenario_ids": [
+        "ccos-02",
+        "ccos-03",
+        "ccos-04",
+        "ccos-06",
+        "ccos-07",
+        "ccos-13"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "policy or source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts or authoritative records are missing",
+        "conflicting policy or source materially changes the answer",
+        "safety or inspection evidence is contradictory below safe threshold"
+      ],
+      "scenario_ids": [
+        "ccos-02",
+        "ccos-04",
+        "ccos-09",
+        "ccos-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to permitting, inspection, safety, superintendent, trade, engineering, occupancy, or legal authority",
+        "policy or source conflict cannot be resolved in-lane",
+        "safe downstream owner is required before work can proceed"
+      ],
+      "scenario_ids": [
+        "ccos-08",
+        "ccos-10"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "required progression criteria",
+        "execution evidence set"
+      ],
+      "required_outputs": [
+        "execution-status-update",
+        "next lifecycle state",
+        "named next action"
+      ],
+      "refusal_triggers": [
+        "required progression criteria are incomplete",
+        "new evidence invalidates the current state",
+        "state change would exceed lane authority"
+      ],
+      "scenario_ids": [
+        "ccos-01",
+        "ccos-03",
+        "ccos-06",
+        "ccos-09",
+        "ccos-13"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "blocker or defect set",
+        "rework or escalation ownership",
+        "supporting field records"
+      ],
+      "required_outputs": [
+        "exception-queue-note",
+        "rework or escalation package",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "blockers cannot be tied to named records or owners",
+        "exception requires approval or judgment outside lane scope",
+        "exception is being closed without supporting evidence"
+      ],
+      "scenario_ids": [
+        "ccos-02",
+        "ccos-04",
+        "ccos-06",
+        "ccos-09",
+        "ccos-10"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "completion criteria",
+        "inspection, turnover, and occupancy evidence",
+        "closeout artifact set"
+      ],
+      "required_outputs": [
+        "completion-evidence-record",
+        "completion verdict",
+        "missing-closeout-artifact list"
+      ],
+      "refusal_triggers": [
+        "final inspection, occupancy, or closeout evidence is missing or contradictory",
+        "completion is requested without traceable proof",
+        "completion would imply trade, permit, or owner acceptance outside lane scope"
+      ],
+      "scenario_ids": [
+        "ccos-01",
+        "ccos-05",
+        "ccos-07"
+      ]
+    },
+    {
+      "ability_id": "site_and_work_order_dependency_handling",
+      "ability_name": "Site and work-order dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "site conditions and trade context",
+        "work-order state",
+        "permit, schedule, and subcontractor dependencies"
+      ],
+      "required_outputs": [
+        "site-aware execution summary",
+        "work-order blocker map",
+        "evidence capture checklist"
+      ],
+      "refusal_triggers": [
+        "site, trade, or permit dependencies cannot be tied to the work order",
+        "required field evidence is absent at the site-handling boundary",
+        "tenant site-readiness rules materially alter the decision and are missing"
+      ],
+      "scenario_ids": [
+        "ccos-03",
+        "ccos-06",
+        "ccos-12",
+        "ccos-13"
+      ]
+    },
+    {
+      "ability_id": "permit_inspection_and_trade_authority_escalation",
+      "ability_name": "Permit, inspection, and trade-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "permit and inspection state",
+        "licensed trade and design authority map",
+        "changed site-condition evidence"
+      ],
+      "required_outputs": [
+        "authority-escalation package",
+        "permit or inspection blocker note",
+        "trade-boundary routing note"
+      ],
+      "refusal_triggers": [
+        "request requires permit approval, code interpretation, occupancy signoff, or trade signoff",
+        "inspection or safety conditions change the answer and require qualified review",
+        "design or licensed trade judgment is necessary to proceed"
+      ],
+      "scenario_ids": [
+        "ccos-06",
+        "ccos-07",
+        "ccos-08",
+        "ccos-09",
+        "ccos-10",
+        "ccos-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ccos-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-04",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-06",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "site_and_work_order_dependency_handling",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "completion_evidence_capture",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccos-13",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

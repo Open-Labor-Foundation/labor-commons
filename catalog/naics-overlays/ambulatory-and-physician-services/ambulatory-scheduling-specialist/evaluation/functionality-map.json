@@ -1,0 +1,384 @@
+{
+  "agent_slug": "ambulatory-scheduling-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended action",
+        "specialty boundary",
+        "approval and authority context"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for final clinical, payer, staffing, budget, or operational approval",
+        "request asks for medical-necessity, clinical urgency, or privacy-override authority"
+      ],
+      "scenario_ids": [
+        "amss-05",
+        "amss-07",
+        "amss-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "AHRQ, CMS, HHS OCR, and HL7 baseline sources",
+        "tenant policy overlays",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-grounded scheduling judgment",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing",
+        "public and tenant or payer policies conflict materially on referrals, authorization, notice, or scheduling precedence"
+      ],
+      "scenario_ids": [
+        "amss-02",
+        "amss-06",
+        "amss-11",
+        "amss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "orders and referral records",
+        "authorization and benefit records",
+        "provider-template and resource-readiness records",
+        "prep, notice, and communication artifacts"
+      ],
+      "required_outputs": [
+        "traceable schedule rationale",
+        "missing-evidence checklist"
+      ],
+      "refusal_triggers": [
+        "critical order, referral, authorization, preparation, or resource records are absent or contradictory",
+        "traceability from requested ambulatory service to named source records cannot be established"
+      ],
+      "scenario_ids": [
+        "amss-01",
+        "amss-02",
+        "amss-06",
+        "amss-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "provider, room, equipment, payer, and communication dependencies",
+        "owner map across EHR, practice management, payer, and maintenance systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "constraint checklist"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems-of-record materially disagree on service type, authorization state, or resource readiness"
+      ],
+      "scenario_ids": [
+        "amss-01",
+        "amss-03",
+        "amss-09",
+        "amss-10",
+        "amss-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "source or policy conflict indicators"
+      ],
+      "required_outputs": [
+        "escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source or policy conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "amss-02",
+        "amss-08",
+        "amss-10",
+        "amss-11",
+        "amss-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical triage, utilization management, prior authorization approval, financial counseling, or privacy ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "amss-05",
+        "amss-07",
+        "amss-08",
+        "amss-11"
+      ]
+    },
+    {
+      "ability_id": "constraint_and_capacity_assessment",
+      "ability_name": "Constraint and capacity assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "normalized demand frame",
+        "provider templates",
+        "room and equipment capacity",
+        "authorization and preparation constraints",
+        "confidence state"
+      ],
+      "required_outputs": [
+        "capacity-gap analysis",
+        "constraint log",
+        "shortfall quantification"
+      ],
+      "refusal_triggers": [
+        "insufficient capacity or readiness data",
+        "missing referral, authorization, or preparation baselines",
+        "provider, room, or equipment constraints are unverified"
+      ],
+      "scenario_ids": [
+        "amss-03",
+        "amss-04",
+        "amss-06",
+        "amss-09",
+        "amss-10"
+      ]
+    },
+    {
+      "ability_id": "allocation_and_sequence_recommendation",
+      "ability_name": "Allocation and sequence recommendation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "priority policy",
+        "constraint map",
+        "allocation rules",
+        "confidence state"
+      ],
+      "required_outputs": [
+        "schedule recommendation",
+        "allocation recommendation",
+        "deferred-work set"
+      ],
+      "refusal_triggers": [
+        "priority tie-break is missing",
+        "conflicting owners or modality constraints prevent deterministic ordering"
+      ],
+      "scenario_ids": [
+        "amss-01",
+        "amss-03",
+        "amss-04",
+        "amss-09"
+      ]
+    },
+    {
+      "ability_id": "approval_boundary_enforcement",
+      "ability_name": "Approval-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "recommended tradeoff package",
+        "approval matrix",
+        "public and tenant authority boundaries"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "boundary-safe refusal"
+      ],
+      "refusal_triggers": [
+        "request turns scheduling recommendation into final approval",
+        "authority owner for overbook, add-on, payer-risk, or staffing tradeoff is outside the lane"
+      ],
+      "scenario_ids": [
+        "amss-04",
+        "amss-05",
+        "amss-11"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "orders and referral packets",
+        "visit type and duration rules",
+        "provider templates and room or equipment calendars",
+        "authorization and benefit records",
+        "prep instructions and patient-readiness artifacts",
+        "privacy and estimate dependency notes"
+      ],
+      "required_outputs": [
+        "industry-aware scheduling frame",
+        "booking-readiness summary",
+        "artifact-specific blocker log"
+      ],
+      "refusal_triggers": [
+        "industry-specific records are treated as optional metadata",
+        "generic scheduling artifacts are substituted for ambulatory source records"
+      ],
+      "scenario_ids": [
+        "amss-01",
+        "amss-06",
+        "amss-07",
+        "amss-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "amss-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "allocation_and_sequence_recommendation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-04",
+      "ability_ids": [
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "constraint_and_capacity_assessment",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-08",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-09",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "amss-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

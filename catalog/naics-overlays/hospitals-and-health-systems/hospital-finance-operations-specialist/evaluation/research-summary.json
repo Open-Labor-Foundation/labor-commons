@@ -1,0 +1,474 @@
+{
+  "agent_slug": "hospital-finance-operations-specialist",
+  "agent_release": "v0.1.0",
+  "resolved_workflow_phase_group": "revenue-billing-and-financial-reconciliation",
+  "industry_profile": "healthcare-and-care-delivery",
+  "resolved_industry_profile": "healthcare-and-care-delivery",
+  "semantic_baseline_version": "2026-04-07",
+  "source_decay_policy": "review_required_after_interval",
+  "last_reviewed_at": "2026-04-14",
+  "domain_research_pack": "healthcare-and-care-delivery",
+  "authoritative_sources": [
+    {
+      "title": "42 CFR 482.24 - Condition of participation: Medical record services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.24",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital medical-record regulation. It is authoritative for encounter documentation, authentication, medical-record truth set, and source evidence that can support or block charge and claim handling.",
+      "workflow_stage": "record-of-truth and charge or claim source support validation",
+      "used_for": [
+        "encounter and documentation support requirements",
+        "missing documentation and unsupported charge scenarios",
+        "audit-ready source traceability"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.30 - Condition of participation: Utilization review",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.30",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital utilization-review regulation. It is authoritative for the boundary between finance operations and medical necessity, admission, continued stay, and professional service determinations.",
+      "workflow_stage": "medical necessity and utilization boundary handling",
+      "used_for": [
+        "clinical and medical-necessity refusal",
+        "utilization management routing",
+        "payer denial boundary scenarios"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "45 CFR 164.506 - Uses and disclosures to carry out treatment, payment, or health care operations",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-E/section-164.506",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary HIPAA Privacy Rule provision for payment and health care operations use and disclosure of PHI. It constrains finance operations outputs involving patient, claim, denial, payment, and AR data.",
+      "workflow_stage": "payment operations PHI handling",
+      "used_for": [
+        "controlled PHI routing",
+        "payment and operations source context",
+        "privacy boundary scenarios"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "HIPAA Minimum Necessary Standard",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the HIPAA privacy regulator. The guidance is authoritative for limiting operational PHI access and disclosures in finance, AR, denial, remittance, and patient billing outputs.",
+      "workflow_stage": "minimum-necessary finance artifact distribution",
+      "used_for": [
+        "patient-level AR and denial list refusal",
+        "minimum-necessary evidence posture",
+        "privacy-sensitive request scenario"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "Medicare Claims Processing Manual, Chapter 3 - Inpatient Hospital Billing",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/downloads/clm104c03.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS claims-processing manual for inpatient hospital billing. It is authoritative for Medicare institutional billing workflow, claim, payment, adjustment, and remittance terminology.",
+      "workflow_stage": "hospital claim and billing workflow support",
+      "used_for": [
+        "institutional billing readiness",
+        "source support for claim handling",
+        "hospital billing terminology"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_manual_revision"
+    },
+    {
+      "title": "Medicare Claims Processing Manual, Chapter 25 - Completing and Processing the Form CMS-1450 Data Set",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/downloads/clm104c25.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS manual for CMS-1450/UB-04 institutional claim data set handling. It is authoritative for field-level claim artifact expectations used in hospital finance operations.",
+      "workflow_stage": "CMS-1450 and 837I claim data validation",
+      "used_for": [
+        "claim draft support",
+        "institutional claim field terminology",
+        "claim source traceability"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_manual_revision"
+    },
+    {
+      "title": "Medicare Claims Processing Manual, Chapter 22 - Remittance Advice",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/downloads/clm104c22.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS remittance manual. It is authoritative for remittance advice, payment posting, claim adjustment, and reconciliation evidence expectations.",
+      "workflow_stage": "remittance posting and reconciliation",
+      "used_for": [
+        "835/ERA and EOB reconciliation",
+        "payment posting mismatch scenario",
+        "adjustment reason evidence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_manual_revision"
+    },
+    {
+      "title": "Medicare Claims Processing Manual, Chapter 29 - Appeals of Claims Decisions",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/downloads/clm104c29.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS claims appeals manual. It is authoritative for appeal and claim decision terminology, while this lane only packages evidence and routes strategy decisions.",
+      "workflow_stage": "denial, dispute, and appeal package routing",
+      "used_for": [
+        "denial exception packet",
+        "appeal-strategy boundary",
+        "payer decision handoff"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_manual_revision"
+    },
+    {
+      "title": "CMS Interoperability and Prior Authorization Final Rule",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/priorities/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS final-rule guidance is authoritative for payer/provider prior authorization workflow expectations. It supports finance prerequisite handling for authorization, referral, and payer-portal evidence without granting payer interpretation authority.",
+      "workflow_stage": "authorization and prerequisite handling",
+      "used_for": [
+        "missing authorization, referral, or eligibility scenario",
+        "payer portal evidence handling",
+        "payer interpretation refusal"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Provider requirements and resources - No Surprises",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/nosurprises/policies-and-resources/provider-requirements-and-resources",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Official CMS/HHS guidance for provider and facility No Surprises requirements. It is authoritative for patient billing protection, balance billing, good faith estimate, and patient-provider dispute boundary handling.",
+      "workflow_stage": "patient billing exception and regulated dispute routing",
+      "used_for": [
+        "patient billing dispute scenario",
+        "balance billing and good faith estimate escalation",
+        "regulated interpretation boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "CAQH CORE Operating Rules",
+      "publisher": "CAQH CORE",
+      "url": "https://www.caqh.org/core/operating-rules",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "CAQH CORE is the recognized operating-rule body for eligibility and benefits, claim status, health care claims, payment and remittance, prior authorization and referrals, EFT/ERA enrollment, and CARC/RARC/CAGC code-combination workflow.",
+      "workflow_stage": "eligibility, claim, remittance, and adjustment-code workflow normalization",
+      "used_for": [
+        "CARC/RARC/CAGC and ERA terminology",
+        "eligibility and claim workflow dependencies",
+        "reconciliation and denial root-cause categories"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_core_rule_update"
+    }
+  ],
+  "workflow_questions": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Required prerequisites include tenant facility, business unit, service setting, payer, plan, provider/facility type, service dates, claim or account identifier, source hierarchy, RACI, approval matrix, privacy/minimum-necessary rule, EHR encounter, order and clinical-administrative documentation, eligibility, benefits, referral or authorization status, charge capture record, coder/HIM status, institutional claim artifact, payer portal evidence, remittance/EOB/payment batch, denial or appeal record, posting or adjustment approval evidence, and audit log. Missing authorization, referral, eligibility, documentation, charge, coding, claim, remittance, approval, or access evidence blocks final disposition."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "Truth-set systems include the EHR or EMR and clinical documentation system, order repository, discharge or care-transition records when relevant, patient access and CRM records, eligibility and benefits system, referral and authorization system, approved payer portal, charge capture and chargemaster systems, coding/HIM system, institutional claim platform, EDI acknowledgement and payer status systems, remittance/EOB/EFT records, payment posting system, patient accounting or patient financial services platform, denial and appeal system, refund/recoupment records, adjustment approval logs, contract management or variance references, document repository, privacy/access-control system, and audit logs. Code correctness, medical necessity, payer policy, claim adjudication, accounting treatment, and legal interpretation remain with adjacent owners."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops before diagnosis, treatment planning, clinical judgment, discharge readiness, level-of-care or medical-necessity determination, medical code assignment or validation, authorization approval, coverage approval, payer-policy interpretation, appeal strategy, reimbursement contract interpretation, PHI disclosure approval, patient billing legal interpretation, write-off or refund approval, accounting or tax treatment, and legal position. Those require clinical review, utilization management, medical coding, patient access, payer operations, denials and appeals, privacy, compliance, accounting, tax, legal, finance approval, or orchestrator return."
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Finance intake and boundary classification",
+      "description": "Capture facility, service setting, payer, plan, account or claim identifier, requested financial action, amount, source systems, approval threshold, privacy posture, source hierarchy, and adjacent owner context before accepting work.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Prerequisite and source-record validation",
+      "description": "Validate encounter documentation, orders, eligibility, benefits, referral, authorization, charge capture, coding/HIM status, claim data, payer portal status, remittance/EOB/payment batch, denial or appeal record, posting/adjustment approval, and audit evidence.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Billing, claim, invoice, or posting readiness",
+      "description": "Determine whether source support is sufficient for billing readiness, claim or invoice support, payment posting, account note, or adjustment package without assigning codes, interpreting payer policy, or approving financial changes.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Reconciliation and exception handling",
+      "description": "Match claim, remittance, EOB, EFT, payment batch, posting, adjustment, denial, appeal, patient responsibility, and contract variance evidence; classify root cause; hold unsupported correction; and escalate unresolved variances.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Closeout, escalation, or orchestrator return",
+      "description": "Close only when source records, matched items, owner acceptance, approval evidence, residual variances, privacy posture, and audit trail are documented. Escalate clinical, payer, coding, privacy, accounting, tax, legal, patient billing, or approval questions.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "billing or financial readiness summary",
+    "claim or invoice support summary",
+    "payment posting summary",
+    "reconciliation note",
+    "revenue exception escalation packet",
+    "EHR or EMR encounter record",
+    "order record",
+    "clinical-administrative note",
+    "discharge or care-transition record",
+    "eligibility and benefits evidence",
+    "referral record",
+    "authorization record",
+    "payer portal evidence",
+    "charge capture record",
+    "chargemaster reference",
+    "coding or HIM work item",
+    "CMS-1450 or UB-04 data set",
+    "837I institutional claim record",
+    "EDI acknowledgement or claim status record",
+    "835 electronic remittance advice",
+    "EOB or remittance advice",
+    "EFT or payment batch",
+    "CARC, RARC, or CAGC reason evidence",
+    "denial record",
+    "appeal packet",
+    "patient statement or invoice",
+    "patient billing dispute record",
+    "payment posting record",
+    "adjustment log",
+    "write-off, refund, or recoupment request",
+    "contract variance category",
+    "approval matrix entry",
+    "controlled PHI routing note",
+    "policy-conflict escalation note",
+    "audit log"
+  ],
+  "systems_of_record": [
+    "EHR or EMR and associated clinical documentation system",
+    "order management system",
+    "discharge or care-transition documentation system",
+    "patient access, CRM, or registration system",
+    "eligibility and benefits system",
+    "referral management system",
+    "authorization system or approved payer portal",
+    "case management or utilization review system",
+    "charge capture system",
+    "chargemaster or charge description master reference",
+    "medical coding or health information management system",
+    "practice management or revenue cycle platform",
+    "institutional claim or clearinghouse system",
+    "payer portal or claim status system",
+    "remittance advice, EOB, EFT, and payment batch systems",
+    "patient accounting or patient financial services system",
+    "cash posting system",
+    "denial and appeal management system",
+    "contract management or variance reference system",
+    "refund, recoupment, and adjustment approval systems",
+    "document repository",
+    "privacy, consent, access-control, and audit systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify hospital finance operations work as accepted, blocked, exception, escalated, returned_to_orchestrator, or complete based on documented evidence.",
+      "Determine whether source documentation supports billing readiness, claim or invoice support, payment posting, reconciliation note, or exception package preparation.",
+      "Prepare evidence-backed summaries, reconciliation notes, denial/dispute packets, unsupported adjustment refusal notes, and adjacent-specialist handoff packages.",
+      "Classify root-cause categories for missing authorization, referral, eligibility, documentation, charge support, coding dependency, remittance mismatch, denial, underpayment, recoupment, patient billing concern, or approval gap.",
+      "Hold or reopen work when source support, approval evidence, owner acceptance, or audit trail is missing."
+    ],
+    "escalate": [
+      "Escalate diagnosis, treatment, discharge readiness, level-of-care, medical necessity, or patient-safety questions to licensed clinical review or utilization management.",
+      "Escalate code assignment, DRG/APC/HCPCS/CPT/modifier/revenue code validation, coding edits, or documentation sufficiency for coding to medical coding or HIM.",
+      "Escalate coverage, authorization approval, payer-policy interpretation, contract interpretation, appeal strategy, or claim adjudication questions to patient access, payer operations, denials and appeals, or contract authority.",
+      "Escalate PHI disclosure, patient-level export, consent/proxy ambiguity, minimum-necessary uncertainty, or access-control conflict to healthcare privacy or compliance.",
+      "Escalate write-off, refund, recoupment, contractual allowance, bad debt, reserve, accounting, tax, legal, or financial approval questions to the appropriate approver or specialist.",
+      "Escalate public-source, payer-rule, tenant-policy, contract, facility-procedure, accounting-policy, or jurisdictional conflicts to orchestrator and accountable governance owner."
+    ],
+    "refuse": [
+      "Refuse to invent, add, keep, remove, or rebill charges without authoritative source evidence.",
+      "Refuse to post, adjust, write off, refund, recoup, rebucket, suppress, or close financial items without source support, approval evidence, and audit trail.",
+      "Refuse to assign, change, validate, or approve clinical codes as a coding authority.",
+      "Refuse to determine medical necessity, diagnosis support, level of care, treatment appropriateness, or clinical risk.",
+      "Refuse to interpret payer policy, waive authorization/referral rules, approve coverage, decide appeal strategy, or override contract terms.",
+      "Refuse to disclose PHI, export patient-level finance data, or broaden distribution outside tenant role-based access, consent, minimum-necessary, and audit controls.",
+      "Refuse to determine accounting treatment, tax position, legal conclusion, or financial statement impact."
+    ]
+  },
+  "domain_failure_modes": [
+    "Revenue leakage, claim denial, or compliance exposure from billing or posting unsupported charges, adjustments, write-offs, refunds, or recoupments.",
+    "Patient or member harm from financial handling that assumes clinical readiness, medical necessity, coverage, or authorization status without the accountable owner.",
+    "PHI exposure from broad AR, denial, claim, or patient billing exports without minimum-necessary controls.",
+    "Incorrect claim or payment handling when EHR, authorization, charge capture, coding, claim, remittance, payer portal, posting, and accounting systems conflict.",
+    "Improper payer or appeal handling when finance operations interprets payer policy, coverage, authorization validity, contract terms, or denial strategy.",
+    "Improper accounting, tax, legal, or financial approval posture when operational reconciliation is treated as formal accounting or approval authority.",
+    "Incomplete documentation trail when reconciliation closeout lacks source links, matched items, variance owner, approval evidence, and audit record.",
+    "Unsafe generic finance behavior that ignores hospital EHR, institutional billing, authorization, claim, remittance, HIPAA, clinical, coding, payer, and patient billing constraints."
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-04",
+        "hfops-11"
+      ]
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-06",
+        "hfops-13",
+        "hfops-14"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-07",
+        "hfops-08",
+        "hfops-09",
+        "hfops-11"
+      ]
+    },
+    {
+      "scenario_family": "Source records do not support the requested billing or adjustment",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-03",
+        "hfops-10"
+      ]
+    },
+    {
+      "scenario_family": "Reconciliation mismatch or denial requires exception handling",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-02",
+        "hfops-09",
+        "hfops-11"
+      ]
+    },
+    {
+      "scenario_family": "Stakeholder asks for an unsupported financial override",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-05",
+        "hfops-13"
+      ]
+    },
+    {
+      "scenario_family": "Missing documentation for a charge or posting decision",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-03",
+        "hfops-10"
+      ]
+    },
+    {
+      "scenario_family": "Normal in-scope execution with realistic hospital finance terminology",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-01",
+        "hfops-02",
+        "hfops-09"
+      ]
+    },
+    {
+      "scenario_family": "Low-confidence or conflicting-source escalation",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-10",
+        "hfops-11",
+        "hfops-14"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation preserving the public baseline",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-12"
+      ]
+    },
+    {
+      "scenario_family": "Patient billing protection or regulated dispute handling",
+      "covered": true,
+      "scenario_ids": [
+        "hfops-13"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Tenant source-of-truth hierarchy, RACI, and approval matrix",
+      "status": "tenant_runtime_required",
+      "blocking": false,
+      "notes": "Public sources cannot identify a tenant hospital's authoritative EHR, authorization, charge, coding, claim, remittance, posting, accounting, denial, appeal, privacy, or audit system hierarchy. The pack requires retrieval or tenant configuration at runtime and refuses final disposition when these facts are missing."
+    },
+    {
+      "topic": "Payer, plan, contract, and authorization rules",
+      "status": "tenant_runtime_required",
+      "blocking": false,
+      "notes": "Public CMS guidance supplies baseline workflow concepts, but payer, plan, product, contract, facility type, provider type, and service setting determine operational prerequisites. The lane routes interpretation to patient access, utilization management, payer operations, revenue cycle, denials and appeals, or contract authority."
+    },
+    {
+      "topic": "Coding, clinical, and medical-necessity authority",
+      "status": "tenant_runtime_required",
+      "blocking": false,
+      "notes": "State law, medical staff bylaws, clinical protocols, payer rules, and coding policy determine licensed and coding authority. The lane records the gap and escalates rather than assigning codes or deciding diagnosis, treatment, medical necessity, level of care, or clinical risk."
+    },
+    {
+      "topic": "Formal accounting, tax, legal, and financial approval treatment",
+      "status": "tenant_runtime_required",
+      "blocking": false,
+      "notes": "Tenant accounting policy, audit requirements, tax posture, legal review, board policy, and approval matrix determine formal treatment. The lane can package operational evidence but refuses or escalates approval and interpretation decisions."
+    },
+    {
+      "topic": "Jurisdiction-specific privacy, consent, patient billing, and record handling",
+      "status": "tenant_runtime_required",
+      "blocking": false,
+      "notes": "HIPAA and federal No Surprises guidance are public baselines; stricter state, facility, consent, proxy, payer, or contractual obligations may apply. The lane requires tenant privacy and compliance controls and escalates uncertainty."
+    }
+  ],
+  "notes": [
+    "No blocking unresolved ambiguity remains for a validated specification-based package because tenant-specific variables are explicit required runtime inputs and refusal conditions.",
+    "Research output constrained the final pack by requiring hospital-specific source records, institutional claim terminology, remittance and reconciliation evidence, authorization/referral/eligibility dependencies, denial and dispute routing, unsupported financial change refusal, PHI controls, patient billing protections, and clinical/coding/payer/accounting authority boundaries."
+  ]
+}

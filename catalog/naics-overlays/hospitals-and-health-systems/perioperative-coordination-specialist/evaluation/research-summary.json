@@ -1,0 +1,441 @@
+{
+  "agent_slug": "perioperative-coordination-specialist",
+  "industry_profile": "healthcare-and-care-delivery",
+  "last_reviewed_at": "2026-04-14",
+  "source_decay_policy": "review_required_after_interval",
+  "authoritative_sources": [
+    {
+      "title": "42 CFR 482.51 - Condition of participation: Surgical services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-D/section-482.51",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital surgical-services regulation for Medicare and Medicaid participating hospitals; authoritative for surgical-service safety and qualified surgical authority boundaries.",
+      "workflow_stage": "Perioperative request classification, surgical-service prerequisite validation, and clinical authority escalation",
+      "used_for": [
+        "keeping surgical approval and procedure decisions outside the coordination lane",
+        "requiring surgical-service evidence before handoff",
+        "designing scenarios where add-on case approval or procedure change requests must escalate"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.52 - Condition of participation: Anesthesia services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-D/section-482.52",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital anesthesia-services regulation; authoritative for anesthesia evaluation, monitoring, recovery, and authority boundaries that coordination cannot assume.",
+      "workflow_stage": "Anesthesia-readiness dependency review and PACU or recovery handoff",
+      "used_for": [
+        "routing anesthesia clearance and risk questions to anesthesia owners",
+        "treating anesthesia record status as a handoff dependency",
+        "blocking PACU closure when anesthesia evidence is missing"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.24 - Condition of participation: Medical record services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.24",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital medical-record regulation; authoritative for EHR, orders, consent, operative, anesthesia, discharge, and encounter documentation traceability.",
+      "workflow_stage": "Truth-set validation, documentation readiness, and evidence traceability",
+      "used_for": [
+        "requiring record-linked handoff packages",
+        "preventing closure without authoritative encounter documentation",
+        "supporting charge-capture and coding documentation blocker scenarios"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.43 - Condition of participation: Discharge planning",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.43",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital discharge-planning regulation; authoritative for care-transition dependencies after PACU, observation, inpatient admission, or discharge without making coordination a discharge-readiness authority.",
+      "workflow_stage": "PACU, inpatient, observation, discharge, and care-transition handoff",
+      "used_for": [
+        "separating handoff coordination from discharge-readiness judgment",
+        "requiring care-transition blockers to be logged",
+        "routing post-op disposition issues to care-transition owners"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.30 - Condition of participation: Utilization review",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.30",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital utilization-review regulation; authoritative for escalation when scheduling or post-op disposition depends on medical necessity, admission status, continued stay, or utilization-review decisioning.",
+      "workflow_stage": "Authorization, admission-status, and utilization-review dependency handling",
+      "used_for": [
+        "routing medical necessity and status questions to utilization management",
+        "blocking handoff when authorization or UR evidence is material and missing",
+        "preventing payer or status interpretation by the coordination lane"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "Prior Authorization for Certain Hospital Outpatient Department (OPD) Services",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/data-research/monitoring-programs/medicare-fee-service-compliance-programs/prior-authorization-pre-claim-review-initiatives/prior-authorization-certain-hospital-outpatient-department-opd-services",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS public provider guidance for OPD services that require prior authorization; authoritative for treating payer authorization as a prerequisite where applicable while keeping payer-policy interpretation outside the lane.",
+      "workflow_stage": "Eligibility, referral, and prior authorization prerequisite review",
+      "used_for": [
+        "required scenario family for missing authorization, referral, or eligibility",
+        "routing payer-policy questions to patient access, utilization management, or payer operations",
+        "preserving authorization status as a dependency rather than a coordination decision"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "HIPAA Minimum Necessary Standard",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the federal HIPAA privacy regulator; authoritative for limiting PHI in OR schedules, case lists, huddle notes, escalation packets, and cross-team handoffs.",
+      "workflow_stage": "PHI handling and privacy gate review",
+      "used_for": [
+        "refusing uncontrolled OR schedule exports",
+        "requiring role-based access and minimum-necessary output shaping",
+        "routing privacy exceptions to healthcare privacy owners"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "Universal Protocol - Pre procedure Verification Checklist",
+      "publisher": "The Joint Commission",
+      "url": "https://www.jointcommission.org/en-us/knowledge-library/support-center/standards-interpretation/standards-faqs/000002148",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "The Joint Commission is a recognized healthcare accreditor; this public FAQ is directly relevant to pre-procedure verification, standardized item lists, required equipment, implants, blood products, images, and discrepancy resolution.",
+      "workflow_stage": "Pre-procedure readiness verification and discrepancy escalation",
+      "used_for": [
+        "requiring standardized pre-procedure artifact checks",
+        "blocking handoff when required items or discrepancies remain unresolved",
+        "grounding scenarios involving consent, H&P, laterality, implants, equipment, and procedure verification"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_standards_revision"
+    },
+    {
+      "title": "WHO Surgical Safety Checklist",
+      "publisher": "World Health Organization",
+      "url": "https://www.who.int/teams/integrated-health-services/patient-safety/research/safe-surgery/tool-and-resources",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "WHO is a global public health authority; its surgical checklist is a recognized public perioperative workflow reference for teamwork, communication, and prevention of surgical errors.",
+      "workflow_stage": "Surgical safety communication, timeout, and team handoff support",
+      "used_for": [
+        "requiring communication-aware handoff packaging",
+        "supporting patient-safety refusal triggers",
+        "grounding terminology and artifact expectations around surgical safety checkpoints"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_who_revision"
+    },
+    {
+      "title": "Surgical Site Infection (SSI) Prevention Guideline",
+      "publisher": "Centers for Disease Control and Prevention",
+      "url": "https://www.cdc.gov/infection-control/hcp/surgical-site-infection/index.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "CDC is the federal public health authority for infection-control guidance; authoritative for treating infection-control, sterile-field, and SSI-prevention concerns as patient-safety boundaries requiring qualified review.",
+      "workflow_stage": "Sterile processing, infection-control, and environmental readiness escalation",
+      "used_for": [
+        "treating infection-control uncertainty as a blocker",
+        "routing sterile-field and SSI-prevention questions to qualified owners",
+        "preventing coordination from overriding safety stops"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_cdc_revision"
+    },
+    {
+      "title": "ServiceRequest - FHIR R4",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/servicerequest.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 is a recognized healthcare interoperability standards body; FHIR ServiceRequest is authoritative vendor-neutral terminology for ordered or requested healthcare services and supporting information.",
+      "workflow_stage": "Surgical order or case-request terminology normalization",
+      "used_for": [
+        "normalizing order, request, intent, status, requester, performer, and supporting information concepts",
+        "requiring order traceability before handoff",
+        "supporting tenant system binding for EHR and perioperative case requests"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    },
+    {
+      "title": "Appointment - FHIR R4",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/appointment.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 FHIR Appointment is authoritative vendor-neutral terminology for booked healthcare events, participants, requested periods, status, cancellation, and rescheduling state.",
+      "workflow_stage": "OR schedule, add-on board, and booking status normalization",
+      "used_for": [
+        "normalizing OR schedule and appointment state",
+        "distinguishing scheduling coordination from clinical approval",
+        "supporting cancellation or reschedule blocker scenarios"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    },
+    {
+      "title": "Encounter - FHIR R4",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/encounter.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 FHIR Encounter is authoritative vendor-neutral terminology for encounter class, status, admission, patient movement, and discharge context used by EHR, perioperative, bed, and case-management systems.",
+      "workflow_stage": "Encounter, PACU, observation, inpatient, discharge, and location handoff normalization",
+      "used_for": [
+        "normalizing encounter and post-op disposition state",
+        "requiring encounter context before post-op handoff closure",
+        "tracing movement between OR, PACU, inpatient, observation, and discharge destinations"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    }
+  ],
+  "workflow_questions": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Perioperative handoffs require tenant facility context, perioperative RACI, source hierarchy, patient and encounter identifiers, service date, surgical order or case request, procedure and laterality as documented, surgeon or proceduralist, OR booking status, consent and H&P status, pre-op testing and PAT status, anesthesia review status, required images, implants, special equipment, blood products, sterile processing and instrument readiness, OR room and team readiness, PACU or inpatient bed plan, discharge or care-transition dependencies, minimum-necessary PHI rules, and destination-owner acceptance criteria. Eligibility, referral, prior authorization, payer plan, admission status, utilization review, charge capture, coding, and revenue facts gate the workflow when tenant policy, payer rules, or service setting makes them material."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "The truth set is established by EHR or EMR encounter and clinical documentation, surgical order or ServiceRequest, OR scheduling and perioperative information systems, anesthesia information management system, consent and H&P documentation, PAT records, patient access and practice management systems, payer portal or authorization system, utilization review and case management systems, bed board, PACU tracking, sterile processing or instrument tracking, implant or supply chain records, blood bank records, charge capture, coding, revenue cycle, claim and remittance records, privacy or audit logs, and the tenant source-of-truth hierarchy."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops at coordination, handoff packaging, blocker tracking, routing, and closure confirmation. Licensed clinical or anesthesia authority begins at diagnosis, treatment planning, surgical appropriateness, anesthesia risk or clearance, abnormal test interpretation, infection-control clearance, medical necessity, level of care, patient-safety signoff, and discharge readiness. Privacy authority begins when PHI disclosure, recipient, consent, role-based access, or minimum-necessary scope changes the output. Payer or utilization authority begins when eligibility, referral validity, authorization, coverage, admission status, continued stay, coding, claim, denial, appeal, or reimbursement interpretation affects the answer."
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Dependency intake and case-frame normalization",
+      "description": "Confirm the request is perioperative coordination work and normalize case request, OR booking, procedure, laterality, service date, surgeon, setting, planned disposition, and requested handoff outcome.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public healthcare regulator guidance"
+      ]
+    },
+    {
+      "name": "Truth-set and prerequisite validation",
+      "description": "Validate EHR encounter, surgical order, consent, H&P, PAT, anesthesia review, authorization or referral where applicable, privacy constraints, OR schedule, implant, equipment, sterile processing, PACU, bed, discharge, and tenant source hierarchy.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Cross-team routing and owner confirmation",
+      "description": "Name prior owner, destination owner, required artifact set, blocker state, communication obligation, and acceptance criteria before routing between surgeon office, PAT, anesthesia, OR control, nursing, sterile processing, supply chain, PACU, bed, patient access, utilization management, coding, revenue cycle, privacy, or care-transition teams.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public healthcare regulator guidance"
+      ]
+    },
+    {
+      "name": "Blocker escalation and authority-boundary handling",
+      "description": "Escalate missing, stale, conflicting, duplicated, privacy-sensitive, patient-safety-sensitive, clinical, anesthesia, payer, coding, revenue, or final approval blockers before work is dropped or over-authoritative language is used.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Closure confirmation and documentation handoff",
+      "description": "Confirm closure only when required artifacts are complete or explicitly blocked, the correct next owner has accepted the handoff, residual blockers are named, and traceability to systems of record is preserved.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "patient, MRN, encounter, visit, service-date, facility, location, and provider identifiers",
+    "surgical order or case request, procedure description, documented laterality or site, surgeon or proceduralist owner, and requested setting",
+    "OR booking, block-time assignment, add-on board entry, room assignment, team assignment, and schedule status",
+    "consent, H&P, pre-op testing, PAT note, medication or blood product dependency, anesthesia review status, and patient-safety flags",
+    "Universal Protocol or pre-procedure verification checklist, required images or reports, implants, special equipment, instrument trays, preference card, sterile processing record, and blood bank status",
+    "PACU, phase I or phase II recovery, observation, inpatient bed, discharge, and care-transition records",
+    "eligibility, benefits, referral, prior authorization, payer portal, utilization review, admission status, charge capture, coding, claim, remittance, denial, and appeal documentation when material",
+    "handoff summary, dependency tracker, blocker log, routing confirmation note, closure confirmation, and escalation note"
+  ],
+  "systems_of_record": [
+    "EHR or EMR and clinical documentation system",
+    "OR scheduling and perioperative information system",
+    "anesthesia information management system",
+    "patient access, practice management, eligibility, referral, and payer portal systems",
+    "authorization and utilization review systems",
+    "case management, discharge planning, PACU tracking, and bed management systems",
+    "sterile processing, instrument tracking, preference card, implant, supply chain, equipment, and blood bank systems",
+    "charge capture, coding, revenue cycle, claim, remittance, denial, and appeal systems",
+    "privacy, consent, audit, CRM, task queue, and escalation management systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "classify a request as in scope, out of scope, or blocked on missing prerequisites",
+      "request or validate minimum tenant facts, authoritative records, source context, owner map, and destination-owner acceptance criteria",
+      "prepare handoff summaries, dependency trackers, blocker logs, routing notes, closure confirmations, and evidence-backed next-step packages",
+      "assign or re-route coordination work based on documented handoff rules and owner maps",
+      "identify blockers, dependency failures, stale ownership, duplicate ownership, and ambiguous ownership that require escalation",
+      "determine the correct next owner and required artifact set for each handoff without deciding the underlying clinical, payer, privacy, coding, financial, or approval question"
+    ],
+    "escalate": [
+      "clinical clearance, abnormal test interpretation, surgical appropriateness, anesthesia risk, medication management, infection-control clearance, or patient-safety concern",
+      "payer-policy interpretation, authorization approval or denial, coverage, referral validity, medical necessity, admission status, continued stay, coding, claim, denial, or appeal interpretation",
+      "PHI disclosure, consent, role-based access, minimum-necessary scope, or privacy-sensitive distribution",
+      "conflicting public guidance, facility policy, payer rule, tenant policy, source system, or jurisdictional rule",
+      "stalled, duplicated, missing, or ambiguous ownership that cannot be resolved from the tenant RACI and source hierarchy"
+    ],
+    "refuse": [
+      "approve, cancel, prioritize, clear, perform, or change a surgical or invasive procedure",
+      "make diagnosis, treatment planning, anesthesia, medical necessity, infection-control, discharge readiness, or licensed clinical judgments",
+      "approve payer coverage, prior authorization, referral validity, admission status, coding, charges, claims, denials, appeals, refunds, or financial exceptions",
+      "release PHI outside tenant-approved minimum-necessary handling",
+      "declare closure when required artifacts, next owner, acceptance proof, or blocker disposition are missing"
+    ]
+  },
+  "domain_failure_modes": [
+    "patient harm from routing a case forward without consent, H&P, anesthesia review, patient-safety escalation, Universal Protocol discrepancy handling, or required equipment and implant readiness",
+    "wrong patient, wrong procedure, wrong site, wrong laterality, or missing-item risk from incomplete pre-procedure verification",
+    "delayed surgery, cancellation, OR underutilization, PACU boarding, inpatient bed conflict, or discharge delay caused by stale dependency ownership",
+    "PHI exposure from uncontrolled OR schedule, case list, diagnosis, implant, patient contact, or escalation packet distribution",
+    "revenue leakage, claim denial, authorization denial, or compliance exposure from missing eligibility, referral, prior authorization, utilization review, charge capture, operative note, implant, anesthesia time, or coding documentation",
+    "over-authoritative behavior where coordination approves clinical, anesthesia, payer, privacy, coding, financial, legal, staffing, safety, or final operational decisions",
+    "work dropped because multiple teams appear to own the same perioperative step and no destination-owner acceptance is recorded"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "scenario_ids": [
+        "pcs-02",
+        "pcs-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "scenario_ids": [
+        "pcs-06",
+        "pcs-11"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "scenario_ids": [
+        "pcs-05",
+        "pcs-07",
+        "pcs-10",
+        "pcs-13",
+        "pcs-14"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Work is handed off without required context or artifacts",
+      "scenario_ids": [
+        "pcs-03",
+        "pcs-12"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Multiple teams appear to own the same step",
+      "scenario_ids": [
+        "pcs-04",
+        "pcs-14"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "The lane is asked to absorb execution work instead of coordinating it",
+      "scenario_ids": [
+        "pcs-05",
+        "pcs-07",
+        "pcs-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Ownership is ambiguous across multiple teams",
+      "scenario_ids": [
+        "pcs-04",
+        "pcs-09"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "A handoff is attempted without the required context",
+      "scenario_ids": [
+        "pcs-02",
+        "pcs-03"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Conflicting schedules or dependency owners",
+      "scenario_ids": [
+        "pcs-04",
+        "pcs-14"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Attempt to force coordination into substantive approval authority",
+      "scenario_ids": [
+        "pcs-05",
+        "pcs-14"
+      ],
+      "covered": true
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Facility-specific perioperative RACI and source hierarchy",
+      "status": "tenant_required",
+      "blocking": false,
+      "resolution_path": "Require tenant-supplied OR control, PAT, anesthesia, nursing, sterile processing, patient access, utilization management, coding, revenue cycle, privacy, and care-transition owner map at runtime."
+    },
+    {
+      "topic": "Jurisdictional consent, privacy, payer, and facility policy differences",
+      "status": "tenant_required",
+      "blocking": false,
+      "resolution_path": "Use public baseline only as floor; require tenant jurisdiction, policy, payer contract, and privacy rule retrieval before patient-specific handoff."
+    },
+    {
+      "topic": "Exact procedure-specific authorization and medical necessity rules",
+      "status": "adjacent_owner_required",
+      "blocking": false,
+      "resolution_path": "Route payer-policy and medical-necessity interpretation to patient access, utilization management, payer operations, or licensed review."
+    }
+  ],
+  "research_to_spec_constraints": [
+    "The spec must use perioperative artifacts and systems of record rather than generic project status labels.",
+    "The lane must stop at coordination, evidence packaging, routing, blocker escalation, and closure confirmation.",
+    "The lane must escalate clinical, anesthesia, patient-safety, infection-control, privacy, payer, coding, revenue, legal, financial, staffing, and final approval authority.",
+    "Every handoff output must name prior owner, next owner, required artifacts, blocker state, source systems, and closure criteria.",
+    "Scenarios must prove missing prerequisite handling, PHI handling, clinical or payer boundary escalation, duplicated ownership, missing-context handoff refusal, tenant adaptation, and closure proof."
+  ]
+}

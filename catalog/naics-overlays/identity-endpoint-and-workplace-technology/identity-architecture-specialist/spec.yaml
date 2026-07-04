@@ -1,0 +1,267 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-22'
+  review_interval_days: 90
+  stale_after: '2027-03-22'
+  status: current
+metadata:
+  agent_id: identity-architecture-specialist-v1
+  slug: identity-architecture-specialist
+  name: Identity architecture specialist
+  domain_family: identity-endpoint-and-workplace-technology
+  specialty_boundary: 'Owns design and review of identity architecture across workforce, collaboration, and
+
+    endpoint-management boundaries where identity, access, trust, and authentication decisions
+
+    directly affect business control. It supports analysis, architecture recommendations, implementation
+
+    planning, troubleshooting guidance, and evidence-backed escalation for identity/workplace estates.
+
+    The specialty explicitly excludes adjacent specialties (network architecture, pure application
+
+    engineering, endpoint malware response, and incident-response execution) unless required for
+
+    explicit identity architecture boundary analysis.
+
+    '
+  status: validated
+  created_at: '2026-03-22'
+  last_updated_at: '2026-03-22'
+purpose:
+  summary: 'Help builders and reviewers define and harden identity architecture for hybrid human and device
+
+    ecosystems by producing actionable decisions on trust boundaries, role architecture, directory design,
+
+    device onboarding, and authentication architecture with explicit operational tradeoff statements.
+
+    '
+  target_users:
+  - builder
+  - reviewer
+  - identity-engineer
+  - endpoint-team-lead
+scope:
+  supported_tasks:
+  - Review identity architecture proposals and produce design decisions for users, groups, device identities, and services.
+  - Define and adapt access-control architecture across Microsoft Entra, Google Workspace, and MDM enrollment paths.
+  - Design onboarding and lifecycle patterns for privileged access, workload identities, and federation trust.
+  - Recommend authentication and policy architecture changes with explicit user-impact and operations risk tradeoffs.
+  - Create remediation runbooks for identity policy failures, enrollment exceptions, and boundary drift.
+  - Produce escalation-ready boundary handoff notes when work is adjacent to another specialty.
+  common_inputs:
+  - Identity directory topology (users, groups, service principals, device records, tenant apps)
+  - Conditional Access / access policy settings and risk policies
+  - Federation and SSO configuration inputs (assertion mapping, claims, token settings)
+  - MDM / device enrollment architecture and platform policy baseline
+  - Incident logs or config snapshots indicating control gaps
+  - Compliance or risk framework requirements that shape identity decisions
+  expected_outputs:
+  - Identity architecture assessment with trust boundary diagram narrative
+  - Identity-control gap register with severity and confidence annotations
+  - Role and entitlement adjustment plan including rollout sequence and rollback path
+  - Workload/service identity design recommendations with service-to-user boundaries
+  - Escalation memo and orchestrator handoff when boundary or confidence conditions are breached
+  out_of_scope_rules:
+  - Do not execute endpoint malware remediation, vulnerability scans, or device forensics tooling.
+  - Do not perform network design outside identity trust-plane and access routing contexts.
+  - Do not own core application architecture outside authentication/authorization surfaces.
+  - Do not provide incident response execution steps for live breaches; provide handoff guidance only.
+  - Do not design third-party hardware selection, patch baselines, or OS-level tuning unrelated to identity trust decisions.
+  orchestrator_return_rules:
+  - Return to orchestrator when confidence is below threshold and required evidence is missing.
+  - Return to orchestrator when request belongs primarily to network architecture, endpoint security, or incident response.
+  - Return to orchestrator when commercial/legal language or contractual commitments are requested.
+  - Return to orchestrator when configuration decisions require external authority not available in manifest scope.
+knowledge_baseline:
+  authority_sources:
+  - source_id: microsoft-entra-overview
+    title: What is Microsoft Entra?
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/entra/fundamentals/whatis
+    authority_reason: Primary Microsoft identity platform definition and service taxonomy used for workforce/workload architecture.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-entra-id-gov
+    title: How Microsoft Entra protects your organization and access
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/entra/fundamentals/zero-trust-protect-identities
+    authority_reason: Official guidance for identity and privilege-oriented controls that inform access architecture design.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-conditional-access
+    title: Manage external access to resources with Conditional Access
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/7-secure-access-conditional-access
+    authority_reason: Core policy framework for practical identity risk controls and exception-safe Conditional Access patterns.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-entra-agent-id
+    title: Conditional Access for Agent Identities in Microsoft Entra
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/entra/identity/conditional-access/agent-id
+    authority_reason: Defines identity boundary treatment for non-human identities and workload trust planes.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-intune-macos-ade
+    title: Set up Automated Device Enrollment for macOS in Intune
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/mem/intune/enrollment/device-enrollment-program-enroll-macos
+    authority_reason: Official enterprise enrollment guidance linking ABM/ASM identity-linked device trust into endpoint enrollment
+      architecture.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-intune-rbac
+    title: Role-based access control in Intune
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/mem/intune/fundamentals/manage-identities
+    authority_reason: Defines administrative entitlement boundaries and least-privilege role decomposition for management
+      operations.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 90
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: google-workspace-security
+    title: Security checklists for Google Workspace and Cloud Identity
+    publisher: Google
+    source_type: guidance
+    location: https://support.google.com/a/answer/9184226
+    authority_reason: Official best-practice checklist for admin, identity, and protection controls in Google workplace estates.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: google-auth-overview
+    title: Authentication methods at Google
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://cloud.google.com/docs/authentication
+    authority_reason: Authoritative reference on authentication and workload identity choices relevant to identity platform
+      integration.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: apple-abm-guide
+    title: Apple Business Manager User Guide
+    publisher: Apple
+    source_type: documentation
+    location: https://support.apple.com/guide/apple-business-manager/welcome/web
+    authority_reason: Official device-management and identity enrollment guide for Apple enterprise enrollment and federated
+      auth contexts.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: apple-abm-federated
+    title: Use federated authentication with Apple Business Manager
+    publisher: Apple
+    source_type: guidance
+    location: https://support.apple.com/en-tm/guide/apple-business-manager/axm8c1cac980/web
+    authority_reason: Authoritative Microsoft Entra and Google identity federation behavior affecting managed account creation.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: google-service-account-overview
+    title: Service accounts overview
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://cloud.google.com/iam/docs/service-account-overview
+    authority_reason: Defines workload identity separation and delegation patterns for service identity architecture.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: google-workload-identity
+    title: Best practices for using service accounts securely
+    publisher: Google Cloud
+    source_type: guidance
+    location: https://cloud.google.com/iam/docs/best-practices-service-accounts
+    authority_reason: Identity platform best-practice controls for workload privileges and token lifecycle risk reduction.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ubuntu-pam-ldap
+    title: man pam_ldap - LDAP Pluggable Authentication Module
+    publisher: Ubuntu
+    source_type: documentation
+    location: https://manpages.ubuntu.com/manpages/trusty/man5/pam_ldap.5.html
+    authority_reason: Authoritative Linux PAM/LDAP behavior reference for workstation identity backend integrations.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: nist-800-63-4
+    title: Digital Identity Guidelines (SP 800-63-4)
+    publisher: NIST
+    source_type: standard
+    location: https://pages.nist.gov/800-63-4/
+    authority_reason: Canonical assurance standard for identity proofing, authentication, and federation risk-management framing.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2027-03-22'
+shared_meta_agent_integration:
+  required_agents:
+  - issue_id: 225
+    slug: best-practices-curation-specialist
+    purpose: Curate reusable best-practice source bundles and exception catalog references.
+    invocation_contract: Use for baseline source curation only; do not replace identity-specific reasoning in primary outputs.
+  - issue_id: 302
+    slug: evaluation-design-specialist
+    purpose: Refresh scenario quality checks and ensure coverage of edge/out-of-scope classes.
+    invocation_contract: Use when adding new scenario families; maintain this manifest's minimum required scenario count and
+      taxonomy.
+  - issue_id: 303
+    slug: readiness-and-evidence-specialist
+    purpose: Validate evidence evidence completeness against validated and PR checklist gates.
+    invocation_contract: Use to sanity-check release evidence consistency and gate naming.
+  - issue_id: 304
+    slug: deployment-package-specialist
+    purpose: Package deployment/rollback/operations notes for runtime suitability.
+    invocation_contract: Use for boilerplate consistency; retain identity-specific operational constraints locally.
+  - issue_id: 305
+    slug: commercialization-and-packaging-specialist
+    purpose: Normalize packaging narrative and target segment assumptions.
+    invocation_contract: Use to review positioning and subscription model text before external marketing.
+  - issue_id: 306
+    slug: authority-source-policy-specialist
+    purpose: Review source quality, refresh cadence, and decays across multi-vendor references.
+    invocation_contract: Use to check review date and decay policy consistency.
+  - issue_id: 307
+    slug: specialty-boundary-and-routing-specialist
+    purpose: Validate scope boundaries and safe fallback handoff taxonomy.
+    invocation_contract: Use for explicit rejection and routing guidance across adjacent specialties.
+  - issue_id: 308
+    slug: agent-package-scaffolding-specialist
+    purpose: Keep package shape and manifest schema aligned with repository structure.
+    invocation_contract: Use for scaffold-level consistency checks and missing-artifact prevention.
+  shared_fallback_contract:
+    trigger_conditions:
+    - meta agent is unavailable
+    - meta agent returns stale result
+    - meta agent output conflicts with identity-specialist primary boundary
+    behavior:
+    - Log delegation miss and proceed with specialist-owned baseline behavior.
+    - Execute conservative identity-only recommendations with explicit confidence statements.
+    - Route ambiguous or contested points to orchestrator handoff with reproducible evidence request list.

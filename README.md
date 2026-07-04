@@ -1,0 +1,56 @@
+# labor-commons
+
+The governance layer for the Open Labor Foundation stack: a catalog of AI
+agent definitions, one per profession or industry function, each specifying
+what an agent in that role is authorized to decide, what it must escalate or
+refuse, and a test suite proving it stays inside that boundary. Consumed by
+[commons-board](https://github.com/Open-Labor-Foundation/commons-board) and
+[commons-crew](https://github.com/Open-Labor-Foundation/commons-crew) to run
+governed specialist agents rather than open-ended ones.
+
+## What a definition is
+
+Each entry lives under `catalog/naics-overlays/[industry]/[specialist-slug]/`
+and centers on a `spec.yaml`:
+
+- **`specialty_boundary`** — what the agent owns, in explicit terms, and what
+  it must reject or hand off.
+- **`evaluation/scenarios.md`** — numbered test cases: a realistic input, the
+  expected behavior, and the required output, verifying the agent doesn't
+  quietly expand past its authority.
+- **`deployment/`, `positioning/`, `readiness/`** — packaging, fit, and
+  release-readiness evidence for the definition.
+
+A definition isn't scoped to the business that needed it first. Any workflow
+on the platform can invoke any specialist whose boundary matches what it
+needs, regardless of which industry originally motivated the definition.
+
+## Coverage
+
+The catalog launched with an AI-curated seed built from the NAICS industry
+classification — 57 industry categories, each with a target number of
+specialist definitions. Actual coverage is tracked against that target per
+industry; closing the gap is ongoing, continuous work, not a one-time launch
+task.
+
+## Contributing
+
+Definitions are produced through
+[commons-idea](https://github.com/Open-Labor-Foundation/commons-idea): describe
+your expertise in a guided conversation, and it generates the structured
+`spec.yaml` and supporting files. Submit the result here as a pull request.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full spec format.
+
+## Staying current
+
+[commons-keeper](https://github.com/Open-Labor-Foundation/commons-keeper) runs
+continuously against this catalog — validating definitions, scoring health,
+and flagging entries that have gone stale for renewal.
+
+## License
+
+[CC-BY-SA 4.0](LICENSE) — share alike.
+
+---
+
+Part of the [Open Labor Foundation](https://github.com/Open-Labor-Foundation/open-labor-foundation).

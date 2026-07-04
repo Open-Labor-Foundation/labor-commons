@@ -1,0 +1,417 @@
+{
+  "agent_slug": "construction-draw-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested draw action",
+        "specialty boundary",
+        "approval, payment, grant, lender, legal, inspection, and licensed authority context"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to approve, transmit, fund, certify, or release a draw, loan advance, grant voucher, payment, or retainage",
+        "request asks for lien-law, contract-entitlement, code, design, inspection, safety, or grant-eligibility interpretation",
+        "request treats construction draw work as generic invoice processing without funding-source and site evidence"
+      ],
+      "scenario_ids": [
+        "cds-05",
+        "cds-08",
+        "cds-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "HUD MAP, HOME, IDIS, AIA, 2 CFR 200, DOL, and OSHA source baseline",
+        "tenant source hierarchy and source freshness metadata",
+        "project-specific funding-source and jurisdiction context"
+      ],
+      "required_outputs": [
+        "source-grounded draw posture",
+        "source or policy conflict note",
+        "tenant-adaptation assumptions"
+      ],
+      "refusal_triggers": [
+        "required public source or tenant policy context is missing",
+        "lender, contract, grant, or public-program rules conflict materially",
+        "source freshness or jurisdictional applicability cannot be established"
+      ],
+      "scenario_ids": [
+        "cds-02",
+        "cds-06",
+        "cds-09",
+        "cds-11",
+        "cds-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "draw request, pay application, HUD requisition, or IDIS voucher",
+        "approved SOV, budget line map, prior draw ledger, retainage schedule, and change-order log",
+        "inspection, architect certificate, stored-material, certified payroll, lien waiver, funding-source, and closeout artifacts"
+      ],
+      "required_outputs": [
+        "evidence sufficiency summary",
+        "draw artifact tie-out",
+        "missing-evidence checklist"
+      ],
+      "refusal_triggers": [
+        "core draw artifacts are absent, stale, or contradictory",
+        "traceability from requested amount to approved scope, funding source, or evidence cannot be established",
+        "completion evidence is missing for a requested lifecycle transition"
+      ],
+      "scenario_ids": [
+        "cds-01",
+        "cds-02",
+        "cds-03",
+        "cds-06",
+        "cds-07",
+        "cds-09",
+        "cds-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "draw portal, PMIS, document control, job-cost, grant, lender, permitting, inspection, and approval registry references",
+        "owner map for funding, inspection, labor, legal, and payment dependencies"
+      ],
+      "required_outputs": [
+        "system dependency map",
+        "record-of-truth summary",
+        "blocked retrieval checklist"
+      ],
+      "refusal_triggers": [
+        "critical system-of-record access is unavailable",
+        "systems materially disagree on draw, funding, inspection, or completion state",
+        "current approver or next owner cannot be identified"
+      ],
+      "scenario_ids": [
+        "cds-01",
+        "cds-02",
+        "cds-06",
+        "cds-10",
+        "cds-11",
+        "cds-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "policy and source conflict indicators",
+        "authority, funding-source, labor, inspection, and closeout risk markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist",
+        "assumption register"
+      ],
+      "refusal_triggers": [
+        "required tenant facts, authoritative records, or approval owners are missing",
+        "source or policy conflict would change draw disposition",
+        "evidence does not support a confident lifecycle transition"
+      ],
+      "scenario_ids": [
+        "cds-02",
+        "cds-04",
+        "cds-06",
+        "cds-09",
+        "cds-11",
+        "cds-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist directory",
+        "handoff evidence bundle",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing note",
+        "handoff owner and artifact map",
+        "next-action package"
+      ],
+      "refusal_triggers": [
+        "request belongs to housing finance, grant compliance, legal, lien review, architect, engineer, AHJ, inspection, permitting, or payment approver ownership",
+        "handoff owner is ambiguous",
+        "requested action requires formal authority outside this lane"
+      ],
+      "scenario_ids": [
+        "cds-04",
+        "cds-05",
+        "cds-08",
+        "cds-09",
+        "cds-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current draw lifecycle state",
+        "stage prerequisites",
+        "draw package and evidence sufficiency status",
+        "next-owner and approval matrix"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "accepted, held, returned, routed, or completed disposition",
+        "next-action decision"
+      ],
+      "refusal_triggers": [
+        "stage prerequisites are incomplete",
+        "requested transition would bypass evidence, approval, or system controls",
+        "draw completion is requested before closeout or inspection evidence exists"
+      ],
+      "scenario_ids": [
+        "cds-01",
+        "cds-02",
+        "cds-06",
+        "cds-07",
+        "cds-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception class",
+        "blocking evidence or missing record",
+        "owner-routing rules",
+        "rework criteria"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework package",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "exception would be skipped or closed without evidence",
+        "missing owner would make rework unsafe",
+        "exception requires payment, legal, design, inspection, labor, or grant approval outside the lane"
+      ],
+      "scenario_ids": [
+        "cds-03",
+        "cds-04",
+        "cds-06",
+        "cds-09",
+        "cds-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "draw closure criteria",
+        "inspection, certificate, lien, payroll, funding, and closeout evidence",
+        "approval-ready routing record"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure or remaining-blocker decision",
+        "audit-ready evidence list"
+      ],
+      "refusal_triggers": [
+        "inspection, certificate, lien, payroll, funding, or closeout evidence is missing",
+        "open exception contradicts requested completion",
+        "closure would imply payment or final approval authority"
+      ],
+      "scenario_ids": [
+        "cds-01",
+        "cds-07",
+        "cds-10",
+        "cds-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "named-industry artifact set",
+        "funding-source and program context",
+        "tenant-specific draw terminology",
+        "public baseline source records"
+      ],
+      "required_outputs": [
+        "artifact normalization summary",
+        "industry-specific evidence checklist",
+        "tenant adaptation note"
+      ],
+      "refusal_triggers": [
+        "industry-specific artifacts are missing or misidentified",
+        "request would use generic invoice handling despite housing or community-development controls",
+        "tenant-specific labels cannot be mapped to public-baseline records"
+      ],
+      "scenario_ids": [
+        "cds-01",
+        "cds-06",
+        "cds-09",
+        "cds-10",
+        "cds-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cds-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-04",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cds-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

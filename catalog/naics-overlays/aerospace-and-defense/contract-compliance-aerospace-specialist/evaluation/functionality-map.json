@@ -1,0 +1,479 @@
+{
+  "agent_slug": "contract-compliance-aerospace-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 12,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "specialty boundary",
+        "tenant authority map",
+        "adjacent specialist matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, regulator negotiation, contracting officer communication, formal certification, or final signoff",
+        "request asks the lane to release held product, approve supplier substitution, or override quality and traceability controls",
+        "request requires export/security, engineering, financial, or executive authority"
+      ],
+      "scenario_ids": [
+        "ccas-04",
+        "ccas-06",
+        "ccas-07",
+        "ccas-11",
+        "ccas-13"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness and decay policy",
+        "contract clauses and tenant source hierarchy",
+        "public baseline versus tenant-specific constraint map"
+      ],
+      "required_outputs": [
+        "source priority map",
+        "source freshness status",
+        "source-conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "required public source, contract clause, customer flowdown, or tenant policy context is missing",
+        "public sources, tenant policy, contract clauses, or customer flowdowns materially conflict",
+        "source freshness has decayed enough to change the compliance posture"
+      ],
+      "scenario_ids": [
+        "ccas-01",
+        "ccas-03",
+        "ccas-09",
+        "ccas-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "production orders, travelers, routers, and MES records",
+        "lot, batch, serial, inventory, and WMS records",
+        "supplier C of C, source inspection, receiving inspection, and procurement records",
+        "quality holds, NCRs, MRB records, release records, and change-control records"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "evidence readiness or gap summary",
+        "artifact-to-owner linkage",
+        "traceability conflict memo"
+      ],
+      "refusal_triggers": [
+        "critical production, supplier, inventory, quality, release, or traceability evidence is missing",
+        "evidence cannot be tied to an authoritative system of record",
+        "ERP, MES, WMS, QMS, supplier, or contract records disagree materially"
+      ],
+      "scenario_ids": [
+        "ccas-01",
+        "ccas-02",
+        "ccas-05",
+        "ccas-06",
+        "ccas-10",
+        "ccas-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems-of-record inventory",
+        "retrieval hooks for ERP, MES, WMS, QMS, supplier management, CLM, GRC, and document control",
+        "program, facility, product, lot, supplier, release, and owner context"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "retrieval prerequisite map",
+        "system-of-record evidence map"
+      ],
+      "refusal_triggers": [
+        "critical system of record or retrieval hook is unavailable",
+        "program, lot, supplier, facility, or release owner is unresolved",
+        "required production, supplier, or quality state cannot be verified"
+      ],
+      "scenario_ids": [
+        "ccas-05",
+        "ccas-08",
+        "ccas-09",
+        "ccas-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence-impacting missing facts",
+        "policy, source, contract, or evidence conflict flags",
+        "authority uncertainty and owner map"
+      ],
+      "required_outputs": [
+        "low-confidence prerequisite note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "contract clauses, program, facility, supplier, lot, system-of-record, or release authority facts are missing",
+        "source precedence or policy conflict is unresolved",
+        "request depends on export/security, legal, quality release, supplier approval, or engineering authority"
+      ],
+      "scenario_ids": [
+        "ccas-03",
+        "ccas-08",
+        "ccas-13"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff context",
+        "adjacent owner map",
+        "evidence packet required for transfer"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "responsibility transfer map"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, contracts, procurement, production planning, quality release, engineering, export/security, finance, or executive approval",
+        "request requires formal regulator-facing or customer-facing certification",
+        "control decision requires unsupported downstream authority"
+      ],
+      "scenario_ids": [
+        "ccas-04",
+        "ccas-07",
+        "ccas-11",
+        "ccas-13"
+      ]
+    },
+    {
+      "ability_id": "obligation_and_control_mapping",
+      "ability_name": "Obligation and control mapping",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "FAR, DFARS, FAA, IAQG, customer-flowdown, and tenant policy references",
+        "contract clauses, QAP, program quality plan, and CDRL context",
+        "production, supplier, inventory, quality, release, and change-control evidence"
+      ],
+      "required_outputs": [
+        "control-obligation matrix",
+        "control gap and overlap analysis",
+        "review cadence and owner map"
+      ],
+      "refusal_triggers": [
+        "required obligation references or clauses are missing",
+        "control interpretation materially changes with missing source or tenant context",
+        "contract, policy, or customer-flowdown hierarchy is unresolved"
+      ],
+      "scenario_ids": [
+        "ccas-01",
+        "ccas-02",
+        "ccas-03",
+        "ccas-09",
+        "ccas-10",
+        "ccas-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_and_review_management",
+      "ability_name": "Evidence and review management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness state",
+        "review readiness criteria",
+        "audit trail and approval trail",
+        "evidence owners and review cadence"
+      ],
+      "required_outputs": [
+        "review-ready evidence checklist",
+        "open-review blocker list",
+        "evidence readiness summary"
+      ],
+      "refusal_triggers": [
+        "required records, approvals, source evidence, or review trail are missing",
+        "evidence cannot be tied to current system-of-record state",
+        "review package would imply unsupported certification or acceptance"
+      ],
+      "scenario_ids": [
+        "ccas-01",
+        "ccas-02",
+        "ccas-05",
+        "ccas-06",
+        "ccas-10",
+        "ccas-12"
+      ]
+    },
+    {
+      "ability_id": "exception_and_remediation_handling",
+      "ability_name": "Exception and remediation handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception source and affected obligation",
+        "impact on production, supplier, traceability, quality, release, or contract posture",
+        "remediation options and accountable owners"
+      ],
+      "required_outputs": [
+        "exception escalation package",
+        "remediation owner routing",
+        "open-risk summary"
+      ],
+      "refusal_triggers": [
+        "exception cannot be assigned to an accountable owner",
+        "required remediation path is unresolved",
+        "conflict changes legal, contract, supplier, quality release, or approval outcome"
+      ],
+      "scenario_ids": [
+        "ccas-02",
+        "ccas-03",
+        "ccas-06",
+        "ccas-10"
+      ]
+    },
+    {
+      "ability_id": "unauthorized_signoff_refusal",
+      "ability_name": "Unauthorized signoff refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request for final signoff",
+        "requested authority scope",
+        "tenant ownership map",
+        "regulatory, contract, or customer acceptance context"
+      ],
+      "required_outputs": [
+        "refusal notice",
+        "authorized-signoff routing package",
+        "bounded evidence package"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, contracting officer, regulator-facing, customer-facing, or certification signoff",
+        "request asks for quality release, supplier approval, engineering disposition, export/security authorization, or policy override",
+        "request seeks to close compliance without required evidence traceability"
+      ],
+      "scenario_ids": [
+        "ccas-04",
+        "ccas-07",
+        "ccas-12",
+        "ccas-13"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "lot, serial, batch, and inventory history",
+        "production, inspection, supplier, and release records",
+        "hold, NCR, MRB, concession, waiver, and change-control status"
+      ],
+      "required_outputs": [
+        "traceability conflict memo",
+        "release dependency summary",
+        "hold or release escalation package"
+      ],
+      "refusal_triggers": [
+        "traceability or inventory evidence conflict remains unresolved",
+        "release is requested while hold, NCR, MRB, or inspection evidence is incomplete",
+        "required release authority is absent or disputed"
+      ],
+      "scenario_ids": [
+        "ccas-02",
+        "ccas-05",
+        "ccas-06",
+        "ccas-10"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier certifications and approved source evidence",
+        "supplier corrective-action and source inspection records",
+        "customer or program quality requirements",
+        "counterfeit-parts, specialty-material, and purchasing-system control evidence"
+      ],
+      "required_outputs": [
+        "supplier-quality escalation memo",
+        "supplier substitution refusal note",
+        "source-control evidence checklist"
+      ],
+      "refusal_triggers": [
+        "request to approve supplier substitution, alternate part, or use-as-is disposition without authority",
+        "request to ignore supplier-quality nonconformance or traceability gap",
+        "supplier or source evidence is missing, contradictory, or outside approved controls"
+      ],
+      "scenario_ids": [
+        "ccas-02",
+        "ccas-07",
+        "ccas-10",
+        "ccas-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ccas-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping",
+        "exception_and_remediation_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "evidence_and_review_management",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-06",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "obligation_and_control_mapping"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-11",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "unauthorized_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccas-13",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal"
+      ],
+      "status": "covered"
+    }
+  ]
+}

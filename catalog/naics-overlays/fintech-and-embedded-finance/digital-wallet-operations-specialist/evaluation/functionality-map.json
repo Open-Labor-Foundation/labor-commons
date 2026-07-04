@@ -1,0 +1,393 @@
+{
+  "agent_slug": "digital-wallet-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "authority context",
+        "adjacent specialist map",
+        "digital wallet operations ownership boundaries"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "adjacent routing summary"
+      ],
+      "refusal_triggers": [
+        "request asks for privileged access, production release, or sponsor-bank or network approval authority",
+        "request asks for legal interpretation, fraud or AML adjudication, or reimbursement or dispute decisions",
+        "request asks to mark work complete without wallet-operation closure evidence"
+      ],
+      "scenario_ids": [
+        "dwo-03",
+        "dwo-04",
+        "dwo-10",
+        "dwo-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative wallet source set",
+        "tenant source precedence policy",
+        "source freshness metadata",
+        "conflict indicators"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "staleness or conflict note",
+        "confidence state"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "required source freshness exceeds decay tolerance",
+        "public-source and tenant-policy conflict materially changes the outcome"
+      ],
+      "scenario_ids": [
+        "dwo-08",
+        "dwo-09",
+        "dwo-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "wallet operations ticket",
+        "token lifecycle and wallet ledger references",
+        "processor or network acknowledgements",
+        "customer-impact and closure evidence"
+      ],
+      "required_outputs": [
+        "artifact-state linkage",
+        "missing-evidence packet",
+        "evidence-backed status summary"
+      ],
+      "refusal_triggers": [
+        "core wallet records are missing or contradictory",
+        "system status cannot be tied to named wallet evidence",
+        "customer-impact, dependency recovery, or change evidence conflicts remain unresolved"
+      ],
+      "scenario_ids": [
+        "dwo-01",
+        "dwo-02",
+        "dwo-03",
+        "dwo-05",
+        "dwo-06"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant retrieval hooks",
+        "approval owner map",
+        "wallet program and jurisdictional context"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "retrieval owner routing",
+        "system-readiness summary"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable",
+        "retrieval hook or owner is unknown",
+        "wallet program, sponsor-bank, or jurisdictional context cannot be confirmed"
+      ],
+      "scenario_ids": [
+        "dwo-01",
+        "dwo-02",
+        "dwo-05",
+        "dwo-08",
+        "dwo-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "confidence rubric",
+        "policy or source conflict signals",
+        "risk flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist",
+        "assumption register"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact remains unknown",
+        "record truth cannot be established",
+        "authority conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "dwo-08",
+        "dwo-09",
+        "dwo-11",
+        "dwo-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to fraud, disputes, security engineering, compliance, legal, or approval owners",
+        "request requires final access, release, or policy approval authority",
+        "dependency ownership ambiguity remains unresolved"
+      ],
+      "scenario_ids": [
+        "dwo-04",
+        "dwo-05",
+        "dwo-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "artifact completion status",
+        "wallet platform and dependency status",
+        "approval and handoff readiness"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition recommendation"
+      ],
+      "refusal_triggers": [
+        "state change requested without required evidence",
+        "incident, access, or release gates are unmet",
+        "wallet dependency, customer-impact, or policy blocker remains unresolved"
+      ],
+      "scenario_ids": [
+        "dwo-01",
+        "dwo-05",
+        "dwo-06",
+        "dwo-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "owner resolution context"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework and unblock plan"
+      ],
+      "refusal_triggers": [
+        "evidence gap remains unresolved",
+        "policy or source conflict remains unresolved",
+        "dependency cannot be cleared without external owner action"
+      ],
+      "scenario_ids": [
+        "dwo-02",
+        "dwo-05",
+        "dwo-06",
+        "dwo-09"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure checklist",
+        "incident or release resolution evidence",
+        "customer-impact or dependency recovery artifacts",
+        "handoff or closure approvals"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "wallet operations disposition summary"
+      ],
+      "refusal_triggers": [
+        "completion attempted without closure evidence",
+        "required approval, rollback, or customer-impact evidence is absent",
+        "open blockers or rework tasks remain unresolved"
+      ],
+      "scenario_ids": [
+        "dwo-01",
+        "dwo-03",
+        "dwo-06",
+        "dwo-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "digital wallet artifact set",
+        "wallet product and payment-rail context",
+        "token, ledger, processor, and access records"
+      ],
+      "required_outputs": [
+        "industry terminology-aware wallet summary",
+        "artifact completeness and system-of-record map"
+      ],
+      "refusal_triggers": [
+        "wallet product or payment context cannot be identified",
+        "artifact shape is not recognizable as wallet operations work",
+        "request uses generic app-support framing without wallet record context"
+      ],
+      "scenario_ids": [
+        "dwo-01",
+        "dwo-07",
+        "dwo-10",
+        "dwo-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "dwo-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-03",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-07",
+      "ability_ids": [
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-10",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-11",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dwo-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

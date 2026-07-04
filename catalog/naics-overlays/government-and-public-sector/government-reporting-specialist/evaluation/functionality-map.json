@@ -1,0 +1,440 @@
+{
+  "agent_slug": "government-reporting-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "requested claim or output shape",
+        "official authority boundary",
+        "adjacent specialist owner map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation note",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "request asks for eligibility, adjudication, enforcement, procurement-award, records-release, legal, audit, or financial-approval authority",
+        "request seeks official government action instead of reporting support",
+        "request asks the lane to publish unsupported certainty, policy conclusions, or public obligations"
+      ],
+      "scenario_ids": [
+        "grs-05",
+        "grs-07",
+        "grs-09",
+        "grs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "source recency metadata",
+        "tenant source-precedence rules",
+        "jurisdiction and program authority"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "staleness or conflict note",
+        "source sufficiency disposition"
+      ],
+      "refusal_triggers": [
+        "required statute, agency manual, official record, or tenant source context is missing",
+        "public source and tenant policy materially conflict",
+        "source freshness no longer supports confident publication"
+      ],
+      "scenario_ids": [
+        "grs-02",
+        "grs-03",
+        "grs-04",
+        "grs-11",
+        "grs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "case, application, eligibility, permit, procurement, and grant identifiers",
+        "official records and retrieval logs",
+        "notice, correspondence, transparency, and audit artifacts"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "artifact-to-report linkage",
+        "traceability confidence note"
+      ],
+      "refusal_triggers": [
+        "required official records are missing or stale",
+        "evidence cannot be tied to the reporting period or authority context",
+        "reported claim would exceed the named official record set"
+      ],
+      "scenario_ids": [
+        "grs-01",
+        "grs-04",
+        "grs-06",
+        "grs-07",
+        "grs-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks and owner map",
+        "tenant context and reporting prerequisites"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "retrieval prerequisite map",
+        "reroute or handoff package"
+      ],
+      "refusal_triggers": [
+        "critical system of record is unavailable",
+        "jurisdiction, program rules, reporting cadence, or service population is unresolved",
+        "required official evidence source cannot be retrieved"
+      ],
+      "scenario_ids": [
+        "grs-01",
+        "grs-03",
+        "grs-06",
+        "grs-08",
+        "grs-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence-impacting conflicts",
+        "changed-condition or submission-risk signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown",
+        "source conflict remains unresolved",
+        "confidence is too low to support publication, submission, or disclosure"
+      ],
+      "scenario_ids": [
+        "grs-02",
+        "grs-03",
+        "grs-04",
+        "grs-06",
+        "grs-08",
+        "grs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist owner map",
+        "handoff evidence"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing note",
+        "owner and artifact handoff package",
+        "responsibility transfer summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to program adjudication, legal, public records, procurement, audit, privacy, or enforcement owners",
+        "request requires regulator-facing, formal signoff, records-release, award, or adjudication action",
+        "reporting conclusion depends on unsupported downstream authority"
+      ],
+      "scenario_ids": [
+        "grs-07",
+        "grs-09",
+        "grs-10"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric request and definitions",
+        "source tables and date windows",
+        "tenant metric dictionary",
+        "public baseline definition"
+      ],
+      "required_outputs": [
+        "metric-definition summary",
+        "data-source mapping",
+        "definition-consistency decision"
+      ],
+      "refusal_triggers": [
+        "metric definition is ambiguous or disputed",
+        "required source columns or official records are missing",
+        "tenant definitions conflict with the public baseline without precedence"
+      ],
+      "scenario_ids": [
+        "grs-01",
+        "grs-02",
+        "grs-04",
+        "grs-11",
+        "grs-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric and evidence summaries",
+        "audience and reporting cadence",
+        "risk and caveat policy",
+        "submission checklist"
+      ],
+      "required_outputs": [
+        "analysis or reporting package",
+        "submission logic summary",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "submission inputs are incomplete",
+        "required caveat language cannot be resolved",
+        "requested audience requires unsupported authority statements"
+      ],
+      "scenario_ids": [
+        "grs-01",
+        "grs-03",
+        "grs-04",
+        "grs-06",
+        "grs-08"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested claim",
+        "available evidence",
+        "publication or disclosure context"
+      ],
+      "required_outputs": [
+        "claim refusal or downgrade",
+        "evidence gap statement",
+        "safe next-step guidance"
+      ],
+      "refusal_triggers": [
+        "claim exceeds the evidence",
+        "causal, policy, equity, public-obligation, or attestation assertion is not supported",
+        "publication would imply certainty not present in the records"
+      ],
+      "scenario_ids": [
+        "grs-05",
+        "grs-09",
+        "grs-10"
+      ]
+    },
+    {
+      "ability_id": "statutory_authority_awareness",
+      "ability_name": "Statutory-authority awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "program statute and jurisdiction",
+        "agency policy and authority boundary",
+        "official records and reporting obligation context"
+      ],
+      "required_outputs": [
+        "authority-aware reporting scope note",
+        "statutory and tenant source tie-out",
+        "authority limitation caveat"
+      ],
+      "refusal_triggers": [
+        "program authority or jurisdiction is missing",
+        "statutory interpretation determines the reporting answer",
+        "request asks the lane to exercise official public authority"
+      ],
+      "scenario_ids": [
+        "grs-01",
+        "grs-07",
+        "grs-09",
+        "grs-11",
+        "grs-12"
+      ]
+    },
+    {
+      "ability_id": "rights_and_due_process_escalation",
+      "ability_name": "Rights and due-process escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "eligibility or rights-sensitive case context",
+        "notice, appeal, hearing, or public-service decision records",
+        "due-process and legal-owner routing map"
+      ],
+      "required_outputs": [
+        "rights-sensitive escalation note",
+        "audit-ready records status summary",
+        "adjudication or legal handoff package"
+      ],
+      "refusal_triggers": [
+        "eligibility, rights, benefits, sanctions, or public obligations depend on legal interpretation",
+        "notice, appeal, hearing, or official decision record is missing",
+        "request requires adjudication, enforcement, or legal authority"
+      ],
+      "scenario_ids": [
+        "grs-07",
+        "grs-08",
+        "grs-09",
+        "grs-10",
+        "grs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "grs-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "statutory_authority_awareness"
+      ]
+    },
+    {
+      "scenario_id": "grs-02",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition"
+      ]
+    },
+    {
+      "scenario_id": "grs-03",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "grs-04",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "grs-05",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_claim_refusal"
+      ]
+    },
+    {
+      "scenario_id": "grs-06",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "grs-07",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "statutory_authority_awareness",
+        "rights_and_due_process_escalation"
+      ]
+    },
+    {
+      "scenario_id": "grs-08",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly",
+        "rights_and_due_process_escalation"
+      ]
+    },
+    {
+      "scenario_id": "grs-09",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "statutory_authority_awareness",
+        "rights_and_due_process_escalation"
+      ]
+    },
+    {
+      "scenario_id": "grs-10",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "rights_and_due_process_escalation"
+      ]
+    },
+    {
+      "scenario_id": "grs-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "statutory_authority_awareness"
+      ]
+    },
+    {
+      "scenario_id": "grs-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "metric_and_source_definition",
+        "statutory_authority_awareness",
+        "rights_and_due_process_escalation"
+      ]
+    }
+  ]
+}

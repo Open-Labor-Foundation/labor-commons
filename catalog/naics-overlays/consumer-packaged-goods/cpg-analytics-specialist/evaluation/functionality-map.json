@@ -1,0 +1,413 @@
+{
+  "agent_slug": "cpg-analytics-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "adjacent specialist registry",
+        "authority ownership map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for release, supplier approval, engineering, or disclosure signoff authority",
+        "request asks for unsupported causal, policy, or certainty claims",
+        "request asks to bypass traceability, hold, or quality controls"
+      ],
+      "scenario_ids": [
+        "cpgas-05",
+        "cpgas-06",
+        "cpgas-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness indicators",
+        "tenant source precedence"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "refresh risk marker",
+        "conflict summary"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources are stale and materially affect output reliability",
+        "public-source and tenant-policy interpretation materially conflict"
+      ],
+      "scenario_ids": [
+        "cpgas-02",
+        "cpgas-03",
+        "cpgas-11",
+        "cpgas-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "batch, lot, pallet, and inventory identifiers",
+        "quality and release artifacts",
+        "supplier and traceability records"
+      ],
+      "required_outputs": [
+        "source-lineage map",
+        "evidence-linked metric summary",
+        "missing-evidence or conflict note"
+      ],
+      "refusal_triggers": [
+        "core batch, lot, inventory, or release records cannot be traced to named systems",
+        "evidence for the reported metric is incomplete or contradictory",
+        "published claim would exceed named evidence"
+      ],
+      "scenario_ids": [
+        "cpgas-01",
+        "cpgas-04",
+        "cpgas-07",
+        "cpgas-08",
+        "cpgas-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "retrieval hooks",
+        "tenant context and owner map"
+      ],
+      "required_outputs": [
+        "dependency and system map",
+        "blocked-prerequisite note",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required system-of-record is unavailable",
+        "tenant retrieval path is unknown",
+        "plant, product, or reporting context needed for safe analysis is missing"
+      ],
+      "scenario_ids": [
+        "cpgas-03",
+        "cpgas-04",
+        "cpgas-11",
+        "cpgas-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "conflict or ambiguity signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "metric denominator remains unresolved",
+        "source conflict materially changes the answer",
+        "confidence is too low to support publication"
+      ],
+      "scenario_ids": [
+        "cpgas-02",
+        "cpgas-03",
+        "cpgas-04",
+        "cpgas-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside CPG analytics ownership",
+        "request requires quality, procurement, supplier-quality, engineering, or legal/disclosure authority",
+        "policy or source conflict cannot be resolved in-lane"
+      ],
+      "scenario_ids": [
+        "cpgas-06",
+        "cpgas-08",
+        "cpgas-09"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric request",
+        "source hierarchy",
+        "definition and denominator rules"
+      ],
+      "required_outputs": [
+        "metric definition summary",
+        "source hierarchy decision",
+        "refresh and caveat note"
+      ],
+      "refusal_triggers": [
+        "metric definition is ambiguous or disputed",
+        "source hierarchy is not defined",
+        "required definition inputs are missing"
+      ],
+      "scenario_ids": [
+        "cpgas-01",
+        "cpgas-02",
+        "cpgas-10",
+        "cpgas-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated metrics",
+        "source-lineage evidence",
+        "audience and disclosure context"
+      ],
+      "required_outputs": [
+        "analysis or reporting package",
+        "caveats and confidence notes",
+        "action-threshold summary"
+      ],
+      "refusal_triggers": [
+        "analysis would rely on incomplete or stale source data",
+        "cross-system conflict prevents trustworthy reporting",
+        "audience-facing disclosure cannot be supported"
+      ],
+      "scenario_ids": [
+        "cpgas-01",
+        "cpgas-03",
+        "cpgas-04",
+        "cpgas-06",
+        "cpgas-07"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested claim",
+        "available evidence",
+        "publication or disclosure context"
+      ],
+      "required_outputs": [
+        "claim refusal or downgrade",
+        "evidence gap statement",
+        "safe next-step guidance"
+      ],
+      "refusal_triggers": [
+        "claim exceeds the evidence",
+        "causal or policy assertion is not supported",
+        "publication would imply certainty not present in the records"
+      ],
+      "scenario_ids": [
+        "cpgas-05",
+        "cpgas-06",
+        "cpgas-08"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "batch, lot, pallet, and shipment history",
+        "inventory allocation or reservation status",
+        "quality release or hold records"
+      ],
+      "required_outputs": [
+        "traceability-aware analysis package",
+        "release-dependency caveat note"
+      ],
+      "refusal_triggers": [
+        "batch or lot lineage cannot be reconciled",
+        "held or quarantined status materially changes the metric outcome",
+        "traceability or release controls would be bypassed by the requested output"
+      ],
+      "scenario_ids": [
+        "cpgas-04",
+        "cpgas-07",
+        "cpgas-08"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier records and incident trends",
+        "nonconformance and release context",
+        "approval-owner map"
+      ],
+      "required_outputs": [
+        "supplier or quality escalation note",
+        "handoff package with evidence and unresolved questions"
+      ],
+      "refusal_triggers": [
+        "supplier substitution or approval authority is required",
+        "quality release or nonconformance disposition is required",
+        "supplier or quality conflict materially changes the reporting outcome"
+      ],
+      "scenario_ids": [
+        "cpgas-05",
+        "cpgas-08",
+        "cpgas-09"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cpgas-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-02",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-03",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-04",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly",
+        "traceability_and_release_dependency_handling"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-05",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_claim_refusal",
+        "supplier_quality_and_release_escalation"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-06",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "analysis_or_reporting_package_assembly",
+        "unsupported_claim_refusal"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-07",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "analysis_or_reporting_package_assembly",
+        "traceability_and_release_dependency_handling"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-08",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-09",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-10",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "metric_and_source_definition"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "cpgas-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "metric_and_source_definition"
+      ]
+    }
+  ]
+}

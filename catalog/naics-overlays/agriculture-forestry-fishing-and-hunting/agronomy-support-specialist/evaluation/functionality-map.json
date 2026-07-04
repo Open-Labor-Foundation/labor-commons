@@ -1,0 +1,437 @@
+{
+  "agent_slug": "agronomy-support-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested outcome",
+        "specialty boundary",
+        "adjacent specialist and authority owner map",
+        "tenant service policy and escalation rules"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or routing note"
+      ],
+      "refusal_triggers": [
+        "request asks for agronomic recommendation, pesticide-label interpretation, food-safety release, environmental compliance determination, veterinary advice, insurance eligibility, grant approval, legal advice, or financial exception authority",
+        "request asks the lane to override tenant policy, field-log requirements, program conditions, reentry interval, preharvest interval, or safety hold",
+        "request asks support to clear work when field, weather, crop, environmental, food-safety, or program conditions materially change the answer"
+      ],
+      "scenario_ids": [
+        "agss-03",
+        "agss-04",
+        "agss-07",
+        "agss-08",
+        "agss-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness metadata",
+        "tenant source-precedence rules",
+        "jurisdiction, crop, season, and program context"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "staleness or conflict marker",
+        "source conflict summary"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources conflict materially on the support disposition",
+        "source freshness exceeds the allowed decay window for a material decision"
+      ],
+      "scenario_ids": [
+        "agss-06",
+        "agss-10",
+        "agss-11",
+        "agss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "field, block, crop, season, and grower identifiers",
+        "field logs, crop plans, soil, weather, scouting, input, harvest, traceability, and program records",
+        "system-of-record references and retrieval timestamps"
+      ],
+      "required_outputs": [
+        "evidence-linked resolution note",
+        "artifact-to-system traceability summary",
+        "missing-evidence note"
+      ],
+      "refusal_triggers": [
+        "field, crop, season, application, traceability, or program records cannot be tied to named systems",
+        "input, harvest, environmental, or food-safety evidence is incomplete or contradictory",
+        "support disposition would rely on undocumented field facts"
+      ],
+      "scenario_ids": [
+        "agss-01",
+        "agss-02",
+        "agss-05",
+        "agss-07",
+        "agss-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location hooks",
+        "tenant policy and owner map",
+        "field, weather, traceability, food-safety, and program dependencies"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required farm management, GIS, agronomy, weather, traceability, food-safety, or program records are unavailable",
+        "record-of-truth hierarchy is unknown",
+        "tenant routing owner for agronomy, environmental, food-safety, pesticide, insurance, grant, or program decisions is missing"
+      ],
+      "scenario_ids": [
+        "agss-02",
+        "agss-05",
+        "agss-06",
+        "agss-10",
+        "agss-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "policy, source, or system conflict indicators",
+        "authority owner map"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts, field records, or authoritative records are missing",
+        "conflicting policy or source materially changes the answer",
+        "seasonal, environmental, food-safety, traceability, or program confidence is below safe threshold"
+      ],
+      "scenario_ids": [
+        "agss-05",
+        "agss-09",
+        "agss-10",
+        "agss-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements",
+        "authority owner and communication map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to certified crop adviser, licensed applicator, field operations, environmental compliance, food-safety, program administration, insurance, grant, veterinary, legal, or financial authority",
+        "policy or source conflict cannot be resolved in-lane",
+        "safe downstream owner is required before the support case can close"
+      ],
+      "scenario_ids": [
+        "agss-03",
+        "agss-04",
+        "agss-06",
+        "agss-07",
+        "agss-08",
+        "agss-11"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request summary and desired outcome",
+        "tenant support policy",
+        "complete field, season, crop, and record context"
+      ],
+      "required_outputs": [
+        "support disposition",
+        "resolution note",
+        "unresolved item list"
+      ],
+      "refusal_triggers": [
+        "request cannot be resolved from documented support rules",
+        "support outcome requires authority outside the lane",
+        "required facts are missing and would change the resolution"
+      ],
+      "scenario_ids": [
+        "agss-01",
+        "agss-02",
+        "agss-05",
+        "agss-12"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "resolved or blocked disposition",
+        "evidence references",
+        "stakeholder audience and communication constraints"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "next-owner statement",
+        "caveat and assumption summary"
+      ],
+      "refusal_triggers": [
+        "communication would imply authority, approval, or signoff the lane does not have",
+        "communication omits material unresolved field, food-safety, environmental, or program blockers",
+        "handoff owner is unknown"
+      ],
+      "scenario_ids": [
+        "agss-01",
+        "agss-04",
+        "agss-06",
+        "agss-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception request",
+        "governing policy, source, or authority boundary",
+        "required escalation owner and evidence packet"
+      ],
+      "required_outputs": [
+        "exception escalation package",
+        "blocked disposition",
+        "human-review request"
+      ],
+      "refusal_triggers": [
+        "stakeholder requests an unsupported workaround, policy exception, or discretionary override",
+        "repeat failure requires owner intervention",
+        "conflicting source or policy requires human resolution"
+      ],
+      "scenario_ids": [
+        "agss-03",
+        "agss-04",
+        "agss-05",
+        "agss-08",
+        "agss-11"
+      ]
+    },
+    {
+      "ability_id": "seasonal_and_field_dependency_handling",
+      "ability_name": "Seasonal and field-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "season, crop stage, geography, field access, soil condition, weather, water, and equipment context",
+        "field maps, crop plans, application records, and program dates",
+        "tenant dependency rules for planting, spraying, irrigation, harvest, and reporting windows"
+      ],
+      "required_outputs": [
+        "seasonal dependency summary",
+        "field blocker list",
+        "production-cycle status note"
+      ],
+      "refusal_triggers": [
+        "seasonal, weather, soil, crop-stage, or field-access facts are missing",
+        "program or planting deadline interpretation is required",
+        "field condition changes the support answer and requires authority review"
+      ],
+      "scenario_ids": [
+        "agss-01",
+        "agss-06",
+        "agss-09",
+        "agss-10"
+      ]
+    },
+    {
+      "ability_id": "environmental_and_food_safety_escalation",
+      "ability_name": "Environmental and food-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "environmental, pesticide, worker-safety, water, animal, biological soil amendment, harvest, and traceability risk indicators",
+        "food-safety, environmental compliance, and licensed applicator owner map",
+        "public and tenant policy context"
+      ],
+      "required_outputs": [
+        "environmental or food-safety escalation note",
+        "risk evidence packet",
+        "blocked release or clearance caveat"
+      ],
+      "refusal_triggers": [
+        "request asks support to clear environmental, pesticide, WPS, reentry, preharvest interval, harvest, food-safety, or traceability risk",
+        "environmental or food-safety evidence is incomplete or contradictory",
+        "animal intrusion, floodwater, biological soil amendment, pesticide, or traceability issue affects harvest or land-use disposition"
+      ],
+      "scenario_ids": [
+        "agss-07",
+        "agss-08",
+        "agss-09",
+        "agss-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "agss-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "seasonal_and_field_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "seasonal_and_field_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-07",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-09",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "seasonal_and_field_dependency_handling",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "seasonal_and_field_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "agss-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "environmental_and_food_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

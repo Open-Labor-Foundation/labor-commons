@@ -1,0 +1,312 @@
+{
+  "agent_slug": "retail-patient-services-specialist",
+  "resolved_workflow_phase_group": "service-support-and-resolution",
+  "industry_profile": "cross-industry",
+  "resolved_industry_profile": "cross-industry",
+  "source_decay_policy": "review_required_after_interval",
+  "last_reviewed_at": "2026-04-10",
+  "authoritative_sources": [
+    {
+      "title": "Pennsylvania Medical Marijuana Program",
+      "publisher": "Pennsylvania Department of Health",
+      "url": "https://www.pa.gov/agencies/health/programs/medical-marijuana",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Official Pennsylvania program guidance establishing that the program uses patient and practitioner registries, a seed-to-sale electronic tracking system, and strict confidentiality for patient, caregiver, practitioner, and ETS data.",
+      "workflow_stage": "Program-model grounding, registry and ETS dependency definition, and complaint-path identification",
+      "used_for": [
+        "public baseline selection",
+        "systems-of-record definition",
+        "confidentiality and complaint-routing posture"
+      ],
+      "practical_use_in_pack": "Constrains the lane to regulated medical-cannabis dispensary operations and requires registry and ETS-backed evidence before the lane can resolve order, pickup, or complaint work.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "28 Pa. Code Chapter 1161a, Dispensaries",
+      "publisher": "Commonwealth of Pennsylvania",
+      "url": "https://www.pacodeandbulletin.gov/secure/pacode/data/028/chapter1161a/028_1161a.pdf",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Primary dispensary regulation covering card verification, patient certification review, quantity limits, licensed-medical consultation availability, receipt filing, labels, complaints, recalls, inventory, and ETS integration.",
+      "workflow_stage": "Dispensing, order-release, complaint, recall, and traceability controls",
+      "used_for": [
+        "dispensing prerequisites",
+        "quantity and form-limit boundaries",
+        "complaint and recall escalation triggers",
+        "inventory and ETS evidence requirements"
+      ],
+      "practical_use_in_pack": "Provides the core refusal triggers for unsupported quantity, form, delivery, and recall exceptions and grounds the lane in specific patient, product, and receipt artifacts.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "Medical Marijuana Patients",
+      "publisher": "Pennsylvania Department of Health",
+      "url": "https://www.pa.gov/agencies/health/programs/medical-marijuana/medical-marijuana-patients",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Official patient and caregiver workflow guidance for registry enrollment, patient certification, card payment and issuance, caregiver eligibility, background checks, and pickup prerequisites.",
+      "workflow_stage": "Patient or caregiver intake, identity grounding, and pickup-readiness checks",
+      "used_for": [
+        "patient and caregiver prerequisites",
+        "registry and card-state terminology",
+        "caregiver boundary handling"
+      ],
+      "practical_use_in_pack": "Keeps first-visit readiness, caregiver linkage, and missing-ID scenarios grounded in patient-program rules instead of generic retail account logic.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "The Medical Marijuana Assistance Program (MMAP) Dispensary FAQs, Phase 3 and Phase 3 Pilot",
+      "publisher": "Pennsylvania Department of Health",
+      "url": "https://www.pa.gov/content/dam/copapwp-pagov/en/health/documents/topics/documents/programs/medical-marijuana/MMAP%20PHASE%20_3a_Dispensary_FAQ.pdf",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Official dispensary workflow FAQ for identifying MMAP-eligible patients at the point of sale, applying benefits, using the state support tool, and handling reimbursement and discount interaction.",
+      "workflow_stage": "Pricing, discount, and point-of-sale handling for eligible patients",
+      "used_for": [
+        "MMAP benefit workflow",
+        "pricing and discount terminology",
+        "repeat-failure and policy-conflict scenarios"
+      ],
+      "practical_use_in_pack": "Makes the lane specific to regulated patient pricing support instead of generic discount handling and creates evidence expectations for MMAP, POS, and reimbursement-related cases.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "ASTM D8233-19, Standard Guide for Packaging and Labeling of Cannabis/Hemp Raw Materials and Finished Goods",
+      "publisher": "ASTM International",
+      "url": "https://store.astm.org/d8233-19.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Recognized ASTM D37 retail-environment guide for cannabis packaging and labeling used as a vendor-neutral reference for patient-facing product-information and label terminology.",
+      "workflow_stage": "Patient-facing product-information and packaging communication",
+      "used_for": [
+        "retail terminology normalization",
+        "label and packaging vocabulary",
+        "patient-safe product-information communication"
+      ],
+      "practical_use_in_pack": "Adds cannabis retail terminology discipline so outputs reference labels, packaging, and patient-facing product information rather than generic SKU and price language.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "ASTM D8286-19, Standard Guide for Processing Cannabis Product Complaints",
+      "publisher": "ASTM International",
+      "url": "https://store.astm.org/d8286-19.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "Recognized ASTM D37 control guide defining minimum requirements to receive, process, investigate, document, and correct cannabis product complaints with corrective and preventive action expectations.",
+      "workflow_stage": "Complaint intake, investigation support, documentation, and corrective-action routing",
+      "used_for": [
+        "complaint evidence expectations",
+        "adverse-event and corrective-action escalation",
+        "traceability and documentation posture"
+      ],
+      "practical_use_in_pack": "Prevents the lane from closing complaints or adverse-event reports as ordinary service requests without the documentation and escalation structure expected in regulated cannabis operations.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Service intake and patient or caregiver grounding",
+      "description": "Confirm patient, caregiver, facility, jurisdiction, order, and product identifiers and establish whether the request is informational, pricing-sensitive, complaint-driven, exception-driven, or a handoff.",
+      "source_classes": [
+        "Named-industry operating guidance"
+      ]
+    },
+    {
+      "name": "Card, certification, order, and pricing evidence retrieval",
+      "description": "Review card state, patient certification, MMAP status, POS totals, ETS activity, inventory availability, and receipt history before stating next steps or releasing an order disposition.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Supported request resolution and bounded retail communication",
+      "description": "Respond using only documented patient, caregiver, certification, pricing, order, and product-information state without promising clinical recommendations, pricing overrides, or unsupported returns.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Complaint, repeat-failure, and adverse-event escalation",
+      "description": "Package recurring MMAP, pricing, order, complaint, or adverse-event issues with traceable evidence and the correct next owner instead of retrying unsupported fixes.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Recall, clinical, and policy-conflict boundary handling",
+      "description": "Escalate when recall status, adverse-event facts, program rules, or tenant policy materially change the safe answer and avoid representing the lane as licensed clinical or compliance authority.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    }
+  ],
+  "artifacts": [
+    "patient and caregiver registry records, patient ID card state, and caregiver linkage artifacts",
+    "patient certification status, limits on form or dosage, and remaining quantity or 90-day supply context",
+    "order, cart, receipt, POS pricing, MMAP benefit, and reimbursement-support artifacts",
+    "product sku, label, safety insert, THC/CBD, lot or batch, expiration, and recall-hold records",
+    "ETS and seed-to-sale activity, inventory availability, and release-blocker logs",
+    "complaint records, adverse-event reports, communication logs, and escalation packets"
+  ],
+  "systems_of_record": [
+    "patient and caregiver registry",
+    "Department database and electronic tracking system (ETS)",
+    "dispensary point-of-sale system",
+    "seed-to-sale, ERP, or inventory platform",
+    "CRM or case-management system",
+    "MMAP support and reimbursement tooling",
+    "complaint, quality, and recall tracking systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify patient-service work as in-scope, blocked, handoff-ready, or unresolved based on documented patient, caregiver, certification, pricing, inventory, complaint, and recall artifacts.",
+      "Prepare evidence-backed resolution notes, retail workflow summaries, patient communication summaries, and escalation packets without claiming clinical, compliance, or pricing-approval authority.",
+      "Request or validate the minimum tenant facts, systems, and source records needed to continue safely."
+    ],
+    "escalate": [
+      "Conflicting public guidance, jurisdiction rules, or tenant policy that materially change whether the product may be released, discounted, returned, or communicated as safe to use.",
+      "Requests requiring licensed medical consultation, compliance interpretation, recall or quality disposition, pricing approval, or security-sensitive handling.",
+      "Repeated patient-service failures where blocker history shows the issue is not being resolved in the current lane."
+    ],
+    "refuse": [
+      "Issue clinical dosage advice, patient certification changes, or medical-use appropriateness recommendations.",
+      "Approve quantity overrides, price waivers, free product, home delivery, or unsupported return or refund exceptions.",
+      "Treat cannabis and controlled substance retail patient services as generic retail support that ignores patient card, caregiver, certification, MMAP, lot, or recall evidence."
+    ]
+  },
+  "domain_failure_modes": [
+    "patient-service work proceeds without patient, caregiver, certification, or facility identifiers that materially change the answer",
+    "generic retail language replaces cannabis-specific records such as patient ID card, certification, MMAP benefit, medical marijuana units, safety insert, lot, or recall hold",
+    "pricing and MMAP issues are treated as discretionary discount decisions instead of documented point-of-sale and policy workflows",
+    "clinical product-use, dosage, or adverse-event questions are answered as ordinary retail support instead of being routed to licensed medical or quality owners",
+    "recall, complaint, or adverse-event cases are closed without Department, grower-processor, or corrective-action routing where required",
+    "registry, ETS, POS, and inventory conflicts are ignored instead of escalated as source-of-truth failures"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-02",
+        "rpss-12"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-07",
+        "rpss-09"
+      ]
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-04",
+        "rpss-06"
+      ]
+    },
+    {
+      "scenario_family": "Customer or stakeholder requests a policy exception",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-03"
+      ]
+    },
+    {
+      "scenario_family": "Service request lacks the detail needed for safe resolution",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-02"
+      ]
+    },
+    {
+      "scenario_family": "Communication becomes a handoff to another lane",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-04"
+      ]
+    },
+    {
+      "scenario_family": "Ineligible or unsupported request",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-03",
+        "rpss-09"
+      ]
+    },
+    {
+      "scenario_family": "Repeat failure requiring escalation",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-05"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-08"
+      ]
+    },
+    {
+      "scenario_family": "Scenario proving industry-specific in-scope execution",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-01",
+        "rpss-11"
+      ]
+    },
+    {
+      "scenario_family": "Scenario proving escalation when industry-specific authority or safety facts are missing",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-12"
+      ]
+    },
+    {
+      "scenario_family": "Scenario proving the lane refuses or escalates when the industry name cannot be treated as cosmetic",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-07"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves the public baseline",
+      "covered": true,
+      "scenario_ids": [
+        "rpss-10"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Jurisdictions differ on whether patient-facing retail work is medical-only, hybrid medical-adult-use, or otherwise integrated with broader cannabis retail models.",
+      "impact": "Could change pickup rules, home-delivery availability, who may enter the facility, and what patient identity artifacts are mandatory.",
+      "resolution_policy": "Treat jurisdiction, facility, and program model as required tenant facts; use the Pennsylvania medical-dispensary workflow as the public baseline and escalate whenever another jurisdiction's rules materially change the answer.",
+      "blocking": false
+    },
+    {
+      "topic": "Operators implement different POS, seed-to-sale, MMAP, and recall workflows across facilities and vendors.",
+      "impact": "Could change which system is authoritative for price, available inventory, release status, or complaint routing.",
+      "resolution_policy": "Require tenant system-of-record mapping and owner routing before resolving pricing, inventory, recall, or repeat-failure disputes.",
+      "blocking": false
+    }
+  ],
+  "notes": [
+    "The research set intentionally combines Pennsylvania medical-marijuana program guidance, dispensary regulations, patient workflow guidance, MMAP retail workflow guidance, and ASTM cannabis standards so workflow, evidence, terminology, and failure handling are all covered.",
+    "No blocking unresolved ambiguity remains for this validated pack because variable jurisdiction and tenant workflow areas are converted into explicit tenant-fact and retrieval prerequisites."
+  ]
+}

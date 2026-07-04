@@ -1,0 +1,440 @@
+{
+  "agent_slug": "healthcare-documentation-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority ownership map",
+        "adjacent specialist routing matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation",
+        "adjacent-owner routing note"
+      ],
+      "refusal_triggers": [
+        "request asks for clinical authorship, diagnosis, treatment, medical necessity, or note rewriting",
+        "request asks for coding, billing, payer, legal, privacy, or release approval outside the lane",
+        "request asks to disclose records without authorization or legal basis"
+      ],
+      "scenario_ids": [
+        "hds-02",
+        "hds-04",
+        "hds-05",
+        "hds-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "eCFR, HHS OCR, CMS, AHIMA, and ASTP/ONC source baseline",
+        "source freshness metadata",
+        "jurisdiction, payer, care setting, and tenant policy context"
+      ],
+      "required_outputs": [
+        "applicable source decision",
+        "source conflict or staleness warning",
+        "confidence posture"
+      ],
+      "refusal_triggers": [
+        "required public baseline is stale or absent",
+        "public guidance, payer rule, or tenant policy conflict changes the answer",
+        "jurisdiction, care setting, or payer context is missing"
+      ],
+      "scenario_ids": [
+        "hds-08",
+        "hds-12",
+        "hds-13"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "patient or member identifier",
+        "encounter, service date, request, or claim references",
+        "record versions, signatures, attestations, deficiency states, and source links"
+      ],
+      "required_outputs": [
+        "evidence checklist",
+        "record-completeness summary",
+        "audit-trail or exception summary"
+      ],
+      "refusal_triggers": [
+        "required notes, consents, signatures, attestations, amendments, or attachments are missing",
+        "records conflict across EHR, HIM, ROI, document, or audit systems",
+        "record lineage or authentication cannot be established"
+      ],
+      "scenario_ids": [
+        "hds-01",
+        "hds-03",
+        "hds-06",
+        "hds-07",
+        "hds-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks",
+        "source precedence map",
+        "authorization, referral, eligibility, and payer dependency facts"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system or retrieval blocker note",
+        "source precedence escalation"
+      ],
+      "refusal_triggers": [
+        "required system is unavailable or stale",
+        "legal health record or designated record set scope is unknown",
+        "authorization, referral, eligibility, or owner mapping is missing"
+      ],
+      "scenario_ids": [
+        "hds-07",
+        "hds-08",
+        "hds-11",
+        "hds-13"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact indicators",
+        "record conflict signals",
+        "authority or policy conflict indicators",
+        "confidence rubric"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts list",
+        "next-owner route"
+      ],
+      "refusal_triggers": [
+        "required tenant facts are missing",
+        "PHI handling, legal hold, payer policy, or clinical safety authority is unresolved",
+        "conflicting sources remain unreconciled"
+      ],
+      "scenario_ids": [
+        "hds-07",
+        "hds-08",
+        "hds-09",
+        "hds-12",
+        "hds-13"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff context and required evidence"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and preserved evidence package"
+      ],
+      "refusal_triggers": [
+        "request requires clinician, CDI, coding, billing, privacy, legal, payer, or compliance authority",
+        "correct owner cannot be identified from tenant routing data",
+        "handoff would disclose PHI outside access controls"
+      ],
+      "scenario_ids": [
+        "hds-04",
+        "hds-09",
+        "hds-10",
+        "hds-12"
+      ]
+    },
+    {
+      "ability_id": "record_and_document_maintenance",
+      "ability_name": "Record and document maintenance",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "record set under review",
+        "required healthcare documentation artifacts",
+        "current lifecycle state and owner",
+        "tenant legal-health-record and designated-record-set definitions"
+      ],
+      "required_outputs": [
+        "record update note",
+        "record-completeness summary",
+        "documentation deficiency summary"
+      ],
+      "refusal_triggers": [
+        "mandatory healthcare artifacts are absent",
+        "requested update would alter official clinical history improperly",
+        "record owner or source set has not been confirmed"
+      ],
+      "scenario_ids": [
+        "hds-01",
+        "hds-03",
+        "hds-04",
+        "hds-05",
+        "hds-06",
+        "hds-11"
+      ]
+    },
+    {
+      "ability_id": "permission_and_retention_control",
+      "ability_name": "Permission and retention control",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "retention rule",
+        "authorized-access context",
+        "ROI or amendment request",
+        "legal hold, consent, and minimum-necessary constraints"
+      ],
+      "required_outputs": [
+        "ROI or amendment routing note",
+        "retention or access constraint summary",
+        "privacy or legal-hold escalation"
+      ],
+      "refusal_triggers": [
+        "authorization, legal basis, personal representative authority, or minimum-necessary support is absent",
+        "retention or legal-hold rule is unknown",
+        "request exceeds allowed disclosure scope"
+      ],
+      "scenario_ids": [
+        "hds-02",
+        "hds-04",
+        "hds-09",
+        "hds-12",
+        "hds-13"
+      ]
+    },
+    {
+      "ability_id": "administrative_boundary_enforcement",
+      "ability_name": "Administrative-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "administrative task definition",
+        "approval requirements",
+        "official-record boundaries",
+        "clinical, privacy, payer, and coding authority map"
+      ],
+      "required_outputs": [
+        "administrative status note",
+        "authority-boundary refusal",
+        "orchestrator return note"
+      ],
+      "refusal_triggers": [
+        "request treats record maintenance as authority to decide clinical, payer, claim, benefit, legal, or release outcome",
+        "request crosses into adjudication, licensed clinical judgment, coding, billing, or policy interpretation",
+        "required approver or human reviewer is missing"
+      ],
+      "scenario_ids": [
+        "hds-05",
+        "hds-09",
+        "hds-10",
+        "hds-12"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "clinical content request markers",
+        "licensed-review requirements",
+        "clinician-owner or CDI routing data"
+      ],
+      "required_outputs": [
+        "clinical-boundary refusal or escalation",
+        "clinician-owner routing note",
+        "administrative-only evidence summary"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to imply diagnosis, treatment planning, clinical completeness, or medical necessity",
+        "request asks the lane to write or rewrite clinical content",
+        "patient safety or licensed review changes the answer"
+      ],
+      "scenario_ids": [
+        "hds-04",
+        "hds-09",
+        "hds-10"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI handling posture",
+        "authorization, consent, proxy, or legal basis evidence",
+        "patient-safety or access-denial risk indicators",
+        "privacy and clinical escalation routes"
+      ],
+      "required_outputs": [
+        "privacy-sensitive routing note",
+        "minimum-necessary or access constraint summary",
+        "patient-safety escalation"
+      ],
+      "refusal_triggers": [
+        "disclosure lacks valid authorization, legal basis, or minimum-necessary support",
+        "privacy, legal-hold, information-blocking, or access-denial authority is unresolved",
+        "clinical risk or patient safety changes release or routing behavior"
+      ],
+      "scenario_ids": [
+        "hds-02",
+        "hds-09",
+        "hds-12",
+        "hds-13"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hds-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-02",
+      "ability_ids": [
+        "boundary_control",
+        "permission_and_retention_control",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "record_and_document_maintenance",
+        "permission_and_retention_control",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-05",
+      "ability_ids": [
+        "boundary_control",
+        "record_and_document_maintenance",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-09",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "permission_and_retention_control",
+        "administrative_boundary_enforcement",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-11",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "permission_and_retention_control",
+        "administrative_boundary_enforcement",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hds-13",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "permission_and_retention_control",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

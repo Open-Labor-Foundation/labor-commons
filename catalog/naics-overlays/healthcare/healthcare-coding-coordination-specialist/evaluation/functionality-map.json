@@ -1,0 +1,451 @@
+{
+  "agent_slug": "healthcare-coding-coordination-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "coding coordination specialty boundary",
+        "authority map for coding, CDI, billing, compliance, privacy, and clinical review"
+      ],
+      "required_outputs": [
+        "authority-boundary refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for final code assignment, code change, modifier approval, or claim release",
+        "request asks for unsupported documentation backfill",
+        "request asks for clinical, payer, privacy, or compliance interpretation"
+      ],
+      "scenario_ids": [
+        "hccs-02",
+        "hccs-04",
+        "hccs-07",
+        "hccs-08",
+        "hccs-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CMS, HHS, AHIMA/ACDIS, and HFMA source baseline",
+        "tenant policy overlays",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-grounded routing rationale",
+        "source or policy conflict escalation"
+      ],
+      "refusal_triggers": [
+        "required public source context is stale or missing",
+        "payer, tenant, and public guidance conflict materially",
+        "licensed code set or payer contract details are unavailable when needed"
+      ],
+      "scenario_ids": [
+        "hccs-02",
+        "hccs-05",
+        "hccs-09",
+        "hccs-10",
+        "hccs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "encounter documentation artifacts",
+        "coder query and CDI artifacts",
+        "claim edit, charge review, and denial records"
+      ],
+      "required_outputs": [
+        "coding-readiness coordination note",
+        "evidence-backed blocker log",
+        "traceable handoff summary"
+      ],
+      "refusal_triggers": [
+        "critical encounter, query, edit, or denial record is absent",
+        "documentation support is ambiguous or contradictory",
+        "closure cannot be tied to named systems of record"
+      ],
+      "scenario_ids": [
+        "hccs-01",
+        "hccs-02",
+        "hccs-03",
+        "hccs-04",
+        "hccs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "EHR, encoder/CAC, coding workqueue, payer, and RCM denial queue references",
+        "owner map and open dependency list"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "system-of-record gap list",
+        "routing confirmation"
+      ],
+      "refusal_triggers": [
+        "patient, encounter, member, claim, payer, or service-date truth set is unresolved",
+        "systems of record disagree on coding dependency state",
+        "owner or retrieval hook is missing for the next action"
+      ],
+      "scenario_ids": [
+        "hccs-01",
+        "hccs-04",
+        "hccs-05",
+        "hccs-10",
+        "hccs-11",
+        "hccs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "source and tenant-policy completeness signals",
+        "policy conflict and authority indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "missing-information checklist",
+        "human-review routing package"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or records would change routing or release state",
+        "source or policy conflict prevents safe synthesis",
+        "PHI handling, clinical risk, or payer interpretation changes the answer"
+      ],
+      "scenario_ids": [
+        "hccs-02",
+        "hccs-05",
+        "hccs-06",
+        "hccs-08",
+        "hccs-09",
+        "hccs-10",
+        "hccs-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary and owner map"
+      ],
+      "required_outputs": [
+        "next-owner routing note",
+        "handoff summary",
+        "orchestrator return note"
+      ],
+      "refusal_triggers": [
+        "request belongs to certified coding, CDI, billing, revenue integrity, compliance, privacy, utilization management, or clinical review",
+        "adjacent owner cannot be uniquely identified",
+        "handoff would imply final specialist approval"
+      ],
+      "scenario_ids": [
+        "hccs-02",
+        "hccs-04",
+        "hccs-05",
+        "hccs-06",
+        "hccs-07",
+        "hccs-08",
+        "hccs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "coding workflow item",
+        "documentation, query, charge, edit, denial, authorization, and referral dependency list",
+        "owner and due-date map"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "blocked dependency status update"
+      ],
+      "refusal_triggers": [
+        "handoff request lacks required artifact or owner",
+        "billing or closure is requested while dependencies remain unresolved",
+        "authorization, referral, or documentation prerequisite cannot be verified"
+      ],
+      "scenario_ids": [
+        "hccs-01",
+        "hccs-03",
+        "hccs-04",
+        "hccs-05",
+        "hccs-11",
+        "hccs-12"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "approved handoff summary",
+        "recipient-owner assignment",
+        "required coding and denial artifact list"
+      ],
+      "required_outputs": [
+        "handoff execution note",
+        "routing confirmation note"
+      ],
+      "refusal_triggers": [
+        "handoff prerequisites unresolved",
+        "recipient owner ambiguity remains",
+        "handoff would transfer final coding, payer, or clinical authority to this lane"
+      ],
+      "scenario_ids": [
+        "hccs-01",
+        "hccs-02",
+        "hccs-03",
+        "hccs-05",
+        "hccs-11",
+        "hccs-12"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "active blocker list",
+        "resolution owner states",
+        "closure criteria for coding, billing, denial, and query workflows"
+      ],
+      "required_outputs": [
+        "closure confirmation note",
+        "blocker summary",
+        "billing hold or release routing confirmation"
+      ],
+      "refusal_triggers": [
+        "blocker list is missing before closure",
+        "documentation, query, authorization, referral, or payer edit blocker remains open",
+        "closure would imply final coding approval, claim release, or compliance signoff"
+      ],
+      "scenario_ids": [
+        "hccs-03",
+        "hccs-04",
+        "hccs-05",
+        "hccs-09",
+        "hccs-11",
+        "hccs-12"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "clinical-risk signals",
+        "administrative coordination artifacts",
+        "licensed review owner map"
+      ],
+      "required_outputs": [
+        "clinical-boundary routing note",
+        "administrative coordination summary"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, treatment, clinical validity, medical necessity, or patient-safety judgment",
+        "request asks for provider documentation content rather than routing a compliant query",
+        "clinical risk changes whether the work can continue"
+      ],
+      "scenario_ids": [
+        "hccs-03",
+        "hccs-07",
+        "hccs-08"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI handling basis",
+        "minimum-necessary constraints",
+        "patient or member safety implications",
+        "privacy and clinical escalation owner map"
+      ],
+      "required_outputs": [
+        "privacy escalation note",
+        "patient-safety escalation note",
+        "minimum-necessary artifact set"
+      ],
+      "refusal_triggers": [
+        "PHI request exceeds minimum necessary or lacks approved disclosure basis",
+        "patient safety or clinical risk changes the routing decision",
+        "privacy, consent, or sensitive-record handling is unclear"
+      ],
+      "scenario_ids": [
+        "hccs-06",
+        "hccs-08",
+        "hccs-10",
+        "hccs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hccs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-02",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "handoff_execution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-04",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "dependency_tracking",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-05",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-06",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-08",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-09",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-11",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hccs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "handoff_execution",
+        "blocker_and_closure_management",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

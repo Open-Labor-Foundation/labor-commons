@@ -1,0 +1,620 @@
+{
+  "agent_slug": "edge-and-remote-site-infrastructure-specialist",
+  "agent_release": "v1.1.0",
+  "resolved_workflow_phase_group": "general-workflow-phase",
+  "industry_profile": "cross-industry",
+  "current_review_date": "2026-04-14",
+  "authoritative_sources": [
+    {
+      "title": "What is AWS Outposts?",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/outposts/latest/userguide/what-is-outposts.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS publishes the official service documentation for AWS-managed infrastructure deployed at customer sites, including rack, server, local gateway, service link, and responsibility boundaries.",
+      "workflow_stage": "site context intake, topology and control-plane analysis, provider support boundary review",
+      "practical_use_in_pack": [
+        "provider-specific site and service-link terminology",
+        "edge platform systems-of-record examples",
+        "hardware and support boundary caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_outposts_service_link_or_support_model_update"
+    },
+    {
+      "title": "Prepare for network disconnects for Amazon EKS local clusters on AWS Outposts",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/eks/latest/userguide/eks-outposts-network-disconnects.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "AWS official EKS on Outposts guidance directly describes operational behavior and limitations during network disconnection, including local registry, IAM, storage API, logging, metrics, and reconnection considerations.",
+      "workflow_stage": "intermittent connectivity, local operations, observability, state behavior, degraded-mode planning",
+      "practical_use_in_pack": [
+        "scenario constraints for temporary WAN loss",
+        "local registry and local evidence prerequisites",
+        "identity, storage, metrics, and logs caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_eks_outposts_disconnection_guidance_update"
+    },
+    {
+      "title": "AWS Well-Architected Framework: Reliability Pillar",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS official reliability framework grounds recovery objectives, failure-domain thinking, backup, DR, change management, and resilience testing used in edge topology tradeoffs.",
+      "workflow_stage": "resilience review, RTO/RPO feasibility, deployment and rollback validation",
+      "practical_use_in_pack": [
+        "failure-domain and recovery objective evidence",
+        "DR scenario pass criteria",
+        "reliability tradeoff output shape"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_aws_reliability_pillar_update"
+    },
+    {
+      "title": "What is Azure Stack Edge Pro 2?",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/databox-online/azure-stack-edge-pro-2-overview",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft publishes the official documentation for Azure Stack Edge appliance use at remote sites and edge compute locations.",
+      "workflow_stage": "Azure edge appliance intake, topology selection, local management and deployment caveats",
+      "practical_use_in_pack": [
+        "Azure edge appliance terminology",
+        "local hardware and management facts",
+        "provider-specific topology evidence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_azure_stack_edge_guidance_update"
+    },
+    {
+      "title": "Azure Local disconnected operations overview",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-local/manage/disconnected-operations-overview?view=azloc-2603",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Microsoft official Azure Local documentation directly addresses disconnected operations, local control-plane behavior, and preview-state caveats for local infrastructure.",
+      "workflow_stage": "disconnected operating-mode review, local control-plane planning, confidence and preview-feature escalation",
+      "practical_use_in_pack": [
+        "disconnected-mode evidence requirements",
+        "local management assumptions",
+        "preview or unsupported-mode escalation language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval_or_after_azure_local_disconnected_operations_change"
+    },
+    {
+      "title": "Azure Arc overview",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-arc/overview",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft official hybrid and multicloud management documentation identifies Azure Arc management records, connected resources, policy, GitOps, and governance dependencies.",
+      "workflow_stage": "systems-of-record discovery, hybrid governance dependency review, adjacent-lane routing",
+      "practical_use_in_pack": [
+        "hybrid management record examples",
+        "GitOps and policy dependency language",
+        "centralized management versus local autonomy caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_azure_arc_management_model_update"
+    },
+    {
+      "title": "Overview of connected deployments of Google Distributed Cloud",
+      "publisher": "Google Cloud",
+      "url": "https://docs.cloud.google.com/distributed-cloud/edge/latest/docs/overview",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Google Cloud official documentation defines connected Distributed Cloud deployment expectations, edge hardware, Cloud VPN connectivity, and Google-managed service boundaries.",
+      "workflow_stage": "connected edge topology analysis, provider-specific site evidence, connectivity-mode review",
+      "practical_use_in_pack": [
+        "connected Distributed Cloud terminology",
+        "Cloud VPN and support-model prerequisites",
+        "provider-specific edge topology scenarios"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_gdc_connected_release_or_support_update"
+    },
+    {
+      "title": "Impact of temporary disconnection from Google Cloud",
+      "publisher": "Google Cloud",
+      "url": "https://docs.cloud.google.com/distributed-cloud/docs/reference/anthos-connectivity",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Google Cloud official guidance for Distributed Cloud connectivity describes temporary disconnection behavior and limitations across lifecycle management, logging, monitoring, Config Sync, policy, and identity.",
+      "workflow_stage": "temporary disconnection handling, observability caveats, conflicting operating-mode escalation",
+      "practical_use_in_pack": [
+        "temporary versus nominal disconnected-mode distinction",
+        "logging, monitoring, Config Sync, and identity caveats",
+        "source-policy conflict scenario"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_gdc_connectivity_guidance_update"
+    },
+    {
+      "title": "About Google Distributed Cloud air-gapped",
+      "publisher": "Google Cloud",
+      "url": "https://docs.cloud.google.com/distributed-cloud/hosted/docs/latest/gdcag/overview",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Google Cloud official documentation for air-gapped Distributed Cloud environments that are designed without Google Cloud connectivity and require site survey, local infrastructure, and offline distribution planning.",
+      "workflow_stage": "air-gapped topology analysis, site survey prerequisites, deployment and materialization caveats",
+      "practical_use_in_pack": [
+        "air-gapped operating-mode terminology",
+        "site survey and offline distribution prerequisites",
+        "separation from connected temporary-disconnection guidance"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_gdc_air_gapped_release_update"
+    },
+    {
+      "title": "Safely drain a node",
+      "publisher": "Kubernetes",
+      "url": "https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Kubernetes project documentation defines node evacuation and maintenance workflow behavior that constrains cluster-backed edge rollout and rollback guidance.",
+      "workflow_stage": "deployment sequencing, maintenance planning, rollback readiness, Kubernetes handoff boundary",
+      "practical_use_in_pack": [
+        "node maintenance terminology",
+        "rollout and rollback gate examples",
+        "container platform adjacent-lane limits"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_kubernetes_drain_behavior_update"
+    },
+    {
+      "title": "Node-pressure Eviction",
+      "publisher": "Kubernetes",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Kubernetes project documentation defines node-pressure signals, thresholds, and eviction behavior used to ground saturation and degraded-site operations playbooks.",
+      "workflow_stage": "capacity and saturation response, local observability, operations playbook",
+      "practical_use_in_pack": [
+        "node-pressure and saturation evidence",
+        "capacity scenario thresholds",
+        "handoff to Kubernetes platform implementation when required"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_kubernetes_eviction_behavior_update"
+    },
+    {
+      "title": "Terraform State",
+      "publisher": "HashiCorp Developer",
+      "url": "https://developer.hashicorp.com/terraform/language/state",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "HashiCorp official Terraform state documentation defines infrastructure state mapping, source-of-truth behavior, and operational risk relevant to edge drift and reconciliation scenarios.",
+      "workflow_stage": "state reconciliation, drift recovery, deployment rollback evidence, IaC handoff",
+      "practical_use_in_pack": [
+        "IaC state record requirements",
+        "drift and partial-update scenario",
+        "infrastructure-as-code adjacent-lane boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval_or_after_terraform_state_behavior_update"
+    },
+    {
+      "title": "NIST SP 500-325: Fog Computing Conceptual Model",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/500/325/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST provides a neutral public conceptual model for fog and edge computing terms, roles, and system characteristics that prevents vendor-only or generic-cloud definitions.",
+      "workflow_stage": "terminology normalization, edge-versus-cloud boundary, cross-industry artifact awareness",
+      "practical_use_in_pack": [
+        "non-vendor edge/fog terminology",
+        "cross-industry cloud role vocabulary",
+        "specialty-specific artifact awareness"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_nist_replacement"
+    },
+    {
+      "title": "NIST SP 800-34 Rev. 1: Contingency Planning Guide for Federal Information Systems",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/34/r1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST official contingency planning guidance grounds business impact analysis, recovery strategies, contingency plans, training, exercises, testing, maintenance, and recovery evidence.",
+      "workflow_stage": "DR readiness, recovery strategy, exercise and test evidence, RTO/RPO validation",
+      "practical_use_in_pack": [
+        "contingency and recovery evidence requirements",
+        "remote-site DR scenario",
+        "business-impact and testing caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_nist_contingency_guidance_update"
+    },
+    {
+      "title": "NIST SP 800-53 Rev. 5: Security and Privacy Controls for Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST official control catalog supplies public evidence terminology for audit, configuration management, contingency planning, incident response, maintenance, monitoring, physical/environmental, and system integrity caveats.",
+      "workflow_stage": "control evidence, audit traceability, non-attestation caveats, security and privacy handoff",
+      "practical_use_in_pack": [
+        "evidence sufficiency language",
+        "security and privacy boundary handling",
+        "non-attestation refusal criteria"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_nist_control_catalog_update"
+    },
+    {
+      "title": "Current edge-and-remote-site-infrastructure-specialist package baseline",
+      "publisher": "olf-agents repository",
+      "url": "catalog/cloud-platform-and-infrastructure/edge-and-remote-site-infrastructure-specialist/",
+      "source_class": "Current package task baseline from edge-and-remote-site-infrastructure-specialist",
+      "authority_rationale": "The committed legacy package is authoritative only for preserving high-value supported tasks, input and output shapes, validation thresholds, refusal rules, and no-regression context; this refreshed spec pack supersedes it.",
+      "workflow_stage": "legacy baseline comparison and regression review",
+      "practical_use_in_pack": [
+        "preserved specialist boundary",
+        "no-regression scenario coverage",
+        "replacement of stale build-era assumptions"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 30,
+      "decay_policy": "baseline_only_after_refresh"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "stage_id": "ers-stage-01",
+      "name": "scope, authority, and site context intake",
+      "description": "Confirm requested output, site class, geography, criticality, operating mode, provider/platform context, authority level, and adjacent-lane indicators before producing guidance.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "stage_id": "ers-stage-02",
+      "name": "systems of record and evidence discovery",
+      "description": "Collect provider inventory, edge platform, connectivity, local telemetry, incident, backup, change, IaC state, GitOps, and tenant policy evidence; identify missing facts and confidence state.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "stage_id": "ers-stage-03",
+      "name": "topology, operating mode, and control-plane analysis",
+      "description": "Compare connected, intermittently connected, temporarily disconnected, intentionally air-gapped, provider-managed, and appliance-backed options with failure-domain, local autonomy, support, and responsibility boundaries.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "stage_id": "ers-stage-04",
+      "name": "resilience, synchronization, and recovery design",
+      "description": "Define degraded-mode behavior, local queues, caches, registries, sync windows, source-of-truth precedence, conflict handling, backup, restore, failback, and RTO/RPO validation.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "stage_id": "ers-stage-05",
+      "name": "operations, observability, and saturation planning",
+      "description": "Create runbooks for local evidence capture, telemetry gaps, alerting, delayed logs, node pressure, capacity saturation, degraded links, owner escalation, and post-outage validation.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "stage_id": "ers-stage-06",
+      "name": "deployment, rollback, tenant adaptation, and review",
+      "description": "Plan canary waves, blast-radius limits, drain/evacuation checks, artifact and registry readiness, local rollback, source-precedence review, tenant overrides, and final handoff or escalation.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "site-context-and-evidence-matrix",
+      "name": "Site context and evidence matrix",
+      "required_records": [
+        "site class, geography, criticality, staffing model, provider platform, operating mode, connectivity pattern, SLO/RTO/RPO, data classification, owner and approval map"
+      ],
+      "used_by_scenarios": [
+        "ers-001",
+        "ers-002",
+        "ers-015",
+        "ers-018"
+      ]
+    },
+    {
+      "artifact_id": "topology-and-failure-domain-map",
+      "name": "Topology and failure-domain map",
+      "required_records": [
+        "edge appliance or local cluster inventory, service-link or VPN status, local gateways, DNS, routing, dependency map, cloud control-plane dependencies, local autonomy requirement"
+      ],
+      "used_by_scenarios": [
+        "ers-001",
+        "ers-002",
+        "ers-007"
+      ]
+    },
+    {
+      "artifact_id": "degraded-mode-and-sync-playbook",
+      "name": "Degraded-mode and synchronization playbook",
+      "required_records": [
+        "queue records, cache behavior, authoritative state, sync logs, conflict records, local registry evidence, version inventory, state-precedence decision"
+      ],
+      "used_by_scenarios": [
+        "ers-003",
+        "ers-010",
+        "ers-017"
+      ]
+    },
+    {
+      "artifact_id": "operations-and-observability-playbook",
+      "name": "Operations and observability playbook",
+      "required_records": [
+        "local telemetry store, heartbeat source, monitoring gaps, log forwarding, alert rules, incident runbook, node pressure metrics, capacity baseline, escalation matrix"
+      ],
+      "used_by_scenarios": [
+        "ers-004",
+        "ers-007",
+        "ers-009"
+      ]
+    },
+    {
+      "artifact_id": "dr-and-restore-validation-plan",
+      "name": "DR and restore validation plan",
+      "required_records": [
+        "business impact tier, backup policy, recovery points, restore tests, replication status, failback procedure, RTO/RPO objective, contingency exercise evidence"
+      ],
+      "used_by_scenarios": [
+        "ers-005"
+      ]
+    },
+    {
+      "artifact_id": "deployment-and-rollback-plan",
+      "name": "Deployment and rollback plan",
+      "required_records": [
+        "release artifact, artifact registry, change tickets, maintenance windows, site waves, rollback artifact, drain criteria, validation gates, post-change evidence"
+      ],
+      "used_by_scenarios": [
+        "ers-006",
+        "ers-010",
+        "ers-018"
+      ]
+    },
+    {
+      "artifact_id": "tradeoff-and-boundary-note",
+      "name": "Tradeoff and boundary note",
+      "required_records": [
+        "cost assumptions, reliability and isolation requirements, approval owners, adjacent-lane indicators, authority constraints, refusal reason, handoff context"
+      ],
+      "used_by_scenarios": [
+        "ers-008",
+        "ers-011",
+        "ers-012",
+        "ers-013",
+        "ers-014",
+        "ers-016",
+        "ers-017"
+      ]
+    }
+  ],
+  "systems_of_record": [
+    "Cloud provider inventories, edge appliance management records, AWS Outposts records, Azure Arc/Azure Local/Azure Stack Edge records, Google Distributed Cloud records, and Kubernetes cluster records.",
+    "CMDB or asset inventory for site class, device/appliance lifecycle, dependencies, ownership, warranty boundary, and support model.",
+    "Connectivity records for service link, VPN, Cloud VPN, DNS, routing, BGP, carrier incidents, bandwidth, packet loss, latency, and outage history.",
+    "IaC repository, Terraform state backend, GitOps repository, artifact/image registry, release logs, and deployment pipeline records.",
+    "Monitoring, logging, synthetic checks, local telemetry buffers, audit logs, SIEM/event stores, incident and problem records.",
+    "Change management, maintenance windows, deployment waves, rollback approvals, backup policies, restore-test records, and DR exercise evidence.",
+    "Tenant policy, data classification, privacy, contract, regulated-data, exception, source-precedence, and approval records."
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Recommend edge topology, control-plane placement, local autonomy, connectivity-mode, and failure-domain options within documented provider and tenant constraints.",
+      "Recommend degraded-mode, synchronization, reconciliation, observability, capacity, deployment, rollback, and recovery guidance with evidence and assumptions.",
+      "Prepare comparative cost, reliability, timing, isolation, and operational-burden tradeoffs without approving spend or procurement.",
+      "Produce tenant-specific adaptation notes that preserve the public baseline and record source precedence."
+    ],
+    "escalate": [
+      "Required site, connectivity, SLO/RTO/RPO, source-of-truth, tenant isolation, approval, safety, or regulated-data facts are missing.",
+      "Public provider guidance and tenant policy or requested operating mode conflict without approved source precedence.",
+      "A provider feature is preview, unsupported for nominal disconnected use, or ambiguous for the requested operating model.",
+      "The request requires final risk acceptance, budget approval, production execution, legal interpretation, compliance signoff, safety signoff, or licensed review."
+    ],
+    "refuse": [
+      "Application code, API, database tuning, or application-only architecture work.",
+      "Pure telecom circuit procurement, carrier selection, or vendor SLA negotiation.",
+      "Primary IAM policy framework design, cloud security investigation, SOC response, legal advice, compliance certification, procurement approval, or risk acceptance.",
+      "Help-desk execution, single-device troubleshooting, rack-and-stack work, non-cloud hardware repair, or live production changes."
+    ]
+  },
+  "domain_failure_modes": [
+    {
+      "failure_mode": "generic edge advice ignores operating mode",
+      "description": "Connected, temporarily disconnected, intermittently connected, and air-gapped systems have different service-link, identity, observability, policy, registry, and lifecycle behavior.",
+      "scenario_ids": [
+        "ers-002",
+        "ers-016",
+        "ers-017"
+      ]
+    },
+    {
+      "failure_mode": "unsupported disconnected assumptions",
+      "description": "A connected platform may tolerate temporary disconnection but not be appropriate for planned weeks-long disconnection without provider-supported air-gapped design.",
+      "scenario_ids": [
+        "ers-002",
+        "ers-017"
+      ]
+    },
+    {
+      "failure_mode": "central-only observability creates false confidence",
+      "description": "Remote sites may keep running while central logs or metrics are delayed or absent; outputs must distinguish local evidence from stale central telemetry.",
+      "scenario_ids": [
+        "ers-004",
+        "ers-007",
+        "ers-009"
+      ]
+    },
+    {
+      "failure_mode": "state and source-of-truth drift after partial failure",
+      "description": "Interrupted deployments and delayed synchronization can leave local nodes, Terraform state, GitOps records, and service state inconsistent.",
+      "scenario_ids": [
+        "ers-003",
+        "ers-010"
+      ]
+    },
+    {
+      "failure_mode": "remote-site RTO/RPO objectives conflict with connectivity or backup evidence",
+      "description": "Recovery objectives may be unachievable when backups or replication depend on intermittent WAN links and restore tests are missing.",
+      "scenario_ids": [
+        "ers-005",
+        "ers-015"
+      ]
+    },
+    {
+      "failure_mode": "boundary drift into execution, procurement, security, legal, or hardware authority",
+      "description": "Edge infrastructure requests often include adjacent actions that require different owners and cannot be absorbed by this specialist.",
+      "scenario_ids": [
+        "ers-011",
+        "ers-012",
+        "ers-013",
+        "ers-014"
+      ]
+    },
+    {
+      "failure_mode": "tenant-specific override treated as public baseline",
+      "description": "Tenant policies such as local-only logs, data residency, private registries, or no cross-tenant sharing must remain tenant-scoped rather than generalized.",
+      "scenario_ids": [
+        "ers-018"
+      ]
+    }
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "core implementation or architecture guidance",
+      "scenario_ids": [
+        "ers-001",
+        "ers-002"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "operations and troubleshooting guidance",
+      "scenario_ids": [
+        "ers-004",
+        "ers-007",
+        "ers-009"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "resilience and failure scenarios",
+      "scenario_ids": [
+        "ers-003",
+        "ers-005",
+        "ers-010"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "cost, reliability, or isolation tradeoffs where relevant",
+      "scenario_ids": [
+        "ers-008"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "out-of-scope rejection",
+      "scenario_ids": [
+        "ers-011",
+        "ers-012",
+        "ers-013",
+        "ers-014"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "low-confidence escalation",
+      "scenario_ids": [
+        "ers-015",
+        "ers-017"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "scenario_ids": [
+        "ers-015",
+        "ers-016",
+        "ers-017"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "scenario_ids": [
+        "ers-002",
+        "ers-016"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "scenario_ids": [
+        "ers-010",
+        "ers-011",
+        "ers-012",
+        "ers-013",
+        "ers-014"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "conflicting-source or conflicting-policy handling",
+      "scenario_ids": [
+        "ers-017"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "tenant-specific adaptation handling",
+      "scenario_ids": [
+        "ers-018"
+      ],
+      "covered": true
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "tenant-specific provider mix and regional availability",
+      "status": "non_blocking",
+      "blocking": false,
+      "resolution_path": "Materialized runtime must retrieve tenant provider selections, region and site availability, and current service constraints before finalizing provider-specific recommendations."
+    },
+    {
+      "topic": "jurisdictional, contractual, privacy, safety, and regulated-data constraints",
+      "status": "non_blocking",
+      "blocking": false,
+      "resolution_path": "The spec records these as tenant-supplied authority facts and requires orchestrator or human-review escalation when they materially change the answer."
+    },
+    {
+      "topic": "preview or rapidly changing disconnected-operation features",
+      "status": "non_blocking",
+      "blocking": false,
+      "resolution_path": "Sources have short refresh intervals and decay policies; materialization must run a source freshness check and escalate when preview status or support limits affect the requested design."
+    }
+  ],
+  "market_ready_research_conclusion": {
+    "blocking_unresolved_ambiguity_count": 0,
+    "conclusion": "No blocking ambiguity remains for a validated spec pack. Tenant-specific ambiguity is handled through required facts, source-precedence checks, and orchestrator or human-review escalation."
+  }
+}

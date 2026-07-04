@@ -1,0 +1,416 @@
+{
+  "agent_slug": "regulatory-reporting-finance-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested reporting action",
+        "lane scope and adjacent authority map",
+        "tenant approval, attestation, and submission rules"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff rationale"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, final accounting-policy decision, formal attestation, or regulator-facing submission authority",
+        "request seeks unsupported override of reporting treatment, edit resolution, or signoff rules",
+        "request bypasses mandatory evidence, reconciliation, or control gates"
+      ],
+      "scenario_ids": [
+        "rrfs-05",
+        "rrfs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness metadata",
+        "tenant source precedence rules"
+      ],
+      "required_outputs": [
+        "applicable source map",
+        "source conflict or staleness marker",
+        "confidence disposition"
+      ],
+      "refusal_triggers": [
+        "required reporting source context is missing",
+        "public instructions and tenant policy materially conflict",
+        "source freshness no longer supports a confident reporting result"
+      ],
+      "scenario_ids": [
+        "rrfs-01",
+        "rrfs-02",
+        "rrfs-09",
+        "rrfs-11",
+        "rrfs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "reporting entity and period identifiers",
+        "ledger, subledger, workpaper, and approval artifacts",
+        "reconciliation, edit, and communication records"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "traceable reporting summary",
+        "missing-evidence escalation packet"
+      ],
+      "refusal_triggers": [
+        "critical records are missing or unverifiable",
+        "artifacts cannot be tied to a named system of record or owner",
+        "requested reporting treatment is not supported by traceable evidence"
+      ],
+      "scenario_ids": [
+        "rrfs-01",
+        "rrfs-03",
+        "rrfs-04",
+        "rrfs-06",
+        "rrfs-07",
+        "rrfs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location and retrieval hooks",
+        "owner and approver map"
+      ],
+      "required_outputs": [
+        "system dependency matrix",
+        "blocked-prerequisite summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required ledger, subledger, reporting, or document system is unavailable",
+        "record location or retrieval hook is unknown",
+        "approval, review, or attestation owner is unresolved"
+      ],
+      "scenario_ids": [
+        "rrfs-02",
+        "rrfs-04",
+        "rrfs-06",
+        "rrfs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact flags",
+        "confidence rubric",
+        "policy and source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-facts checklist"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact is unknown",
+        "conflicting policy or source interpretation remains unresolved",
+        "required approvals or controls are missing for the requested action"
+      ],
+      "scenario_ids": [
+        "rrfs-02",
+        "rrfs-08",
+        "rrfs-09",
+        "rrfs-11",
+        "rrfs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request is outside regulatory-reporting finance workflow ownership",
+        "request requires fraud, AML, legal-compliance, controllership, accounting-policy, or attestation-owner authority",
+        "request requires formal policy interpretation or final signoff"
+      ],
+      "scenario_ids": [
+        "rrfs-05",
+        "rrfs-08",
+        "rrfs-10"
+      ]
+    },
+    {
+      "ability_id": "financial_trigger_and_source_traceability",
+      "ability_name": "Financial-trigger and source traceability",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "reporting line, posting, or adjustment request",
+        "entity and product context",
+        "source records and disclosure requirements",
+        "financial trigger state"
+      ],
+      "required_outputs": [
+        "financial trigger validation report",
+        "regulatory reporting readiness status"
+      ],
+      "refusal_triggers": [
+        "requested reporting treatment lacks source support",
+        "required disclosure or notice baseline is unmet",
+        "posting or adjustment authority is absent"
+      ],
+      "scenario_ids": [
+        "rrfs-01",
+        "rrfs-03",
+        "rrfs-04",
+        "rrfs-09",
+        "rrfs-12"
+      ]
+    },
+    {
+      "ability_id": "reconciliation_and_exception_resolution",
+      "ability_name": "Reconciliation and exception resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "ledger, subledger, and reporting records",
+        "edit or exception flags",
+        "variance reason categories"
+      ],
+      "required_outputs": [
+        "reconciliation note",
+        "matched and unmatched item sets",
+        "exception escalation action list"
+      ],
+      "refusal_triggers": [
+        "unmatched items remain unresolved",
+        "edit failures cannot be explained from retrieved records",
+        "variance cannot be explained from authoritative source sets"
+      ],
+      "scenario_ids": [
+        "rrfs-06",
+        "rrfs-07",
+        "rrfs-09",
+        "rrfs-11"
+      ]
+    },
+    {
+      "ability_id": "unsupported_financial_change_refusal",
+      "ability_name": "Unsupported financial-change refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported change request category",
+        "impact and urgency",
+        "handoff destination"
+      ],
+      "required_outputs": [
+        "financial exception escalation packet",
+        "refusal rationale and blockers"
+      ],
+      "refusal_triggers": [
+        "unsupported override request",
+        "top-side reporting adjustment or signoff bypass is requested without authority",
+        "source records do not support the requested financial treatment"
+      ],
+      "scenario_ids": [
+        "rrfs-03",
+        "rrfs-05",
+        "rrfs-10"
+      ]
+    },
+    {
+      "ability_id": "regulated_transaction_evidence_handling",
+      "ability_name": "Regulated-transaction evidence handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "account, policy, claim, transaction, or entity truth-set references",
+        "statement, notice, ledger, and reporting records",
+        "reconciliation and communication artifacts"
+      ],
+      "required_outputs": [
+        "regulated transaction evidence package",
+        "account-policy-transaction alignment summary"
+      ],
+      "refusal_triggers": [
+        "account, policy, transaction, or entity truth set is incomplete",
+        "payment, reserve, or claim evidence cannot be reconciled",
+        "required disclosure, communication, or workpaper artifact is absent"
+      ],
+      "scenario_ids": [
+        "rrfs-01",
+        "rrfs-04",
+        "rrfs-06",
+        "rrfs-11"
+      ]
+    },
+    {
+      "ability_id": "fraud_and_consumer_protection_escalation",
+      "ability_name": "Fraud and consumer-protection escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "fraud, AML, sanctions, or customer-impact indicators",
+        "dispute and complaint context",
+        "required escalation owners"
+      ],
+      "required_outputs": [
+        "fraud or consumer-protection escalation package",
+        "risk triage rationale",
+        "owner mapping and communication constraints"
+      ],
+      "refusal_triggers": [
+        "fraud, AML, or sanctions indicators remain unresolved",
+        "consumer-harm risk exceeds lane authority",
+        "resolution would require regulated advice or discretionary approval"
+      ],
+      "scenario_ids": [
+        "rrfs-08",
+        "rrfs-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rrfs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "financial_trigger_and_source_traceability",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "financial_trigger_and_source_traceability",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "financial_trigger_and_source_traceability",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "reconciliation_and_exception_resolution",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "reconciliation_and_exception_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-08",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "financial_trigger_and_source_traceability",
+        "reconciliation_and_exception_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "reconciliation_and_exception_resolution",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rrfs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "financial_trigger_and_source_traceability"
+      ],
+      "status": "covered"
+    }
+  ]
+}

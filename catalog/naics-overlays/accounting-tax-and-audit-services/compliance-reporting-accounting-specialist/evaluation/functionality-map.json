@@ -1,0 +1,431 @@
+{
+  "agent_slug": "compliance-reporting-accounting-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested reporting action",
+        "lane scope and adjacent authority map",
+        "engagement scope, approval matrix, and signoff ownership"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or routed handoff"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, attestation, audit opinion language, tax-position approval, final disclosure certification, or contractual signoff",
+        "request asks the lane to publish or certify unsupported metrics, schedules, or disclosures",
+        "request requires editorial or filing approval outside documented engagement authority"
+      ],
+      "scenario_ids": [
+        "cras-05",
+        "cras-06",
+        "cras-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source list with refresh and decay metadata",
+        "jurisdiction, reporting framework, filing form, and audience",
+        "source recency, system timestamps, and tenant source-precedence rules"
+      ],
+      "required_outputs": [
+        "applicable source map",
+        "source freshness and conflict marker",
+        "retrieval gap summary"
+      ],
+      "refusal_triggers": [
+        "required jurisdiction or reporting-framework context is missing",
+        "source baseline has decayed for the requested filing or disclosure use",
+        "public guidance, tenant policy, and retrieved records materially conflict"
+      ],
+      "scenario_ids": [
+        "cras-01",
+        "cras-02",
+        "cras-03",
+        "cras-07",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "reporting period, entity, business unit, and schedule identifiers",
+        "ERP, GL, subledger, close, consolidation, reporting, disclosure, and workpaper records",
+        "preparer notes, reviewer comments, PBC support, and approval history"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "source tie-out and reconciliation package",
+        "missing-support escalation packet"
+      ],
+      "refusal_triggers": [
+        "authoritative accounting, disclosure, or workpaper records are incomplete or unverifiable",
+        "metric, schedule, and disclosure lineage cannot be tied to named records",
+        "requested claim is not supported by traceable source evidence"
+      ],
+      "scenario_ids": [
+        "cras-01",
+        "cras-03",
+        "cras-04",
+        "cras-05",
+        "cras-08",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record locations and retrieval hooks",
+        "owner, reviewer, client-release, and approval dependencies"
+      ],
+      "required_outputs": [
+        "system dependency matrix",
+        "blocker summary with missing records, owners, or access paths"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable",
+        "record location or retrieval hook is missing",
+        "owner, reviewer, client-release approver, or confidentiality approval is unknown"
+      ],
+      "scenario_ids": [
+        "cras-04",
+        "cras-07",
+        "cras-08",
+        "cras-09",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact flags",
+        "confidence rubric",
+        "metric ambiguity, stale-data, source-conflict, and signoff-risk indicators"
+      ],
+      "required_outputs": [
+        "escalation packet",
+        "assumption and uncertainty log"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact or authority source is missing",
+        "source data is incomplete, stale, or conflicting",
+        "required review or approval is missing for the requested report or disclosure"
+      ],
+      "scenario_ids": [
+        "cras-02",
+        "cras-03",
+        "cras-04",
+        "cras-07",
+        "cras-10",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact and evidence requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with evidence, blockers, and owner"
+      ],
+      "refusal_triggers": [
+        "request is outside compliance-reporting accounting assembly, tie-out, caveat, and escalation scope",
+        "request requires legal, tax, assurance, editorial, quality, account, or final signoff authority",
+        "request requires professional judgment that the lane cannot make"
+      ],
+      "scenario_ids": [
+        "cras-05",
+        "cras-06",
+        "cras-09",
+        "cras-10"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested metric, schedule, or disclosure",
+        "reporting period, audience, and cadence",
+        "GAAP, non-GAAP, regulator, or tenant calculation logic",
+        "source-system and workpaper lineage"
+      ],
+      "required_outputs": [
+        "metric definition and source-lineage map",
+        "definition ambiguity or source-conflict escalation"
+      ],
+      "refusal_triggers": [
+        "metric definition is ambiguous or disputed",
+        "GAAP comparable measure or non-GAAP reconciliation logic is missing",
+        "source records do not support the requested metric"
+      ],
+      "scenario_ids": [
+        "cras-01",
+        "cras-02",
+        "cras-03",
+        "cras-05",
+        "cras-11",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "source records and reporting template",
+        "workpaper index and review notes",
+        "caveat, threshold, and approval requirements"
+      ],
+      "required_outputs": [
+        "compliance-reporting package",
+        "reconciliation note",
+        "review caveat and missing-support list"
+      ],
+      "refusal_triggers": [
+        "required source records or workpapers are missing",
+        "review notes or signoff gates remain open",
+        "package would imply completeness or certainty not supported by records"
+      ],
+      "scenario_ids": [
+        "cras-01",
+        "cras-03",
+        "cras-04",
+        "cras-08",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "claim or disclosure requested",
+        "supporting source records",
+        "reviewer and signoff authority map"
+      ],
+      "required_outputs": [
+        "unsupported-claim refusal note",
+        "evidence gap and escalation routing"
+      ],
+      "refusal_triggers": [
+        "stakeholder asks for a claim or disclosure not supported by data",
+        "request asks to certify regulator readiness without required review",
+        "request asks for causal, materiality, legal, or policy conclusions outside lane authority"
+      ],
+      "scenario_ids": [
+        "cras-02",
+        "cras-05",
+        "cras-06",
+        "cras-10"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "client identity and engagement scope",
+        "confidentiality, data-access, and release constraints",
+        "client commitments, delivery cadence, and contractual boundaries"
+      ],
+      "required_outputs": [
+        "confidentiality-safe handling decision",
+        "client-delivery approval and release-gate note"
+      ],
+      "refusal_triggers": [
+        "requester access is not documented",
+        "client release approval is missing",
+        "delivery would violate confidentiality, engagement scope, or client commitment constraints"
+      ],
+      "scenario_ids": [
+        "cras-08",
+        "cras-09",
+        "cras-10",
+        "cras-12"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "authority-sensitive request category",
+        "license, engagement, and contractual approval requirements",
+        "adjacent owner and signoff path"
+      ],
+      "required_outputs": [
+        "licensed or contractual authority escalation",
+        "refusal rationale and routed owner"
+      ],
+      "refusal_triggers": [
+        "request requires licensed CPA, attorney, tax advisor, auditor, engagement partner, controller, or contractual signoff authority",
+        "client rights or professional judgment determine the answer",
+        "tenant policy or engagement terms reserve the decision for a named approver"
+      ],
+      "scenario_ids": [
+        "cras-06",
+        "cras-08",
+        "cras-10",
+        "cras-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cras-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "unsupported_claim_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-05",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "metric_and_source_definition",
+        "unsupported_claim_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "analysis_or_reporting_package_assembly",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-09",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-10",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-11",
+      "ability_ids": [
+        "metric_and_source_definition"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cras-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

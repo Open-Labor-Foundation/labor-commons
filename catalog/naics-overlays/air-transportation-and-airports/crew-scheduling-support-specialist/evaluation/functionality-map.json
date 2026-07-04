@@ -1,0 +1,427 @@
+{
+  "agent_slug": "crew-scheduling-support-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "approval and authority context"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for final crew assignment approval, dispatch release, customs clearance, safety signoff, maintenance release, or labor-policy interpretation",
+        "request attempts to bypass duty/rest, manifest, aircraft status, dispatch release, or documentation controls"
+      ],
+      "scenario_ids": [
+        "csss-05",
+        "csss-08",
+        "csss-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FAA, eCFR, CBP, and recognized aviation operating sources",
+        "source freshness indicators",
+        "tenant policy overlays"
+      ],
+      "required_outputs": [
+        "source-grounded crew scheduling judgment",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "source refresh is stale for a regulatory or customs-sensitive decision",
+        "public source and tenant policy conflict materially"
+      ],
+      "scenario_ids": [
+        "csss-02",
+        "csss-11",
+        "csss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "crew roster and pairing records",
+        "duty/rest calculation evidence",
+        "dispatch release, flight plan, load manifest, crew manifest, APIS, aircraft, and maintenance references"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing-evidence checklist",
+        "record-linked constraint or conflict summary"
+      ],
+      "refusal_triggers": [
+        "critical crew legality, dispatch, route, aircraft, customs, or handoff records are absent or contradictory",
+        "records cannot be traced to the schedule or movement recommendation"
+      ],
+      "scenario_ids": [
+        "csss-02",
+        "csss-06",
+        "csss-07",
+        "csss-09",
+        "csss-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "crew, flight, route, aircraft, documentation, and owner dependencies",
+        "owner map across crew scheduling, crew tracking, dispatch, OCC, maintenance, customs, booking, fleet, and station systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "constraint checklist"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on crew legality, movement, route, aircraft, or documentation state"
+      ],
+      "scenario_ids": [
+        "csss-01",
+        "csss-03",
+        "csss-06",
+        "csss-07",
+        "csss-10",
+        "csss-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy and source conflict indicators"
+      ],
+      "required_outputs": [
+        "blocked recommendation note",
+        "crew-coverage risk escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authoritative records would change the recommendation",
+        "public sources, jurisdictional rules, labor policy, or tenant policy conflict materially",
+        "safety, dispatch, customs, or maintenance authority is required"
+      ],
+      "scenario_ids": [
+        "csss-02",
+        "csss-07",
+        "csss-08",
+        "csss-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to dispatch, customs/compliance, maintenance, warehouse, customer operations, OCC, crew tracking, labor relations, or safety ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "csss-05",
+        "csss-08",
+        "csss-09",
+        "csss-11"
+      ]
+    },
+    {
+      "ability_id": "constraint_and_capacity_assessment",
+      "ability_name": "Constraint and capacity assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "crew demand frame",
+        "approved capacity envelope",
+        "crew legality and qualification posture",
+        "route, airport, aircraft, maintenance, dispatch, customs, and service-level constraints"
+      ],
+      "required_outputs": [
+        "capacity-gap analysis",
+        "constraint log",
+        "shortfall quantification"
+      ],
+      "refusal_triggers": [
+        "insufficient crew availability or legality data",
+        "missing aircraft, route, dispatch release, manifest, or documentation state",
+        "unverified priority, service-level, or owner-readiness constraints"
+      ],
+      "scenario_ids": [
+        "csss-01",
+        "csss-02",
+        "csss-03",
+        "csss-04",
+        "csss-12"
+      ]
+    },
+    {
+      "ability_id": "allocation_and_sequence_recommendation",
+      "ability_name": "Allocation and sequence recommendation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "priority policy",
+        "constraint map",
+        "allocation rules",
+        "confidence and authority state"
+      ],
+      "required_outputs": [
+        "schedule recommendation",
+        "allocation recommendation",
+        "deferred or escalated demand set"
+      ],
+      "refusal_triggers": [
+        "priority tie-break is missing",
+        "conflicting owners prevent deterministic sequencing",
+        "recommendation would rely on unresolved legality, dispatch, customs, aircraft, or safety blockers"
+      ],
+      "scenario_ids": [
+        "csss-01",
+        "csss-03",
+        "csss-04",
+        "csss-07",
+        "csss-12"
+      ]
+    },
+    {
+      "ability_id": "approval_boundary_enforcement",
+      "ability_name": "Approval-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "approval boundary map",
+        "required decision owners"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "boundary refusal package"
+      ],
+      "refusal_triggers": [
+        "request for final approval outside lane",
+        "request for policy override or labor interpretation",
+        "request to imply dispatch, customs, maintenance, safety, or operational-control authority"
+      ],
+      "scenario_ids": [
+        "csss-04",
+        "csss-05",
+        "csss-08",
+        "csss-09",
+        "csss-11"
+      ]
+    },
+    {
+      "ability_id": "movement_and_chain_of_custody_handling",
+      "ability_name": "Movement and chain-of-custody handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "flight, route, segment, crew, passenger, cargo, load, dispatch release, flight plan, manifest, and handoff records",
+        "movement owner and custody context",
+        "documentation and station acceptance state"
+      ],
+      "required_outputs": [
+        "movement-or-handoff readiness summary",
+        "record-linked handoff blocker summary"
+      ],
+      "refusal_triggers": [
+        "movement, custody, route, dispatch release, or manifest records are missing or conflicting",
+        "handoff owner or acceptance proof is absent",
+        "request requires the lane to take custody, dispatch, customs, or movement approval authority"
+      ],
+      "scenario_ids": [
+        "csss-06",
+        "csss-07",
+        "csss-09",
+        "csss-10"
+      ]
+    },
+    {
+      "ability_id": "safety_and_clearance_escalation",
+      "ability_name": "Safety and clearance escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "safety, fatigue, dispatch, aircraft, maintenance, customs, APIS, and clearance state",
+        "decision owner map",
+        "source and policy conflict signals"
+      ],
+      "required_outputs": [
+        "dispatch-customs-or-safety-boundary escalation",
+        "approval-needed summary"
+      ],
+      "refusal_triggers": [
+        "fatigue, aircraft, maintenance, route, dispatch, customs, or safety authority is required",
+        "clearance or documentation gap threatens compliant movement",
+        "conflicting sources or policies need human resolution"
+      ],
+      "scenario_ids": [
+        "csss-07",
+        "csss-08",
+        "csss-09",
+        "csss-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "csss-01",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-04",
+      "ability_ids": [
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "allocation_and_sequence_recommendation",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-08",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-09",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csss-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_declared": true,
+    "all_scenarios_covered": true,
+    "all_declared_abilities_validated": true,
+    "functionality_coverage_complete": true
+  }
+}

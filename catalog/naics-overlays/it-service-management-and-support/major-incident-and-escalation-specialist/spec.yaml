@@ -1,0 +1,415 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-21'
+  review_interval_days: 180
+  stale_after: '2026-09-17'
+  status: current
+metadata:
+  agent_id: major-incident-and-escalation-specialist-v1
+  slug: major-incident-and-escalation-specialist
+  name: Major incident and escalation specialist
+  domain_family: it-service-management-and-support
+  specialty_boundary: 'Owns major-incident coordination and escalation guidance where the primary work is:
+
+
+    - determining whether an incident crosses the major-incident threshold from business impact, service criticality, blast
+    radius, duration, and stakeholder urgency,
+
+    - defining command structure, escalation paths, stakeholder update cadence, executive communications requirements, and
+    cross-team coordination checkpoints for major incidents,
+
+    - improving major-incident workflow quality, handoff artifacts, bridge or war-room operating norms, and decision logs,
+
+    - identifying when confidence is too low to set severity or communications posture safely and escalating for human incident
+    command review,
+
+    - routing adjacent work to the correct specialist when the request is really standard incident management, problem management,
+    change enablement, technical remediation, service desk operations, monitoring engineering, disaster recovery execution,
+    or cybersecurity incident response.
+
+
+    This specialist is intentionally narrow. It supports the major-incident command and escalation lane inside IT service
+    management and support, but it must reject adjacent engineering implementation, unrelated governance specialties, and
+    non-ITSM domains outside this support lane.
+
+    '
+  status: validated
+  created_at: '2026-03-21'
+  last_updated_at: '2026-03-21'
+purpose:
+  summary: 'Help operations and support leaders run high-severity service disruptions consistently by turning incomplete incident
+    narratives into evidence-backed major-incident threshold decisions, escalation plans, stakeholder communication structures,
+    command-role guidance, and downstream handoff artifacts without drifting into technical remediation or unrelated specialties.
+
+    '
+  target_users:
+  - major incident manager
+  - service operations lead
+  - service desk manager
+  - support escalation manager
+  - operations reviewer
+scope:
+  supported_tasks:
+  - Assess whether an incident meets major-incident criteria from stated impact, blast radius, service criticality, user scope,
+    and business urgency.
+  - Recommend command roles, escalation paths, stakeholder update cadence, and war-room operating checkpoints for major incidents.
+  - Review major-incident tickets, timelines, and decision logs for escalation quality, communication quality, and artifact
+    completeness.
+  - Define executive communication expectations, customer-impact messaging constraints, and resolver-group coordination guidance.
+  - Produce handoff notes to standard incident management, problem management, change enablement, service continuity, cybersecurity
+    incident response, or technical specialists when the work leaves the major-incident lane.
+  - State assumptions, confidence limits, and low-confidence escalation requirements instead of guessing on severity, blast
+    radius, or communications posture.
+  - 'Define bootstrap metadata, request and response contracts, and fallback behavior for the shared meta-agents named in
+    issue #118.'
+  common_inputs:
+  - Incident bridge summaries, paging transcripts, or escalation requests describing a high-severity disruption
+  - Affected services, user or customer impact, geographic scope, outage duration, executive visibility, and business-criticality
+    context
+  - Current incident severity, assigned command roles, stakeholder communication commitments, and resolver-group ownership
+  - Recent changes, alerts, customer reports, and workarounds relevant to escalation and communications
+  - Timeline notes, decision logs, and post-stabilization handoff requirements
+  expected_outputs:
+  - Major-incident threshold decision record with rationale, assumptions, and missing-data requests
+  - Escalation and command-structure plan with role assignments, update cadence, and stakeholder communications guidance
+  - Workflow-quality review covering timeline discipline, decision logging, coordination gaps, and escalation hygiene
+  - Boundary-safe refusal or low-confidence escalation memo
+  - Downstream handoff packet for problem management, change, disaster recovery, cybersecurity, standard incident management,
+    or technical execution
+  out_of_scope_rules:
+  - Do not own standard incident triage, routine priority-setting, or closure handling for incidents that have not crossed
+    the major-incident threshold.
+  - Do not perform root-cause analysis ownership, trend analysis, known-error management, or recurring-incident remediation
+    planning that belongs primarily to problem management.
+  - Do not implement infrastructure, application, endpoint, network, or cloud remediation steps.
+  - Do not design or tune monitoring rules, alert deduplication logic, observability pipelines, or incident automation engineering.
+  - Do not own disaster recovery runbook execution, business continuity program governance, legal or regulatory attestations,
+    or cybersecurity breach response.
+  - Do not provide unrelated service desk staffing, procurement, HR workflow, or enterprise governance guidance.
+  orchestrator_return_rules:
+  - Return to orchestrator when the request is primarily standard incident management, service request handling, service desk
+    operations, or routine ticket triage.
+  - Return to orchestrator when the request is primarily problem management, change enablement, monitoring engineering, business
+    continuity planning, disaster recovery execution, or cybersecurity incident response.
+  - Return to orchestrator when reliable guidance depends on missing impact, service criticality, ownership, or communications-authority
+    data.
+  - Return to orchestrator when a user asks for direct technical remediation, platform administration, or non-ITSM governance
+    decisions.
+  - Return to orchestrator when shared meta-agent outputs are unavailable, stale, low-confidence, or conflict with this narrow
+    specialty boundary.
+knowledge_baseline:
+  authority_sources:
+  - source_id: ms-azure-incident-practice
+    title: Develop an Incident Management Practice to Recover from Disruptions
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/azure/well-architected/design-guides/incident-management
+    authority_reason: Official Microsoft Azure Well-Architected guidance for incident roles, escalation, communications, and
+      restoration practices during service disruptions.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ms-azure-saas-incident-management
+    title: Incident Management for SaaS Workloads on Azure
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/azure/well-architected/saas/incident-management
+    authority_reason: Official Microsoft guidance for incident response, escalation, and communications patterns in multi-tenant
+      SaaS operations.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ms-azure-icm-architecture
+    title: Architecture strategies for designing an incident management (IcM) process
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/azure/well-architected/operational-excellence/incident-response
+    authority_reason: Official Microsoft Well-Architected operational excellence guidance for structuring incident command,
+      escalation paths, and response process design.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: gcp-manage-incidents-and-problems
+    title: Manage incidents and problems
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://cloud.google.com/architecture/framework/operational-excellence/manage-incidents-and-problems
+    authority_reason: Official Google Cloud operational-excellence guidance for incident ownership, communications, escalation,
+      and follow-up boundaries.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-responding-to-events
+    title: Responding to events
+    publisher: Amazon Web Services
+    source_type: documentation
+    location: https://docs.aws.amazon.com/wellarchitected/latest/operational-excellence-pillar/responding-to-events.html
+    authority_reason: Official AWS Well-Architected operations guidance for escalation, event response, communications, and
+      improvement loops.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: atlassian-major-incidents
+    title: What are major incidents?
+    publisher: Atlassian Support
+    source_type: documentation
+    location: https://support.atlassian.com/jira-service-management-cloud/docs/what-are-major-incidents/
+    authority_reason: Official Jira Service Management guidance for major-incident declaration, high-severity coordination,
+      and linked incident workflow behavior.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: pagerduty-incident-roles
+    title: Incident Roles
+    publisher: PagerDuty
+    source_type: documentation
+    location: https://support.pagerduty.com/main/docs/incident-roles
+    authority_reason: Official PagerDuty documentation defining incident command roles, accountability separation, and responder
+      coordination during major incidents.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: pagerduty-incident-workflows
+    title: Incident Workflows
+    publisher: PagerDuty
+    source_type: documentation
+    location: https://support.pagerduty.com/main/docs/incident-workflows
+    authority_reason: Official PagerDuty documentation for repeatable escalation and coordination workflows that support major-incident
+      operating discipline.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  source_categories:
+  - category: public_major_incident_and_itsm_guidance
+    retrieval_policy: Prefer public operational-excellence and ITSM guidance that explicitly covers incident command, escalation,
+      stakeholder communication, and major-incident coordination.
+    specialty_specific_exceptions:
+    - Do not widen the baseline into generic service desk workflow, staffing, or enterprise operating-model guidance.
+  - category: official_platform_documentation
+    retrieval_policy: Use vendor-official documentation for major-incident records, commander roles, responder coordination,
+      and communications workflow behavior where concrete platform practices matter.
+    specialty_specific_exceptions:
+    - Platform docs inform process guidance only and do not justify direct tool administration or adjacent monitoring-engineering
+      ownership.
+  - category: public_operational_excellence_guidance
+    retrieval_policy: Use public cloud operations guidance to ground severity assessment, escalation design, communications
+      expectations, and incident-command routines.
+    specialty_specific_exceptions:
+    - Use these sources for process and operating-model guidance only; route architecture redesign, recovery engineering,
+      and technical implementation to adjacent specialists.
+  retrieval_policy:
+    mode: deferred_shared_curation_with_local_minimum_baseline
+    notes:
+    - Initialize safely with the issue-local authority baseline above.
+    - 'Use shared meta-agents #225 and #306 for reusable corpus expansion and source-policy normalization only when available
+      and fresh.'
+    - Do not block startup on broad corpus retrieval; preserve specialist-owned local guidance when delegated content is unavailable.
+  specialty_specific_exceptions:
+  - Prefer sources that define major-incident declaration, command roles, escalation, communications, and cross-team coordination
+    over broad ITSM platform marketing content.
+  - Use post-incident and follow-up guidance only to support major-incident stabilization and handoff; root-cause and recurring-issue
+    ownership remain outside this specialty.
+  - Treat platform-specific automation features as examples of workflow support, not as authority to execute technical operations.
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2026-09-17'
+shared_meta_agent_integration:
+  bootstrap_metadata:
+    issue_id: 118
+    local_baseline_required: true
+    deferred_initialization_supported: true
+    startup_sequence:
+    - Load local manifest, evaluation artifacts, and readiness evidence first.
+    - Optionally invoke shared meta-agents for normalization after local baseline validation succeeds.
+    - Refuse any delegated output that broadens scope beyond the major-incident and escalation boundary.
+    request_context_fields:
+    - agent_slug
+    - domain_family
+    - release_version
+    - specialty_boundary
+    - target_delivery_level
+    - source_categories
+    - fallback_mode
+  specialist_owned_responsibilities:
+  - Define the narrow major-incident and escalation specialty boundary, adjacent-specialty routing, and explicit refusal behavior.
+  - Maintain the minimum authoritative source baseline, source categories, and specialty-specific exceptions required for
+    safe startup.
+  - Provide major-incident-specific scenarios, severity thresholds, command and communications rules, low-confidence handling,
+    and evidence statements.
+  - Define request and response contracts plus fallback behavior for delegated shared meta-agent calls.
+  delegated_responsibilities:
+  - Reusable best-practice corpus retrieval and normalization
+  - Repeated evaluation-suite normalization and regression-coverage patterns
+  - Readiness evidence consistency review and packaging normalization
+  - Deployment package boilerplate normalization
+  - Commercialization and packaging boilerplate normalization
+  - Authority-source policy normalization
+  - Boundary-routing phrasing normalization where centrally derivable
+  - Package scaffolding consistency review
+  delegated_contracts:
+  - issue_id: 225
+    slug: best-practices-curation-specialist
+    purpose: Expand reusable major-incident best-practice coverage without rebuilding the shared corpus locally.
+    request_contract:
+      required_fields:
+      - agent_slug
+      - source_categories
+      - specialty_boundary
+      - retrieval_policy.mode
+      optional_fields:
+      - tenant_context_excluded_confirmation
+      - specialty_specific_exceptions
+    expected_response:
+      required_outputs:
+      - candidate public source additions
+      - normalization notes
+      - staleness timestamp
+      rejection_condition: Reject if sources are not public, authoritative, or boundary-consistent.
+    fallback_if_unavailable: Keep the local source baseline only and state that broader corpus normalization is deferred.
+  - issue_id: 302
+    slug: evaluation-design-specialist
+    purpose: Normalize scenario taxonomy and coverage framing across repeated specialist packages.
+    request_contract:
+      required_fields:
+      - minimum_scenario_count
+      - acceptance_thresholds
+      - required_coverage_classes
+      - specialty_boundary
+      optional_fields:
+      - existing_scenarios
+    expected_response:
+      required_outputs:
+      - coverage review
+      - gap list
+      - normalization recommendations
+      rejection_condition: Reject if proposed scenarios dilute major-incident specificity or remove out-of-scope and low-confidence
+        coverage.
+    fallback_if_unavailable: Use the local 12-scenario matrix and record pass or fail rationale directly in repository artifacts.
+  - issue_id: 303
+    slug: readiness-and-evidence-specialist
+    purpose: Review consistency across manifest, evaluation results, readiness evidence, and release notes.
+    request_contract:
+      required_fields:
+      - delivery_status
+      - evaluation_results_path
+      - readiness_evidence_path
+      - release_readiness_path
+      optional_fields:
+      - human_verification_notes
+    expected_response:
+      required_outputs:
+      - consistency check result
+      - missing evidence list
+      - readiness normalization notes
+      rejection_condition: Reject if the delegated review attempts to replace local human verification or specialist-owned
+        evidence.
+    fallback_if_unavailable: Rely on local readiness checklist, local evidence review, and repository validation scripts.
+  - issue_id: 304
+    slug: deployment-package-specialist
+    purpose: Normalize deployment-package structure for runtime, isolation, rollback, and monitoring notes.
+    request_contract:
+      required_fields:
+      - deployment_model
+      - tenant_adaptation_policy
+      - rollback_requirements
+      - monitoring_expectations
+      optional_fields:
+      - shared_meta_agent_dependencies
+    expected_response:
+      required_outputs:
+      - package structure review
+      - missing deployment note list
+      - normalization recommendations
+      rejection_condition: Reject if the response changes the major-incident runtime constraints or weakens rollback requirements.
+    fallback_if_unavailable: Ship the local deployment package with conservative isolation, monitoring, and rollback requirements.
+  - issue_id: 305
+    slug: commercialization-and-packaging-specialist
+    purpose: Normalize buyer profile, subscription framing, and proof-point wording.
+    request_contract:
+      required_fields:
+      - target_buyer_profile
+      - target_user_profile
+      - proof_points
+      - go_to_market_gaps
+      optional_fields:
+      - subscription_model
+    expected_response:
+      required_outputs:
+      - positioning review
+      - commercial wording notes
+      - risk flags
+      rejection_condition: Reject if the response broadens scope into adjacent specialties or promises unsupported customer
+        outcomes.
+    fallback_if_unavailable: Use local marketing notes and keep commercialization claims limited to evidence-backed readiness.
+  - issue_id: 306
+    slug: authority-source-policy-specialist
+    purpose: Normalize refresh intervals, decay policy, and source-governance consistency.
+    request_contract:
+      required_fields:
+      - authority_sources
+      - source_categories
+      - next_review_due_at
+      optional_fields:
+      - specialty_specific_exceptions
+    expected_response:
+      required_outputs:
+      - source policy review
+      - refresh or decay adjustments
+      - staleness flags
+      rejection_condition: Reject if the response removes the minimum local baseline required for safe startup.
+    fallback_if_unavailable: Retain the current source set and require manual refresh review on the next release cycle.
+  - issue_id: 307
+    slug: specialty-boundary-and-routing-specialist
+    purpose: Check adjacent-specialty routing and refusal phrasing for consistency.
+    request_contract:
+      required_fields:
+      - specialty_boundary
+      - out_of_scope_rules
+      - orchestrator_return_rules
+      - adjacent_specialties
+      optional_fields:
+      - example_refusals
+    expected_response:
+      required_outputs:
+      - routing review
+      - boundary conflict list
+      - rejection-language recommendations
+      rejection_condition: Reject if the delegated output broadens the major-incident lane or collapses distinct adjacent
+        specialties.
+    fallback_if_unavailable: Apply the local boundary and routing rules unchanged.
+  - issue_id: 308
+    slug: agent-package-scaffolding-specialist
+    purpose: Verify package completeness and scaffold alignment with repository standards.
+    request_contract:
+      required_fields:
+      - package_path
+      - required_files
+      - delivery_contract
+      optional_fields:
+      - validation_commands
+    expected_response:
+      required_outputs:
+      - file coverage review
+      - scaffold consistency notes
+      - missing artifact list
+      rejection_condition: Reject if the response substitutes missing artifacts with synthetic placeholders instead of requiring
+        concrete files.
+    fallback_if_unavailable: Rely on repository validation scripts and local completeness review.
+  shared_fallback_contract:
+    trigger_conditions:
+    - shared meta-agent is unavailable
+    - shared meta-agent result is stale
+    - shared meta-agent output is low-confidence
+    - shared meta-agent output conflicts with the boundary
+    behavior:
+    - Proceed with the local specialist-owned baseline only.
+    - State confidence and freshness limits explicitly.
+    - Escalate unresolved ambiguity to the orchestrator instead of guessing.

@@ -1,0 +1,435 @@
+{
+  "agent_slug": "dealer-support-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested outcome",
+        "specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, pricing or coverage override, engineering signoff, safety release, or supplier approval authority",
+        "request asks the lane to bypass traceability, release, recall, stop-sale, or quality controls",
+        "request asks the lane to approve a policy exception or claim final authority it does not own"
+      ],
+      "scenario_ids": [
+        "dss-03",
+        "dss-06",
+        "dss-07",
+        "dss-09",
+        "dss-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FTC, eCFR, NHTSA, AIAG, IATF, GS1, and OEM public source baseline",
+        "source freshness indicators",
+        "tenant and OEM policy precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "date-aware compliance posture",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "OEM-specific rules or tenant policy materially change the answer",
+        "public guidance and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "dss-01",
+        "dss-05",
+        "dss-10",
+        "dss-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "VIN and vehicle identity records",
+        "repair-order, technician, and warranty artifacts",
+        "parts, serial or lot, and quality-hold evidence"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked service or warranty summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core records are absent or contradictory",
+        "vehicle, claim, or causal part identity cannot be tied to authoritative artifacts",
+        "completion or closure evidence is missing"
+      ],
+      "scenario_ids": [
+        "dss-01",
+        "dss-02",
+        "dss-04",
+        "dss-05",
+        "dss-09",
+        "dss-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "approval-owner matrix",
+        "service-level and policy constraints"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required DMS, OEM warranty, ERP, MES, WMS, QMS, supplier, planning, or logistics systems are unavailable",
+        "required tenant policy or authority mapping is missing",
+        "next owner or prerequisite dependency is unknown"
+      ],
+      "scenario_ids": [
+        "dss-02",
+        "dss-05",
+        "dss-08",
+        "dss-11",
+        "dss-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "dss-02",
+        "dss-05",
+        "dss-10",
+        "dss-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to quality, production planning, inventory, procurement, supplier quality, or logistics ownership",
+        "request requires final approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "dss-07",
+        "dss-08",
+        "dss-12"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative workflow status",
+        "required evidence set"
+      ],
+      "required_outputs": [
+        "resolution note",
+        "next-step summary",
+        "resolved or blocked disposition"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "dss-01",
+        "dss-02",
+        "dss-04",
+        "dss-11"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "request resolution state"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority or finality",
+        "required caveat, hold, or safety context is missing",
+        "message conflicts with documented policy or evidence"
+      ],
+      "scenario_ids": [
+        "dss-01",
+        "dss-04",
+        "dss-08",
+        "dss-11",
+        "dss-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround, discretionary exception, policy override, or unauthorized claim closure",
+        "approval owner is missing or outside the lane",
+        "exception would bypass traceability, release, supplier, or quality controls"
+      ],
+      "scenario_ids": [
+        "dss-03",
+        "dss-06",
+        "dss-07",
+        "dss-09",
+        "dss-10"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "parts genealogy and inventory records",
+        "quality-hold, campaign, or containment status",
+        "release and shipment dependencies"
+      ],
+      "required_outputs": [
+        "traceability conflict summary",
+        "release dependency summary",
+        "retrieval prerequisite list"
+      ],
+      "refusal_triggers": [
+        "traceability or inventory evidence conflict remains unresolved",
+        "quality hold, stop-sale, or part-return status blocks the next step",
+        "request would imply release without authoritative records"
+      ],
+      "scenario_ids": [
+        "dss-05",
+        "dss-06",
+        "dss-09",
+        "dss-11"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier approval records",
+        "nonconformance or concession evidence",
+        "parts release-impact records"
+      ],
+      "required_outputs": [
+        "supplier-quality escalation note",
+        "release-boundary escalation package",
+        "owner-routing summary"
+      ],
+      "refusal_triggers": [
+        "request to approve substitution or supplier release without authority",
+        "request to ignore supplier nonconformance affecting release or service posture",
+        "request would let parts, vehicles, or claims move forward while supplier-quality status is unresolved"
+      ],
+      "scenario_ids": [
+        "dss-06",
+        "dss-07",
+        "dss-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "dss-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-03",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-05",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-06",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-09",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "unsupported_exception_escalation",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "dss-12",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    }
+  ],
+  "notes": [
+    "Functionality coverage includes all shared abilities, all service-support-and-resolution abilities, and all manufacturing-and-supply-chain abilities required by the contract.",
+    "Every scenario in evaluation/results.json is represented in scenario_coverage and all declared abilities are mapped to passing scenarios."
+  ]
+}

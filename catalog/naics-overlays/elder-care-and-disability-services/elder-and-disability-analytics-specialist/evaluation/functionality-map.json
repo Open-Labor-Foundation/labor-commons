@@ -1,0 +1,366 @@
+{
+  "agent_slug": "elder-and-disability-analytics-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "user request",
+        "specialty boundary",
+        "adjacent owner map"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "handoff summary"
+      ],
+      "refusal_triggers": [
+        "clinical policy interpretation request",
+        "legal sufficiency request",
+        "payer-adjudication request",
+        "final policy or care claim request"
+      ],
+      "scenario_ids": [
+        "eadi-07",
+        "eadi-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "MDS/OASIS and claims source inventory",
+        "source extraction timestamps",
+        "setting-specific record availability"
+      ],
+      "required_outputs": [
+        "source-ranked evidence package",
+        "source freshness assessment",
+        "data inclusion memo"
+      ],
+      "refusal_triggers": [
+        "missing source hierarchy",
+        "source set missing required version",
+        "stale or stale-incompatible extraction windows"
+      ],
+      "scenario_ids": [
+        "eadi-01",
+        "eadi-02",
+        "eadi-04",
+        "eadi-08",
+        "eadi-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "numerator and denominator candidate fields",
+        "evidence identifiers",
+        "record system provenance"
+      ],
+      "required_outputs": [
+        "evidence traceability map",
+        "artifact dependency list",
+        "traceability reconciliation memo"
+      ],
+      "refusal_triggers": [
+        "missing core evidence identifiers",
+        "inconsistent record lineage across systems"
+      ],
+      "scenario_ids": [
+        "eadi-01",
+        "eadi-03",
+        "eadi-04",
+        "eadi-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "system-of-record map",
+        "EHR/assessment/claims ownership map",
+        "source recency and reconciliation rules"
+      ],
+      "required_outputs": [
+        "system dependency matrix",
+        "cross-system gap inventory",
+        "routed owner plan"
+      ],
+      "refusal_triggers": [
+        "unresolved dependencies across MDS/OASIS/claims systems",
+        "missing tenant ownership for a source-of-truth"
+      ],
+      "scenario_ids": [
+        "eadi-03",
+        "eadi-10",
+        "eadi-08"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence escalation",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "coverage-period ambiguity",
+        "confidence score or confidence flags",
+        "conflicting record signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "missing context checklist",
+        "publication-block recommendation"
+      ],
+      "refusal_triggers": [
+        "critical data gaps",
+        "stale denominator evidence",
+        "inconclusive trend inference"
+      ],
+      "scenario_ids": [
+        "eadi-04",
+        "eadi-03",
+        "eadi-10"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request owner context",
+        "scope and authority tags",
+        "outcome requested"
+      ],
+      "required_outputs": [
+        "adjacent specialist handoff",
+        "routing rationale note"
+      ],
+      "refusal_triggers": [
+        "clinical review request",
+        "legal adjudication request",
+        "payers or compliance policy decision request"
+      ],
+      "scenario_ids": [
+        "eadi-07",
+        "eadi-09"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested metric statement",
+        "eligible assessment records",
+        "authoritative measure references"
+      ],
+      "required_outputs": [
+        "metric definition memo",
+        "numerator and denominator chart",
+        "assumption-and-exclusion list"
+      ],
+      "refusal_triggers": [
+        "disputed metric definitions",
+        "no authoritative denominator hierarchy"
+      ],
+      "scenario_ids": [
+        "eadi-01",
+        "eadi-02",
+        "eadi-05",
+        "eadi-10"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated metric definition",
+        "verified source evidence",
+        "required output shape"
+      ],
+      "required_outputs": [
+        "analysis package",
+        "trend summary",
+        "risk and confidence note"
+      ],
+      "refusal_triggers": [
+        "unreconciled denominator",
+        "missing setting assumptions"
+      ],
+      "scenario_ids": [
+        "eadi-01",
+        "eadi-02",
+        "eadi-05",
+        "eadi-08",
+        "eadi-10"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested causal or policy conclusion",
+        "strength of evidence",
+        "output audience requirements"
+      ],
+      "required_outputs": [
+        "causality refusal note",
+        "descriptive-only boundary restatement"
+      ],
+      "refusal_triggers": [
+        "causal attribution request",
+        "publication claim without evidentiary support"
+      ],
+      "scenario_ids": [
+        "eadi-05",
+        "eadi-06",
+        "eadi-10"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "service setting (SNF/HCBS/ICF/IID/home-health)",
+        "tenant care artifacts and reporting policy",
+        "assessment form/version context"
+      ],
+      "required_outputs": [
+        "setting boundary note",
+        "artifact assumptions register",
+        "cross-setting caution statement"
+      ],
+      "refusal_triggers": [
+        "cross-setting reuse without setting-specific assumptions",
+        "missing tenant-specific artifact context"
+      ],
+      "scenario_ids": [
+        "eadi-01",
+        "eadi-02",
+        "eadi-08",
+        "eadi-09",
+        "eadi-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "eadi-01",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-05",
+      "ability_ids": [
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "unsupported_claim_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-06",
+      "ability_ids": [
+        "unsupported_claim_refusal",
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "source_selection_and_refresh",
+        "analysis_or_reporting_package_assembly",
+        "industry_specific_artifact_awareness",
+        "metric_and_source_definition"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "eadi-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "unsupported_claim_refusal",
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    }
+  ]
+}

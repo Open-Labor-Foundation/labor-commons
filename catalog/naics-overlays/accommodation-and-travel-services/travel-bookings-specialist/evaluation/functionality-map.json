@@ -1,0 +1,441 @@
+{
+  "agent_slug": "travel-bookings-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested booking outcome",
+        "specialty boundary",
+        "adjacent specialist map",
+        "booking, pricing, refund, fraud, safety, and approval authority matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or routing note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for fare difference, penalty, deposit, mandatory-fee, refund, credit, compensation, or inventory override outside delegated authority",
+        "request asks for legal travel-document, safety/security, accessibility, fraud, or chargeback determination",
+        "request asks the lane to approve downstream ticketing, supplier fulfillment, refund, or rebooking execution instead of validating intake conditions"
+      ],
+      "scenario_ids": [
+        "tbs-04",
+        "tbs-07",
+        "tbs-08",
+        "tbs-10",
+        "tbs-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "DOT, eCFR, FTC, DOJ, TSA, State Department, FTC Red Flags, and PCI SSC source set",
+        "source freshness metadata",
+        "tenant source-precedence and supplier-policy rules"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict marker",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public source, supplier bulletin, tenant policy, or jurisdictional rule conflict materially changes the booking outcome",
+        "source freshness exceeds the allowed decay window for a material booking, refund, fee, identity, or payment decision"
+      ],
+      "scenario_ids": [
+        "tbs-01",
+        "tbs-08",
+        "tbs-11",
+        "tbs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "traveler profile and requester authority records",
+        "PNR, record locator, booking-engine cart, GDS or supplier records, fare or rate rules, and hotel confirmations",
+        "payment guarantee, card-token, deposit, authorization, approval, and change-log artifacts"
+      ],
+      "required_outputs": [
+        "evidence-linked booking summary",
+        "artifact-to-system traceability map",
+        "missing-or-conflicting-evidence note"
+      ],
+      "refusal_triggers": [
+        "PNR, booking, supplier, payment, traveler profile, or approval records cannot be tied to named systems of record",
+        "fare rules, rate rules, supplier confirmations, or payment guarantee evidence is incomplete or contradictory",
+        "booking confirmation would overstate what the records prove"
+      ],
+      "scenario_ids": [
+        "tbs-01",
+        "tbs-02",
+        "tbs-05",
+        "tbs-06",
+        "tbs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location and retrieval hooks",
+        "tenant policy, supplier, payment, and owner map"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required booking engine, GDS, CRS/PMS, supplier, CRM, payment, traveler profile, queue, or communications record is unavailable",
+        "record-of-truth hierarchy is unknown for booking, ticketing, hotel guarantee, payment, or supplier disruption state",
+        "tenant routing owner for pricing, refund, waiver, fraud, safety, or operations is missing"
+      ],
+      "scenario_ids": [
+        "tbs-02",
+        "tbs-05",
+        "tbs-06",
+        "tbs-09",
+        "tbs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "source, supplier, payment, or tenant-policy conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts or authoritative records are missing",
+        "conflicting policy or source materially changes the intake, booking, rebooking, refund, or payment outcome",
+        "identity, payment, travel-document, safety, or booking authority confidence is below the safe threshold"
+      ],
+      "scenario_ids": [
+        "tbs-02",
+        "tbs-05",
+        "tbs-08",
+        "tbs-11",
+        "tbs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff artifact requirements",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to guest services, front office, pricing/revenue, fraud or loss-prevention, operations, supplier relations, safety/security, travel compliance, or refund ownership",
+        "policy or source conflict cannot be resolved in-lane",
+        "safe downstream owner is required before the request can move"
+      ],
+      "scenario_ids": [
+        "tbs-03",
+        "tbs-04",
+        "tbs-07",
+        "tbs-10",
+        "tbs-11"
+      ]
+    },
+    {
+      "ability_id": "intake_prerequisite_validation",
+      "ability_name": "Intake prerequisite validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requester role and booking authority context",
+        "traveler identity, profile, contact, itinerary, and consent facts",
+        "booking, supplier, payment, approval, and policy prerequisites"
+      ],
+      "required_outputs": [
+        "prerequisite validation outcome",
+        "missing-fact checklist",
+        "accept, reject, pend, or route decision"
+      ],
+      "refusal_triggers": [
+        "traveler identity, profile, itinerary, approval, or payment guarantee is missing",
+        "PNR, supplier confirmation, fare or rate rule, or booking artifact is absent",
+        "required intake facts are missing and would change the result"
+      ],
+      "scenario_ids": [
+        "tbs-01",
+        "tbs-02",
+        "tbs-03",
+        "tbs-08",
+        "tbs-09"
+      ]
+    },
+    {
+      "ability_id": "eligibility_authorization_decisioning",
+      "ability_name": "Eligibility and authorization decisioning",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "travel policy and traveler eligibility context",
+        "payment guarantee, approval, and booking authority records",
+        "fare, rate, supplier, destination, and access prerequisites"
+      ],
+      "required_outputs": [
+        "eligibility or authorization status",
+        "authorization gap list",
+        "blocked or ready intake disposition"
+      ],
+      "refusal_triggers": [
+        "required payment guarantee, traveler approval, or requester authority is missing",
+        "booking eligibility cannot be confirmed with named records",
+        "supplier, fare, rate, destination, or accessibility prerequisites are unsatisfied or conflicting"
+      ],
+      "scenario_ids": [
+        "tbs-01",
+        "tbs-03",
+        "tbs-04",
+        "tbs-08",
+        "tbs-12"
+      ]
+    },
+    {
+      "ability_id": "pre_execution_routing",
+      "ability_name": "Pre-execution routing",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated prerequisite result",
+        "queue state and owner map",
+        "routing policy and service window"
+      ],
+      "required_outputs": [
+        "routing disposition",
+        "intake or access disposition summary",
+        "pending, reject, accept, or route state"
+      ],
+      "refusal_triggers": [
+        "validation failed",
+        "access, approval, supplier, or authorization checks are incomplete",
+        "downstream owner requires pricing, refund, rebooking, fraud, safety, or operations approval before work can move"
+      ],
+      "scenario_ids": [
+        "tbs-02",
+        "tbs-03",
+        "tbs-04",
+        "tbs-06",
+        "tbs-10"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer-workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue volume and promised service windows",
+        "customer-facing booking artifacts",
+        "traveler-impact and supplier-disruption priority context",
+        "record-readiness indicators"
+      ],
+      "required_outputs": [
+        "high-volume intake prioritization-safe summary",
+        "customer-safe queue disposition",
+        "blocked-versus-ready queue split"
+      ],
+      "refusal_triggers": [
+        "required identity, payment, approval, fare-rule, supplier, or safety checks are skipped to protect speed metrics",
+        "customer promise windows cannot be tied to booking or supplier records",
+        "volume pressure would cause unauthorized booking acceptance, repricing, refund, or exception handling"
+      ],
+      "scenario_ids": [
+        "tbs-06",
+        "tbs-09",
+        "tbs-12"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "traveler-impact facts",
+        "refund, pricing, fraud, safety, or supplier-policy context",
+        "service recovery or escalation owner map"
+      ],
+      "required_outputs": [
+        "traveler-impact escalation note",
+        "policy-exception routing packet",
+        "harm-aware disposition summary"
+      ],
+      "refusal_triggers": [
+        "request asks intake to override pricing, refund, supplier, safety, or fraud policy",
+        "customer harm, fraud, loss-prevention, or policy exception determines the answer",
+        "service recovery, rebooking guarantee, or compensation requires authority outside the lane"
+      ],
+      "scenario_ids": [
+        "tbs-04",
+        "tbs-06",
+        "tbs-07",
+        "tbs-08",
+        "tbs-10",
+        "tbs-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "tbs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "intake_prerequisite_validation",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-03",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "pre_execution_routing",
+        "high_volume_customer_workflow_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-08",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-09",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "intake_prerequisite_validation",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tbs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "eligibility_authorization_decisioning",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

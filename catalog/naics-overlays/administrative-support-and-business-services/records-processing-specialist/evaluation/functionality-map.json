@@ -1,0 +1,395 @@
+{
+  "agent_slug": "records-processing-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested records-processing outcome",
+        "specialty boundary",
+        "client SOW or service catalog entry",
+        "authority matrix for official records, legal, privacy, records, HR, finance, security, and publication decisions"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return or routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, privacy-rights, records-disposition, HR, finance, security, contract, publication, or official-record approval authority",
+        "request treats record maintenance as authority to decide the underlying case or official record outcome",
+        "request treats administrative support and business services as a catch-all for generic office ownership"
+      ],
+      "scenario_ids": [
+        "rps-03",
+        "rps-06",
+        "rps-07"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source baseline",
+        "tenant policy hierarchy",
+        "client SOW and jurisdiction context",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "freshness or conflict escalation note",
+        "tenant-adaptation assumptions"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public guidance, tenant SOP, client SOW, and repository permissions materially conflict",
+        "source is stale enough to change retention, access, or evidence handling"
+      ],
+      "scenario_ids": [
+        "rps-05",
+        "rps-10",
+        "rps-11",
+        "rps-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "case ID or work item",
+        "source record, source document, and record image",
+        "OCR extract, indexed fields, register entry, and official-file location",
+        "attachment checklist",
+        "retention, access, QA, and audit evidence"
+      ],
+      "required_outputs": [
+        "artifact-to-source linkage",
+        "records evidence packet",
+        "audit-trail or exception summary"
+      ],
+      "refusal_triggers": [
+        "required source record, attachment, retention, access, QA, or audit evidence is missing",
+        "systems of record conflict on record identity, version, effective date, record series, or official-file location",
+        "completion or handoff is requested without authoritative record evidence"
+      ],
+      "scenario_ids": [
+        "rps-01",
+        "rps-02",
+        "rps-04",
+        "rps-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record locations and retrieval hooks",
+        "client, program, business-unit, jurisdiction, and data-category context",
+        "retention schedule, legal-hold, and access-owner records"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "required-artifact checklist",
+        "system-of-record and owner summary"
+      ],
+      "refusal_triggers": [
+        "current DMS, ECM, records, workflow, IAM, QA, or audit system access is missing",
+        "record series, retention class, legal hold, or access owner cannot be established",
+        "client, program, jurisdiction, or data-category context has not been retrieved"
+      ],
+      "scenario_ids": [
+        "rps-02",
+        "rps-04",
+        "rps-10",
+        "rps-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority risk flags",
+        "source conflict indicators",
+        "retention, legal-hold, privacy, access, and publication markers"
+      ],
+      "required_outputs": [
+        "low-confidence administrative status note",
+        "required-facts checklist",
+        "escalation owner assignment"
+      ],
+      "refusal_triggers": [
+        "missing records or permissions materially change the outcome",
+        "policy or source conflict remains unresolved",
+        "adjacent approval or regulated authority is required"
+      ],
+      "scenario_ids": [
+        "rps-03",
+        "rps-05",
+        "rps-10",
+        "rps-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist map",
+        "records evidence packet"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "next-owner assignment"
+      ],
+      "refusal_triggers": [
+        "request belongs to records disposition, legal, privacy, IAM, HR, finance, security, client contract, or official approver ownership",
+        "handoff is attempted without the minimum source and case context",
+        "ownership remains ambiguous after boundary review"
+      ],
+      "scenario_ids": [
+        "rps-06",
+        "rps-07",
+        "rps-08"
+      ]
+    },
+    {
+      "ability_id": "record_and_document_maintenance",
+      "ability_name": "Record and document maintenance",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "source record package",
+        "permitted metadata or status fields",
+        "record classification and version rules",
+        "attachment and QA checklist"
+      ],
+      "required_outputs": [
+        "record update note",
+        "records completeness summary",
+        "document or evidence packet"
+      ],
+      "refusal_triggers": [
+        "requested update lacks source support or delegated authority",
+        "required attachment, signature, version, classification, or QA evidence is missing",
+        "record package cannot be tied to the authoritative record"
+      ],
+      "scenario_ids": [
+        "rps-01",
+        "rps-02",
+        "rps-03",
+        "rps-09"
+      ]
+    },
+    {
+      "ability_id": "permission_and_retention_control",
+      "ability_name": "Permission and retention control",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "retention schedule and record series",
+        "access entitlement and repository permissions",
+        "legal-hold, redaction, privacy, and disposition status",
+        "approved publication or handoff rule"
+      ],
+      "required_outputs": [
+        "retention, access, or governance escalation package",
+        "records-governance escalation note",
+        "access and retention blocker summary"
+      ],
+      "refusal_triggers": [
+        "retention, legal-hold, access, privacy, redaction, or publication authority is missing or conflicting",
+        "request asks for disposal, distribution, or publication before controls are verified",
+        "records schedule or repository permission conflicts with the requested action"
+      ],
+      "scenario_ids": [
+        "rps-05",
+        "rps-06",
+        "rps-10",
+        "rps-11"
+      ]
+    },
+    {
+      "ability_id": "administrative_boundary_enforcement",
+      "ability_name": "Administrative-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "underlying case or record purpose",
+        "approval and official-record ownership",
+        "tenant authority matrix",
+        "adjacent-lane routing rules"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal",
+        "administrative status note",
+        "records-governance escalation note"
+      ],
+      "refusal_triggers": [
+        "request asks the records lane to decide the underlying case, claim, benefit, legal, HR, financial, or client-contract outcome",
+        "request asks for official record approval or policy override",
+        "request widens records processing into generic administrative management"
+      ],
+      "scenario_ids": [
+        "rps-03",
+        "rps-06",
+        "rps-07",
+        "rps-08"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "administrative-support and business-services artifacts and terminology",
+        "client SOW, SLA, queue, batch, record series, file plan, records repository, DMS, OCR, indexing, retention, access, QA, and audit context",
+        "public baseline plus tenant adaptation requirements"
+      ],
+      "required_outputs": [
+        "industry-specific records completeness summary",
+        "records-processing artifact checklist",
+        "adaptation-safe handling note"
+      ],
+      "refusal_triggers": [
+        "records-processing-specific records are replaced with generic operations abstractions",
+        "client, jurisdiction, retention, access, or data-category differences materially alter the workflow and are not supplied",
+        "industry terminology is used cosmetically without record-series, file-plan, retention, access, queue, and evidence context"
+      ],
+      "scenario_ids": [
+        "rps-01",
+        "rps-09",
+        "rps-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rps-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-03",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "record_and_document_maintenance",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-05",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "permission_and_retention_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "permission_and_retention_control",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-08",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "permission_and_retention_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "permission_and_retention_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rps-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

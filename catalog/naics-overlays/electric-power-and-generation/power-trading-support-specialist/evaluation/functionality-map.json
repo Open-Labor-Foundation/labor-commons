@@ -1,0 +1,399 @@
+{
+  "agent_slug": "power-trading-support-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "authority ownership map",
+        "adjacent specialist registry",
+        "tenant escalation policy"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation decision"
+      ],
+      "refusal_triggers": [
+        "request asks for bid, offer, trade, or pricing approval outside documented authority",
+        "request asks for credit approval, legal or tariff interpretation, conduct judgment, or regulatory signoff",
+        "request asks the lane to declare settlement, invoice, or reporting posture final without authoritative records"
+      ],
+      "scenario_ids": [
+        "ptss-03",
+        "ptss-04",
+        "ptss-05",
+        "ptss-08",
+        "ptss-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "staleness or conflict note",
+        "confidence state"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "source freshness or tariff posture materially affects the answer",
+        "public guidance and tenant or market policy materially conflict"
+      ],
+      "scenario_ids": [
+        "ptss-06",
+        "ptss-10",
+        "ptss-11",
+        "ptss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "trade, schedule, or settlement identifiers",
+        "named market records and timelines",
+        "dependency and communication artifacts"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "request summary tied to records",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core trade, tag, OASIS, or settlement records are missing or inconsistent",
+        "status claims cannot be tied to named systems of record",
+        "billing or dispute evidence lacks required version or ownership trace"
+      ],
+      "scenario_ids": [
+        "ptss-01",
+        "ptss-02",
+        "ptss-07",
+        "ptss-09",
+        "ptss-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant retrieval hooks",
+        "approval and escalation owner map"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system-readiness blockers",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required market system of record is unavailable or stale",
+        "trading, scheduling, settlement, or credit owner is unknown",
+        "tenant retrieval path cannot establish market truth"
+      ],
+      "scenario_ids": [
+        "ptss-01",
+        "ptss-02",
+        "ptss-07",
+        "ptss-10",
+        "ptss-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "ptss-02",
+        "ptss-06",
+        "ptss-09",
+        "ptss-10",
+        "ptss-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request is outside power-trading-support scope",
+        "request requires trading, credit, compliance, legal, regulatory, or transmission authority",
+        "service lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "ptss-04",
+        "ptss-05",
+        "ptss-11",
+        "ptss-12"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative workflow status",
+        "required evidence set"
+      ],
+      "required_outputs": [
+        "resolution note",
+        "next-step summary",
+        "resolved or blocked disposition"
+      ],
+      "refusal_triggers": [
+        "request type is not supported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "ptss-01",
+        "ptss-02",
+        "ptss-07"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "request resolution state"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority or finality",
+        "required caveat or approval is missing",
+        "client-facing or desk-facing message conflicts with documented evidence or policy"
+      ],
+      "scenario_ids": [
+        "ptss-01",
+        "ptss-07",
+        "ptss-09",
+        "ptss-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround or override",
+        "approval owner is missing or outside the lane",
+        "exception would bypass market, transmission, settlement, or conduct controls"
+      ],
+      "scenario_ids": [
+        "ptss-03",
+        "ptss-06",
+        "ptss-09",
+        "ptss-11",
+        "ptss-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "power-trading support artifacts",
+        "market and transmission context",
+        "trade, OASIS, e-Tag, EIR, and settlement records"
+      ],
+      "required_outputs": [
+        "industry terminology-aware support summary",
+        "artifact-specific blocker or resolution note"
+      ],
+      "refusal_triggers": [
+        "named power-market artifacts are absent and the lane would become generic support",
+        "market, path, interval, or settlement context materially changes the outcome but is unknown",
+        "request tries to use the power-trading label without power-trading-specific records or constraints"
+      ],
+      "scenario_ids": [
+        "ptss-01",
+        "ptss-07",
+        "ptss-08",
+        "ptss-10",
+        "ptss-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ptss-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-03",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-08",
+      "ability_ids": [
+        "boundary_control",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ptss-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

@@ -1,0 +1,506 @@
+{
+  "agent_slug": "code-review-and-maintainability-specialist",
+  "agent_release": "v0.2.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "user request and intended output",
+        "code review and maintainability specialty boundary",
+        "tenant authority and approval context",
+        "adjacent specialist routing map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or code-review carveout",
+        "orchestrator return rationale"
+      ],
+      "refusal_triggers": [
+        "request primarily asks for cloud, network, identity, platform architecture, production operations, incident command, capacity planning, legal or commercial strategy, pricing, contracts, product roadmap, full penetration testing, security policy enforcement, release approval, implementation ownership, or final signoff",
+        "request asks the specialist to bypass a documented review gate, quality hold, branch protection, code-owner rule, confidentiality rule, retention rule, or approval matrix",
+        "request asks for final approval or execution authority outside code review support"
+      ],
+      "scenario_ids": [
+        "crms-04",
+        "crms-05",
+        "crms-06",
+        "crms-07",
+        "crms-14",
+        "crms-16"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authority-source baseline with review dates",
+        "tenant runtime and framework versions",
+        "source freshness metadata",
+        "tenant review policy precedence guidance"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "source freshness status",
+        "conflict or decay summary"
+      ],
+      "refusal_triggers": [
+        "required code review, maintainability, runtime, test, security, API, CI, retention, or confidentiality source is missing or stale",
+        "public source and tenant policy materially conflict without documented precedence",
+        "source freshness could materially change the review recommendation"
+      ],
+      "scenario_ids": [
+        "crms-01",
+        "crms-10",
+        "crms-17",
+        "crms-18"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "diffs, files, requirements, acceptance criteria, design notes, tests, CI runs, coverage, artifacts, defects, incidents, review notes, code owner rules, release gates, or client commitments",
+        "artifact owners and repository references",
+        "expected output shape"
+      ],
+      "required_outputs": [
+        "evidence checklist",
+        "artifact-to-finding linkage",
+        "assumption and missing-evidence record"
+      ],
+      "refusal_triggers": [
+        "critical finding or recommendation cannot be tied to review evidence",
+        "merge readiness, hold clearance, or finding closure lacks supporting evidence",
+        "evidence bundle is incomplete, inconsistent, restricted, or inaccessible"
+      ],
+      "scenario_ids": [
+        "crms-01",
+        "crms-02",
+        "crms-03",
+        "crms-08",
+        "crms-09",
+        "crms-11",
+        "crms-12",
+        "crms-13",
+        "crms-15"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems-of-record inventory",
+        "retrieval hooks for source, diffs, requirements, tests, CI, artifacts, defects, incidents, review gates, ownership records, documents, and policies",
+        "approval owner and recipient authorization records"
+      ],
+      "required_outputs": [
+        "retrieval prerequisite map",
+        "dependency blocker list",
+        "system-aware routing package"
+      ],
+      "refusal_triggers": [
+        "required repository, PR, diff, CI result, test report, defect, incident, review gate, owner approval, retention, or confidentiality record is inaccessible",
+        "approval owner, code owner, or authorized recipient is unknown",
+        "execution or official record mutation would require privileged tenant access"
+      ],
+      "scenario_ids": [
+        "crms-03",
+        "crms-08",
+        "crms-11",
+        "crms-12",
+        "crms-15",
+        "crms-18"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing facts and records",
+        "confidence flags",
+        "source, policy, evidence, authority, approval, confidentiality, or retention conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "tenant context is insufficient to review safely",
+        "evidence sufficiency cannot be established",
+        "public source, tenant policy, client commitment, confidentiality rule, retention rule, code-owner rule, or approval scope remains unresolved"
+      ],
+      "scenario_ids": [
+        "crms-03",
+        "crms-08",
+        "crms-12",
+        "crms-15",
+        "crms-17"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist map",
+        "handoff evidence context"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "responsibility transfer summary"
+      ],
+      "refusal_triggers": [
+        "request belongs to implementation ownership, software architecture, API design, CI/CD ownership, release engineering, platform operations, security policy, penetration testing, incident command, product strategy, procurement, legal, privacy, contractual signoff, or commercial strategy",
+        "request requires final approval or execution authority outside code review support",
+        "request asks the lane to improvise cross-functional ownership"
+      ],
+      "scenario_ids": [
+        "crms-04",
+        "crms-05",
+        "crms-06",
+        "crms-07",
+        "crms-08",
+        "crms-14",
+        "crms-16"
+      ]
+    },
+    {
+      "ability_id": "control_and_inspection_application",
+      "ability_name": "Control and inspection application",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "documented review standard, acceptance criterion, quality control, merge gate, or branch protection rule",
+        "code review evidence set",
+        "review and approval prerequisites"
+      ],
+      "required_outputs": [
+        "quality or safety review note",
+        "criteria-to-evidence assessment",
+        "pass, fail, hold, merge-ready-recommended, changes-requested, investigation-needed, or escalation-required disposition"
+      ],
+      "refusal_triggers": [
+        "review control objective or quality criterion is missing",
+        "inspection evidence is incomplete or contradictory",
+        "requested conclusion requires formal release, legal, privacy, security, contractual, code-owner, or merge authority"
+      ],
+      "scenario_ids": [
+        "crms-01",
+        "crms-02",
+        "crms-09",
+        "crms-10",
+        "crms-11",
+        "crms-12",
+        "crms-14"
+      ]
+    },
+    {
+      "ability_id": "defect_or_incident_handling",
+      "ability_name": "Defect or incident handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "defect, incident, regression, nonconformance, flaky-test, or failure records",
+        "impact, severity, chronology, RCA, retest, and corrective-action status",
+        "incident-sensitive confidentiality and authority flags"
+      ],
+      "required_outputs": [
+        "control or incident summary",
+        "defect or nonconformance escalation",
+        "corrective-action evidence package"
+      ],
+      "refusal_triggers": [
+        "incident handling requires incident command, security operations, safety-critical, regulated, executive, legal, or release authority",
+        "repeat defect lacks RCA, owner, mitigation, retest, or closure evidence",
+        "incident or defect records conflict or contain confidentiality restrictions that block communication"
+      ],
+      "scenario_ids": [
+        "crms-09",
+        "crms-11",
+        "crms-13",
+        "crms-15"
+      ]
+    },
+    {
+      "ability_id": "hold_release_boundary_enforcement",
+      "ability_name": "Hold and release boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "hold, merge, review, branch protection, or release criteria",
+        "current review gate, nonconformance, defect, regression, approval, and unresolved-risk records",
+        "authorized approver and code-owner map"
+      ],
+      "required_outputs": [
+        "hold, changes-requested, merge-ready-recommended, or nonconformance recommendation",
+        "hold-maintained rationale or release/merge recommendation caveat",
+        "approval boundary statement"
+      ],
+      "refusal_triggers": [
+        "merge or release is requested while a hold, failed gate, missing evidence, or unresolved issue exists",
+        "required test, CI, review, defect, regression, customer-impact, or approval evidence is incomplete",
+        "request asks the lane to clear hold, close finding, approve merge, approve release, or bypass quality control without authorized reviewer support"
+      ],
+      "scenario_ids": [
+        "crms-11",
+        "crms-12",
+        "crms-14",
+        "crms-16"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "client confidentiality terms",
+        "engagement scope and delivery commitments",
+        "approved recipient list, delivery channel, redaction rule, and retention requirements"
+      ],
+      "required_outputs": [
+        "confidentiality-safe review summary",
+        "client commitment and delivery constraint note",
+        "disclosure blocker or approval request"
+      ],
+      "refusal_triggers": [
+        "recipient, channel, retention, redaction, source disclosure, vulnerability disclosure, or deliverable approval is not authorized",
+        "client commitment or engagement scope is missing or contradicted",
+        "delivery would disclose tenant, client, source, test, defect, incident, vulnerability, credential, production, contractual, or quality evidence records without approval"
+      ],
+      "scenario_ids": [
+        "crms-15",
+        "crms-16",
+        "crms-17",
+        "crms-18"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "authority requirements",
+        "contractual signoff rules",
+        "professional judgment, client rights, legal, privacy, security, release, code-owner, or compliance flags"
+      ],
+      "required_outputs": [
+        "authority escalation package",
+        "contractual or professional-judgment boundary rationale",
+        "owner mapping and communication constraints"
+      ],
+      "refusal_triggers": [
+        "request requires attorney, privacy officer, contract signer, security risk approver, release owner, code owner, formal QA owner, executive, regulator, customer approver, or licensed professional judgment",
+        "request asks the lane to imply legal, privacy, editorial, contractual, attestation, compliance, security risk-acceptance, release, merge, or final review approval authority without explicit scope",
+        "client rights, professional judgment, data rights, regulated duties, contractual approval, or final signoff determine the answer"
+      ],
+      "scenario_ids": [
+        "crms-05",
+        "crms-07",
+        "crms-14",
+        "crms-15",
+        "crms-16",
+        "crms-17"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "crms-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-11",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "control_and_inspection_application",
+        "defect_or_incident_handling",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-13",
+      "ability_ids": [
+        "evidence_traceability",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-14",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-15",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "defect_or_incident_handling",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-16",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "hold_release_boundary_enforcement",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-17",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "crms-18",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_declared": true,
+    "all_scenarios_represented": true,
+    "functionality_coverage_complete": true,
+    "notes": [
+      "Covers all shared abilities, all quality-safety-and-assurance abilities, and all professional-and-information-services abilities.",
+      "Every scenario in evaluation/results.json is represented in scenario_coverage.",
+      "Every required ability declares required inputs, required outputs, refusal triggers, and passing scenario coverage."
+    ]
+  }
+}

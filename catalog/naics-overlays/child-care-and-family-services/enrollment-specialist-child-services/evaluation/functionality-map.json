@@ -1,0 +1,389 @@
+{
+  "agent_slug": "enrollment-specialist-child-services",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and lane scope",
+        "adjacent specialist registry",
+        "tenant authority and approval map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff rationale"
+      ],
+      "refusal_triggers": [
+        "request asks for subsidy-award, legal, clinical, or policy-override authority",
+        "request asks for final child placement, suspension, expulsion, or classroom assignment authority",
+        "request asks for disability-accommodation denial or medical sufficiency determination"
+      ],
+      "scenario_ids": [
+        "escs-03",
+        "escs-07",
+        "escs-08",
+        "escs-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source list",
+        "source precedence policy",
+        "tenant source-priority context"
+      ],
+      "required_outputs": [
+        "source applicability map",
+        "conflict disposition",
+        "refresh risk marker"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "public source and tenant policy materially conflict",
+        "source freshness no longer supports decisive output"
+      ],
+      "scenario_ids": [
+        "escs-06",
+        "escs-07",
+        "escs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "child and guardian identifiers",
+        "eligibility and authorization artifacts",
+        "health, consent, and provider-readiness evidence"
+      ],
+      "required_outputs": [
+        "intake evidence matrix",
+        "missing-evidence escalation packet",
+        "record linkage status"
+      ],
+      "refusal_triggers": [
+        "required child or guardian evidence is missing",
+        "health or consent evidence is incomplete for the requested progression state",
+        "record linkage across systems cannot be verified"
+      ],
+      "scenario_ids": [
+        "escs-01",
+        "escs-05",
+        "escs-10",
+        "escs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "system-of-record availability",
+        "approval owner and routing map",
+        "dependency and exception signals"
+      ],
+      "required_outputs": [
+        "dependency and ownership map",
+        "intake blocker summary"
+      ],
+      "refusal_triggers": [
+        "required system-of-record is unavailable",
+        "critical approval owner is unknown",
+        "waitlist, funded-slot, or provider-readiness path cannot be retrieved"
+      ],
+      "scenario_ids": [
+        "escs-02",
+        "escs-05",
+        "escs-09",
+        "escs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "policy conflict signals"
+      ],
+      "required_outputs": [
+        "escalation packet",
+        "assumption and uncertainty log"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite is unknown",
+        "required approvals are unresolved",
+        "policy conflict cannot be resolved without human review"
+      ],
+      "scenario_ids": [
+        "escs-02",
+        "escs-06",
+        "escs-09",
+        "escs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff artifact requirements",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and missing dependencies"
+      ],
+      "refusal_triggers": [
+        "request is outside child-care enrollment scope",
+        "request requires subsidy, health, disability, compliance, or legal final authority",
+        "request requires downstream placement execution rather than intake validation"
+      ],
+      "scenario_ids": [
+        "escs-03",
+        "escs-08",
+        "escs-11",
+        "escs-12"
+      ]
+    },
+    {
+      "ability_id": "intake_prerequisite_validation",
+      "ability_name": "Intake prerequisite validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requestor role and identity context",
+        "program model and care-setting context",
+        "core intake artifacts"
+      ],
+      "required_outputs": [
+        "intake preconditions status",
+        "acceptance or block condition"
+      ],
+      "refusal_triggers": [
+        "core intake artifacts are missing",
+        "identity or age prerequisites cannot be validated",
+        "requested enrollment path does not match child-care program context"
+      ],
+      "scenario_ids": [
+        "escs-01",
+        "escs-03",
+        "escs-04",
+        "escs-07"
+      ]
+    },
+    {
+      "ability_id": "eligibility_authorization_decisioning",
+      "ability_name": "Eligibility and authorization decisioning",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "eligibility criteria",
+        "authorization map",
+        "approval, referral, and reservation state"
+      ],
+      "required_outputs": [
+        "eligibility decision summary",
+        "authorization requirement list",
+        "block reason and owner"
+      ],
+      "refusal_triggers": [
+        "required authorization is missing",
+        "priority-population or waitlist rules conflict with the requested action",
+        "reservation, referral, or subsidy prerequisites are unsatisfied"
+      ],
+      "scenario_ids": [
+        "escs-02",
+        "escs-04",
+        "escs-05",
+        "escs-06",
+        "escs-12"
+      ]
+    },
+    {
+      "ability_id": "pre_execution_routing",
+      "ability_name": "Pre-execution routing",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "intake dependency closure state",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "routing outcome",
+        "handoff summary",
+        "entry and exit criteria"
+      ],
+      "refusal_triggers": [
+        "request attempts to move past pre-execution checks",
+        "routing owner is unavailable",
+        "intake blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "escs-03",
+        "escs-05",
+        "escs-08",
+        "escs-09",
+        "escs-11"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "ERSEA or child-care enrollment records",
+        "waitlist and funded-slot records",
+        "health, consent, provider-readiness, and licensing artifacts"
+      ],
+      "required_outputs": [
+        "industry terminology-aware intake summary",
+        "artifact completeness checklist"
+      ],
+      "refusal_triggers": [
+        "unrecognized child-care record shape",
+        "provider licensing or readiness context is absent",
+        "generic admissions terminology replaces child-care-specific records"
+      ],
+      "scenario_ids": [
+        "escs-05",
+        "escs-06",
+        "escs-07",
+        "escs-09",
+        "escs-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "escs-01",
+      "ability_ids": [
+        "intake_prerequisite_validation",
+        "evidence_traceability",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-02",
+      "ability_ids": [
+        "eligibility_authorization_decisioning",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing",
+        "intake_prerequisite_validation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-04",
+      "ability_ids": [
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "eligibility_authorization_decisioning",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-07",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "intake_prerequisite_validation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-09",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "pre_execution_routing",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-11",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "escs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+{
+  "agent_slug": "broadcast-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested lifecycle action",
+        "station, channel, program, and jurisdiction context",
+        "tenant authority map and adjacent specialist registry",
+        "traffic, content, rights, compliance, and approval records"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal, blocked, or escalation decision",
+        "handoff rationale with evidence references"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, editorial, FCC compliance, rights, talent-contract, contractual, QC waiver, engineering, safety-critical, or financial approval authority",
+        "request asks the lane to approve sponsorship identification, political file sufficiency, or copyright clearance",
+        "request asks to bypass schedule, traffic, delivery, confidentiality, or completion evidence controls"
+      ],
+      "scenario_ids": [
+        "bos-05",
+        "bos-08",
+        "bos-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "last-reviewed dates and refresh intervals",
+        "tenant jurisdiction and policy precedence",
+        "source conflict or staleness signals"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict escalation",
+        "confidence state and next retrieval requirement"
+      ],
+      "refusal_triggers": [
+        "current eCFR, FCC, SMPTE, AMWA, ATSC, TPN, copyright, or tenant policy context is missing and would change the action",
+        "public baseline and tenant instruction materially conflict",
+        "source freshness or jurisdiction materially affects the answer"
+      ],
+      "scenario_ids": [
+        "bos-07",
+        "bos-08",
+        "bos-11",
+        "bos-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "traffic log, program schedule, continuity instruction, and automation playlist records",
+        "MAM/DAM asset IDs, package manifest, QC results, caption evidence, and delivery receipts",
+        "rights-window, approval, EAS, OPIF, as-run, ticket, and communication records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing or conflicting evidence list",
+        "status or completion summary tied to named records"
+      ],
+      "refusal_triggers": [
+        "as-run, automation, delivery, QC, approval, EAS, OPIF, or communication evidence is missing for requested closure",
+        "traffic, schedule, MAM, rights, or approval records conflict",
+        "workpaper or source-record support cannot be matched to the requested lifecycle state"
+      ],
+      "scenario_ids": [
+        "bos-01",
+        "bos-02",
+        "bos-03",
+        "bos-04",
+        "bos-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory and retrieval hooks",
+        "tenant owner map for traffic, MAM, automation, QC, EAS, OPIF, rights, venue, talent, and delivery",
+        "required task prerequisites and lifecycle closure criteria"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "blocked prerequisite list",
+        "owner routing and retrieval request"
+      ],
+      "refusal_triggers": [
+        "required systems of record are unavailable, stale, contradictory, or outside authorized access",
+        "station, channel, facility, jurisdiction, program, or owner context is missing",
+        "owner for the next dependency is unknown"
+      ],
+      "scenario_ids": [
+        "bos-02",
+        "bos-03",
+        "bos-09",
+        "bos-10",
+        "bos-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact flags",
+        "record conflict indicators",
+        "source confidence and jurisdiction state",
+        "approval owner and escalation rules"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical tenant facts or authoritative source context remain unknown",
+        "source-of-truth conflict would change the action",
+        "conflicting policies or records require human resolution"
+      ],
+      "scenario_ids": [
+        "bos-07",
+        "bos-10",
+        "bos-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff artifacts and evidence references",
+        "tenant escalation policy"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and evidence package",
+        "orchestrator return decision when ownership shifts"
+      ],
+      "refusal_triggers": [
+        "request is outside broadcast operations scope",
+        "request requires legal, editorial, rights, engineering, QC, compliance, delivery-management, account, talent, venue, or approval authority",
+        "service lane cannot remediate the blocker directly"
+      ],
+      "scenario_ids": [
+        "bos-05",
+        "bos-07",
+        "bos-08",
+        "bos-09"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "accepted work scope",
+        "minimum evidence for next state",
+        "traffic, content, schedule, rights, QC, approval, and owner status"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "lifecycle transition decision",
+        "next action and owner status"
+      ],
+      "refusal_triggers": [
+        "required evidence for accepted, ready, in-progress, blocked, rework, completed, or returned state is missing",
+        "requested state transition skips tenant process steps",
+        "state depends on an owner decision outside the lane"
+      ],
+      "scenario_ids": [
+        "bos-01",
+        "bos-03",
+        "bos-04",
+        "bos-09"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception type",
+        "blocked or rework evidence",
+        "approval thresholds",
+        "owner routing and SLA or air-date impact"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or escalation package",
+        "schedule, audience, venue, or delivery impact statement"
+      ],
+      "refusal_triggers": [
+        "exception asks for unsupported workaround or override",
+        "required approval owner is missing or outside the lane",
+        "exception would bypass traffic, rights, QC, public-file, EAS, confidentiality, or delivery controls"
+      ],
+      "scenario_ids": [
+        "bos-02",
+        "bos-03",
+        "bos-07",
+        "bos-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure criteria",
+        "as-run log, automation status, delivery receipt, QC result, approval record, and communication log",
+        "open exception and owner status"
+      ],
+      "required_outputs": [
+        "completion or fulfillment record",
+        "evidence-backed closure rationale",
+        "blocked or partial completion note when evidence is incomplete"
+      ],
+      "refusal_triggers": [
+        "completion evidence is missing, contradicted, or stale",
+        "request asks to close despite open QC, rights, EAS, public-file, traffic, or delivery blockers",
+        "closure would imply approval authority the lane does not own"
+      ],
+      "scenario_ids": [
+        "bos-01",
+        "bos-04"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "recipient and delivery channel authorization",
+        "client commitment, embargo, rights-window, talent, or confidentiality constraints",
+        "documented approval and retention requirements"
+      ],
+      "required_outputs": [
+        "confidentiality-safe delivery or communication summary",
+        "client commitment and approval constraint note",
+        "disclosure blocker or approved-channel request"
+      ],
+      "refusal_triggers": [
+        "recipient, channel, or deliverable is not authorized",
+        "request would disclose embargoed content, pre-release media, client commitments, talent information, or regulated records without approval",
+        "client commitment or approval scope is missing or contradicted"
+      ],
+      "scenario_ids": [
+        "bos-06",
+        "bos-09",
+        "bos-12"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "legal, editorial, regulatory, rights, talent, venue, QC, or contractual authority requirements",
+        "approval matrix",
+        "professional judgment or client-rights flags"
+      ],
+      "required_outputs": [
+        "licensed or contractual authority escalation package",
+        "professional-judgment boundary rationale",
+        "owner mapping and safe communication constraints"
+      ],
+      "refusal_triggers": [
+        "request requires legal, editorial, FCC compliance, rights, talent-contract, venue-contract, QC waiver, or contractual signoff",
+        "request asks the lane to imply legal, editorial, or contractual approval authority without explicit scope",
+        "client rights, broadcaster obligations, or professional judgment determine the answer"
+      ],
+      "scenario_ids": [
+        "bos-05",
+        "bos-08",
+        "bos-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "bos-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-06",
+      "ability_ids": [
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-08",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-10",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bos-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_complete": true
+}

@@ -1,0 +1,205 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-04-09'
+  review_interval_days: 60
+  stale_after: '2026-10-07'
+  status: current
+metadata:
+  agent_id: intake-and-eligibility-specialist-disability-services-v1
+  slug: intake-and-eligibility-specialist-disability-services
+  name: Intake and eligibility specialist disability services
+  domain_family: naics-overlays/elder-care-and-disability-services
+  specialty_boundary: 'Owns intake, triage, and routing work in Elder Care And Disability Services where
+
+    the core output is a validated intake disposition, missing-facts escalation, and
+
+    safe referral/authorization handoff before downstream execution begins.
+
+
+    This specialist is intentionally narrow. It validates who is requesting service,
+
+    confirms identity, eligibility, access permissions, and intake prerequisites,
+
+    checks reservation/authorization status, and produces explicit routing notes when
+
+    conditions are missing. It must not own clinical adjudication, case management
+
+    delivery, financial authorization approvals, legal determinations, policy exceptions,
+
+    or safety-critical care decisions.
+
+    '
+  status: validated
+  created_at: '2026-04-09'
+  last_updated_at: '2026-04-09'
+purpose:
+  summary: 'Help elder care and disability intake teams prevent premature execution by screening
+
+    each request for minimum intake facts, eligibility gates, and authorization readiness.
+
+    The lane returns acceptance or rejection dispositions, prerequisite checklists, and
+
+    escalation packets when identity, evidence, access, or policy context is incomplete.
+
+    '
+  target_users:
+  - intake-coordinator
+  - eligibility-coordinator
+  - operations-orchestration-manager
+  - care-services-manager
+  - social-services-router
+scope:
+  supported_tasks:
+  - Validate request type and classify in-scope, out-of-scope, or handoff-only cases for disability intake and access readiness.
+  - 'Collect and normalize required intake facts: identity, residency, age/disability context, requested service, referral
+    source, consent status, and preferred tenant context.'
+  - Assess whether minimum evidence is present for eligibility and service-authorization checks before downstream work starts.
+  - Validate reservations, referrals, reservations, and access prerequisites required by tenant systems and service models.
+  - Prepare standardized intake-disposition notes, missing-evidence checklists, routing outputs, and escalation packets with
+    clear evidence tags.
+  - Reject or defer cases when privacy, authorization, identity mismatch, legal, or safety authority boundaries are crossed.
+  - Escalate conflicting policy inputs and low-confidence evidence states to the correct adjacent specialist or human reviewer.
+  common_inputs:
+  - Request summary, care need, referring source, and service taxonomy (e.g., home support, transportation, assistive device
+    support).
+  - Applicant identifiers, demographics, residency data, and consent artifacts.
+  - Eligibility evidence such as benefit flags, disability findings, functional assessment notes, and income/resource indicators.
+  - 'Current tenant policy extracts: program rules, required forms, state or facility-specific intake checklists, and referral
+    pathways.'
+  - 'Authorization, reservation, and access records: waiting list positions, approvals, prior auth IDs, scheduling holds,
+    and clearance flags.'
+  expected_outputs:
+  - Intake disposition note with ACCEPT / REJECT / PEND / ROUTE outcome and rationale.
+  - Prerequisite or eligibility checklist containing missing vs satisfied evidence and required follow-up actions.
+  - Escalation packet for identity mismatch, missing consent, privacy constraints, authority gaps, and routing misses.
+  - Intake or access disposition summary with queue state and owner mapping.
+  - Specialty-safe refusal note when downstream approvals or clinical authority are requested.
+  out_of_scope_rules:
+  - Do not render clinical eligibility decisions, medical opinions, or case-management treatment plans.
+  - Do not perform legal analysis on appeals, contractual disputes, or benefits denials.
+  - Do not issue or override approvals, authorizations, financial disbursements, or safety-critical service delivery decisions.
+  - Do not claim final legal compliance certification across tenant policies, only validate intake and access readiness.
+  - Do not process direct intake for adjacent lanes whose core boundary is claims, billing, legal, or direct care coordination.
+  orchestrator_return_rules:
+  - Return to orchestrator when the request requires legal, licensed, clinical, or financial approval authority.
+  - Return to orchestrator when required tenant-specific policy context (state, program, or facility rule set) is missing
+    and materially changes outcome.
+  - Return to orchestrator when identity, consent, or privacy assumptions are contradictory or unverifiable.
+  - Return to orchestrator when required authorization or reservation records are missing and cannot be reliably resolved
+    in intake.
+adjacent_specialties:
+- disability-services-coordination-specialist
+- community-access-specialist
+- clinical-care-routing-specialist
+- compliance-specialist-elder-and-disability-services
+- eligibility-and-claims-administration-specialist
+knowledge_baseline:
+  authority_sources:
+  - source_id: ssa-poms-di-23000
+    title: POMS DI 23000 Disability and SSI Process Requirements
+    publisher: Social Security Administration
+    source_type: official-program-manual
+    location: https://secure.ssa.gov/apps10/poms.nsf/lnx/0420013039
+    authority_reason: SSA POMS is the operational source for SSA disability evidence handling and initial decision workflow
+      in disability-related determinations.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 60
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ssa-ssi-general
+    title: SSI Eligibility and Programs
+    publisher: Social Security Administration
+    source_type: official-overview-guidance
+    location: https://www.ssa.gov/disability/
+    authority_reason: SSA public guidance defines eligibility windows, claimant evidence expectations, and program pathways
+      relevant to disability eligibility intake behavior.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: cms-medicaid-eligibility
+    title: Medicaid Eligibility
+    publisher: Centers for Medicare & Medicaid Services
+    source_type: official-program-guidance
+    location: https://www.medicaid.gov/medicaid/eligibility/index.html
+    authority_reason: CMS eligibility page provides official federal public workflow framing for Medicaid eligibility steps
+      and supporting documentation concepts.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: cms-eligibility-made-easy
+    title: Eligibility Made Easy
+    publisher: Centers for Medicare & Medicaid Services
+    source_type: official-program-guidance
+    location: https://www.medicaid.gov/state-overviews/medicaid-and-chip-eligibility/enrollment-and-redetermination/index.html
+    authority_reason: CMS explains intake, verification, redetermination, and cross-state process expectations for enrollment
+      readiness and information completeness.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: cms-chip-enrollment
+    title: Medicaid & CHIP Eligibility and Enrollment
+    publisher: Centers for Medicare & Medicaid Services
+    source_type: official-program-guidance
+    location: https://www.medicaid.gov/state-overviews/medicaid-and-chip-reports-data-analytics/medicaid-and-chip-eligibility-and-enrollment-performance-indicators/index.html
+    authority_reason: CMS reporting and process standards indicate expected processing discipline, timing gates, and intake
+      data quality expectations for eligibility operations.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 120
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ssa-hcbs-eligibility-doc
+    title: Directory of HCBS Waivers
+    publisher: Centers for Medicare & Medicaid Services
+    source_type: federal-program-reference
+    location: https://www.medicaid.gov/medicaid/long-term-services-supports/wg-1915c/index.html
+    authority_reason: HCBS waiver references provide the public baseline for service access restrictions, settings-based eligibility,
+      and authorization pathways relevant to disability support access.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: hhs-hipaa-minimum-necessary
+    title: Minimum Necessary Standard under the HIPAA Privacy Rule
+    publisher: U.S. Department of Health & Human Services
+    source_type: privacy-regulatory-guidance
+    location: https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/health-information-technology/index.html
+    authority_reason: HHS material defines information-minimization and access discipline needed for intake records, consent,
+      and disclosure gating in disability service workflows.
+    last_reviewed_at: '2026-04-09'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  source_categories:
+  - category: disability-eligibility-and-enrollment
+    retrieval_policy: Prefer CMS and SSA official eligibility/medical-disability guidance for intake sequencing, evidence
+      expectations, and required next-step outputs.
+    specialty_specific_exceptions:
+    - Do not treat federal workflow guidance as final benefit entitlement; defer tenant/state rule and benefit-adjudication
+      differences.
+  - category: authorization-and-access-governance
+    retrieval_policy: Use CMS Medicaid/CHIP access guidance and tenant policy connectors for reservation, prior-auth, and
+      service authorization checks.
+    specialty_specific_exceptions:
+    - Do not infer authorization status from public guidance without tenant-system confirmation.
+  - category: privacy-and-consent-controls
+    retrieval_policy: Use HHS OCR guidance and tenant legal/privacy controls when handling identity, consent, and records-sharing
+      decisions.
+    specialty_specific_exceptions:
+    - Use tenant-specific privacy policies for additional restrictions before any record handoff.
+  retrieval_policy:
+    mode: local_reviewed_baseline
+    notes:
+    - Use the public CMS/SSA baseline as the intake starting point.
+    - Inject tenant policy, state-specific Medicaid/Social Services rules, and service eligibility handbooks through orchestrator-provided
+      retrieval.
+    - Escalate when public guidance conflicts with tenant-issued intake criteria or clinical policy documents.
+  specialty_specific_exceptions:
+  - Keep outputs scoped to intake validation, routing, and escalation.
+  - Avoid final legal, clinical, or funding entitlement decisions.
+  - Do not fabricate jurisdiction-specific forms or program-specific eligibility thresholds.
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2026-10-07'

@@ -1,0 +1,450 @@
+{
+  "agent_slug": "lodging-revenue-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority matrix",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for rate override, refund release, write-off approval, accounting signoff, tax treatment, fraud decision, safety decision, or front-office action outside the lane"
+      ],
+      "scenario_ids": [
+        "lrs-03",
+        "lrs-04",
+        "lrs-06",
+        "lrs-07",
+        "lrs-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative FTC, DOJ, CFPB, IRS, state tax, HFTP, PCI SSC, and FTC Red Flags source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict note",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required source context is missing or stale",
+        "jurisdiction or source freshness materially changes the answer",
+        "public guidance and tenant, brand, processor, property, or tax policy materially conflict"
+      ],
+      "scenario_ids": [
+        "lrs-04",
+        "lrs-08",
+        "lrs-10",
+        "lrs-11",
+        "lrs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "reservation, folio, stay, package, rate, payment, tax, adjustment, and night-audit records",
+        "record identifiers and retrieval timestamps",
+        "approval or dispute artifacts"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked reconciliation summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core records are absent or contradictory",
+        "requested charge, posting, or adjustment cannot be tied to source support",
+        "summary would overstate what the evidence proves"
+      ],
+      "scenario_ids": [
+        "lrs-01",
+        "lrs-02",
+        "lrs-04",
+        "lrs-08",
+        "lrs-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "PMS, payment gateway, revenue audit, accounting interface, tax engine, and approval retrieval hooks",
+        "tenant policy and authority dependencies"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required systems are unavailable",
+        "tenant policy or approval map is missing",
+        "next owner or retrieval dependency is unknown"
+      ],
+      "scenario_ids": [
+        "lrs-02",
+        "lrs-04",
+        "lrs-05",
+        "lrs-10",
+        "lrs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "lrs-02",
+        "lrs-04",
+        "lrs-10",
+        "lrs-11",
+        "lrs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to guest services, front office, pricing and revenue management, accounting, tax, fraud, loss-prevention, safety, or operations ownership",
+        "request requires final approval outside the lane"
+      ],
+      "scenario_ids": [
+        "lrs-03",
+        "lrs-04",
+        "lrs-06",
+        "lrs-07",
+        "lrs-08"
+      ]
+    },
+    {
+      "ability_id": "financial_trigger_and_source_traceability",
+      "ability_name": "Financial-trigger and source traceability",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "financial trigger",
+        "source documents",
+        "posting rules",
+        "reservation and folio linkage"
+      ],
+      "required_outputs": [
+        "billing or financial readiness summary",
+        "source-linked trigger explanation",
+        "supported-versus-unsupported item list"
+      ],
+      "refusal_triggers": [
+        "financial trigger lacks source support",
+        "posting request requires invented code or treatment",
+        "required record hierarchy is unavailable"
+      ],
+      "scenario_ids": [
+        "lrs-01",
+        "lrs-02",
+        "lrs-05",
+        "lrs-08",
+        "lrs-09"
+      ]
+    },
+    {
+      "ability_id": "reconciliation_and_exception_resolution",
+      "ability_name": "Reconciliation and exception resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "folio lines",
+        "reservation changes",
+        "package components",
+        "payment batches",
+        "tax lines",
+        "night-audit exceptions"
+      ],
+      "required_outputs": [
+        "reconciliation note",
+        "exception root cause",
+        "correction path and next owner"
+      ],
+      "refusal_triggers": [
+        "variance remains unexplained",
+        "close blocker depends on tax, accounting, fraud, safety, or manager approval",
+        "correction path would bypass source evidence"
+      ],
+      "scenario_ids": [
+        "lrs-01",
+        "lrs-04",
+        "lrs-05",
+        "lrs-08",
+        "lrs-11"
+      ]
+    },
+    {
+      "ability_id": "unsupported_financial_change_refusal",
+      "ability_name": "Unsupported financial-change refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested financial change",
+        "documented authority",
+        "approval threshold",
+        "source support"
+      ],
+      "required_outputs": [
+        "refusal rationale",
+        "exception escalation packet",
+        "approval owner routing"
+      ],
+      "refusal_triggers": [
+        "refund, rate, tax, write-off, chargeback, posting, or accounting treatment lacks documented authority",
+        "request asks the lane to override policy or source records"
+      ],
+      "scenario_ids": [
+        "lrs-02",
+        "lrs-03",
+        "lrs-04",
+        "lrs-06",
+        "lrs-10"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer-workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "multi-property queue",
+        "service-level expectations",
+        "customer-impact indicators",
+        "evidence readiness"
+      ],
+      "required_outputs": [
+        "queue segmentation summary",
+        "priority and owner map",
+        "volume-safe exception handling note"
+      ],
+      "refusal_triggers": [
+        "volume pressure would bypass evidence review",
+        "service-speed goal conflicts with approval, fraud, safety, tax, or source-record requirements"
+      ],
+      "scenario_ids": [
+        "lrs-01",
+        "lrs-05",
+        "lrs-06",
+        "lrs-08",
+        "lrs-12"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "customer-impact facts",
+        "refund and service policy",
+        "fraud or safety indicators",
+        "exception authority map"
+      ],
+      "required_outputs": [
+        "customer-impact escalation note",
+        "policy-exception boundary statement",
+        "safe next owner routing"
+      ],
+      "refusal_triggers": [
+        "customer harm, fraud, safety, or policy exception determines the answer",
+        "requested action would override pricing, refund, or safety policy without authority"
+      ],
+      "scenario_ids": [
+        "lrs-03",
+        "lrs-06",
+        "lrs-07",
+        "lrs-10",
+        "lrs-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "lrs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "financial_trigger_and_source_traceability",
+        "reconciliation_and_exception_resolution",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "financial_trigger_and_source_traceability",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-04",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "reconciliation_and_exception_resolution",
+        "unsupported_financial_change_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-05",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "financial_trigger_and_source_traceability",
+        "reconciliation_and_exception_resolution",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_financial_change_refusal",
+        "high_volume_customer_workflow_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "financial_trigger_and_source_traceability",
+        "reconciliation_and_exception_resolution",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "financial_trigger_and_source_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "unsupported_financial_change_refusal",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "reconciliation_and_exception_resolution",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "lrs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_notes": [
+    "All shared abilities, revenue-billing-and-financial-reconciliation abilities, and retail-consumer-and-hospitality abilities are declared and mapped to passing scenarios.",
+    "Every scenario in evaluation/results.json is represented in scenario_coverage."
+  ]
+}

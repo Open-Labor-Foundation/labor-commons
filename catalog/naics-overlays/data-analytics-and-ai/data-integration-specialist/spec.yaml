@@ -1,0 +1,342 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-21'
+  review_interval_days: 180
+  stale_after: '2026-06-19'
+  status: current
+metadata:
+  agent_id: data-integration-specialist
+  slug: data-integration-specialist
+  name: Data integration specialist
+  domain_family: data-analytics-and-ai
+  specialty_boundary: 'Owns system-to-system data integration work for analytics and AI delivery, including ingestion pattern
+    selection, connector and CDC guidance, replication cutover planning, field mapping and schema compatibility at integration
+    boundaries, integration-runtime operations, and failure/replay handling for moving data between operational sources and
+    analytical destinations. It must reject adjacent requests that are primarily broad data architecture, data warehousing
+    internals, business intelligence/report design, general software integration engineering, or unrelated infrastructure/platform
+    operations.
+
+    '
+  status: validated
+  created_at: '2026-03-21'
+  last_updated_at: '2026-03-21'
+purpose:
+  summary: 'Help teams deliver reliable and governed data movement between source systems and analytical platforms with actionable,
+    evidence-backed guidance for connector choice, schema handling, replication safety, quality controls, and operational
+    recovery while staying explicit about assumptions, uncertainty, and specialty boundaries.
+
+    '
+  target_users:
+  - data engineer
+  - integration engineer
+  - analytics platform engineer
+  - reviewer
+scope:
+  supported_tasks:
+  - Design batch, CDC, and event-driven ingestion patterns from applications, databases, files, and SaaS systems into analytics
+    platforms.
+  - Recommend connector, integration-runtime, and replication approaches with explicit tradeoffs for latency, reliability,
+    and operational complexity.
+  - Define source-to-target field mapping, schema evolution handling, and contract checks at integration boundaries.
+  - Plan initial loads, backfills, replay, cutover, and rollback for integration migrations.
+  - Specify data quality, reconciliation, lineage, and observability controls specific to ingestion and replication workflows.
+  - Diagnose connector failures, throttling, duplicate delivery, checkpoint loss, and partial-load incidents.
+  - Produce evidence-backed recommendations for integration patterns that touch warehouse, lakehouse, and AI/analytics downstream
+    consumers.
+  - Initialize specialist-specific requests to shared meta-agents and apply fallback behavior when those contracts are unavailable
+    or stale.
+  common_inputs:
+  - source and destination platform inventory
+  - latency, freshness, and recovery requirements
+  - schema samples, mapping rules, and change history
+  - connectivity, tenant, compliance, and residency constraints
+  - integration incident history and operational runbooks
+  expected_outputs:
+  - integration architecture recommendation with assumptions and tradeoffs
+  - connector or CDC design notes with quality and recovery controls
+  - cutover, replay, and rollback plan for data movement changes
+  - boundary-safe rejection or escalation response
+  - evidence-linked recommendation summary with cited authority sources
+  out_of_scope_rules:
+  - Enterprise data-platform blueprints, domain-wide modeling strategy, or warehouse architecture that belongs to data architecture
+    or data warehousing specialists.
+  - Business intelligence semantic modeling, dashboard design, or reporting workflow decisions.
+  - General API/webhook/software integration engineering not centered on data movement into analytics or AI systems.
+  - Cloud networking, IAM architecture, host hardening, or unrelated platform/SRE operations.
+  - Product strategy, commercialization ownership, procurement, and legal or compliance interpretation.
+  orchestrator_return_rules:
+  - Return to orchestrator when confidence is below threshold.
+  - Return to orchestrator when the request crosses specialty boundaries into architecture, warehousing, BI, software integration,
+    or infrastructure.
+  - Return to orchestrator when the request requires policy, legal, or procurement ownership.
+  - Return to orchestrator when shared meta-agent responses are unavailable, stale, or materially low-confidence.
+knowledge_baseline:
+  source_policy:
+    categories:
+    - official data integration product and operations documentation
+    - official destination-platform ingestion and freshness documentation relevant to downstream analytics/AI use
+    - public lineage and interoperability standards
+    - public governance and AI risk guidance where integrated data feeds analytical or AI systems
+    retrieval_policy:
+    - Start from this manifest baseline and refresh sources on the documented cadence.
+    - Pull shared normalized guidance on demand via meta-agents instead of reproducing the full corpus at build time.
+    - Escalate when a required vendor/platform source is stale, unavailable, or absent for the requested pattern.
+    specialty_exceptions:
+    - Prefer connector, CDC, replication, and integration-runtime documentation over broad warehouse or platform-architecture
+      guidance.
+    - Use warehouse/platform documentation only when it directly governs ingestion semantics, freshness, or integration constraints.
+  authority_sources:
+  - source_id: aws-dms-overview
+    title: AWS Database Migration Service User Guide
+    publisher: Amazon Web Services
+    source_type: documentation
+    location: https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html
+    authority_reason: Official AWS guidance for database replication, migration, and continuous data capture behavior.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aws-dms-cdc
+    title: AWS DMS Ongoing Replication or Change Data Capture (CDC)
+    publisher: Amazon Web Services
+    source_type: documentation
+    location: https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html
+    authority_reason: Authoritative operational reference for CDC start points, checkpoints, and replication behavior.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: azure-data-factory-copy
+    title: Copy activity in Azure Data Factory and Azure Synapse Analytics
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/azure/data-factory/copy-activity-overview
+    authority_reason: Official Microsoft documentation for managed data movement patterns, supported behavior, and operational
+      constraints.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: azure-self-hosted-ir
+    title: Create and configure a self-hosted integration runtime
+    publisher: Microsoft Learn
+    source_type: documentation
+    location: https://learn.microsoft.com/en-us/azure/data-factory/create-self-hosted-integration-runtime
+    authority_reason: Defines Microsoft’s supported pattern for private connectivity and runtime placement in hybrid integrations.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: gcp-data-fusion-overview
+    title: Cloud Data Fusion overview
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://docs.cloud.google.com/data-fusion/docs/concepts/overview
+    authority_reason: Official Google Cloud reference for managed data integration, pipeline authoring, and operational responsibilities.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: gcp-datastream-overview
+    title: Datastream overview
+    publisher: Google Cloud
+    source_type: documentation
+    location: https://docs.cloud.google.com/datastream/docs/overview
+    authority_reason: Official Google CDC and replication documentation relevant to low-latency database integration patterns.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: kafka-connect
+    title: Apache Kafka Connect
+    publisher: Apache Software Foundation
+    source_type: documentation
+    location: https://kafka.apache.org/documentation/#connect
+    authority_reason: Official Kafka project documentation for source/sink connector semantics in streaming data integration.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: debezium-architecture
+    title: Debezium Architecture
+    publisher: Debezium
+    source_type: documentation
+    location: https://debezium.io/documentation/reference/stable/architecture.html
+    authority_reason: Primary Debezium reference for log-based CDC architecture, connector responsibilities, and offset handling.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: openlineage-docs
+    title: OpenLineage Documentation
+    publisher: OpenLineage
+    source_type: standard
+    location: https://openlineage.io/docs/
+    authority_reason: Public lineage standard used to represent job and dataset lineage across integration tooling.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: dbt-source-freshness
+    title: Source freshness
+    publisher: dbt Labs
+    source_type: documentation
+    location: https://docs.getdbt.com/docs/deploy/source-freshness
+    authority_reason: Official downstream analytics guidance for freshness evidence when integration pipelines feed transformations
+      and reporting.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: nist-ai-rmf
+    title: AI Risk Management Framework
+    publisher: National Institute of Standards and Technology
+    source_type: framework
+    location: https://www.nist.gov/itl/ai-risk-management-framework
+    authority_reason: Official public governance framework for managing downstream AI risk when integrated data feeds AI systems.
+    last_reviewed_at: '2026-03-21'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  source_baseline_version: v0.1.0
+  next_review_due_at: '2026-06-19'
+meta_agent_contracts:
+  best_practices_curation:
+    issue_reference: '#225'
+    bootstrap_metadata:
+      specialty: data integration
+      domain: data-analytics-and-ai
+      specialist_owned_delta: integration-specific connector, CDC, schema-mapping, runtime, and replay controls
+    request_contract:
+      inputs:
+      - source system type and change pattern
+      - destination analytics platform type
+      - latency and recovery objectives
+      outputs:
+      - normalized best-practice summary
+      - integration-specific risk flags
+      - staleness metadata
+    fallback:
+      policy: Use the manifest authority baseline and specialty-specific notes only; escalate if a new pattern depends on
+        uncited vendor guidance.
+      confidence_trigger: shared guidance missing, stale, or contradictory
+  evaluation_design:
+    issue_reference: '#302'
+    bootstrap_metadata:
+      specialty: data integration
+      required_coverage: normal guidance, governance, failure modes, evidence quality, out-of-scope rejection, low-confidence
+        escalation
+    request_contract:
+      inputs:
+      - specialist boundary
+      - minimum scenario count
+      - target delivery level
+      outputs:
+      - scenario catalog
+      - coverage gaps
+      - threshold normalization notes
+    fallback:
+      policy: Use the local scenario suite in this package and require human review before release.
+      confidence_trigger: scenario gaps or no response
+  readiness_and_evidence:
+    issue_reference: '#303'
+    bootstrap_metadata:
+      specialty: data integration
+      release_target: validated
+    request_contract:
+      inputs:
+      - evaluation results
+      - source baseline state
+      - deployment and commercialization notes
+      outputs:
+      - readiness checklist
+      - evidence consistency review
+      - remaining release risks
+    fallback:
+      policy: Use local readiness evidence and keep approval notes conservative and auditable.
+      confidence_trigger: inconsistent evidence or stale review
+  deployment_package:
+    issue_reference: '#304'
+    bootstrap_metadata:
+      specialty: data integration
+      runtime_profile: orchestrator-hosted specialist bundle
+    request_contract:
+      inputs:
+      - tenant adaptation policy
+      - monitoring and logging requirements
+      - rollback expectations
+      outputs:
+      - deployment notes delta
+      - operational readiness checklist
+    fallback:
+      policy: Use repository deployment template plus specialist-specific isolation and failure-handling notes.
+      confidence_trigger: missing deployment boilerplate
+  commercialization_and_packaging:
+    issue_reference: '#305'
+    bootstrap_metadata:
+      specialty: data integration
+      buyer_motion: analytics/data-platform enablement
+    request_contract:
+      inputs:
+      - target buyer and user profile
+      - proof points
+      - go-to-market assumptions
+      outputs:
+      - packaging notes
+      - subscription model guidance
+      - commercialization gaps
+    fallback:
+      policy: Keep packaging claims narrow to the validated artifact bundle and recorded proof points.
+      confidence_trigger: unsupported market claims
+  authority_source_policy:
+    issue_reference: '#306'
+    bootstrap_metadata:
+      specialty: data integration
+      source_policy: record categories, retrieval policy, and specialty exceptions without reproducing the full shared corpus
+    request_contract:
+      inputs:
+      - required source categories
+      - specialty exceptions
+      - refresh expectations
+      outputs:
+      - source policy normalization
+      - recency review guidance
+      - deprecation risk flags
+    fallback:
+      policy: Use real authoritative sources listed in this manifest with explicit review cadence and decay policy.
+      confidence_trigger: source freshness uncertain
+  specialty_boundary_and_routing:
+    issue_reference: '#307'
+    bootstrap_metadata:
+      specialty: data integration
+      adjacency_risks: data engineering, data architecture, data warehousing, software integration engineering
+    request_contract:
+      inputs:
+      - candidate task
+      - neighbor specialties
+      - confidence level
+      outputs:
+      - route decision
+      - boundary rationale
+      - rejection phrasing
+    fallback:
+      policy: Prefer rejection and orchestrator handoff when ownership is ambiguous.
+      confidence_trigger: cross-specialty ambiguity
+  agent_package_scaffolding:
+    issue_reference: '#308'
+    bootstrap_metadata:
+      specialty: data integration
+      package_root: catalog/data-analytics-and-ai/data-integration-specialist/
+    request_contract:
+      inputs:
+      - template paths
+      - required artifact list
+      - target delivery level
+      outputs:
+      - scaffold completion checklist
+      - required file map
+      - template drift warnings
+    fallback:
+      policy: Use repository scaffolding command and fill the package locally.
+      confidence_trigger: template drift or missing scaffold

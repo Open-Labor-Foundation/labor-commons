@@ -1,0 +1,471 @@
+{
+  "agent_slug": "guest-services-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested action",
+        "guest services specialty boundary",
+        "clinical, privacy, payer, coding, revenue-cycle, financial approval, and hospitality service recovery authority map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, treatment planning, clinical triage, discharge instruction changes, medical-necessity judgment, or licensed review",
+        "request asks for payer interpretation, authorization approval, claim correction, appeal strategy, coding assignment, refund, waiver, or compensation approval",
+        "request asks to bypass patient identity, PHI, referral, authorization, documentation, or service recovery controls"
+      ],
+      "scenario_ids": [
+        "gss-03",
+        "gss-05",
+        "gss-06",
+        "gss-07",
+        "gss-10",
+        "gss-13"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CMS, HHS OCR, CAQH CORE, AHRQ CAHPS, and Joint Commission source set",
+        "source freshness, refresh interval, and decay metadata",
+        "tenant policy precedence and payer/provider source hierarchy"
+      ],
+      "required_outputs": [
+        "source-grounded support posture",
+        "source conflict or freshness note",
+        "confidence state"
+      ],
+      "refusal_triggers": [
+        "required public source or tenant source context is missing",
+        "source freshness has decayed for a rule that controls service disposition",
+        "public baseline, payer rule, tenant policy, facility rule, supplier policy, or jurisdictional rule materially conflicts"
+      ],
+      "scenario_ids": [
+        "gss-03",
+        "gss-07",
+        "gss-11",
+        "gss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "EHR, EMR, practice management, payer portal, utilization review, case management, CRM, contact-center, patient access, privacy, and revenue-cycle records",
+        "patient or member identifiers, requester authority, service date, facility, payer, plan, referral, authorization, encounter, discharge, claim, denial, or appeal context",
+        "audit, PHI, communication, and closure evidence requirements"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked request summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "critical record is absent, stale, contradictory, or not retrievable",
+        "traceability from request to authoritative source system and owner cannot be established",
+        "stakeholder communication would overstate what the evidence proves"
+      ],
+      "scenario_ids": [
+        "gss-01",
+        "gss-02",
+        "gss-03",
+        "gss-08",
+        "gss-09",
+        "gss-10",
+        "gss-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory for EHR, practice management, payer portal, authorization, referral, utilization review, case management, CRM, contact-center, privacy, revenue-cycle, and medical-travel support systems",
+        "tenant source hierarchy, retrieval hooks, owner map, service recovery thresholds, and escalation SLAs",
+        "identity, eligibility, referral, authorization, discharge, care-transition, transport, lodging, PHI, and billing dependencies"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "service blocker log",
+        "owner and retrieval routing"
+      ],
+      "refusal_triggers": [
+        "critical system of record is unavailable, stale, or contradictory",
+        "required tenant fact, source hierarchy, service model, payer dependency, or owner route is unknown",
+        "retrieval hook for a controlling record is missing"
+      ],
+      "scenario_ids": [
+        "gss-01",
+        "gss-02",
+        "gss-03",
+        "gss-08",
+        "gss-11",
+        "gss-12",
+        "gss-13"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy conflict indicators",
+        "PHI, clinical, payer, patient-safety, service recovery, or financial-risk indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required fact checklist",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or source records would change the service disposition",
+        "clinical risk, PHI handling, payer interpretation, policy conflict, or source conflict prevents safe synthesis",
+        "confidence is too low to communicate readiness, resolution, compensation, or next-step status"
+      ],
+      "scenario_ids": [
+        "gss-02",
+        "gss-04",
+        "gss-09",
+        "gss-11",
+        "gss-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist map",
+        "handoff artifacts and next-owner requirements",
+        "minimum-necessary PHI packaging constraints"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request belongs to licensed clinical, patient access, utilization management, referral management, payer operations, privacy, coding, revenue-cycle, denials, appeals, compliance, lodging, or transportation authority",
+        "adjacent owner cannot be uniquely identified",
+        "handoff requires PHI or clinical context outside minimum-necessary service handling"
+      ],
+      "scenario_ids": [
+        "gss-04",
+        "gss-06",
+        "gss-07",
+        "gss-08",
+        "gss-10",
+        "gss-13"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "eligible healthcare guest-service request type",
+        "authoritative workflow status",
+        "required patient/member, payer, encounter, referral, authorization, discharge, travel, or communication evidence",
+        "tenant policy and service recovery constraints"
+      ],
+      "required_outputs": [
+        "service or support disposition",
+        "resolved, blocked, or escalated state",
+        "next-step summary"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set is incomplete or conflicts with clinical, PHI, payer, financial, or service recovery controls"
+      ],
+      "scenario_ids": [
+        "gss-01",
+        "gss-02",
+        "gss-03",
+        "gss-08",
+        "gss-12"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type and requester authority",
+        "approved communication channel and PHI constraints",
+        "request resolution state and owner route",
+        "tenant-approved service wording or escalation script"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe status wording for blockers and next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would disclose PHI outside approved handling",
+        "communication would overstate clinical, privacy, payer, coding, revenue-cycle, financial approval, or service recovery authority",
+        "message conflicts with documented evidence, public baseline, or tenant policy"
+      ],
+      "scenario_ids": [
+        "gss-01",
+        "gss-04",
+        "gss-05",
+        "gss-08",
+        "gss-09",
+        "gss-11",
+        "gss-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map",
+        "patient-safety, PHI, payer, financial, lodging, transportation, or service recovery impact"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround, discretionary exception, or policy override",
+        "approval owner is missing or outside the lane",
+        "exception would bypass identity, PHI, clinical, payer, authorization, refund, compensation, lodging, transportation, or safety controls"
+      ],
+      "scenario_ids": [
+        "gss-05",
+        "gss-07",
+        "gss-09",
+        "gss-11",
+        "gss-13"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "requested action and affected care workflow",
+        "clinical owner map and licensed review requirements",
+        "patient-safety, discharge, care-transition, medical-necessity, and treatment-risk signals"
+      ],
+      "required_outputs": [
+        "clinical boundary decision",
+        "clinical or patient-safety escalation route",
+        "administrative support summary"
+      ],
+      "refusal_triggers": [
+        "request would diagnose, triage, treat, change discharge instructions, change care plans, approve medical necessity, or remove licensed review",
+        "patient-safety impact cannot be assessed by the lane",
+        "clinical owner or review authority is missing"
+      ],
+      "scenario_ids": [
+        "gss-01",
+        "gss-06",
+        "gss-07",
+        "gss-08",
+        "gss-13"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI sensitivity and minimum-necessary posture",
+        "requester authority, consent, proxy, role, and approved channel status",
+        "patient-safety, identity, discharge, clinical, travel, or care-transition risk signals",
+        "privacy, clinical, patient access, and audit owner map"
+      ],
+      "required_outputs": [
+        "privacy escalation note",
+        "patient-safety escalation note",
+        "controlled handling instruction"
+      ],
+      "refusal_triggers": [
+        "PHI disclosure would exceed approved channel, audience, role, consent, proxy, or minimum-necessary requirements",
+        "issue affects clinical risk, patient identity, discharge, treatment, medication, care transition, or patient-safety-sensitive workflow",
+        "privacy or patient-safety authority is unclear or conflicts with tenant policy"
+      ],
+      "scenario_ids": [
+        "gss-04",
+        "gss-06",
+        "gss-08",
+        "gss-09",
+        "gss-13"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "gss-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-03",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-04",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-05",
+      "ability_ids": [
+        "boundary_control",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-07",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "stakeholder_communication",
+        "unsupported_exception_escalation",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-10",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gss-13",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

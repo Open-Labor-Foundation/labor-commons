@@ -1,0 +1,439 @@
+{
+  "agent_slug": "guest-communications-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for rate change, fee waiver, refund exception, or discretionary compensation approval outside delegated rules",
+        "request asks the lane to make a fraud finding, legal interpretation, or final safety decision",
+        "request asks the lane to authorize room-control, accessible-room substitution, or final incident closure"
+      ],
+      "scenario_ids": [
+        "gcs-03",
+        "gcs-05",
+        "gcs-06",
+        "gcs-08",
+        "gcs-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative DOJ, FTC, CFPB, CDC, FTC Red Flags, and PCI SSC source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict note",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdiction or source freshness materially changes the answer",
+        "public guidance and tenant, brand, supplier, processor, or property policy materially conflict"
+      ],
+      "scenario_ids": [
+        "gcs-01",
+        "gcs-04",
+        "gcs-05",
+        "gcs-11",
+        "gcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "reservation, folio, and guest identifiers",
+        "payment, refund, fee, and recovery records",
+        "contact-center transcripts, incident notes, and property or outage artifacts"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked request summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core records are absent or contradictory",
+        "reservation, folio, disruption, or payment state cannot be tied to the request",
+        "guest-facing summary would overstate what the records prove"
+      ],
+      "scenario_ids": [
+        "gcs-01",
+        "gcs-02",
+        "gcs-04",
+        "gcs-06",
+        "gcs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "pricing, refund, accessibility, and safety constraints"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required PMS, CRS, CRM, contact-center, payment, or incident systems are unavailable",
+        "required tenant, brand, supplier, or property-policy mapping is missing",
+        "next owner or retrieval dependency is unknown"
+      ],
+      "scenario_ids": [
+        "gcs-02",
+        "gcs-04",
+        "gcs-07",
+        "gcs-08",
+        "gcs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "gcs-02",
+        "gcs-06",
+        "gcs-09",
+        "gcs-11",
+        "gcs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to front office, lodging revenue, fraud investigation, operations, or compliance ownership",
+        "request requires final approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "gcs-03",
+        "gcs-05",
+        "gcs-06",
+        "gcs-08",
+        "gcs-09"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative workflow status",
+        "required evidence set"
+      ],
+      "required_outputs": [
+        "service or support disposition",
+        "next-step summary",
+        "resolved or blocked disposition"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "gcs-01",
+        "gcs-02",
+        "gcs-07",
+        "gcs-10",
+        "gcs-12"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "request resolution state"
+      ],
+      "required_outputs": [
+        "guest communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority or finality",
+        "required disclosure or caveat is missing",
+        "message conflicts with documented policy or evidence"
+      ],
+      "scenario_ids": [
+        "gcs-01",
+        "gcs-05",
+        "gcs-08",
+        "gcs-09",
+        "gcs-10"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "service-recovery escalation note",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround, discretionary exception, or policy override",
+        "approval owner is missing or outside the lane",
+        "exception would bypass pricing, refund, accessibility, safety, or complaint controls"
+      ],
+      "scenario_ids": [
+        "gcs-03",
+        "gcs-09",
+        "gcs-11"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue segmentation rules",
+        "request class inventory",
+        "record-readiness indicators",
+        "service-level expectations"
+      ],
+      "required_outputs": [
+        "high-volume triage summary",
+        "priority and owner routing map",
+        "blocked-versus-ready queue split"
+      ],
+      "refusal_triggers": [
+        "queue handling would skip evidence checks or boundary rules",
+        "request classes are blended in a way that hides safety, fraud, or policy-exception work",
+        "service-level pressure is being used to justify unsupported decisions"
+      ],
+      "scenario_ids": [
+        "gcs-07",
+        "gcs-09",
+        "gcs-10"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "guest-impact severity",
+        "customer-harm indicators",
+        "policy-exception thresholds",
+        "escalation owner map"
+      ],
+      "required_outputs": [
+        "harm-aware escalation packet",
+        "repeat-failure or policy-exception rationale",
+        "next owner and response deadline"
+      ],
+      "refusal_triggers": [
+        "customer harm, fraud, or policy exception determines the answer",
+        "the case requires safety, refund, compensation, or accessibility exception authority",
+        "repeat failure materially changes whether routine handling is safe"
+      ],
+      "scenario_ids": [
+        "gcs-03",
+        "gcs-05",
+        "gcs-06",
+        "gcs-09",
+        "gcs-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "gcs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-05",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-06",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-08",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-09",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "unsupported_exception_escalation",
+        "high_volume_customer_workflow_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "unsupported_exception_escalation",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "gcs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    }
+  ]
+}

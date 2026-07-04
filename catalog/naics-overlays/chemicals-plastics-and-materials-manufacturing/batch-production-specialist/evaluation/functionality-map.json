@@ -1,0 +1,428 @@
+{
+  "agent_slug": "batch-production-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "specialty boundary",
+        "approval and authority context",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "scope verdict",
+        "routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for engineering approval, safety-critical override, regulatory certification, or other authority-side signoff",
+        "request asks to bypass permit, interlock, inspection, or evidence requirements to recover throughput"
+      ],
+      "scenario_ids": [
+        "bps-05",
+        "bps-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative ISA, OSHA, EPA, eCFR, and ISO source set",
+        "tenant source precedence policy",
+        "source freshness metadata",
+        "conflict signals"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "source freshness status",
+        "conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public sources and tenant policy conflict materially",
+        "stale source or permit context would change the answer"
+      ],
+      "scenario_ids": [
+        "bps-02",
+        "bps-06",
+        "bps-09",
+        "bps-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "production orders and control recipes",
+        "batch records and event histories",
+        "sample, permit, inspection, and completion artifacts"
+      ],
+      "required_outputs": [
+        "artifact-state linkage",
+        "missing-evidence checklist",
+        "completion evidence sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required batch, sample, permit, or completion evidence is missing or contradictory",
+        "execution or closure claims cannot be traced to authoritative records"
+      ],
+      "scenario_ids": [
+        "bps-01",
+        "bps-02",
+        "bps-03",
+        "bps-04",
+        "bps-06",
+        "bps-10",
+        "bps-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "owner and escalation map",
+        "dependencies across ERP, MES, LIMS, EHS, CMMS, permit, and incident systems"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "production status summary",
+        "handoff note"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable",
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on readiness or execution state"
+      ],
+      "scenario_ids": [
+        "bps-01",
+        "bps-02",
+        "bps-06",
+        "bps-07",
+        "bps-11",
+        "bps-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority completeness signals",
+        "source or policy conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist"
+      ],
+      "refusal_triggers": [
+        "critical tenant facts or records are missing",
+        "changed conditions materially alter the safe answer",
+        "source or policy conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "bps-02",
+        "bps-06",
+        "bps-07",
+        "bps-09"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist directory"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to EHS, maintenance, field operations, engineer-of-record, or regulatory-reporting ownership",
+        "authority ownership ambiguity remains unresolved"
+      ],
+      "scenario_ids": [
+        "bps-05",
+        "bps-08",
+        "bps-12"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle stage",
+        "artifact completion status",
+        "throughput or process-cell constraints",
+        "approval and readiness context"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition recommendation"
+      ],
+      "refusal_triggers": [
+        "state change requested without required evidence",
+        "permit, release, or readiness blocker remains unresolved",
+        "job is requested to move to complete without closure criteria"
+      ],
+      "scenario_ids": [
+        "bps-01",
+        "bps-02",
+        "bps-03",
+        "bps-04",
+        "bps-11",
+        "bps-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "owner resolution context"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or unblock plan"
+      ],
+      "refusal_triggers": [
+        "evidence gap remains unresolved",
+        "policy conflict remains unresolved",
+        "dependency cannot be cleared without external owners"
+      ],
+      "scenario_ids": [
+        "bps-02",
+        "bps-03",
+        "bps-06",
+        "bps-07",
+        "bps-09",
+        "bps-12"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "batch completion criteria",
+        "yield and reconciliation evidence",
+        "sample disposition and signoff status"
+      ],
+      "required_outputs": [
+        "completion record",
+        "blocked completion note",
+        "closure evidence summary"
+      ],
+      "refusal_triggers": [
+        "completion evidence is incomplete or contradictory",
+        "closure is requested before batch history, reconciliation, or required signoff exists"
+      ],
+      "scenario_ids": [
+        "bps-01",
+        "bps-03",
+        "bps-04",
+        "bps-10"
+      ]
+    },
+    {
+      "ability_id": "permit_and_inspection_dependency_handling",
+      "ability_name": "Permit and inspection dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "permit conditions",
+        "monitoring, sampling, and inspection records",
+        "threshold applicability context"
+      ],
+      "required_outputs": [
+        "permit or inspection evidence-gap note",
+        "permit-aware blocker summary"
+      ],
+      "refusal_triggers": [
+        "required permit, monitoring, sampling, or inspection evidence is missing",
+        "regulated thresholds or permit conditions are treated as optional execution inputs"
+      ],
+      "scenario_ids": [
+        "bps-02",
+        "bps-06",
+        "bps-07",
+        "bps-11"
+      ]
+    },
+    {
+      "ability_id": "environmental_and_safety_risk_escalation",
+      "ability_name": "Environmental and safety-risk escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "field observations",
+        "safety or environmental risk indicators",
+        "authority owner map"
+      ],
+      "required_outputs": [
+        "field-risk escalation note",
+        "authority-side routing package"
+      ],
+      "refusal_triggers": [
+        "field conditions materially change risk posture",
+        "engineering, safety, or environmental authority is required",
+        "real-world risk exists beyond batch-production authority"
+      ],
+      "scenario_ids": [
+        "bps-05",
+        "bps-07",
+        "bps-08",
+        "bps-09",
+        "bps-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "bps-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "permit_and_inspection_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "environmental_and_safety_risk_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "permit_and_inspection_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "permit_and_inspection_dependency_handling",
+        "environmental_and_safety_risk_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "environmental_and_safety_risk_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "environmental_and_safety_risk_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "permit_and_inspection_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bps-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "environmental_and_safety_risk_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

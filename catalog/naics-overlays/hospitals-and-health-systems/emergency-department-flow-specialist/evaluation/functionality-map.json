@@ -1,0 +1,449 @@
+{
+  "agent_slug": "emergency-department-flow-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested decision authority",
+        "ED flow specialty boundary",
+        "clinical, EMTALA, privacy, payer, staffing, command, and approval authority context"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "high-risk escalation note",
+        "adjacent-specialist routing note"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to perform clinical triage, diagnose, treat, interpret results, decide discharge readiness, determine medical necessity, or override EMTALA",
+        "request asks for final diversion, staffing, room closure, budget, command, payer, privacy, or legal approval"
+      ],
+      "scenario_ids": [
+        "edfs-04",
+        "edfs-06",
+        "edfs-07",
+        "edfs-08",
+        "edfs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CMS EMTALA, CMS hospital CoP, HHS OCR, AHRQ, CMS quality-program, IHI, and ENA source baseline",
+        "source freshness metadata",
+        "tenant policy and state-law overlays"
+      ],
+      "required_outputs": [
+        "source-grounded ED flow recommendation",
+        "source or policy conflict escalation"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "public guidance, tenant policy, payer rule, state law, or command procedure conflicts materially on ED flow, privacy, clinical safety, or authorization handling"
+      ],
+      "scenario_ids": [
+        "edfs-09",
+        "edfs-10",
+        "edfs-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "EHR, ED tracking board, ADT, bed board, staffing, ambulance, diagnostic, consult, discharge, transfer, authorization, privacy, and incident records",
+        "source record IDs and timestamps",
+        "tenant closure and escalation criteria"
+      ],
+      "required_outputs": [
+        "schedule, capacity, or allocation recommendation",
+        "ED flow constraint log",
+        "missing-prerequisite or evidence checklist",
+        "safety or security incident status summary"
+      ],
+      "refusal_triggers": [
+        "critical records are absent, stale, contradictory, or not traceable to systems of record",
+        "recommendation cannot be tied to named constraints, source records, owner, and approval needs"
+      ],
+      "scenario_ids": [
+        "edfs-01",
+        "edfs-02",
+        "edfs-05",
+        "edfs-09",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list and source-of-truth hierarchy",
+        "ED service model, unit map, capacity rules, staffing roster, escalation thresholds, and tie-break rules",
+        "eligibility, authorization, referral, documentation, transfer, discharge, privacy, safety, and incident dependencies"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "constraint log",
+        "blocked-prerequisite summary"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on patient state, capacity, staffing, authorization, transfer, incident, or owner status",
+        "required tenant facts are missing"
+      ],
+      "scenario_ids": [
+        "edfs-01",
+        "edfs-02",
+        "edfs-05",
+        "edfs-09",
+        "edfs-11",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "clinical safety, EMTALA, privacy, payer, staffing, command, and policy conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation",
+        "missing-facts checklist",
+        "high-risk escalation note"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or records would change the recommendation",
+        "source or policy conflict prevents safe synthesis",
+        "clinical risk, PHI handling, payer interpretation, or EMTALA-sensitive handling changes the answer"
+      ],
+      "scenario_ids": [
+        "edfs-02",
+        "edfs-03",
+        "edfs-06",
+        "edfs-07",
+        "edfs-09",
+        "edfs-10",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "clinical, nursing, command, privacy, payer, patient access, transfer, utilization, coding, revenue cycle, IT, and security boundaries"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to licensed clinician, emergency nursing triage, bed management, transfer center, patient access, utilization management, coding, revenue cycle, healthcare privacy, healthcare IT, command, or security ownership",
+        "adjacent owner or approver cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "edfs-03",
+        "edfs-04",
+        "edfs-05",
+        "edfs-06",
+        "edfs-07",
+        "edfs-08",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "constraint_and_capacity_assessment",
+      "ability_name": "Constraint and capacity assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current ED demand and capacity signals",
+        "treatment-space inventory",
+        "staffing and roster state",
+        "diagnostic, consult, discharge, transfer, bed, authorization, and incident blockers",
+        "approved service levels and escalation thresholds"
+      ],
+      "required_outputs": [
+        "ED flow constraint log",
+        "capacity status summary"
+      ],
+      "refusal_triggers": [
+        "demand, capacity, staffing, or blocker records are missing or materially stale",
+        "capacity assessment would require clinical priority judgment or final staffing approval"
+      ],
+      "scenario_ids": [
+        "edfs-01",
+        "edfs-02",
+        "edfs-05",
+        "edfs-09",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "allocation_and_sequence_recommendation",
+      "ability_name": "Allocation and sequence recommendation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "approved allocation rules",
+        "tenant tie-break rules",
+        "documented acuity labels as source facts",
+        "capacity constraints",
+        "downstream impact assumptions"
+      ],
+      "required_outputs": [
+        "schedule, capacity, or allocation recommendation",
+        "sequencing tradeoff note"
+      ],
+      "refusal_triggers": [
+        "tie-break rule is missing",
+        "recommendation would assign clinical priority or override triage",
+        "recommendation would imply final operational approval"
+      ],
+      "scenario_ids": [
+        "edfs-01",
+        "edfs-03",
+        "edfs-04",
+        "edfs-06",
+        "edfs-11"
+      ]
+    },
+    {
+      "ability_id": "approval_boundary_enforcement",
+      "ability_name": "Approval-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "decision-rights matrix",
+        "approval thresholds",
+        "requested operational change",
+        "required command, nursing, staffing, transfer, privacy, payer, or clinical approver"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "high-risk escalation note"
+      ],
+      "refusal_triggers": [
+        "stakeholder asks the lane to approve diversion, room closure, staffing, budget, clinical, EMTALA, privacy, payer, or policy exceptions",
+        "required approver is unknown or unavailable"
+      ],
+      "scenario_ids": [
+        "edfs-02",
+        "edfs-03",
+        "edfs-04",
+        "edfs-10",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "documented ED workflow request",
+        "clinical and administrative authority map",
+        "documented acuity labels and escalation criteria"
+      ],
+      "required_outputs": [
+        "clinical-boundary refusal note",
+        "clinical owner escalation package"
+      ],
+      "refusal_triggers": [
+        "request requires diagnosis, treatment planning, clinical triage, result interpretation, discharge readiness, medical screening, stabilization, medical necessity, or licensed review",
+        "patient safety or urgent clinical signal cannot be resolved as administrative flow work"
+      ],
+      "scenario_ids": [
+        "edfs-03",
+        "edfs-05",
+        "edfs-06",
+        "edfs-08",
+        "edfs-10",
+        "edfs-12"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI handling basis",
+        "patient safety signals",
+        "privacy, consent, sensitive-record, and disclosure records",
+        "urgent ED escalation pathway"
+      ],
+      "required_outputs": [
+        "privacy escalation note",
+        "patient-safety escalation summary",
+        "minimum-necessary blocker record",
+        "safety or security incident status summary"
+      ],
+      "refusal_triggers": [
+        "PHI disclosure basis is unclear or exceeds treatment, payment, operations, consent, release, or tenant authority",
+        "patient safety or clinical risk requires licensed review",
+        "payer interpretation or authorization handling would change emergency-care timing",
+        "security incident requires command, clinical, privacy, or law-enforcement authority"
+      ],
+      "scenario_ids": [
+        "edfs-02",
+        "edfs-06",
+        "edfs-07",
+        "edfs-10",
+        "edfs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "edfs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment",
+        "approval_boundary_enforcement",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-03",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "constraint_and_capacity_assessment",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-06",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "allocation_and_sequence_recommendation",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-07",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "approval_boundary_enforcement",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "edfs-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "constraint_and_capacity_assessment",
+        "approval_boundary_enforcement",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ],
+  "functionality_coverage_complete": true
+}

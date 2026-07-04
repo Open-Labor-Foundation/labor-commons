@@ -1,0 +1,382 @@
+{
+  "agent_slug": "building-engineering-coordination-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended action",
+        "specialty boundary",
+        "authority map for permitting, safety, superintendent, commissioning, controls, and licensed trades"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for permit approval, inspection signoff, code interpretation, licensed trade signoff, engineer-of-record direction, or field execution direction",
+        "request attempts to bypass safety, outage, inspection, startup, or closeout blockers"
+      ],
+      "scenario_ids": [
+        "becs-05",
+        "becs-07"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "OSHA construction standards",
+        "public permit and inspection guidance",
+        "GSA, WBDG, and USACE facilities and construction-administration references"
+      ],
+      "required_outputs": [
+        "source-grounded routing criteria",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required jurisdictional or tenant source context is missing",
+        "public guidance and tenant policy conflict materially on the outcome"
+      ],
+      "scenario_ids": [
+        "becs-09",
+        "becs-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "work orders and shutdown requests",
+        "permit and inspection records",
+        "site logs, startup and TAB evidence, controls notes, and closeout records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing-evidence checklist",
+        "record-linked blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical permit, inspection, safety, outage, startup, or closeout records are absent or contradictory"
+      ],
+      "scenario_ids": [
+        "becs-02",
+        "becs-04",
+        "becs-06",
+        "becs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "owner map",
+        "dependency status across CMMS, PMIS, permitting, inspection, safety, controls, and closeout systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocker summary"
+      ],
+      "refusal_triggers": [
+        "critical owner or system of record is unresolved",
+        "systems materially disagree on the current work state"
+      ],
+      "scenario_ids": [
+        "becs-03",
+        "becs-08",
+        "becs-09",
+        "becs-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy or source conflict indicators"
+      ],
+      "required_outputs": [
+        "blocked-dependency escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source, jurisdiction, or policy conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "becs-09",
+        "becs-10"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing confirmation note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to permitting, inspection, safety, superintendent, commissioning, controls, licensed trade, or engineer-of-record ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "becs-05",
+        "becs-06",
+        "becs-07"
+      ]
+    },
+    {
+      "ability_id": "dependency_tracking",
+      "ability_name": "Dependency tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "task dependencies",
+        "artifact availability state",
+        "owner assignments"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "handoff blocker summary"
+      ],
+      "refusal_triggers": [
+        "dependency map cannot be established",
+        "handoff artifact set is incomplete"
+      ],
+      "scenario_ids": [
+        "becs-02",
+        "becs-03",
+        "becs-08"
+      ]
+    },
+    {
+      "ability_id": "handoff_execution",
+      "ability_name": "Handoff execution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "prior owner context",
+        "destination owner",
+        "required artifact checklist"
+      ],
+      "required_outputs": [
+        "handoff summary",
+        "handoff status summary"
+      ],
+      "refusal_triggers": [
+        "prior owner is unknown",
+        "destination owner or acceptance proof is absent",
+        "required records are missing"
+      ],
+      "scenario_ids": [
+        "becs-01",
+        "becs-11",
+        "becs-12"
+      ]
+    },
+    {
+      "ability_id": "blocker_and_closure_management",
+      "ability_name": "Blocker and closure management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open blockers",
+        "closure criteria",
+        "destination owner acceptance status"
+      ],
+      "required_outputs": [
+        "closure confirmation",
+        "blocked-dependency escalation note"
+      ],
+      "refusal_triggers": [
+        "closure criteria are not met",
+        "destination owner acceptance is missing",
+        "inspection, startup, safety, or closeout blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "becs-04",
+        "becs-06",
+        "becs-12"
+      ]
+    },
+    {
+      "ability_id": "site_and_work_order_dependency_handling",
+      "ability_name": "Site and work-order dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "site-readiness status",
+        "work order and shutdown request records",
+        "schedule and access-window constraints"
+      ],
+      "required_outputs": [
+        "site-readiness blocker summary",
+        "work-order-aware handoff package"
+      ],
+      "refusal_triggers": [
+        "site access, outage window, or work-order prerequisites are missing",
+        "work-order and field records materially disagree on current readiness"
+      ],
+      "scenario_ids": [
+        "becs-01",
+        "becs-02",
+        "becs-08",
+        "becs-11"
+      ]
+    },
+    {
+      "ability_id": "permit_inspection_and_trade_authority_escalation",
+      "ability_name": "Permit, inspection, and trade-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "permit status and inspection records",
+        "licensed-trade and engineer-of-record boundary map",
+        "safety and closeout blocker state"
+      ],
+      "required_outputs": [
+        "authority-boundary escalation note",
+        "permit and inspection routing package"
+      ],
+      "refusal_triggers": [
+        "request asks for permit approval, inspection signoff, code interpretation, licensed trade signoff, or engineer-of-record judgment",
+        "inspection or safety conditions materially change whether work may proceed"
+      ],
+      "scenario_ids": [
+        "becs-04",
+        "becs-05",
+        "becs-06",
+        "becs-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "becs-01",
+      "ability_ids": [
+        "handoff_execution",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_tracking",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "blocker_and_closure_management",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "blocker_and_closure_management",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "dependency_tracking",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-11",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "handoff_execution",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "becs-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "handoff_execution",
+        "blocker_and_closure_management"
+      ],
+      "status": "covered"
+    }
+  ]
+}

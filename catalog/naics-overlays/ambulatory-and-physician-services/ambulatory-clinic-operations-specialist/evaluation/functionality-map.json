@@ -1,0 +1,398 @@
+{
+  "agent_slug": "ambulatory-clinic-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "clinical, privacy, authorization, and approval authority map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, symptom triage, medical necessity judgment, order creation, or result interpretation",
+        "request asks for privacy-law interpretation, appeal drafting, coding or billing signoff, or payer-override authority",
+        "request treats ambulatory clinic operations like generic calendar or CRM administration and bypasses required ambulatory records"
+      ],
+      "scenario_ids": [
+        "acops-05",
+        "acops-06",
+        "acops-09",
+        "acops-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative CMS, AHRQ, ONC, HHS OCR, and HHS OIG source set",
+        "source freshness indicators",
+        "tenant, payer, and jurisdiction policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "date-aware operating posture",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "payer, state, or tenant policy materially changes the answer",
+        "public baseline and tenant or payer policy materially conflict"
+      ],
+      "scenario_ids": [
+        "acops-04",
+        "acops-08",
+        "acops-10",
+        "acops-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "referral or patient identifiers",
+        "scheduling, authorization, and attachment artifacts",
+        "consult, visit, and closure records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked execution summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core referral, authorization, consult, or closure records are absent or contradictory",
+        "evidence cannot be tied to the requested case or work item",
+        "completion evidence is missing"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-02",
+        "acops-03",
+        "acops-04",
+        "acops-07",
+        "acops-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "service-line, payer, and location context"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required systems of record are unavailable or stale",
+        "required tenant policy or authority mapping is missing",
+        "program, payer, clinic, or next-owner context needed for the next step is unknown"
+      ],
+      "scenario_ids": [
+        "acops-02",
+        "acops-04",
+        "acops-08",
+        "acops-09",
+        "acops-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "acops-04",
+        "acops-06",
+        "acops-08",
+        "acops-10",
+        "acops-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical, authorization-appeal, privacy, HIM, coding, billing, or legal ownership",
+        "request requires formal approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "acops-05",
+        "acops-06",
+        "acops-10",
+        "acops-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current execution state",
+        "required stage prerequisites",
+        "completion or rework criteria"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "next-action decision",
+        "accepted, blocked, rework, transferred, or completed disposition"
+      ],
+      "refusal_triggers": [
+        "stage prerequisites are incomplete",
+        "requested state transition is not supported by evidence",
+        "the next state would bypass an ambulatory workflow control"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-02",
+        "acops-04",
+        "acops-07"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception class",
+        "blocking evidence",
+        "owner-routing rules"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or escalation package",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "exception would be silently skipped or closed without evidence",
+        "required owner for the exception is unknown",
+        "exception requires approval outside the lane"
+      ],
+      "scenario_ids": [
+        "acops-02",
+        "acops-04",
+        "acops-09",
+        "acops-10",
+        "acops-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "proof-of-service or proof-of-completion",
+        "closed-task evidence",
+        "required closure artifacts"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure readiness verdict",
+        "remaining-evidence list"
+      ],
+      "refusal_triggers": [
+        "visit, consult, or closure evidence is missing",
+        "completion evidence conflicts across systems of record",
+        "requested closure would hide an unresolved ambulatory task"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-03"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "industry-specific record catalog",
+        "ambulatory workflow terminology",
+        "tenant service-line context"
+      ],
+      "required_outputs": [
+        "industry-specific workflow summary",
+        "artifact-aware blocker list",
+        "terminology-preserving status note"
+      ],
+      "refusal_triggers": [
+        "named ambulatory records are replaced with generic notes or CRM shortcuts",
+        "industry context needed to interpret the work is missing",
+        "the output collapses referral, scheduling, authorization, and consult artifacts into generic administration"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-07",
+        "acops-09",
+        "acops-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "acops-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-06",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-09",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

@@ -1,0 +1,438 @@
+{
+  "agent_slug": "acute-care-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested acute care operational action",
+        "acute care operations boundary, decision-rights matrix, and adjacent specialist map",
+        "clinical, payer, privacy, coding, revenue-cycle, legal, financial approval, and patient-safety authority indicators"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "adjacent-specialist routing note",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, treatment planning, discharge readiness, clinical prioritization, medical necessity, or level-of-care determination",
+        "request asks for payer-policy interpretation, code assignment, claim approval, PHI disclosure approval, write-off, appeal strategy, or financial override"
+      ],
+      "scenario_ids": [
+        "acops-02",
+        "acops-04",
+        "acops-05",
+        "acops-06",
+        "acops-07",
+        "acops-10",
+        "acops-13"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public healthcare regulator, payer/provider, workflow, and terminology sources",
+        "tenant policy, source hierarchy, payer and plan context, and source freshness metadata",
+        "current facility, service-line, care-setting, and jurisdiction context"
+      ],
+      "required_outputs": [
+        "source-grounded acute care operations posture",
+        "source or policy conflict note",
+        "source freshness limitation"
+      ],
+      "refusal_triggers": [
+        "required public or tenant authority source is missing or stale",
+        "public guidance, tenant policy, payer rule, clinical instruction, facility procedure, contract term, or jurisdictional requirement materially conflicts"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-06",
+        "acops-11",
+        "acops-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "EHR encounter, ADT status, order, clinical-administrative note, case management note, utilization review record, discharge or transition record, payer portal evidence, charge, coding, claim, remittance, denial, appeal, and audit log",
+        "patient/member status, service date, payer, plan, authorization, referral, eligibility, privacy, and source-of-truth hierarchy",
+        "completion, exception, and audit evidence requirements"
+      ],
+      "required_outputs": [
+        "evidence sufficiency summary",
+        "acute care exception note",
+        "completion evidence record"
+      ],
+      "refusal_triggers": [
+        "critical acute care artifact is absent, stale, contradictory, not retrievable, or not authoritative",
+        "traceability from blocker to source record to accountable owner to completion evidence cannot be established"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-03",
+        "acops-07",
+        "acops-09",
+        "acops-13"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record map across EHR, EMR, ADT, case management, utilization review, patient access, payer portal, practice management, revenue cycle, coding, claims, document repository, privacy, and audit systems",
+        "tenant RACI, queue routing policy, source hierarchy, escalation SLA, and prerequisite rules",
+        "authorization, referral, eligibility, order, documentation, discharge, transition, coding, claim, denial, appeal, privacy, and access dependencies"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocker log",
+        "system conflict summary"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on patient status, encounter state, authorization, referral, eligibility, order, documentation, discharge or transition state, coding or claim readiness, owner, or closure state"
+      ],
+      "scenario_ids": [
+        "acops-02",
+        "acops-03",
+        "acops-08",
+        "acops-14"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy and source conflict indicators",
+        "clinical, patient-safety, privacy, payer, coding, revenue-cycle, legal, financial, and access-risk indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "missing-information checklist",
+        "responsible-owner route"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts, source records, retrieval access, or authority maps would change operational disposition",
+        "clinical risk, PHI handling, payer interpretation, coding interpretation, revenue-cycle authority, patient-safety issue, owner conflict, or source conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "acops-03",
+        "acops-08",
+        "acops-11",
+        "acops-14"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "authority boundary and handoff prerequisites",
+        "evidence package required by patient access, utilization management, clinical review, coding, revenue cycle, privacy, compliance, or payer operations"
+      ],
+      "required_outputs": [
+        "routing note",
+        "next-owner package",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical review, licensed clinician, utilization management, patient access, referral management, medical coding, health information management, revenue cycle, denials and appeals, healthcare privacy, compliance, or payer operations",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "acops-02",
+        "acops-05",
+        "acops-06",
+        "acops-07",
+        "acops-10"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "accepted acute care operational request",
+        "tenant lifecycle-state definitions and closure criteria",
+        "current source artifacts, owner, due date, escalation SLA, and system links"
+      ],
+      "required_outputs": [
+        "case or queue disposition summary",
+        "state transition log",
+        "reopened-work trigger"
+      ],
+      "refusal_triggers": [
+        "state cannot move forward because prerequisite evidence, source record, owner acceptance, system access, or approval is missing",
+        "requested transition would bypass clinical, privacy, payer, coding, utilization, revenue-cycle, legal, financial, or safety-critical authority"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-02",
+        "acops-03",
+        "acops-09",
+        "acops-13",
+        "acops-14"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception type, severity, operational impact, patient/member context, owner, due time, escalation rule, and source evidence",
+        "authorization, referral, eligibility, documentation, discharge, transition, coding, claim, denial, appeal, privacy, clinical, payer, system, and access boundary signals",
+        "tenant prioritization, rework, escalation, and closure rules"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "acute care exception summary",
+        "escalation log entry"
+      ],
+      "refusal_triggers": [
+        "exception requires authority outside the acute care operations lane",
+        "operational impact cannot be assessed without missing records or owner confirmation",
+        "policy conflict, source conflict, patient-safety indicator, or privacy risk prevents administrative resolution"
+      ],
+      "scenario_ids": [
+        "acops-02",
+        "acops-03",
+        "acops-08",
+        "acops-10",
+        "acops-11",
+        "acops-14"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "resolved-state evidence",
+        "owner acceptance, downstream handoff, residual blocker, audit log, and system-of-record links",
+        "reopen criteria and source-freshness confirmation"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "residual risk log",
+        "closure confirmation"
+      ],
+      "refusal_triggers": [
+        "closure is requested without source-system evidence, owner acceptance, downstream handoff, or audit trail",
+        "residual clinical, privacy, payer, coding, claim, utilization, access, or system risk remains unresolved"
+      ],
+      "scenario_ids": [
+        "acops-01",
+        "acops-09",
+        "acops-13"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "request content and patient-safety indicators",
+        "clinical protocol, diagnosis, treatment, discharge readiness, level-of-care, medical-necessity, and licensed-review authority map",
+        "administrative facts that can be summarized safely"
+      ],
+      "required_outputs": [
+        "administrative-only acute care operations summary",
+        "clinical escalation note"
+      ],
+      "refusal_triggers": [
+        "request requires diagnosis, treatment planning, clinical protocol change, discharge readiness, patient-specific priority, medical necessity, level-of-care, or licensed review",
+        "operational delay includes patient-safety indicators that require licensed review"
+      ],
+      "scenario_ids": [
+        "acops-05",
+        "acops-09",
+        "acops-10"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI handling context, role-based access posture, consent/proxy and minimum-necessary rules",
+        "patient-safety, clinical-risk, discharge, transition, authorization, documentation, and system-access indicators",
+        "privacy, clinical, compliance, command, or accountable owner map"
+      ],
+      "required_outputs": [
+        "privacy-controlled routing note",
+        "patient-safety escalation note",
+        "controlled evidence package"
+      ],
+      "refusal_triggers": [
+        "request seeks PHI disclosure, patient-level export, broad distribution, or unauthorized access without documented approval",
+        "acute care operational signal may affect patient safety and requires accountable clinical, command, or compliance owner"
+      ],
+      "scenario_ids": [
+        "acops-04",
+        "acops-05",
+        "acops-10",
+        "acops-14"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "acops-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-02",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-04",
+      "ability_ids": [
+        "boundary_control",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-06",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-07",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-12",
+      "ability_ids": [
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-13",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "acops-14",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

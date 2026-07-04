@@ -1,0 +1,415 @@
+{
+  "agent_slug": "food-safety-retail-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "specialty boundary",
+        "approval and authority map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "request asks for medical advice, public-health adjudication, pricing override, refund approval, fraud finding, or final release authority",
+        "request seeks to bypass a documented food-safety hold or control",
+        "request would convert the lane into regulator-facing, legal, or executive authority"
+      ],
+      "scenario_ids": [
+        "fsrs-05",
+        "fsrs-08",
+        "fsrs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "jurisdiction and tenant policy precedence rules",
+        "source freshness indicators"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "conflict escalation summary",
+        "source freshness status"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "jurisdiction and tenant rules materially conflict",
+        "source staleness materially changes reliability"
+      ],
+      "scenario_ids": [
+        "fsrs-01",
+        "fsrs-11",
+        "fsrs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "POS, ecommerce order, customer-care, product, lot, and department records",
+        "food-safety and incident artifacts",
+        "payment and refund records when applicable"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "missing-evidence packet",
+        "artifact-to-owner linkage"
+      ],
+      "refusal_triggers": [
+        "critical grocery retail or incident artifacts are missing or contradictory",
+        "artifacts cannot be tied to the affected order, product, lot, department, or customer case",
+        "evidence gaps materially change hold, release, or closure posture"
+      ],
+      "scenario_ids": [
+        "fsrs-02",
+        "fsrs-03",
+        "fsrs-07",
+        "fsrs-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks and owner map",
+        "grocery retail, order, and incident prerequisites"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "retrieval prerequisite map",
+        "reroute or handoff package"
+      ],
+      "refusal_triggers": [
+        "critical system of record is unavailable",
+        "jurisdiction, store or business unit, or authority context is unresolved",
+        "required evidence source is inaccessible"
+      ],
+      "scenario_ids": [
+        "fsrs-06",
+        "fsrs-09",
+        "fsrs-11",
+        "fsrs-13"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence-impacting missing facts",
+        "customer-harm or changed-condition signals",
+        "policy or source conflicts"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "required facts or records are missing",
+        "customer-harm signals materially alter the answer",
+        "source or policy conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "fsrs-05",
+        "fsrs-11",
+        "fsrs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff context",
+        "adjacent-lane owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "responsibility-transfer map"
+      ],
+      "refusal_triggers": [
+        "request belongs to customer care, pricing, finance, loss prevention, legal, medical, or public-health ownership",
+        "request requires formal approval outside the lane",
+        "control decision depends on unsupported downstream authority"
+      ],
+      "scenario_ids": [
+        "fsrs-05",
+        "fsrs-07",
+        "fsrs-10"
+      ]
+    },
+    {
+      "ability_id": "control_and_inspection_application",
+      "ability_name": "Control and inspection application",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "grocery retail control checklist",
+        "inspection or audit state",
+        "food-safety evidence set"
+      ],
+      "required_outputs": [
+        "quality or safety review note",
+        "control status summary",
+        "inspection-linked blocker note"
+      ],
+      "refusal_triggers": [
+        "request tries to clear a control gap without supporting evidence",
+        "inspection or audit state is unresolved but the requester asks for a release-style answer"
+      ],
+      "scenario_ids": [
+        "fsrs-01",
+        "fsrs-02",
+        "fsrs-06",
+        "fsrs-13"
+      ]
+    },
+    {
+      "ability_id": "defect_or_incident_handling",
+      "ability_name": "Defect or incident handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "incident or complaint records",
+        "repeat-event history",
+        "corrective-action status"
+      ],
+      "required_outputs": [
+        "corrective-action escalation package",
+        "incident status summary",
+        "repeat-defect evidence summary"
+      ],
+      "refusal_triggers": [
+        "request attempts to close a recurring incident without corrective-action evidence",
+        "incident handling requires formal QA, medical, public-health, or legal authority"
+      ],
+      "scenario_ids": [
+        "fsrs-04",
+        "fsrs-05",
+        "fsrs-07",
+        "fsrs-12"
+      ]
+    },
+    {
+      "ability_id": "hold_release_boundary_enforcement",
+      "ability_name": "Hold and release boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "hold status",
+        "release prerequisites",
+        "approval authority records"
+      ],
+      "required_outputs": [
+        "hold or nonconformance record",
+        "release-boundary refusal",
+        "owner escalation note"
+      ],
+      "refusal_triggers": [
+        "request seeks release with unresolved hold, missing logs, open corrective action, or incomplete incident evidence",
+        "request attempts to bypass a documented grocery retail safety control"
+      ],
+      "scenario_ids": [
+        "fsrs-02",
+        "fsrs-03",
+        "fsrs-08"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer-workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue volume indicators",
+        "channel and service mix",
+        "priority and SLA rules"
+      ],
+      "required_outputs": [
+        "triage summary",
+        "queue-state classification",
+        "customer-safe next-step package"
+      ],
+      "refusal_triggers": [
+        "volume pressure would skip control verification or artifact capture",
+        "customer workflow cannot be prioritized safely without prerequisites",
+        "queue handling would collapse distinct safety exceptions into generic closure"
+      ],
+      "scenario_ids": [
+        "fsrs-01",
+        "fsrs-06",
+        "fsrs-09"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "policy-exception request",
+        "customer-impact facts",
+        "safety or fraud signals"
+      ],
+      "required_outputs": [
+        "policy-aware escalation note",
+        "customer-impact summary",
+        "correct owner routing"
+      ],
+      "refusal_triggers": [
+        "request would override refund, pricing, or safety policy without authority",
+        "customer harm, fraud, or safety implications determine the answer",
+        "customer-care or exception authority is required"
+      ],
+      "scenario_ids": [
+        "fsrs-05",
+        "fsrs-07",
+        "fsrs-09",
+        "fsrs-10",
+        "fsrs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "fsrs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "control_and_inspection_application",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-04",
+      "ability_ids": [
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-05",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "defect_or_incident_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-06",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "control_and_inspection_application",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "defect_or_incident_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-08",
+      "ability_ids": [
+        "boundary_control",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "high_volume_customer_workflow_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "defect_or_incident_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fsrs-13",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    }
+  ]
+}

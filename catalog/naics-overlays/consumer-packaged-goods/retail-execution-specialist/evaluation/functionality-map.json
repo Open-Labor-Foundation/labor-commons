@@ -1,0 +1,422 @@
+{
+  "agent_slug": "retail-execution-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for final quality release, recall ownership, or supplier approval",
+        "request asks for a commercial price override, credit approval, or unsupported concession",
+        "request asks the lane to bypass traceability, inventory, or hold controls"
+      ],
+      "scenario_ids": [
+        "rex-05",
+        "rex-06",
+        "rex-08",
+        "rex-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative FDA and GS1 source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "date-aware compliance posture",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "compliance timing or source freshness materially changes the answer",
+        "public guidance and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "rex-01",
+        "rex-10",
+        "rex-11",
+        "rex-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "order and shipment identifiers",
+        "inventory and lot records",
+        "proof-of-execution artifacts",
+        "quality and exception records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked execution summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core records are absent or contradictory",
+        "lot or shipment evidence cannot be tied to the requested work",
+        "completion evidence is missing"
+      ],
+      "scenario_ids": [
+        "rex-01",
+        "rex-03",
+        "rex-04",
+        "rex-05",
+        "rex-07"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "service-level and retailer constraints"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required systems of record are unavailable or stale",
+        "required tenant policy or authority mapping is missing",
+        "next owner or prerequisite dependency is unknown"
+      ],
+      "scenario_ids": [
+        "rex-02",
+        "rex-04",
+        "rex-07",
+        "rex-10",
+        "rex-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "rex-02",
+        "rex-10",
+        "rex-11",
+        "rex-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to quality, procurement, supplier quality, logistics recovery, finance, or commercial ownership",
+        "request requires formal approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "rex-06",
+        "rex-08",
+        "rex-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current execution state",
+        "required stage prerequisites",
+        "completion or rework criteria"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "next-action decision",
+        "accepted, blocked, rework, or completed disposition"
+      ],
+      "refusal_triggers": [
+        "stage prerequisites are incomplete",
+        "requested state transition is not supported by evidence",
+        "the next state would bypass a control"
+      ],
+      "scenario_ids": [
+        "rex-01",
+        "rex-02",
+        "rex-07",
+        "rex-09"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception class",
+        "blocking evidence",
+        "owner-routing rules"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or escalation package",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "exception would be silently skipped or closed without evidence",
+        "required owner for the exception is unknown",
+        "exception requires approval outside the lane"
+      ],
+      "scenario_ids": [
+        "rex-03",
+        "rex-05",
+        "rex-07",
+        "rex-10",
+        "rex-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "proof-of-delivery or proof-of-execution",
+        "closed-order evidence",
+        "required closure artifacts"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure decision",
+        "audit-ready evidence list"
+      ],
+      "refusal_triggers": [
+        "completion artifacts are missing, unsigned, or inconsistent",
+        "work is claimed complete while exceptions remain open",
+        "closure would overstate execution success"
+      ],
+      "scenario_ids": [
+        "rex-01",
+        "rex-03",
+        "rex-09"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "lot and batch history",
+        "inventory and shipment records",
+        "release or hold status"
+      ],
+      "required_outputs": [
+        "traceability conflict summary",
+        "release dependency note",
+        "inventory blocker explanation"
+      ],
+      "refusal_triggers": [
+        "traceability or inventory conflict remains unresolved",
+        "a held lot would be advanced to release or shipment",
+        "release posture cannot be supported from the records"
+      ],
+      "scenario_ids": [
+        "rex-04",
+        "rex-05",
+        "rex-09"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "approved-item and supplier records",
+        "quality or recall posture",
+        "substitution and rework constraints"
+      ],
+      "required_outputs": [
+        "supplier-boundary routing note",
+        "quality or release escalation package",
+        "approval dependency summary"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported supplier substitution or alternate-item approval",
+        "quality or release approval is unresolved",
+        "supplier or rework decision would exceed lane authority"
+      ],
+      "scenario_ids": [
+        "rex-05",
+        "rex-06",
+        "rex-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rex-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-05",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "exception_queue_handling",
+        "traceability_and_release_dependency_handling",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-09",
+      "ability_ids": [
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rex-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

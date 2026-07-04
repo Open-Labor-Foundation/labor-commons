@@ -1,0 +1,328 @@
+{
+  "agent_slug": "corporate-actions-specialist",
+  "resolved_workflow_phase_group": "execution-processing-and-fulfillment",
+  "industry_profile": "cross-industry",
+  "resolved_industry_profile": "cross-industry",
+  "last_reviewed_at": "2026-04-10",
+  "source_decay_policy": "review_required_after_interval",
+  "authoritative_sources": [
+    {
+      "title": "11140. Transactions in Securities \"Ex-Dividend,\" \"Ex-Rights\" or \"Ex-Warrants\"",
+      "publisher": "Financial Industry Regulatory Authority",
+      "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/11140",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "FINRA Rule 11140 is authoritative for U.S. ex-date handling and is the primary public operating rule constraining record-date, payable-date, and late-information logic in corporate-actions workflows.",
+      "workflow_stage": "Event timing, ex-date, and due-bill aware announcement review",
+      "used_for": [
+        "record-date and ex-date distinctions",
+        "rights and warrant timing rules",
+        "late-information escalation boundaries"
+      ],
+      "practical_use_in_pack": "Constrains the lane to verify event timing fields explicitly and blocks generic handling that treats all corporate-action dates as interchangeable.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "6490. Processing of Company-Related Actions",
+      "publisher": "Financial Industry Regulatory Authority",
+      "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/6490",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "FINRA Rule 6490 is authoritative for company-related action notice completeness, timeliness, deficiency handling, and settlement-orderliness concerns in OTC corporate actions.",
+      "workflow_stage": "Announcement sufficiency, deficiency, and escalation control",
+      "used_for": [
+        "timely notice requirements",
+        "supporting-document completeness",
+        "deficiency and hold triggers"
+      ],
+      "practical_use_in_pack": "Defines blocked and escalation behavior when event documentation is incomplete, untimely, or creates uncertainty in settlement and clearance.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "Distributions for Securities - Corporate Actions Processing",
+      "publisher": "Depository Trust & Clearing Corporation",
+      "url": "https://www.dtcc.com/asset-services/corporate-actions-processing/distributions",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "DTCC operates the DTC distribution service and is authoritative for full-lifecycle processing of distributions, participant entitlements, instructions, allocations, and payment reporting on DTC-eligible securities.",
+      "workflow_stage": "Distribution announcement, entitlement, and payment progression",
+      "used_for": [
+        "distribution lifecycle definition",
+        "entitlement and allocation handling",
+        "intraday and settlement-statement evidence"
+      ],
+      "practical_use_in_pack": "Constrains mandatory and elective distribution handling to real DTC-style event states and prevents the lane from treating announcement-only data as completed payment evidence.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "Distributions Service Guide",
+      "publisher": "The Depository Trust Company / DTCC",
+      "url": "https://www.dtcc.com/-/media/Files/Downloads/legal/service-guides/Service-Guide-Distributions.pdf",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "The DTC Distributions Service Guide is an official operating procedure source for CA ID, option blocks, instructions, acknowledgements, entitlements, allocations, adjustments, and ISO 20022 or CA Web processing.",
+      "workflow_stage": "Instruction handling, acknowledgements, and allocation traceability",
+      "used_for": [
+        "CA ID and option-block semantics",
+        "instruction acknowledgement expectations",
+        "allocation, adjustment, and participant settlement evidence"
+      ],
+      "practical_use_in_pack": "Defines realistic instruction-submission, acknowledgement, and allocation evidence so the lane can distinguish drafted elections from processed ones.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "Corporate Actions Processing Service for Reorganizations",
+      "publisher": "Depository Trust & Clearing Corporation",
+      "url": "https://www.dtcc.com/asset-services/corporate-actions-processing/reorganizations",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "DTCC\u2019s reorganization service description is authoritative for the lifecycle of mandatory and voluntary reorganizations, including instruction processing, entitlement collection, and allocation behavior.",
+      "workflow_stage": "Voluntary and mandatory reorganization progression",
+      "used_for": [
+        "tender, exchange, conversion, rights, and warrant workflows",
+        "mandatory versus voluntary event distinctions",
+        "reorganization allocation terminology"
+      ],
+      "practical_use_in_pack": "Constrains the lane to differentiate distributions from reorganizations and to route voluntary-event authority boundaries correctly.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "4511. General Requirements",
+      "publisher": "Financial Industry Regulatory Authority",
+      "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4511",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "FINRA Rule 4511 is a core books-and-records baseline requiring firms to make and preserve the records needed to support corporate-action execution, exception handling, and closure evidence.",
+      "workflow_stage": "Record preservation and audit-ready closure",
+      "used_for": [
+        "books-and-records obligations",
+        "retention posture for event evidence",
+        "closure sufficiency checks"
+      ],
+      "practical_use_in_pack": "Constrains completion outputs so they require preserved event, instruction, and entitlement records rather than narrative claims about what supposedly happened.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "Books and Records Requirements for Brokers and Dealers Under the Securities Exchange Act of 1934",
+      "publisher": "U.S. Securities and Exchange Commission",
+      "url": "https://www.sec.gov/rules-regulations/2003/03/books-records-requirements-brokers-dealers-under-securities-exchange-act-1934",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "This SEC source explains the Rules 17a-3 and 17a-4 books-and-records baseline for preserving the customer, securities, order, and communications records that corporate-actions teams rely on as evidence.",
+      "workflow_stage": "Evidence artifact definition and traceability",
+      "used_for": [
+        "minimum authoritative artifact definitions",
+        "customer and securities record requirements",
+        "communications and workflow evidence preservation"
+      ],
+      "practical_use_in_pack": "Defines the named records the lane must request before asserting record truth, exception closure, or completed event handling.",
+      "last_reviewed_at": "2026-04-10",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Event intake and authoritative announcement verification",
+      "description": "Validate the event identifier, security, event type, record date, ex date, payable or expiration date, option structure, and notice completeness before the event can progress.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Entitlement and eligibility review",
+      "description": "Check record-date holdings, due-bill or interim-accounting implications, beneficial-owner eligibility, and source precedence for the event before instructions or allocations are assumed valid.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Election capture, instruction submission, and acknowledgement monitoring",
+      "description": "Package client or standing instructions, submit elections through CA Web, ISO 20022, or custodian workflows, and confirm positive acknowledgement before treating the event as instructed.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Allocation, payment, and stock-credit progression",
+      "description": "Track entitlements, allocations, adjustments, and settlement-statement effects without treating announcement or instruction states as completed payment or stock-credit outcomes.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Exception handling and blocked-state routing",
+      "description": "Summarize missing notices, conflicting sources, expired elections, funding failures, withholding issues, and missing allocations with explicit blocker ownership and no unsupported clearance.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Completion evidence capture and audit-ready closure",
+      "description": "Produce completion outputs only when authoritative announcement, instruction, acknowledgement, allocation, payment, stock-credit, and preserved record evidence support closure for the event type.",
+      "source_classes": [
+        "Evidence or control standards relevant to the lane"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Issuer, exchange, paying-agent, transfer-agent, custodian, or depository event notices with CA ID or equivalent event identifiers",
+    "Record-date position snapshots, due-bill or interim-accounting records, and beneficial-owner eligibility evidence",
+    "Option blocks, default and choice options, standing instructions, client or portfolio approvals, and election packages",
+    "Instruction messages, positive acknowledgements, instruction-status updates, and cutoff or expiration timestamps",
+    "Allocation reports, payment confirmations, stock-credit evidence, participant settlement statements, and adjustment records",
+    "Case-management notes, approval history, client or counterparty communications, and retained books-and-records evidence"
+  ],
+  "systems_of_record": [
+    "DTCC CA Web, CA 20022, or equivalent depository and custodian corporate-actions platforms",
+    "Issuer, transfer-agent, paying-agent, exchange, or custodian notice repositories",
+    "Position, custody, and portfolio-accounting systems used to establish record-date or eligibility truth",
+    "Cash, stock, settlement, tax, and general-ledger systems used to confirm entitlements and downstream postings",
+    "CRM, workflow, case-management, and document-management systems",
+    "Compliance, legal-escalation, and approval workflow systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Determine whether available records support progression, hold, rework, or completion within corporate-actions execution workflows.",
+      "Produce execution summaries, completion evidence, exception notes, and escalation packages tied to named event, option, instruction, allocation, and payment records.",
+      "Identify when corporate-action blockers require the next operational owner, approver, or adjacent specialist."
+    ],
+    "escalate": [
+      "A legal, tax, issuer, client-authorization, or cross-border market factor changes the risk posture.",
+      "A source-precedence or event-timing interpretation materially changes whether the request may proceed.",
+      "Announcement, instruction, position, allocation, or payment records conflict and need human review or adjacent-owner resolution."
+    ],
+    "refuse": [
+      "The request asks for investment advice, client election choice, legal interpretation, tax advice, issuer approval, or final compliance signoff outside the lane.",
+      "The request asks to waive a cutoff, override a control, or mark work complete without authoritative evidence.",
+      "Required tenant facts, market context, or system-of-record evidence are missing and would change the outcome."
+    ]
+  },
+  "domain_failure_modes": [
+    "Treating record date, ex date, payable date, expiration date, and effective date as interchangeable and progressing the wrong event step.",
+    "Submitting or narrating an election using issuer text rather than the authoritative CA ID, option number, and workflow record used by the servicing platform.",
+    "Marking a voluntary event complete without positive acknowledgement, valid funding, or final allocation evidence.",
+    "Treating announcement or instruction presence as proof of payment, stock credit, or participant settlement completion.",
+    "Collapsing issuer, custodian, depository, and internal position or tax records into one narrative state when they materially conflict.",
+    "Assuming all corporate actions are simple cash dividends and ignoring reorganizations, due bills, rights-subscription funding, ADR handling, or foreign-market differences.",
+    "Drifting into portfolio-decision authority, proxy voting, legal or tax interpretation, issuer services, or settlement-fail ownership."
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "covered": true,
+      "scenario_ids": [
+        "cas-02",
+        "cas-07",
+        "cas-09"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "covered": true,
+      "scenario_ids": [
+        "cas-06",
+        "cas-11"
+      ]
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "covered": true,
+      "scenario_ids": [
+        "cas-04",
+        "cas-10",
+        "cas-11"
+      ]
+    },
+    {
+      "scenario_family": "Incomplete inputs or artifacts mid-process",
+      "covered": true,
+      "scenario_ids": [
+        "cas-02"
+      ]
+    },
+    {
+      "scenario_family": "Execution exception that requires rework or escalation",
+      "covered": true,
+      "scenario_ids": [
+        "cas-05",
+        "cas-08",
+        "cas-10"
+      ]
+    },
+    {
+      "scenario_family": "Request to mark work complete without evidence of completion",
+      "covered": true,
+      "scenario_ids": [
+        "cas-03"
+      ]
+    },
+    {
+      "scenario_family": "Normal in-scope execution using realistic industry terminology and artifact shapes",
+      "covered": true,
+      "scenario_ids": [
+        "cas-01",
+        "cas-06",
+        "cas-09"
+      ]
+    },
+    {
+      "scenario_family": "Low-confidence handling when required facts, records, or authority sources are missing",
+      "covered": true,
+      "scenario_ids": [
+        "cas-07"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling that requires escalation instead of confident synthesis",
+      "covered": true,
+      "scenario_ids": [
+        "cas-08",
+        "cas-11",
+        "cas-12"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves the public baseline and records assumptions",
+      "covered": true,
+      "scenario_ids": [
+        "cas-12"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Jurisdiction and market-infrastructure regime outside the default U.S. DTC-oriented baseline",
+      "impact": "Non-DTC, non-U.S., ADR, or global-custody flows can change event timing, election handling, tax treatment, and evidence expectations materially.",
+      "handling": "Require tenant-provided jurisdiction, market, and custodian-chain context before progression; if absent, return blocked or route to a more specialized lane.",
+      "blocking": false
+    },
+    {
+      "topic": "Beneficial-owner election authority and approval posture",
+      "impact": "Tenants differ on when operations may release an election, when portfolio-manager or client approval is needed, and how standing instructions may be used.",
+      "handling": "Require tenant authorization policy before acting on voluntary events and refuse to infer election authority when approval context is missing.",
+      "blocking": false
+    },
+    {
+      "topic": "Source precedence between issuer notices, exchange notices, DTCC or custodian notices, and tenant event stores",
+      "impact": "Different environments give priority to different event sources when deadlines, option text, or eligibility details disagree.",
+      "handling": "Require tenant source-precedence policy before clearing conflicts or claiming a final event state.",
+      "blocking": false
+    }
+  ],
+  "notes": [
+    "The source set combines FINRA corporate-action timing and notice rules, DTCC lifecycle workflow references for distributions and reorganizations, and FINRA or SEC books-and-records control standards.",
+    "The pack is intentionally corporate-actions-specific: it centers event notices, option structures, elections, acknowledgements, entitlements, allocations, and completion evidence instead of generic finance operations wording.",
+    "No blocking ambiguity remains because open points are translated into tenant-required facts, explicit refusal conditions, or adjacent-lane routing rules."
+  ]
+}

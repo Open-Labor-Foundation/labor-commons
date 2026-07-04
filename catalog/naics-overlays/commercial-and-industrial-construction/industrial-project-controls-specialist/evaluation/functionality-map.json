@@ -1,0 +1,398 @@
+{
+  "agent_slug": "industrial-project-controls-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested outcome",
+        "specialty boundary",
+        "authority ownership context",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request asks for permit approval, code interpretation, regulator-facing commitment, or occupancy or energization approval",
+        "request asks for licensed trade, engineering, special-inspection, or final safety signoff",
+        "request asks for financial approval, schedule override, or policy override outside lane scope"
+      ],
+      "scenario_ids": [
+        "ipcs-06",
+        "ipcs-07",
+        "ipcs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness metadata",
+        "tenant source-precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "source conflict summary",
+        "refresh sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources conflict materially on the outcome",
+        "source freshness exceeds the allowed decay window for a material decision"
+      ],
+      "scenario_ids": [
+        "ipcs-01",
+        "ipcs-08",
+        "ipcs-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "work orders, system identifiers, and project identifiers",
+        "permit and inspection artifacts",
+        "site logs, change orders, turnover records, and installation evidence"
+      ],
+      "required_outputs": [
+        "evidence-linked status summary",
+        "artifact-to-output mapping",
+        "missing-evidence note"
+      ],
+      "refusal_triggers": [
+        "required artifacts are missing, stale, or contradictory",
+        "evidence cannot be tied to the named site, system, work order, or control decision"
+      ],
+      "scenario_ids": [
+        "ipcs-01",
+        "ipcs-04",
+        "ipcs-09",
+        "ipcs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location hooks",
+        "tenant owner and routing map"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required PMIS, work-order, permitting, inspection, safety, or turnover records are unavailable",
+        "record-of-truth hierarchy is unknown",
+        "required owner or approval chain is undefined"
+      ],
+      "scenario_ids": [
+        "ipcs-02",
+        "ipcs-08",
+        "ipcs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "policy or source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts or authoritative records are missing",
+        "conflicting policy or source materially changes the answer",
+        "safety or quality evidence is contradictory below safe threshold"
+      ],
+      "scenario_ids": [
+        "ipcs-04",
+        "ipcs-08",
+        "ipcs-11",
+        "ipcs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to permitting, inspection, safety, superintendent, commissioning, trade, engineering, or legal authority",
+        "policy or source conflict cannot be resolved in-lane",
+        "safe downstream owner is required before work can proceed"
+      ],
+      "scenario_ids": [
+        "ipcs-05",
+        "ipcs-06",
+        "ipcs-12"
+      ]
+    },
+    {
+      "ability_id": "control_and_inspection_application",
+      "ability_name": "Control and inspection application",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "control matrix",
+        "inspection and review status",
+        "permit and site-readiness flags"
+      ],
+      "required_outputs": [
+        "quality-or-safety-status-summary",
+        "control recommendation posture"
+      ],
+      "refusal_triggers": [
+        "inspection, permit, or control checks are incomplete",
+        "release is requested while required control evidence is unresolved"
+      ],
+      "scenario_ids": [
+        "ipcs-01",
+        "ipcs-02",
+        "ipcs-03",
+        "ipcs-07"
+      ]
+    },
+    {
+      "ability_id": "defect_or_incident_handling",
+      "ability_name": "Defect or incident handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "incident history",
+        "defect recurrence data",
+        "corrective-action owner state"
+      ],
+      "required_outputs": [
+        "repeat-incident escalation package",
+        "formal incident or corrective-action handoff"
+      ],
+      "refusal_triggers": [
+        "repeat incident lacks formal corrective ownership",
+        "incident closure would depend on safety, QA, or qualified trade authority not in lane"
+      ],
+      "scenario_ids": [
+        "ipcs-04",
+        "ipcs-05",
+        "ipcs-12"
+      ]
+    },
+    {
+      "ability_id": "hold_release_boundary_enforcement",
+      "ability_name": "Hold and release boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open holds and unresolved issues",
+        "release prerequisites",
+        "release owner approvals"
+      ],
+      "required_outputs": [
+        "hold-release boundary decision",
+        "release blocker list"
+      ],
+      "refusal_triggers": [
+        "release is requested while hold conditions remain unresolved",
+        "inspection, punch-list, turnover, or closeout dependencies remain open"
+      ],
+      "scenario_ids": [
+        "ipcs-03",
+        "ipcs-07",
+        "ipcs-09"
+      ]
+    },
+    {
+      "ability_id": "site_and_work_order_dependency_handling",
+      "ability_name": "Site and work-order dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "site conditions and trade context",
+        "work-order state",
+        "permit, schedule, subcontractor, and turnover dependencies"
+      ],
+      "required_outputs": [
+        "site-aware dependency summary",
+        "work-order blocker map",
+        "evidence capture checklist"
+      ],
+      "refusal_triggers": [
+        "site, trade, or permit dependencies cannot be tied to the work order",
+        "required field evidence is absent at the site-handling boundary",
+        "tenant site-readiness or turnover rules materially alter the decision and are missing"
+      ],
+      "scenario_ids": [
+        "ipcs-02",
+        "ipcs-10",
+        "ipcs-11"
+      ]
+    },
+    {
+      "ability_id": "permit_inspection_and_trade_authority_escalation",
+      "ability_name": "Permit, inspection, and trade-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "jurisdiction and permit context",
+        "inspection status",
+        "licensed trade or design ownership map"
+      ],
+      "required_outputs": [
+        "authority escalation package",
+        "boundary-safe trade or permit routing note"
+      ],
+      "refusal_triggers": [
+        "request implies permit approval or code interpretation",
+        "licensed trade, inspection, safety, or design authority changes the answer",
+        "site safety or inspection requirements change the outcome"
+      ],
+      "scenario_ids": [
+        "ipcs-06",
+        "ipcs-09",
+        "ipcs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ipcs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "control_and_inspection_application",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-03",
+      "ability_ids": [
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-05",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-07",
+      "ability_ids": [
+        "boundary_control",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "hold_release_boundary_enforcement",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "site_and_work_order_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ipcs-12",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "defect_or_incident_handling",
+        "permit_inspection_and_trade_authority_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

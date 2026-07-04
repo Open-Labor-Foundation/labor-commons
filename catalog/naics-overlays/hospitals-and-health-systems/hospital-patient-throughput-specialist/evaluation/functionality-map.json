@@ -1,0 +1,440 @@
+{
+  "agent_slug": "hospital-patient-throughput-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended throughput action",
+        "specialty boundary",
+        "approval and authority context"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "routing decision summary"
+      ],
+      "refusal_triggers": [
+        "request asks for final throughput, staffing, transfer, surge, discharge, payer, or operational approval",
+        "request asks for diagnosis, clinical acuity, level-of-care, infection-control, privacy, legal, or medical-necessity authority"
+      ],
+      "scenario_ids": [
+        "hpts-04",
+        "hpts-07",
+        "hpts-10",
+        "hpts-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CMS, eCFR, HHS OCR, CDC, AHRQ, and HL7 baseline sources",
+        "tenant policy overlays",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-grounded hospital-patient-throughput judgment",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing",
+        "public, payer, facility, or tenant policies conflict materially on admission, transfer, discharge, authorization, privacy, isolation, or placement precedence"
+      ],
+      "scenario_ids": [
+        "hpts-05",
+        "hpts-08",
+        "hpts-10",
+        "hpts-13",
+        "hpts-14"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "ADT and EHR encounter records",
+        "throughput board and unit census records",
+        "staffed-bed and care-team, EVS, transport, equipment, isolation, discharge, transfer, authorization, and approval records"
+      ],
+      "required_outputs": [
+        "traceable throughput recommendation rationale",
+        "missing-evidence checklist"
+      ],
+      "refusal_triggers": [
+        "critical encounter, bed, treatment-space, staffing, isolation, equipment, transport, transfer, discharge, authorization, or approval evidence is absent or contradictory",
+        "traceability from requested placement to named hospital systems cannot be established"
+      ],
+      "scenario_ids": [
+        "hpts-01",
+        "hpts-05",
+        "hpts-08",
+        "hpts-09",
+        "hpts-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "bed, treatment-space, unit, service line, staffing, EVS, transport, diagnostic, transfer, payer, and discharge dependencies",
+        "owner map across EHR, ADT, throughput board, capacity dashboard, transfer center, case management, and approval systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "constraint checklist"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on patient status, throughput status, staffed capacity, isolation, or transfer readiness"
+      ],
+      "scenario_ids": [
+        "hpts-01",
+        "hpts-02",
+        "hpts-05",
+        "hpts-09",
+        "hpts-10",
+        "hpts-14"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "source, payer, privacy, or policy conflict indicators"
+      ],
+      "required_outputs": [
+        "escalation note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source, system, payer, privacy, or policy conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "hpts-03",
+        "hpts-08",
+        "hpts-09",
+        "hpts-12",
+        "hpts-13"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "routing note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical review, utilization management, discharge planning, infection prevention, privacy, transfer-center legal review, patient access, payer operations, staffing office, or final operations ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "hpts-04",
+        "hpts-05",
+        "hpts-06",
+        "hpts-07",
+        "hpts-10",
+        "hpts-11"
+      ]
+    },
+    {
+      "ability_id": "constraint_and_capacity_assessment",
+      "ability_name": "Constraint and capacity assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "normalized hospital throughput demand",
+        "staffed and physical throughput capacity",
+        "unit and service-line scope",
+        "isolation, equipment, EVS, transport, discharge, transfer, and payer constraints",
+        "confidence state"
+      ],
+      "required_outputs": [
+        "capacity-gap analysis",
+        "constraint log",
+        "shortfall quantification"
+      ],
+      "refusal_triggers": [
+        "insufficient capacity or readiness data",
+        "missing admission, transfer, authorization, or discharge prerequisite baselines",
+        "bed, treatment-space, staffing, isolation, equipment, transport, diagnostic, discharge, or unit constraints are unverified"
+      ],
+      "scenario_ids": [
+        "hpts-01",
+        "hpts-02",
+        "hpts-03",
+        "hpts-05",
+        "hpts-08",
+        "hpts-09",
+        "hpts-12"
+      ]
+    },
+    {
+      "ability_id": "allocation_and_sequence_recommendation",
+      "ability_name": "Allocation and sequence recommendation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "priority policy",
+        "constraint map",
+        "allocation rules",
+        "planning horizon",
+        "confidence state"
+      ],
+      "required_outputs": [
+        "throughput allocation recommendation",
+        "sequence recommendation",
+        "deferred-demand set"
+      ],
+      "refusal_triggers": [
+        "priority tie-break is missing",
+        "conflicting owners or readiness constraints prevent deterministic ordering",
+        "recommendation would imply final approval or clinical priority"
+      ],
+      "scenario_ids": [
+        "hpts-01",
+        "hpts-02",
+        "hpts-03",
+        "hpts-14"
+      ]
+    },
+    {
+      "ability_id": "approval_boundary_enforcement",
+      "ability_name": "Approval-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "recommended tradeoff package",
+        "approval matrix",
+        "public, tenant, payer, and clinical authority boundaries"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "boundary-safe refusal"
+      ],
+      "refusal_triggers": [
+        "request turns throughput recommendation into final approval",
+        "authority owner for closed-bed reopening, surge, transfer acceptance, over-capacity placement, staffing, payer risk, diagnostic delay, transport, or discharge tradeoff is outside the lane"
+      ],
+      "scenario_ids": [
+        "hpts-03",
+        "hpts-04",
+        "hpts-10",
+        "hpts-13"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "documented request type",
+        "clinical owner notes or order context",
+        "hospital-patient-throughput administrative scope",
+        "licensed-review escalation path"
+      ],
+      "required_outputs": [
+        "clinical-boundary-safe throughput note",
+        "licensed-review routing summary"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to determine diagnosis, treatment, clinical acuity, level of care, discharge readiness, infection-control clearance, or medical necessity",
+        "clinical risk changes the safe placement answer"
+      ],
+      "scenario_ids": [
+        "hpts-07",
+        "hpts-08",
+        "hpts-10"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI scope",
+        "requester role and care-team relationship",
+        "privacy preferences or consent limits",
+        "patient-safety and placement risk indicators"
+      ],
+      "required_outputs": [
+        "minimum-necessary handling note",
+        "privacy or patient-safety escalation"
+      ],
+      "refusal_triggers": [
+        "request would disclose more PHI than necessary or route PHI through uncontrolled channels",
+        "patient-safety, infection, transfer, or placement risk requires licensed or privacy owner review"
+      ],
+      "scenario_ids": [
+        "hpts-06",
+        "hpts-08",
+        "hpts-09",
+        "hpts-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hpts-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-03",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-05",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "constraint_and_capacity_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-06",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-13",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hpts-14",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

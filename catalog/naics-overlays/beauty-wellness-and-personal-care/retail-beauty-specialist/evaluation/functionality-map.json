@@ -1,0 +1,413 @@
+{
+  "agent_slug": "retail-beauty-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "product-class cue",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, therapeutic suitability guidance, or legal interpretation",
+        "request asks the lane to relabel, reclassify, or independently approve a cosmetic or OTC-drug item",
+        "request treats beauty like generic retail and bypasses ingredient, Drug Facts, shade, tester, or recall controls"
+      ],
+      "scenario_ids": [
+        "rbs-04",
+        "rbs-05",
+        "rbs-10",
+        "rbs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative FDA, FTC, NIST, and GS1 source set",
+        "source freshness indicators",
+        "tenant and jurisdiction precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "date-aware operating posture",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdictional, tenant, or franchise policy materially changes the answer",
+        "public guidance and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "rbs-02",
+        "rbs-04",
+        "rbs-08",
+        "rbs-10",
+        "rbs-11",
+        "rbs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "SKU, GTIN, and shade identifiers",
+        "ingredient or Drug Facts artifacts",
+        "lot or batch references",
+        "order, price, and completion records"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked execution summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core product, pricing, order, or closure records are absent or contradictory",
+        "label or display evidence cannot be tied to the requested assortment",
+        "completion evidence is missing"
+      ],
+      "scenario_ids": [
+        "rbs-01",
+        "rbs-02",
+        "rbs-03",
+        "rbs-06",
+        "rbs-07",
+        "rbs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "product-class and jurisdiction context"
+      ],
+      "required_outputs": [
+        "dependency checklist",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required systems of record are unavailable or stale",
+        "required tenant return, tester, or pricing policy is missing",
+        "product-class or jurisdiction context needed for the next step is unknown"
+      ],
+      "scenario_ids": [
+        "rbs-02",
+        "rbs-07",
+        "rbs-09",
+        "rbs-10",
+        "rbs-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "rbs-02",
+        "rbs-05",
+        "rbs-09",
+        "rbs-10",
+        "rbs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to regulatory compliance, product safety, recall, licensed esthetics, pharmacy or OTC compliance, pricing approval, or customer recovery ownership",
+        "request requires formal approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "rbs-04",
+        "rbs-05",
+        "rbs-10",
+        "rbs-12"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current execution state",
+        "required stage prerequisites",
+        "completion or rework criteria"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "next-action decision",
+        "accepted, blocked, rework, returned, or completed disposition"
+      ],
+      "refusal_triggers": [
+        "stage prerequisites are incomplete",
+        "requested state transition is not supported by evidence",
+        "the next state would bypass beauty-specific label, pricing, order, or recall controls"
+      ],
+      "scenario_ids": [
+        "rbs-01",
+        "rbs-02",
+        "rbs-06",
+        "rbs-07",
+        "rbs-08"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception class",
+        "blocking evidence",
+        "owner-routing rules"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or escalation package",
+        "blocked-state rationale"
+      ],
+      "refusal_triggers": [
+        "exception would be silently skipped or closed without evidence",
+        "required owner for the exception is unknown",
+        "exception requires approval outside the lane"
+      ],
+      "scenario_ids": [
+        "rbs-02",
+        "rbs-06",
+        "rbs-07",
+        "rbs-10",
+        "rbs-12"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "proof of sale, pickup, delivery, or display completion",
+        "closed-task evidence",
+        "required closure artifacts"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure decision",
+        "audit-ready evidence list"
+      ],
+      "refusal_triggers": [
+        "completion artifacts are missing, unsigned, or inconsistent",
+        "work is claimed complete while exceptions remain open",
+        "closure would overstate execution success"
+      ],
+      "scenario_ids": [
+        "rbs-01",
+        "rbs-03",
+        "rbs-06"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "beauty-specific artifact map",
+        "shade, tester, and display terminology",
+        "ingredient, Drug Facts, and lot evidence",
+        "promo, sample, and return-policy context"
+      ],
+      "required_outputs": [
+        "industry-specific workflow summary",
+        "artifact-specific evidence checklist",
+        "generic-overreach refusal note"
+      ],
+      "refusal_triggers": [
+        "the request tries to replace beauty artifacts with generic retail records",
+        "ingredient, tester, shade, Drug Facts, or lot evidence is omitted from a beauty workflow",
+        "industry-specific controls are treated as cosmetic rather than outcome-changing"
+      ],
+      "scenario_ids": [
+        "rbs-01",
+        "rbs-02",
+        "rbs-07",
+        "rbs-08",
+        "rbs-11",
+        "rbs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "rbs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-04",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-05",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "lifecycle_state_progression",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-09",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-10",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "rbs-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

@@ -1,0 +1,441 @@
+{
+  "agent_slug": "saas-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested authority",
+        "SaaS operations lane boundary",
+        "tenant authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation decision",
+        "adjacent-owner routing summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, editorial, contractual, security, engineering, product, financial, service-credit, regulated filing, or executive signoff",
+        "request asks the lane to override service, access, change, maintenance, quality, content, privacy, or approval policy",
+        "request asks to disclose confidential customer, subscriber, tenant, topology, incident, log, credential, content, or contract records without approved recipient and channel"
+      ],
+      "scenario_ids": [
+        "sops-04",
+        "sops-07",
+        "sops-08",
+        "sops-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "source freshness metadata",
+        "tenant policy and contract precedence",
+        "jurisdiction and service model context"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "staleness or conflict note",
+        "confidence state"
+      ],
+      "refusal_triggers": [
+        "required public framework, regulator, or tenant source context is missing",
+        "source freshness materially affects outage, privacy, content, or completion handling",
+        "public source, tenant policy, and contract terms materially conflict"
+      ],
+      "scenario_ids": [
+        "sops-01",
+        "sops-10",
+        "sops-11",
+        "sops-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "ticket, project, service-order, change, and incident identifiers",
+        "CRM, CMDB, DCIM, monitoring, content, approval, document, and communication records",
+        "health check, synthetic test, deployment, QA, activation-test, and customer confirmation evidence"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "artifact-state linkage",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core ticket, order, runbook, approval, test, monitoring, content, or customer-confirmation evidence is missing",
+        "system status cannot be tied to named records",
+        "completion or customer-facing communication lacks evidence for the claimed service state"
+      ],
+      "scenario_ids": [
+        "sops-01",
+        "sops-02",
+        "sops-03",
+        "sops-06",
+        "sops-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant retrieval hooks",
+        "environment, service, content, provider, carrier, and approval owner maps",
+        "dependency and source-of-truth precedence"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system-readiness blockers",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "project, CRM, ticketing, document, content, monitoring, incident, CMDB, DCIM, approval, or communication system is unavailable or stale",
+        "owner for the next service, environment, provider, customer, content, or escalation step is unknown",
+        "retrieval path cannot establish tenant, environment, service, dependency, commitment, or completion truth"
+      ],
+      "scenario_ids": [
+        "sops-02",
+        "sops-05",
+        "sops-09",
+        "sops-10",
+        "sops-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "source, policy, service-record, telemetry, or approval conflict signals",
+        "authority and confidentiality risk flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "authority, confidentiality, outage, or policy conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "sops-02",
+        "sops-05",
+        "sops-10",
+        "sops-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements",
+        "evidence packet and blocker state"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request leaves SaaS operations execution scope",
+        "request requires legal, editorial, QA signoff, delivery management, account, security, network, software engineering, product, privacy, billing, carrier, incident-command, or customer approval authority",
+        "owner mapping is ambiguous after boundary review"
+      ],
+      "scenario_ids": [
+        "sops-04",
+        "sops-05",
+        "sops-07",
+        "sops-08",
+        "sops-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle state",
+        "source-record completion status",
+        "environment, service, dependency, and approval status",
+        "runbook, change, quality, and communication gates"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition recommendation",
+        "advance, hold, rework, escalate, refuse, or complete disposition"
+      ],
+      "refusal_triggers": [
+        "state change requested without required evidence",
+        "environment, dependency, approval, change, runbook, or quality gates are unmet",
+        "confidentiality, tenant-policy, customer-commitment, or authority blocker remains unresolved"
+      ],
+      "scenario_ids": [
+        "sops-01",
+        "sops-02",
+        "sops-03",
+        "sops-05",
+        "sops-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "owner resolution context",
+        "rework criteria and escalation thresholds"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework and unblock plan",
+        "escalation package when owner action is required"
+      ],
+      "refusal_triggers": [
+        "evidence gap remains unresolved",
+        "tenant policy, contract, content, or approval conflict remains unresolved",
+        "dependency cannot be cleared without external owner action"
+      ],
+      "scenario_ids": [
+        "sops-02",
+        "sops-03",
+        "sops-05",
+        "sops-10",
+        "sops-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "completion criteria",
+        "ticket, service-order, runbook, change, and approval references",
+        "health check, synthetic test, deployment, activation, monitoring, content, QA, and customer confirmation support",
+        "communication log requirements"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "fulfillment closure package",
+        "residual-risk and next-owner note"
+      ],
+      "refusal_triggers": [
+        "completion evidence is missing",
+        "exceptions remain unresolved or unowned",
+        "review, approval, customer confirmation, content status, or communication record required for completion is absent"
+      ],
+      "scenario_ids": [
+        "sops-01",
+        "sops-03",
+        "sops-06",
+        "sops-09",
+        "sops-12"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "customer authorization and recipient list",
+        "client commitments, service contract, confidentiality constraints, and approved communication rules",
+        "delivery channel, data classification, and record-retention requirements"
+      ],
+      "required_outputs": [
+        "confidentiality-safe communication summary",
+        "client commitment and delivery constraint note",
+        "disclosure blocker or approval request"
+      ],
+      "refusal_triggers": [
+        "recipient, channel, or deliverable is not authorized",
+        "client commitment, confidentiality label, or engagement scope is missing or contradicted",
+        "delivery would disclose confidential topology, subscriber, tenant, incident, access, log, credential, vulnerability, content, or contractual records without approval"
+      ],
+      "scenario_ids": [
+        "sops-06",
+        "sops-07",
+        "sops-10",
+        "sops-12"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "authority requirements",
+        "contractual signoff rules",
+        "professional judgment, client-rights, content-rights, privacy, outage, or regulatory flags",
+        "adjacent owner mapping"
+      ],
+      "required_outputs": [
+        "authority escalation package",
+        "contractual or professional-judgment boundary rationale",
+        "owner mapping and communication constraints"
+      ],
+      "refusal_triggers": [
+        "request requires attorney, editorial owner, privacy-rights owner, regulatory filer, security incident commander, network engineer, software engineer, product owner, account owner, service-credit approver, quality signer, or contract signer judgment",
+        "request asks the lane to imply legal, editorial, regulatory, financial, quality, or contractual approval authority without explicit scope",
+        "client rights, subscriber rights, outage reporting, content rights, security posture, customer harm, or professional judgment determine the answer"
+      ],
+      "scenario_ids": [
+        "sops-04",
+        "sops-08",
+        "sops-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "sops-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-05",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sops-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

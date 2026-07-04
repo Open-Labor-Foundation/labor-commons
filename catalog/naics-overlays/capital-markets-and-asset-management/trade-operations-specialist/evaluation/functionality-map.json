@@ -1,0 +1,373 @@
+{
+  "agent_slug": "trade-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested outcome",
+        "specialty boundary",
+        "authority context",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return summary"
+      ],
+      "refusal_triggers": [
+        "request asks for portfolio-management intent, best-execution judgment, or trading authority",
+        "request asks for legal interpretation, compliance signoff, or final settlement or cash-movement approval",
+        "request asks to bypass a documented post-trade control without explicit owner authority"
+      ],
+      "scenario_ids": [
+        "tos-05",
+        "tos-10",
+        "tos-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source list",
+        "product, market, and jurisdiction context",
+        "tenant source-precedence map",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-priority mapping",
+        "source conflict summary",
+        "refresh sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "product or market scope changes which public rule set controls the trade",
+        "public guidance and tenant policy conflict materially on the allowed next action"
+      ],
+      "scenario_ids": [
+        "tos-07",
+        "tos-08",
+        "tos-10",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "order blotter and execution records",
+        "allocation, broker-confirm, and affirmation artifacts",
+        "SSI records and settlement-status messages",
+        "exception or control-attestation evidence"
+      ],
+      "required_outputs": [
+        "evidence-linked trade-controls summary",
+        "artifact-to-output mapping",
+        "missing-evidence note"
+      ],
+      "refusal_triggers": [
+        "required blotter, matching, affirmation, or SSI artifacts are missing or contradictory",
+        "evidence cannot be tied to the named trade, account, counterparty, or settlement location",
+        "closure or release is requested without audit-ready record support"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-02",
+        "tos-03",
+        "tos-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location hooks",
+        "tenant operating-model map",
+        "owner and escalation registry"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required OMS, matching, SSI, custodian, or exception system is unavailable",
+        "record-of-truth hierarchy is unknown across tenant operating parties",
+        "required owner or escalation chain is undefined"
+      ],
+      "scenario_ids": [
+        "tos-02",
+        "tos-07",
+        "tos-09",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "policy or source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts or authoritative records are missing",
+        "conflicting policy or source materially changes the answer",
+        "control evidence is contradictory below safe threshold"
+      ],
+      "scenario_ids": [
+        "tos-07",
+        "tos-08",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to settlements, compliance, portfolio management, derivatives, or corporate-actions ownership",
+        "request requires final supervisory approval or product-specialist authority",
+        "safe downstream owner is required before work can proceed"
+      ],
+      "scenario_ids": [
+        "tos-08",
+        "tos-11"
+      ]
+    },
+    {
+      "ability_id": "control_and_inspection_application",
+      "ability_name": "Control and inspection application",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "trade-control checklist",
+        "matching and affirmation status",
+        "SSI and cut-off readiness flags"
+      ],
+      "required_outputs": [
+        "quality-or-safety-status-summary",
+        "control recommendation posture"
+      ],
+      "refusal_triggers": [
+        "control checks are incomplete or contradictory",
+        "release is requested while required affirmation, SSI, or cut-off evidence is unresolved"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-02",
+        "tos-09",
+        "tos-10"
+      ]
+    },
+    {
+      "ability_id": "defect_or_incident_handling",
+      "ability_name": "Defect or incident handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "incident history",
+        "defect recurrence data",
+        "corrective-action owner state"
+      ],
+      "required_outputs": [
+        "repeat-incident escalation package",
+        "formal incident or corrective-action handoff"
+      ],
+      "refusal_triggers": [
+        "repeat incident lacks formal corrective ownership",
+        "incident closure would depend on settlements, compliance, or supervisory authority not in lane"
+      ],
+      "scenario_ids": [
+        "tos-04",
+        "tos-11"
+      ]
+    },
+    {
+      "ability_id": "hold_release_boundary_enforcement",
+      "ability_name": "Hold and release boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open holds and unresolved issues",
+        "release prerequisites",
+        "release owner approvals"
+      ],
+      "required_outputs": [
+        "hold-release boundary decision",
+        "release blocker list"
+      ],
+      "refusal_triggers": [
+        "release is requested while hold conditions remain unresolved",
+        "matching, affirmation, SSI, or fail-aging dependencies remain open"
+      ],
+      "scenario_ids": [
+        "tos-03",
+        "tos-05",
+        "tos-09"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "trade-operations record taxonomy",
+        "institutional post-trade terminology",
+        "tenant control dictionary"
+      ],
+      "required_outputs": [
+        "industry-specific artifact-aligned status",
+        "record-shape and phase mapping"
+      ],
+      "refusal_triggers": [
+        "industry term cannot be mapped to an accepted tenant artifact",
+        "generic trade-admin inputs omit the named capital-markets records that govern the lane",
+        "control obligations cannot be expressed in trade-operations artifact shapes"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-06",
+        "tos-10",
+        "tos-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "tos-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "control_and_inspection_application"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-04",
+      "ability_ids": [
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-05",
+      "ability_ids": [
+        "boundary_control",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-06",
+      "ability_ids": [
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "control_and_inspection_application",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

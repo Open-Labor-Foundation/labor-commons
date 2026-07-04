@@ -1,0 +1,325 @@
+{
+  "agent_slug": "estimate-follow-up-specialist",
+  "agent_release": "v0.1.0",
+  "resolved_workflow_phase_group": "execution-processing-and-fulfillment",
+  "industry_profile": "healthcare-and-care-delivery",
+  "resolved_industry_profile": "healthcare-and-care-delivery",
+  "semantic_baseline_version": "2026-04-07",
+  "source_decay_policy": "review_required_after_interval",
+  "last_reviewed_at": "2026-04-13",
+  "domain_research_pack": "healthcare-and-care-delivery",
+  "authoritative_sources": [
+    {
+      "title": "45 CFR 149.610 - Requirements for provision of good faith estimates of expected charges for uninsured or self-pay individuals",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-B/part-149/subpart-G/section-149.610",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal regulatory text for healthcare good faith estimate requirements, making it directly authoritative for estimate artifact and dispute-boundary handling.",
+      "workflow_stage": "healthcare estimate package validation and estimate-disposition follow-up",
+      "used_for": [
+        "good faith estimate artifact requirements",
+        "estimate version and itemized expected charge handling",
+        "dispute and non-owned legal boundary posture"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "HIPAA Minimum Necessary Standard",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the HIPAA privacy regulator. The guidance constrains PHI use and disclosure in estimate follow-up notes, vendor routing, callback logs, and patient/member artifacts.",
+      "workflow_stage": "PHI-limited follow-up artifact and communication routing",
+      "used_for": [
+        "minimum-necessary PHI posture",
+        "patient-level estimate export refusal",
+        "privacy escalation and audit evidence"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "CMS Interoperability and Prior Authorization Final Rule",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/cms-interoperability-and-prior-authorization-final-rule-cms-0057-f",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS prior authorization guidance is authoritative for payer/provider authorization workflow expectations and supports escalation when estimate follow-up is blocked by authorization or payer-data status.",
+      "workflow_stage": "authorization, referral, and eligibility prerequisite handling",
+      "used_for": [
+        "authorization dependency scenario design",
+        "payer interpretation refusal",
+        "patient access and utilization management routing"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Medicare Benefit Policy Manual, Chapter 7 - Home Health Services",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/downloads/bp102c07.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS manual guidance is authoritative for Medicare home health coverage prerequisites, homebound and plan-of-care dependencies, and the need to avoid clinical or medical-necessity determinations in administrative follow-up.",
+      "workflow_stage": "home-health prerequisite and clinical-boundary validation",
+      "used_for": [
+        "home service coverage prerequisite handling",
+        "plan-of-care and order dependency escalation",
+        "medical necessity and clinical judgment refusal"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Sample Good Faith Estimate for Uninsured (or Self-Pay) Individuals",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/files/document/nsa-sample-good-faith-estimate.pdf",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "CMS provides the public sample estimate form and expected fields for provider, service address, codes, quantities, expected costs, separately scheduled services, disclaimers, and dispute process references.",
+      "workflow_stage": "estimate artifact terminology and evidence shape",
+      "used_for": [
+        "estimate field normalization",
+        "output shape for field-service follow-up summaries",
+        "separately scheduled service and co-provider evidence handling"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "United States Core Data for Interoperability Version 6",
+      "publisher": "Assistant Secretary for Technology Policy / Office of the National Coordinator for Health IT",
+      "url": "https://www.healthit.gov/isa/united-states-core-data-interoperability-uscdi",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "ASTP/ONC USCDI is the federal healthcare interoperability data baseline. It supports patient, encounter, order, care team, procedure, and clinical note terminology used in EHR, CRM, and operational estimate follow-up records.",
+      "workflow_stage": "system-of-record terminology and tenant term normalization",
+      "used_for": [
+        "EHR and patient/member terminology normalization",
+        "tenant terminology adaptation",
+        "source-of-truth mapping"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_uscdi_revision"
+    },
+    {
+      "title": "16 CFR Part 429 - Rule Concerning Cooling-off Period for Sales Made at Homes or at Certain Other Locations",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-429",
+      "source_class": "Public contractor and home-services consumer guidance",
+      "authority_rationale": "Primary federal trade regulation for covered in-home sales and cancellation rights, directly relevant when home-service estimate follow-up touches agreement, cancellation, or in-home sales posture.",
+      "workflow_stage": "agreement, cancellation, and legal-boundary handling",
+      "used_for": [
+        "in-home agreement and cancellation boundary",
+        "legal or agreement-owner escalation",
+        "customer/member communication hold conditions"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "Buyer's Remorse: The FTC's Cooling-Off Rule May Help",
+      "publisher": "Federal Trade Commission",
+      "url": "https://consumer.ftc.gov/articles/buyers-remorse-ftcs-cooling-rule-may-help",
+      "source_class": "Public contractor and home-services consumer guidance",
+      "authority_rationale": "FTC is the federal consumer-protection regulator. The guidance explains in-home sales, cancellation forms, refund timing, and exceptions that estimate follow-up must preserve and route rather than decide.",
+      "workflow_stage": "consumer-facing agreement exception and cancellation escalation",
+      "used_for": [
+        "customer communication boundary",
+        "refund and cancellation exception routing",
+        "state-law ambiguity escalation"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_ftc_revision"
+    }
+  ],
+  "workflow_questions": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Required prerequisites include tenant service model, jurisdiction, business unit, service setting, source hierarchy, RACI, escalation SLA, estimate ID/version, agreement or consent status, service date, schedule window, work order, site-readiness and technician notes, customer/member contact posture, privacy constraints, and, when healthcare linked, patient/member status, payer, plan, benefits, eligibility, referral, authorization, order, encounter, and documentation state. Missing authorization, referral, eligibility, agreement status, or technician-readiness evidence blocks completion."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "Truth-set systems include EHR/EMR, clinical documentation system, practice management, revenue cycle, payer portal, authorization or utilization management system, referral management, eligibility system, case management, CRM, estimate or quoting system, agreement or e-signature repository, scheduling/dispatch, work-order or FSM platform, technician mobile notes, document repository, privacy/access-control system, and audit logs. Claim truth remains with revenue cycle, coding, payer operations, or utilization management rather than this lane."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops before diagnosis, treatment planning, clinical need, medical necessity, care-pathway decisions, licensed review, patient-safety signoff, PHI disclosure approval, consent interpretation, payer coverage, authorization approval, referral sufficiency, claim/coding/denial/appeal decisions, legal agreement interpretation, price approval, refund approval, licensed trade signoff, technician execution, and safety-critical release."
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Estimate follow-up intake and boundary classification",
+      "description": "Capture requested follow-up action, service model, jurisdiction, estimate record, agreement state, customer or patient/member context, source systems, RACI, escalation SLA, and authority posture before accepting work.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public contractor and home-services consumer guidance"
+      ]
+    },
+    {
+      "name": "Prerequisite and evidence validation",
+      "description": "Validate estimate version, expected charges, line items, agreement or consent state, CRM notes, schedule window, site-readiness checklist, technician notes, service address, authorization, referral, eligibility, order, encounter, privacy posture, and source-of-truth hierarchy.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Lifecycle execution and follow-up progression",
+      "description": "Move accepted work through prerequisites_checked, follow_up_pending, customer_or_member_contacted, agreement_pending, technician_review_needed, blocked, escalated, completed, or returned_to_orchestrator based on auditable evidence and owner acceptance.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public contractor and home-services consumer guidance"
+      ]
+    },
+    {
+      "name": "Exception queue and rework handling",
+      "description": "Handle incomplete artifacts, conflicting systems, agreement/scope gaps, schedule or technician blockers, PHI-sensitive communication, payer prerequisites, clinical boundaries, and policy conflicts with explicit owner routing.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Public contractor and home-services consumer guidance"
+      ]
+    },
+    {
+      "name": "Completion confirmation and evidence capture",
+      "description": "Record completion only when estimate disposition, agreement state, required prerequisites, source record links, owner acceptance, residual risks, downstream handoff, and reopen trigger are documented.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "estimate request and estimate version",
+    "good faith estimate or expected charge line-item summary",
+    "agreement, consent, cancellation, or e-signature status",
+    "CRM contact log and callback note",
+    "work order, scheduling record, dispatch record, and technician mobile note",
+    "site-readiness checklist, service address, photos, access notes, infection-control or safety notes, and equipment or parts availability",
+    "eligibility, benefits, referral, authorization, order, encounter, discharge or care-transition, and clinical-administrative notes",
+    "charge capture, coding, claim, remittance, denial, appeal, and payer portal references used only as boundary or routing evidence",
+    "privacy-controlled routing note, exception queue note, completion evidence record, and audit log"
+  ],
+  "systems_of_record": [
+    "estimate or quoting platform",
+    "agreement or e-signature repository",
+    "CRM or customer/member access system",
+    "scheduling and dispatch system",
+    "field-service management or work-order system",
+    "technician mobile application or field note repository",
+    "EHR or EMR and clinical documentation systems",
+    "practice management system",
+    "revenue cycle, charge capture, coding, claim, remittance, denial, or appeal system",
+    "payer portal or benefits/eligibility system",
+    "referral management system",
+    "authorization or utilization management system",
+    "case management system",
+    "privacy/access-control and audit systems",
+    "document repository"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify estimate follow-up requests as in scope, out of scope, or blocked on missing prerequisites.",
+      "Request minimum tenant facts, authoritative records, source links, and owner context needed to continue safely.",
+      "Advance, hold, rework, escalate, or complete the follow-up lifecycle based on documented estimate, agreement, schedule, technician, authorization, referral, eligibility, privacy, and owner evidence.",
+      "Prepare field-service follow-up summaries, execution status updates, exception queue notes, escalation notes, and completion evidence records."
+    ],
+    "escalate": [
+      "Required estimate, agreement, schedule, technician, EHR/EMR, payer, authorization, referral, eligibility, privacy, or tenant authority records are missing or materially conflict.",
+      "The request requires clinical judgment, medical necessity, payer interpretation, PHI disclosure approval, coding, claim, denial, appeal, agreement/legal interpretation, price approval, refund approval, licensed trade signoff, technician execution, or safety-critical release.",
+      "Public guidance, tenant policy, payer rules, state cancellation posture, agreement terms, or system records conflict materially.",
+      "A patient-safety, PHI, clinical, site-safety, or service-readiness signal changes whether follow-up can continue."
+    ],
+    "refuse": [
+      "Mark estimate follow-up complete without documented estimate disposition, agreement status, prerequisite evidence, owner acceptance, and record links.",
+      "Approve discounts, refunds, agreement waivers, cancellation outcomes, payer coverage, authorization approval, medical necessity, coding, claim handling, PHI disclosure, or clinical recommendations.",
+      "Authorize field service when technician, licensed trade, safety, infection-control, scope, access, or site-readiness blockers require accountable owner review."
+    ]
+  },
+  "domain_failure_modes": [
+    "estimate follow-up proceeds without authorization, referral, eligibility, agreement, or service-date prerequisites",
+    "patient/member PHI is included in broad estimate communications without minimum-necessary controls",
+    "the lane implies medical necessity, diagnosis, treatment planning, clinical need, or payer coverage while only owning administrative follow-up",
+    "agreement, cancellation, discount, refund, or scope exceptions are approved by the follow-up lane without legal or financial authority",
+    "technician readiness, site access, infection-control, safety, or licensed trade blockers are treated as ordinary callback friction",
+    "conflicting CRM, estimate, agreement, dispatch, technician, EHR, or payer records are synthesized into an unsupported completion",
+    "stale estimates are closed without customer/member disposition, source links, owner acceptance, residual risk, or reopen trigger",
+    "tenant terminology is mapped casually and changes the meaning of GFE, authorization, referral, agreement hold, or technician review"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "covered": true,
+      "scenario_ids": [
+        "efus-02",
+        "efus-07",
+        "efus-10"
+      ]
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "covered": true,
+      "scenario_ids": [
+        "efus-03",
+        "efus-10"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "covered": true,
+      "scenario_ids": [
+        "efus-04",
+        "efus-11"
+      ]
+    },
+    {
+      "scenario_family": "Incomplete inputs or artifacts mid-process",
+      "covered": true,
+      "scenario_ids": [
+        "efus-07",
+        "efus-10"
+      ]
+    },
+    {
+      "scenario_family": "Execution exception that requires rework or escalation",
+      "covered": true,
+      "scenario_ids": [
+        "efus-06",
+        "efus-08",
+        "efus-11"
+      ]
+    },
+    {
+      "scenario_family": "Request to mark work complete without evidence of completion",
+      "covered": true,
+      "scenario_ids": [
+        "efus-09"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "The queue path is home-services-and-field-consumer-services while the resolved industry profile and required research pack are healthcare-and-care-delivery.",
+      "status": "open",
+      "blocking": false,
+      "notes": "The pack treats home/field estimate follow-up as the named specialty and applies healthcare safeguards when the tenant service is care-adjacent, DME/HME, home health, payer-funded, or patient/member linked. Runtime must retrieve tenant service model before applying healthcare-only or contractor-only posture."
+    },
+    {
+      "topic": "State contractor, cancellation, home improvement, DME/HME, Medicaid, payer, and agreement rules may vary materially by jurisdiction and tenant contract.",
+      "status": "open",
+      "blocking": false,
+      "notes": "The validated public baseline records the conflict trigger and requires tenant, jurisdiction, payer, agreement, legal, and compliance owner review before jurisdiction-specific or payer-specific action."
+    }
+  ],
+  "notes": [
+    "The research baseline intentionally covers workflow, evidence, terminology, privacy, clinical/payer boundaries, agreement handling, technician readiness, and failure behavior rather than only quote follow-up.",
+    "There is no blocking unresolved ambiguity for a validated specification-based package because the lane refuses or escalates wherever tenant, payer, legal, privacy, clinical, or technician authority is required."
+  ]
+}

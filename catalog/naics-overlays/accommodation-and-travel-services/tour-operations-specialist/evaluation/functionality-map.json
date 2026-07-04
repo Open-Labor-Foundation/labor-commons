@@ -1,0 +1,436 @@
+{
+  "agent_slug": "tour-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "tour-operations specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for refund, pricing, booking-change, supplier-substitution, or safety approval outside delegated rules",
+        "request asks the lane to make a fraud finding, legal interpretation, or final safety decision",
+        "request asks the lane to bypass ticketing, permit, guide credential, transport, or capacity controls"
+      ],
+      "scenario_ids": [
+        "tos-03",
+        "tos-05",
+        "tos-06",
+        "tos-07",
+        "tos-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative NPS, FTC, DOT, FMCSA, PCI SSC, ISO, and ASTA source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict note",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdiction, permit, transport, source freshness, or venue rule materially changes the answer",
+        "public guidance and tenant, venue, supplier, transport, processor, or jurisdiction policy materially conflict"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-06",
+        "tos-11",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tour code, manifest, departure list, and guest identifiers",
+        "ticket, voucher, supplier, guide, transport, and CRM records",
+        "exception, payment, fraud, and closeout artifacts"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked execution summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core tour records are absent or contradictory",
+        "manifest, ticket, transport, guide, supplier, or exception state cannot be tied to the request",
+        "readiness or completion summary would overstate what the records prove"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-02",
+        "tos-04",
+        "tos-07",
+        "tos-09",
+        "tos-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "ticketing, transport, guide, supplier, safety, refund, and exception constraints"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required booking, dispatch, ticketing, CRM, supplier, guide, transport, payment, or incident systems are unavailable",
+        "required tenant, venue, supplier, transport, or jurisdiction-policy mapping is missing",
+        "next owner or retrieval dependency is unknown"
+      ],
+      "scenario_ids": [
+        "tos-02",
+        "tos-04",
+        "tos-08",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy, permit, supplier, safety, or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "tos-02",
+        "tos-04",
+        "tos-09",
+        "tos-11",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to guest services, pricing/revenue, fraud, transport, safety, compliance, or front-office ownership",
+        "request requires final approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "tos-03",
+        "tos-05",
+        "tos-06",
+        "tos-07"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current tour execution state",
+        "manifest, ticketing, guide, transport, and supplier evidence",
+        "tenant lifecycle rules"
+      ],
+      "required_outputs": [
+        "advance, hold, rework, or complete decision",
+        "state transition rationale",
+        "reversal condition note"
+      ],
+      "refusal_triggers": [
+        "requested transition lacks required evidence",
+        "state change would bypass tour execution controls",
+        "completion or departure readiness depends on unresolved adjacent authority"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-05",
+        "tos-08",
+        "tos-09",
+        "tos-10",
+        "tos-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception details",
+        "guest-impact severity",
+        "rework path",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "exception queue note",
+        "rework or escalation decision",
+        "response deadline and next owner"
+      ],
+      "refusal_triggers": [
+        "exception would require refund, pricing, safety, supplier, or permit approval outside the lane",
+        "rework would hide missing tickets, capacity, guide, transport, or supplier prerequisites",
+        "service-speed pressure is being used to skip required process steps"
+      ],
+      "scenario_ids": [
+        "tos-02",
+        "tos-03",
+        "tos-04",
+        "tos-05",
+        "tos-08"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "departure and closeout records",
+        "manifest reconciliation",
+        "ticket or admission status",
+        "guide and transport completion evidence",
+        "exception disposition log"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "missing closeout artifact list",
+        "audit-ready disposition summary"
+      ],
+      "refusal_triggers": [
+        "manifest reconciliation, ticket status, guide closeout, transport completion, or exception disposition is absent",
+        "the requested closeout would conceal unresolved guest impact",
+        "completion state cannot be traced to authoritative systems"
+      ],
+      "scenario_ids": [
+        "tos-01",
+        "tos-09"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue segmentation rules",
+        "departure-time inventory",
+        "record-readiness indicators",
+        "guest-impact severity",
+        "service-level expectations"
+      ],
+      "required_outputs": [
+        "high-volume execution summary",
+        "priority and owner routing map",
+        "blocked-versus-ready queue split"
+      ],
+      "refusal_triggers": [
+        "queue handling would skip evidence checks or boundary rules",
+        "request classes are blended in a way that hides safety, fraud, or policy-exception work",
+        "throughput pressure is being used to justify unsupported departure, substitution, or completion decisions"
+      ],
+      "scenario_ids": [
+        "tos-08",
+        "tos-10"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "guest-impact severity",
+        "customer-harm indicators",
+        "policy-exception thresholds",
+        "safety or fraud signals",
+        "escalation owner map"
+      ],
+      "required_outputs": [
+        "harm-aware escalation packet",
+        "policy-exception rationale",
+        "next owner and response deadline"
+      ],
+      "refusal_triggers": [
+        "customer harm, fraud, or policy exception determines the answer",
+        "the case requires safety, refund, pricing, compensation, accessibility exception, or supplier substitution authority",
+        "repeat or high-impact service failure materially changes whether routine tour execution is safe"
+      ],
+      "scenario_ids": [
+        "tos-03",
+        "tos-06",
+        "tos-07",
+        "tos-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "tos-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-06",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-07",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tos-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    }
+  ]
+}

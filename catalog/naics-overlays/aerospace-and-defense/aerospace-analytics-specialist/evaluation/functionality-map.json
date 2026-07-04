@@ -1,0 +1,416 @@
+{
+  "agent_slug": "aerospace-analytics-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "specialty boundary",
+        "authority map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff guidance",
+        "authority caveat statement"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, financial, safety-critical, or engineering authority",
+        "request asks for supplier substitution or release approval",
+        "request asks for stronger causal or disclosure claims than evidence supports"
+      ],
+      "scenario_ids": [
+        "aas-08",
+        "aas-09",
+        "aas-10",
+        "aas-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness indicators",
+        "tenant source precedence"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "refresh status and risks",
+        "conflict summary"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source set is missing",
+        "critical records are stale beyond confidence policy",
+        "public and tenant source precedence materially conflict"
+      ],
+      "scenario_ids": [
+        "aas-02",
+        "aas-03",
+        "aas-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "named production, quality, inventory, and supplier artifacts",
+        "record lineage and timestamps",
+        "metric-to-artifact mapping"
+      ],
+      "required_outputs": [
+        "evidence-linked metric summary",
+        "source-lineage map",
+        "missing-evidence or conflict note"
+      ],
+      "refusal_triggers": [
+        "critical records cannot be tied to an authoritative source-of-truth",
+        "metric is claimed without traceability closure",
+        "cross-system discrepancy is unresolved"
+      ],
+      "scenario_ids": [
+        "aas-01",
+        "aas-04",
+        "aas-07",
+        "aas-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems-of-record inventory",
+        "retrieval hooks",
+        "release and owner context"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocked-prerequisite note",
+        "retrieval-owner routing"
+      ],
+      "refusal_triggers": [
+        "critical system-of-record or tenant retrieval is missing",
+        "owner or authority context is unknown",
+        "key system freshness is stale and materially changes outcomes"
+      ],
+      "scenario_ids": [
+        "aas-03",
+        "aas-04",
+        "aas-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence rubric",
+        "missing-fact and ambiguity signals",
+        "conflict and evidence quality markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "metric definition remains unresolved",
+        "records are stale or incomplete",
+        "tenant or policy conflict changes interpretation"
+      ],
+      "scenario_ids": [
+        "aas-02",
+        "aas-03",
+        "aas-10",
+        "aas-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers and owner context"
+      ],
+      "refusal_triggers": [
+        "request is outside analytics and reporting ownership",
+        "request requires legal, safety, engineering, or release authority",
+        "policy or source conflict requires adjacent specialist action"
+      ],
+      "scenario_ids": [
+        "aas-06",
+        "aas-09",
+        "aas-10",
+        "aas-12"
+      ]
+    },
+    {
+      "ability_id": "metric_and_source_definition",
+      "ability_name": "Metric and source definition",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "metric request",
+        "metric definitions and exclusions",
+        "source and denominator policy"
+      ],
+      "required_outputs": [
+        "metric definition summary",
+        "source hierarchy decision",
+        "refresh and caveat note"
+      ],
+      "refusal_triggers": [
+        "metric denominator is disputed",
+        "source precedence is undefined",
+        "tenant definitions are missing"
+      ],
+      "scenario_ids": [
+        "aas-01",
+        "aas-02",
+        "aas-07",
+        "aas-12"
+      ]
+    },
+    {
+      "ability_id": "analysis_or_reporting_package_assembly",
+      "ability_name": "Analysis or reporting package assembly",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated metrics",
+        "evidence traceability",
+        "disclosure and audience context"
+      ],
+      "required_outputs": [
+        "analysis package",
+        "caveats and confidence notes",
+        "action-threshold summary"
+      ],
+      "refusal_triggers": [
+        "analysis depends on stale/incomplete data",
+        "cross-system conflicts remain unresolved",
+        "audience disclosure is not supportable"
+      ],
+      "scenario_ids": [
+        "aas-01",
+        "aas-03",
+        "aas-04",
+        "aas-05",
+        "aas-07"
+      ]
+    },
+    {
+      "ability_id": "unsupported_claim_refusal",
+      "ability_name": "Unsupported-claim refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested claim",
+        "available evidence",
+        "audience and disclosure context"
+      ],
+      "required_outputs": [
+        "claim refusal or downgrade",
+        "evidence-gap statement",
+        "next-step guidance"
+      ],
+      "refusal_triggers": [
+        "claim exceeds evidence",
+        "causal, forecast, or policy assertion is not supported",
+        "publication would imply unwarranted certainty"
+      ],
+      "scenario_ids": [
+        "aas-05",
+        "aas-06",
+        "aas-12"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "lot, batch, serial, and WIP records",
+        "quality, hold, NCR, and MRB records",
+        "release authority map"
+      ],
+      "required_outputs": [
+        "traceability conflict memo",
+        "release dependency summary",
+        "hold or release escalation"
+      ],
+      "refusal_triggers": [
+        "traceability or inventory evidence conflicts remain unresolved",
+        "release is requested with open hold or NCR",
+        "release authority is unknown"
+      ],
+      "scenario_ids": [
+        "aas-04",
+        "aas-08",
+        "aas-09"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier records and nonconformance context",
+        "DFARS or supplier clause reference",
+        "release impact for supplier substitutions"
+      ],
+      "required_outputs": [
+        "supplier escalation package",
+        "release-impact impact summary",
+        "handoff note for supplier-quality and release owners"
+      ],
+      "refusal_triggers": [
+        "request includes supplier substitution outside lane authority",
+        "C of C or source qualification evidence is missing",
+        "supplier change would alter release posture"
+      ],
+      "scenario_ids": [
+        "aas-09",
+        "aas-10",
+        "aas-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "aas-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "aas-02",
+      "status": "covered",
+      "ability_ids": [
+        "metric_and_source_definition",
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh"
+      ]
+    },
+    {
+      "scenario_id": "aas-03",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "aas-04",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "analysis_or_reporting_package_assembly",
+        "traceability_and_release_dependency_handling"
+      ]
+    },
+    {
+      "scenario_id": "aas-05",
+      "status": "covered",
+      "ability_ids": [
+        "unsupported_claim_refusal",
+        "analysis_or_reporting_package_assembly"
+      ]
+    },
+    {
+      "scenario_id": "aas-06",
+      "status": "covered",
+      "ability_ids": [
+        "unsupported_claim_refusal",
+        "adjacent_lane_routing",
+        "boundary_control"
+      ]
+    },
+    {
+      "scenario_id": "aas-07",
+      "status": "covered",
+      "ability_ids": [
+        "metric_and_source_definition",
+        "analysis_or_reporting_package_assembly",
+        "evidence_traceability"
+      ]
+    },
+    {
+      "scenario_id": "aas-08",
+      "status": "covered",
+      "ability_ids": [
+        "traceability_and_release_dependency_handling",
+        "boundary_control",
+        "unsupported_claim_refusal"
+      ]
+    },
+    {
+      "scenario_id": "aas-09",
+      "status": "covered",
+      "ability_ids": [
+        "supplier_quality_and_release_escalation",
+        "adjacent_lane_routing",
+        "boundary_control",
+        "traceability_and_release_dependency_handling"
+      ]
+    },
+    {
+      "scenario_id": "aas-10",
+      "status": "covered",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "boundary_control",
+        "supplier_quality_and_release_escalation"
+      ]
+    },
+    {
+      "scenario_id": "aas-11",
+      "status": "covered",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "aas-12",
+      "status": "covered",
+      "ability_ids": [
+        "metric_and_source_definition",
+        "evidence_traceability",
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_claim_refusal",
+        "supplier_quality_and_release_escalation"
+      ]
+    }
+  ]
+}

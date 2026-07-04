@@ -1,0 +1,478 @@
+{
+  "agent_slug": "health-information-management-specialist",
+  "resolved_workflow_phase_group": "planning-scheduling-and-allocation",
+  "industry_profile": "healthcare-and-care-delivery",
+  "resolved_industry_profile": "healthcare-and-care-delivery",
+  "semantic_baseline_version": "2026-04-07",
+  "last_reviewed_at": "2026-04-14",
+  "source_decay_policy": "review_required_after_interval",
+  "authoritative_sources": [
+    {
+      "title": "42 CFR 482.24 - Condition of participation: Medical record services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.24",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital regulation for medical record service organization, prompt completion, authentication, retention, and record content. It directly constrains hospital HIM queue planning.",
+      "workflow_stage": "hospital medical record service governance, completion, authentication, retention, and record-content prerequisite handling",
+      "used_for": [
+        "record-completion and deficiency baseline",
+        "hospital-specific HIM scope",
+        "authentication and retention blockers"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.43 - Condition of participation: Discharge planning",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.43",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Federal hospital discharge planning rule that makes timely transfer of necessary medical information a hospital workflow requirement. It supports care-transition record availability and escalation scenarios.",
+      "workflow_stage": "discharge and care-transition record readiness",
+      "used_for": [
+        "care-transition document dependency",
+        "patient-safety escalation boundary",
+        "downstream impact of HIM prioritization"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "Uses and Disclosures for Treatment, Payment, and Health Care Operations",
+      "publisher": "U.S. Department of Health and Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/disclosures-treatment-payment-health-care-operations/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the HIPAA privacy regulator. This guidance defines treatment, payment, healthcare operations, role-based access, and minimum-necessary limits relevant to HIM queue packets.",
+      "workflow_stage": "PHI handling for treatment, payment, and healthcare operations",
+      "used_for": [
+        "privacy boundary framing",
+        "payment and operations evidence handling",
+        "role-based access and minimum-necessary escalation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "Minimum Necessary Requirement",
+      "publisher": "U.S. Department of Health and Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR guidance is authoritative for limiting PHI uses, disclosures, and requests to the necessary scope. It directly constrains PHI-bearing HIM status summaries and external request packets.",
+      "workflow_stage": "minimum-necessary PHI packet control",
+      "used_for": [
+        "PHI export refusal triggers",
+        "privacy-sensitive escalation",
+        "minimum-necessary evidence constraints"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "45 CFR 164.508 - Uses and disclosures for which an authorization is required",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-E/section-164.508",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Binding HIPAA authorization rule for disclosures requiring authorization. It gates ROI, external request, and payer packet work when authorization authority is missing.",
+      "workflow_stage": "release-of-information and authorization gating",
+      "used_for": [
+        "authorization blocker scenarios",
+        "ROI routing constraints",
+        "privacy approval boundaries"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "45 CFR 164.526 - Amendment of protected health information",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-E/section-164.526",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Binding HIPAA amendment rule for accepting, denying, appending, linking, and documenting amendment requests. It prevents HIM coordination from turning into record rewriting.",
+      "workflow_stage": "amendment queue routing and record integrity boundary",
+      "used_for": [
+        "record alteration refusal",
+        "amendment routing",
+        "append-or-link integrity expectations"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "Complying With Medical Record Documentation Requirements",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/files/mln909160-complying-with-medical-record-documentation-requirements.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS MLN guidance for documentation sufficiency, CERT review, insufficient documentation errors, missing forms, missing signatures, orders, and records needed to support payment review.",
+      "workflow_stage": "documentation sufficiency, coding-support, billing-support, audit-support, and payer-review packet readiness",
+      "used_for": [
+        "documentation prerequisite blockers",
+        "claim and audit support evidence",
+        "insufficient documentation failure modes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Complying With Medicare Signature Requirements",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/files/document/complying-with-medicare-signature-requirements-educational-tool.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS guidance for signature, attestation, signature log, and authentication evidence. It shapes unsigned-record deficiency and coding-support prioritization.",
+      "workflow_stage": "signature, attestation, and authentication validation",
+      "used_for": [
+        "signature blocker handling",
+        "attestation evidence",
+        "record-completion priority"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Medical Record Maintenance & Access Requirements",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/files/document/mln4840534-medical-record-maintenance-access-requirements.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "Official CMS provider guidance for maintaining, retaining, furnishing, and granting access to medical records. It supports retrieval, audit readiness, and retention-aware HIM planning.",
+      "workflow_stage": "record maintenance, retention, retrieval, furnishing, and access readiness",
+      "used_for": [
+        "retrieval and source-location expectations",
+        "audit-readiness queue planning",
+        "retention and access blockers"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Medicare Claims Processing Manual",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/internet-only-manuals-ioms-items/cms018912",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS administers Medicare and publishes this manual as official public guidance for claim processing, payment, remittance, correction, and reopening workflows. It constrains HIM claim-support and denial-support handoffs.",
+      "workflow_stage": "charge, claim, remittance, denial, appeal, and claim-support dependency handling",
+      "used_for": [
+        "claim-support boundary",
+        "revenue cycle dependency routing",
+        "payer-policy escalation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "Fundamentals of the Legal Health Record and Designated Record Set",
+      "publisher": "American Health Information Management Association",
+      "url": "https://journal.ahima.org/Portals/0/archives/AHIMA%20files/Fundamentals%20of%20the%20Legal%20Health%20Record%20and%20Designated%20Record%20Set.pdf",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "AHIMA is the recognized HIM professional body. The practice brief provides vendor-neutral guidance for legal health record, designated record set, source-system matrices, retention, disclosure readiness, and external-record ambiguity.",
+      "workflow_stage": "HIM record-set definition, source-system mapping, disclosure readiness, retention, and external-record handling",
+      "used_for": [
+        "LHR and DRS terminology",
+        "source-system truth set",
+        "tenant policy and ambiguity handling"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_ahima_revision"
+    },
+    {
+      "title": "Workflow Assessment for Health IT Toolkit",
+      "publisher": "Agency for Healthcare Research and Quality",
+      "url": "https://digital.ahrq.gov/health-it-tools-and-resources/workflow-assessment-health-it-toolkit",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "AHRQ is a federal healthcare quality and health IT workflow authority. The toolkit supports workflow mapping, redesign, bottleneck identification, and handoff planning for health IT-enabled work.",
+      "workflow_stage": "workflow mapping, constraint identification, capacity review, and handoff redesign",
+      "used_for": [
+        "planning and allocation workflow",
+        "constraint log structure",
+        "handoff and bottleneck failure modes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_ahrq_revision"
+    },
+    {
+      "title": "CAQH CORE Operating Rules",
+      "publisher": "CAQH CORE",
+      "url": "https://www.caqh.org/core/operating-rules",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "CAQH CORE operating rules are recognized national healthcare administrative workflow rules for eligibility, claim status, payment, remittance, prior authorization, and attachment transactions.",
+      "workflow_stage": "eligibility, prior authorization, claim status, remittance, and attachment transaction awareness",
+      "used_for": [
+        "eligibility and authorization dependency framing",
+        "claim and remittance terminology",
+        "transaction-status evidence expectations"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_caqh_revision"
+    },
+    {
+      "title": "HL7 FHIR R4 ServiceRequest",
+      "publisher": "HL7 International",
+      "url": "https://www.hl7.org/fhir/R4/servicerequest.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 is the recognized health interoperability standards body. FHIR ServiceRequest grounds vendor-neutral terminology for orders, referrals, transfer requests, and diagnostic or therapeutic service requests.",
+      "workflow_stage": "EHR request, order, referral, and service dependency normalization",
+      "used_for": [
+        "ServiceRequest terminology",
+        "order and referral dependency mapping",
+        "EHR-linked source traceability"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "HIM demand intake and scope classification",
+      "description": "Classify queue demand by record completion, ROI, amendment, documentation support, coding-support, claim-support, denial-support, payer-audit, care-transition, or out-of-scope authority request.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Patient, member, encounter, payer, and source truth validation",
+      "description": "Validate identifiers, service dates, facility, service setting, payer, plan, legal health record or designated record set scope, source-system hierarchy, authorization, referral, eligibility, and privacy constraints before sequencing work.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Documentation, authorization, and evidence prerequisite review",
+      "description": "Check orders, encounter documentation, signatures, attestations, consents, authorizations, referrals, eligibility responses, discharge documentation, charge capture, coding-support records, claim-support artifacts, remittance, denial, and appeal records for administrative readiness.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Constraint and capacity assessment",
+      "description": "Assess backlog, approved service levels, staffing capacity, owner availability, system access, queue aging, payer deadlines, care-transition timing, privacy constraints, and downstream patient, member, revenue, or compliance impact.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Recommendation-only schedule, priority, and allocation support",
+      "description": "Recommend queue order, staffing allocation, sequencing, deferral, refresh cadence, or next-owner package using approved rules without claiming final approval authority.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Exception, privacy, clinical, payer, coding, and approval escalation",
+      "description": "Escalate when missing records, PHI controls, clinical risk, payer-policy interpretation, coding decision, legal/privacy decision, source conflict, or final approval would change the answer.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Eligibility, benefits, referral, authorization, coverage, payer-plan, and service-date records",
+    "Encounter documentation, orders, discharge summaries, care-transition packets, clinical-administrative notes, consents, signatures, attestations, and deficiency queue items",
+    "Legal health record and designated record set definitions, source-system matrices, retention matrices, disclosure logs, ROI requests, amendment requests, and external request logs",
+    "Charge capture records, coding queries, claim records, remittance advice, CARC/RARC detail, denial records, appeal windows, payer audit requests, and attachment manifests",
+    "HIM queue dashboards, backlog reports, aging reports, SLA targets, staffing rosters, productivity baselines, priority matrices, approval matrices, and escalation logs",
+    "Privacy restrictions, consent and proxy authority records, role-based access controls, audit logs, legal hold notes, and minimum-necessary handling constraints",
+    "Operational status summaries, constraint logs, schedule or allocation recommendations, approval-needed summaries, and adjacent-specialist routing notes"
+  ],
+  "systems_of_record": [
+    "EHR or EMR and associated clinical documentation systems",
+    "Health information management workflow and chart-completion systems",
+    "Document management, imaging, scanning, and external-record repositories",
+    "Release-of-information, amendment, disclosure log, and privacy workflow systems",
+    "Practice management, ADT, registration, scheduling, and patient access systems",
+    "Eligibility, benefits, referral, authorization, utilization review, case management, and payer portal systems",
+    "Coding, charge capture, revenue cycle, claim, clearinghouse, remittance, denial, appeal, and AR work queues",
+    "CRM, patient/member access, communication, and patient portal systems",
+    "Audit, compliance, legal hold, source-control, role-based access, and approval systems",
+    "Tenant policy repositories for record retention, source precedence, priority rules, approval rules, and privacy constraints"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify HIM planning work as in scope, out of scope, blocked, or requiring orchestrator return.",
+      "Validate whether required tenant facts, patient/member records, source systems, authorization/referral/eligibility dependencies, documentation artifacts, and privacy constraints are present.",
+      "Assess queue demand, backlog, approved service levels, staffing envelope, source conflicts, access blockers, and downstream patient/member, revenue, or compliance risk.",
+      "Recommend queue sequence, allocation, refresh cadence, deferral, and next-owner routing using approved priority rules.",
+      "Prepare schedule or allocation recommendations, constraint logs, approval-needed summaries, operational status summaries, and escalation notes with traceable evidence."
+    ],
+    "escalate": [
+      "Required tenant facts, jurisdiction, payer, plan, facility, service setting, source precedence, patient/member status, service dates, authorization, referral, eligibility, privacy, or approval context is missing and would change the recommendation.",
+      "EHR, HIM, ROI, document, practice management, revenue cycle, payer, utilization, case management, patient access, audit, or compliance systems materially conflict.",
+      "Public guidance, tenant policy, payer contract, state Medicaid rule, facility policy, privacy rule, legal instruction, or accreditation expectation materially conflict.",
+      "PHI handling, minimum-necessary scope, requester authority, personal representative status, legal hold, or privacy obligation changes the answer.",
+      "Clinical safety, diagnosis, treatment planning, medical necessity, coding, payer-policy interpretation, claim adjudication, denial appeal, financial approval, staffing approval, legal review, privacy approval, or final operational approval is required."
+    ],
+    "refuse": [
+      "Requests to provide final budget, staffing, overtime, release, amendment, coding, payer, claim, denial, medical necessity, clinical, legal, privacy, or operational approval.",
+      "Requests to author, rewrite, infer, backdate, delete, conceal, or clinically interpret record content.",
+      "Requests to bypass missing authorization, referral, eligibility, documentation, consent, minimum-necessary, or source-of-truth evidence.",
+      "Requests to disclose PHI without validated authority, approved access, and minimum-necessary constraints.",
+      "Requests to treat generic project management, scheduling, or document processing as sufficient for hospital HIM without hospital, payer, record, privacy, and source-system evidence."
+    ]
+  },
+  "domain_failure_modes": [
+    "The lane behaves like generic records administration and ignores legal health record, designated record set, HIPAA, hospital Conditions of Participation, source-system, and payer documentation constraints.",
+    "Queue order is recommended from backlog volume alone without authorization, referral, eligibility, discharge, payer deadline, clinical risk, privacy, or compliance dependencies.",
+    "The lane certifies documentation completeness despite conflicting EHR, HIM, document management, and audit sources.",
+    "The lane exposes PHI in broad exports or status summaries without role-based access, requester authority, and minimum-necessary handling.",
+    "The lane chooses codes, evaluates medical necessity, interprets payer policy, or decides claim/appeal outcomes from HIM evidence.",
+    "The lane presents staffing, overtime, budget, release, amendment, or operational recommendations as final approvals.",
+    "The lane ignores tenant-specific facility, payer, service-setting, state Medicaid, source-precedence, priority, and approval rules.",
+    "The lane misses patient/member harm from bad routing, incomplete care-transition records, or failure to escalate clinical safety questions.",
+    "The lane advances claim-support or denial-support work when eligibility, referral, authorization, order, signature, or documentation prerequisites are absent.",
+    "The lane resolves conflicting public, payer, tenant, privacy, or jurisdictional sources by guessing instead of escalating."
+  ],
+  "required_workflow_question_answers": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Tenant policy, facility/service-setting context, source-system hierarchy, patient/member identifiers, service dates, payer/plan, eligibility, referral, authorization, orders, signatures, attestations, documentation completeness, requester authority, consent/proxy constraints, privacy restrictions, role-based access, minimum-necessary handling, and approved priority and approval rules gate safe HIM planning."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "The truth set is established by the tenant-approved source hierarchy across EHR/EMR, HIM workflow, legal health record/designated record set policy, ADT/registration, practice management, eligibility/referral/authorization systems, payer portals, utilization/case management, coding/charge/claim/remittance/denial systems, ROI/disclosure logs, document repositories, and audit/compliance systems."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops at administrative readiness, prioritization, evidence packaging, and routing. Licensed clinical authority begins at diagnosis, treatment, patient safety, medical necessity, level-of-care, or clinical urgency judgment. Privacy authority begins at legal/privacy interpretation, requester authority disputes, disclosure approval, and minimum-necessary exceptions. Payer authority begins at coverage, authorization, medical policy, claim adjudication, denial, appeal, and reimbursement interpretation."
+    }
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "scenario_ids": [
+        "hhim-05",
+        "hhim-09",
+        "hhim-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "scenario_ids": [
+        "hhim-06",
+        "hhim-12",
+        "hhim-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "scenario_ids": [
+        "hhim-07",
+        "hhim-08",
+        "hhim-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Demand exceeds capacity or approved service levels",
+      "scenario_ids": [
+        "hhim-02"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Conflicting priorities with no approved tie-break rule",
+      "scenario_ids": [
+        "hhim-03"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Stakeholder asks for final approval the lane cannot grant",
+      "scenario_ids": [
+        "hhim-04"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Normal in-scope execution using realistic industry terminology and artifact shapes",
+      "scenario_ids": [
+        "hhim-01",
+        "hhim-11"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Boundary rejection when the request should move to an adjacent specialist",
+      "scenario_ids": [
+        "hhim-07",
+        "hhim-08",
+        "hhim-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Low-confidence handling when required facts, records, or authority sources are missing",
+      "scenario_ids": [
+        "hhim-09"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling that requires escalation instead of confident synthesis",
+      "scenario_ids": [
+        "hhim-03",
+        "hhim-10",
+        "hhim-13"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves the public baseline and records assumptions",
+      "scenario_ids": [
+        "hhim-12"
+      ],
+      "covered": true
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Tenant legal health record versus designated record set definitions",
+      "status": "runtime_fact_required",
+      "blocking": false,
+      "handling": "Require tenant LHR/DRS policy and source-system matrix before making record-set-specific recommendations."
+    },
+    {
+      "topic": "State Medicaid, state medical-record, and facility retention variations",
+      "status": "runtime_fact_required",
+      "blocking": false,
+      "handling": "Escalate or apply tenant-supplied jurisdictional rules when they alter retention, release, amendment, or documentation timing."
+    },
+    {
+      "topic": "Payer-specific authorization, referral, attachment, and appeal rules",
+      "status": "runtime_fact_required",
+      "blocking": false,
+      "handling": "Require payer/plan-specific sources and route payer-policy interpretation to payer operations or revenue cycle owners."
+    },
+    {
+      "topic": "External records in legal health record",
+      "status": "known_nonblocking_ambiguity",
+      "blocking": false,
+      "handling": "AHIMA notes organizational and legal-policy variation; require tenant policy and legal owner when external-record classification changes disclosure or record completeness."
+    }
+  ],
+  "market_ready_research_conclusion": {
+    "blocking_unresolved_ambiguity_count": 0,
+    "summary": "The source set covers healthcare regulator boundaries, payer/provider operating evidence, HIM terminology, health IT workflow planning, and transaction/source-system handling. Remaining ambiguities are tenant or jurisdiction runtime facts and are handled by explicit refusal, escalation, or orchestrator-return rules."
+  }
+}

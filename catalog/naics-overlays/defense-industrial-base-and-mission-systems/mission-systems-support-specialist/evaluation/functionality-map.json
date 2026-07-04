@@ -1,0 +1,369 @@
+{
+  "agent_slug": "mission-systems-support-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request type and action intent",
+        "scope policy and refusal policy",
+        "adjacent specialist routing registry",
+        "policy and authority constraints"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "scope verdict",
+        "owner routing guidance"
+      ],
+      "refusal_triggers": [
+        "request requires legal interpretation",
+        "request requires safety, engineering, or financial-approval authority",
+        "request asks for policy override or discretionary exception authority"
+      ],
+      "scenario_ids": [
+        "mss-01",
+        "mss-04",
+        "mss-05",
+        "mss-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public defense and service guidance list",
+        "tenant policy and doctrine",
+        "source freshness metadata",
+        "conflict indicators"
+      ],
+      "required_outputs": [
+        "applicability and precedence decision",
+        "refresh risk note",
+        "conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public guidance conflicts with tenant policy on materially meaningful points",
+        "source freshness or scope cannot be justified"
+      ],
+      "scenario_ids": [
+        "mss-02",
+        "mss-08",
+        "mss-09",
+        "mss-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "ticket or incident records",
+        "asset and interface dependency artifacts",
+        "change request evidence",
+        "testing/rollback approvals"
+      ],
+      "required_outputs": [
+        "evidence sufficiency summary",
+        "missing-evidence checklist"
+      ],
+      "refusal_triggers": [
+        "required change-readiness evidence is missing",
+        "rollback or approval artifacts are absent",
+        "artifact cannot be mapped to the request outcome"
+      ],
+      "scenario_ids": [
+        "mss-02",
+        "mss-03",
+        "mss-07",
+        "mss-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "interface and integration dependencies",
+        "incident and change-owner registry",
+        "system health signals"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "system blocker report"
+      ],
+      "refusal_triggers": [
+        "critical system connector is unavailable",
+        "required owner for a dependent system is missing",
+        "interface dependency blocks safe support action"
+      ],
+      "scenario_ids": [
+        "mss-03",
+        "mss-06",
+        "mss-08",
+        "mss-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence indicators",
+        "missing context flags",
+        "policy or source conflict state"
+      ],
+      "required_outputs": [
+        "low-confidence escalation packet",
+        "assumption and owner log"
+      ],
+      "refusal_triggers": [
+        "critical tenant facts are missing",
+        "public source conflict cannot be resolved",
+        "same failure recurs without new evidence"
+      ],
+      "scenario_ids": [
+        "mss-02",
+        "mss-06",
+        "mss-08",
+        "mss-10"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "adjacent specialist directory",
+        "handoff owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff packet"
+      ],
+      "refusal_triggers": [
+        "request belongs to safety/engineering/legal/finance lane",
+        "policy override authority is missing",
+        "required adjacent owner cannot be resolved"
+      ],
+      "scenario_ids": [
+        "mss-04",
+        "mss-05",
+        "mss-10"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request scope",
+        "tenant policy applicability",
+        "evidence sufficiency state",
+        "dependency and owner context"
+      ],
+      "required_outputs": [
+        "service or support resolution",
+        "resolution state and next-step disposition"
+      ],
+      "refusal_triggers": [
+        "request is out of scope",
+        "required evidence remains missing",
+        "approval conditions are unresolved"
+      ],
+      "scenario_ids": [
+        "mss-03",
+        "mss-09"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "outcome and risk state",
+        "assumption tags",
+        "owner and escalation context"
+      ],
+      "required_outputs": [
+        "customer or stakeholder summary",
+        "communication handoff"
+      ],
+      "refusal_triggers": [
+        "outcome is disputed and unresolved",
+        "high-risk escalation requires explicit human confirmation",
+        "confidence is below threshold for final communication"
+      ],
+      "scenario_ids": [
+        "mss-01",
+        "mss-03",
+        "mss-04",
+        "mss-06"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "workaround pattern",
+        "exception trigger",
+        "policy and approval gate data"
+      ],
+      "required_outputs": [
+        "exception escalation package",
+        "workaround refusal rationale"
+      ],
+      "refusal_triggers": [
+        "request bypasses documented controls",
+        "discretionary exception is requested without authority",
+        "testing/rollback or approval gates are ignored"
+      ],
+      "scenario_ids": [
+        "mss-05",
+        "mss-09"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "mission systems terminology",
+        "tenant artifact catalog",
+        "interface and readiness glossary"
+      ],
+      "required_outputs": [
+        "artifact-aware interpretation",
+        "industry-specific readiness mapping"
+      ],
+      "refusal_triggers": [
+        "industry terms cannot be mapped to tenant artifacts",
+        "tenant-specific safety or readiness interpretation is missing",
+        "mixed mission vocabularies change classification"
+      ],
+      "scenario_ids": [
+        "mss-03",
+        "mss-07",
+        "mss-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "mss-01",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-03",
+      "ability_ids": [
+        "supported_request_resolution",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-05",
+      "ability_ids": [
+        "unsupported_exception_escalation",
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-06",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "dependency_and_system_awareness",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-07",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "evidence_traceability",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-08",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-09",
+      "ability_ids": [
+        "supported_request_resolution",
+        "unsupported_exception_escalation",
+        "evidence_traceability",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "mss-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    }
+  ]
+}

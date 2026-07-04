@@ -1,0 +1,388 @@
+{
+  "agent_slug": "export-controls-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "adjacent specialist registry",
+        "authority context",
+        "safety-or-legal ownership map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "adjacent-routing summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation or sanctions enforcement",
+        "request asks for procurement or safety final authority",
+        "request asks for final licensing issuance outside tenant scope"
+      ],
+      "scenario_ids": [
+        "ecs-06",
+        "ecs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source list",
+        "refresh metadata",
+        "tenant source precedence policy"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "conflict summary",
+        "evidence freshness status"
+      ],
+      "refusal_triggers": [
+        "required source context missing",
+        "public and tenant sources materially conflict",
+        "source freshness exceeds decay policy"
+      ],
+      "scenario_ids": [
+        "ecs-02",
+        "ecs-07",
+        "ecs-08",
+        "ecs-10"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "license artifacts",
+        "screening outputs",
+        "nonconformance and finding logs",
+        "contract clause records"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "missing-evidence packet",
+        "record linkage map"
+      ],
+      "refusal_triggers": [
+        "critical artifact missing",
+        "evidence stale or inaccessible",
+        "record cannot be traced to requested phase"
+      ],
+      "scenario_ids": [
+        "ecs-01",
+        "ecs-02",
+        "ecs-03",
+        "ecs-09",
+        "ecs-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "service reachability",
+        "owner assignments"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "owner routing note"
+      ],
+      "refusal_triggers": [
+        "critical control registry or screening system unavailable",
+        "approver owner unresolved"
+      ],
+      "scenario_ids": [
+        "ecs-01",
+        "ecs-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signal",
+        "tenant context confidence score",
+        "conflict flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist"
+      ],
+      "refusal_triggers": [
+        "required tenant authority context missing",
+        "evidence sufficiency unknown",
+        "conflicting policy or source guidance"
+      ],
+      "scenario_ids": [
+        "ecs-07",
+        "ecs-08",
+        "ecs-10",
+        "ecs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, sanctions counsel, contracting approval, or safety-design authority",
+        "request requires licensing officer final issuance"
+      ],
+      "scenario_ids": [
+        "ecs-06",
+        "ecs-12",
+        "ecs-05",
+        "ecs-03"
+      ]
+    },
+    {
+      "ability_id": "control_and_inspection_application",
+      "ability_name": "Export-control and inspection application",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "item description",
+        "service/software transfer context",
+        "destination and end-user descriptors",
+        "tenant policy modifiers"
+      ],
+      "required_outputs": [
+        "control and inspection status",
+        "license or restriction recommendation"
+      ],
+      "refusal_triggers": [
+        "classification inputs missing",
+        "jurisdiction cannot be determined from provided data",
+        "required screening checks absent"
+      ],
+      "scenario_ids": [
+        "ecs-01",
+        "ecs-02",
+        "ecs-03",
+        "ecs-05",
+        "ecs-08",
+        "ecs-09"
+      ]
+    },
+    {
+      "ability_id": "defect_or_incident_handling",
+      "ability_name": "Defect and incident handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "incident record",
+        "defect recurrence history",
+        "corrective action state"
+      ],
+      "required_outputs": [
+        "repeat-incident escalation package",
+        "formal escalation owner handoff"
+      ],
+      "refusal_triggers": [
+        "recurring defect without improved mitigation",
+        "incident requires formal QA or safety owner"
+      ],
+      "scenario_ids": [
+        "ecs-04",
+        "ecs-12"
+      ]
+    },
+    {
+      "ability_id": "hold_release_boundary_enforcement",
+      "ability_name": "Hold and release boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "open holds",
+        "findings registry",
+        "release prerequisites",
+        "license status"
+      ],
+      "required_outputs": [
+        "hold-release boundary decision",
+        "release blocker list"
+      ],
+      "refusal_triggers": [
+        "release requested with active hold",
+        "open finding has no closure evidence"
+      ],
+      "scenario_ids": [
+        "ecs-03",
+        "ecs-05",
+        "ecs-09"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "defense industry terminology map",
+        "mission artifact dictionary",
+        "tenant dictionary overrides"
+      ],
+      "required_outputs": [
+        "industry-specific artifact alignment",
+        "terminology-to-output mapping"
+      ],
+      "refusal_triggers": [
+        "industry term cannot be mapped",
+        "mission terminology conflicts with evidence",
+        "tenant overrides missing for ambiguous status"
+      ],
+      "scenario_ids": [
+        "ecs-09",
+        "ecs-10",
+        "ecs-11",
+        "ecs-08"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ecs-01",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "source_selection_and_refresh",
+        "control_and_inspection_application",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-03",
+      "ability_ids": [
+        "hold_release_boundary_enforcement",
+        "boundary_control",
+        "control_and_inspection_application",
+        "evidence_traceability",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-04",
+      "ability_ids": [
+        "defect_or_incident_handling",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-05",
+      "ability_ids": [
+        "hold_release_boundary_enforcement",
+        "adjacent_lane_routing",
+        "control_and_inspection_application",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-07",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness",
+        "control_and_inspection_application",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-09",
+      "ability_ids": [
+        "industry_specific_artifact_awareness",
+        "evidence_traceability",
+        "control_and_inspection_application",
+        "hold_release_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-10",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-11",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "evidence_traceability",
+        "industry_specific_artifact_awareness",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ecs-12",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "low_confidence_and_escalation",
+        "defect_or_incident_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

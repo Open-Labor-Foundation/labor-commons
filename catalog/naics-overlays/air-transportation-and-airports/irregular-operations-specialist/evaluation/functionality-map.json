@@ -1,0 +1,427 @@
+{
+  "agent_slug": "irregular-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intended irregular-operations action",
+        "irregular-operations specialty boundary",
+        "dispatch, customs, security, maintenance, customer operations, finance, legal, and safety authority context"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "adjacent-owner routing note"
+      ],
+      "refusal_triggers": [
+        "request asks for dispatch release, customs clearance, security determination, maintenance return-to-service, compensation approval, ATC clearance, emergency command, legal interpretation, financial approval, or safety signoff",
+        "request attempts to close irregular-operations work without required recovery, custody, handoff, passenger-impact, or completion evidence"
+      ],
+      "scenario_ids": [
+        "iros-07",
+        "iros-09",
+        "iros-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FAA, eCFR, DOT, TSA, CBP, and IATA baseline sources",
+        "source freshness indicators",
+        "tenant irregular-operations playbook, carrier customer-service plan, tarmac-delay plan, airport rules, station SOP, and SLA overlays"
+      ],
+      "required_outputs": [
+        "source-grounded execution judgment",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "public sources and tenant policies conflict materially on the operational or passenger-impact outcome"
+      ],
+      "scenario_ids": [
+        "iros-10",
+        "iros-11",
+        "iros-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "irregular-operations ticket and station or OCC records",
+        "flight, delay, diversion, gate, stand, tarmac-delay, passenger-notification, and customer-impact records",
+        "baggage, cargo, ULD, load, handoff, and chain-of-custody records",
+        "equipment, maintenance, customs, security, field-condition, NOTAM, and service logs"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "missing-evidence checklist",
+        "completion evidence record"
+      ],
+      "refusal_triggers": [
+        "critical movement, passenger-impact, custody, handoff, approval, documentation, or completion evidence is absent or contradictory",
+        "record-of-truth systems materially disagree on current disruption state"
+      ],
+      "scenario_ids": [
+        "iros-02",
+        "iros-04",
+        "iros-05",
+        "iros-08",
+        "iros-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record list",
+        "airport, airline, dispatch, handler, maintenance, security, customs, customer operations, warehouse, finance, and safety owner map",
+        "dependency status across irregular-operations, OCC/AOC, FIDS/AODB, gate, stand, BHS, BRS, dispatch, maintenance, WMS, TMS, customs, security, CRM, notification, and service systems"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocker summary",
+        "next-action package"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on movement, custody, equipment, passenger-impact, tarmac-delay, documentation, or completion state"
+      ],
+      "scenario_ids": [
+        "iros-01",
+        "iros-03",
+        "iros-06",
+        "iros-08",
+        "iros-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy and source conflict indicators"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "documentation gap note",
+        "missing-information checklist"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change the outcome",
+        "source or policy conflict prevents safe synthesis",
+        "safety, customs, security, dispatch, maintenance, customer-service-plan, compensation, or tarmac-delay authority is unclear"
+      ],
+      "scenario_ids": [
+        "iros-02",
+        "iros-10",
+        "iros-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "handoff prerequisites",
+        "authority boundary and destination owner"
+      ],
+      "required_outputs": [
+        "adjacent-owner routing note",
+        "next-owner package"
+      ],
+      "refusal_triggers": [
+        "request belongs to dispatch, customs/compliance, maintenance, warehouse, security, airport operations, customer operations, finance, legal, emergency, or safety ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "iros-03",
+        "iros-05",
+        "iros-07",
+        "iros-09"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "accepted irregular-operations intake",
+        "current lifecycle state",
+        "record-of-truth state and required progression evidence"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "operational movement or turnaround summary"
+      ],
+      "refusal_triggers": [
+        "accepted disruption state cannot be verified",
+        "required progression evidence is missing",
+        "state transition would bypass safety, documentation, passenger-impact, custody, service-level, or handoff controls"
+      ],
+      "scenario_ids": [
+        "iros-01",
+        "iros-02",
+        "iros-06",
+        "iros-08",
+        "iros-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception type and severity",
+        "affected flight, route, facility, equipment, custody, service-level, passenger-impact, cargo-impact, and documentation dependencies",
+        "next owner and rework criteria"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "irregular-operations escalation note",
+        "documentation gap note"
+      ],
+      "refusal_triggers": [
+        "exception depends on regulated, safety-critical, dispatch, customs, security, customer-service-plan, compensation, or maintenance approval",
+        "rework criteria or accountable owner is missing"
+      ],
+      "scenario_ids": [
+        "iros-03",
+        "iros-05",
+        "iros-06",
+        "iros-07",
+        "iros-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "completion criteria",
+        "source-system evidence",
+        "handoff or destination-owner acknowledgement",
+        "residual blocker state"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "closure refusal note"
+      ],
+      "refusal_triggers": [
+        "completion criteria are not met",
+        "required source-system evidence is missing",
+        "destination-owner acknowledgement is absent",
+        "safety, passenger-impact, custody, customs, security, dispatch, maintenance, tarmac-delay, or documentation blockers remain unresolved"
+      ],
+      "scenario_ids": [
+        "iros-01",
+        "iros-04",
+        "iros-09",
+        "iros-11",
+        "iros-12"
+      ]
+    },
+    {
+      "ability_id": "movement_and_chain_of_custody_handling",
+      "ability_name": "Movement and chain-of-custody handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "movement, route, gate, stand, belt, baggage, ULD, cargo, load, booking, and handoff records",
+        "custody scans, manifest records, or reconciliation evidence",
+        "route, schedule, diversion, cancellation, misconnection, or tarmac-delay context"
+      ],
+      "required_outputs": [
+        "operational movement or turnaround summary",
+        "chain-of-custody exception note",
+        "movement blocker summary"
+      ],
+      "refusal_triggers": [
+        "movement, custody, route, load, customs, or handoff evidence is missing or contradictory",
+        "request asks the lane to authorize physical movement or release without required owner approval"
+      ],
+      "scenario_ids": [
+        "iros-01",
+        "iros-05",
+        "iros-06",
+        "iros-07",
+        "iros-08"
+      ]
+    },
+    {
+      "ability_id": "safety_and_clearance_escalation",
+      "ability_name": "Safety and clearance escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "safety, security, customs, dispatch, maintenance, field-condition, tarmac-delay, and movement-clearance context",
+        "jurisdiction and tenant authority map",
+        "required approval or clearance owner"
+      ],
+      "required_outputs": [
+        "irregular-operations escalation note",
+        "adjacent-owner routing note",
+        "safety or clearance boundary refusal"
+      ],
+      "refusal_triggers": [
+        "movement depends on dispatch release, ATC clearance, customs release, TSA or security determination, maintenance return-to-service, legal interpretation, emergency command, or safety-critical approval",
+        "clearance or approval owner is unclear or conflicting"
+      ],
+      "scenario_ids": [
+        "iros-06",
+        "iros-07",
+        "iros-09",
+        "iros-10",
+        "iros-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "iros-01",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-06",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "movement_and_chain_of_custody_handling",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "movement_and_chain_of_custody_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "completion_evidence_capture",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "completion_evidence_capture",
+        "safety_and_clearance_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "iros-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_shared_abilities_declared": true,
+    "all_workflow_phase_abilities_declared": true,
+    "all_industry_profile_abilities_declared": true,
+    "all_scenarios_represented": true,
+    "status": "complete"
+  }
+}

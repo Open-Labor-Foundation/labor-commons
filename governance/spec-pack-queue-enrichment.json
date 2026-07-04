@@ -1,0 +1,617 @@
+{
+  "version": "2026-04-08",
+  "list_delimiter": " || ",
+  "shared": {
+    "decision_types": [
+      "Classify the request as in-scope, out-of-scope, or blocked on missing prerequisites.",
+      "Request or validate the minimum tenant facts, authoritative records, and source context required to continue safely.",
+      "Prepare evidence-backed recommendations, summaries, or next-step packages without overstating authority.",
+      "Route the work to the correct adjacent specialist, approver, or human reviewer when ownership shifts.",
+      "Refuse actions that require legal, licensed, policy-override, financial-approval, or safety-critical authority outside the lane."
+    ],
+    "hard_refusal_triggers": [
+      "Required tenant facts, records, or authoritative source context are missing and would change the outcome.",
+      "The request requires legal, licensed, safety-critical, clinical, engineering, or approval authority outside the lane.",
+      "Conflicting policies or sources materially change the answer and need human resolution."
+    ],
+    "source_classes": [
+      "Primary regulators, statutes, agency manuals, or official public guidance tied to the named industry.",
+      "Recognized standards bodies, professional frameworks, or public operating references directly relevant to the lane.",
+      "Vendor-neutral workflow references that clarify evidence handling, terminology, and safe boundary behavior."
+    ],
+    "tenant_required_facts": [
+      "Tenant-specific policies, service model, and operating constraints that narrow the public baseline.",
+      "Jurisdiction, business unit, program, product, or facility context that materially changes the workflow.",
+      "Current systems of record, record locations, and required retrieval hooks for the lane."
+    ],
+    "success_measures": [
+      "The pack produces outputs that are specific, evidence-backed, and usable by downstream operators.",
+      "Boundary handling is explicit enough to prevent generic or over-authoritative behavior.",
+      "Scenarios prove correct escalation, refusal, and exception handling rather than only happy-path execution."
+    ]
+  },
+  "workflow_phase_groups": [
+    {
+      "id": "intake-access-and-initiation",
+      "primary_job_template": "Turn incoming {industry_name} requests for {agent_name} into validated intake decisions, with prerequisite checks, routing, and documented escalation before execution begins.",
+      "decision_types": [
+        "Accept, reject, pend, or route incoming work based on prerequisites, eligibility, and access rules.",
+        "Determine whether authorizations, referrals, reservations, or approvals are present before downstream work starts."
+      ],
+      "required_output_shapes": [
+        "Intake disposition note with acceptance, rejection, or routing outcome.",
+        "Prerequisite or eligibility checklist showing missing or satisfied conditions.",
+        "Escalation packet for requests blocked on approvals, access, or identity mismatch."
+      ],
+      "must_pass_scenario_families": [
+        "Missing prerequisite or required intake data.",
+        "Request routed to the wrong lane before execution starts.",
+        "Attempt to bypass access, eligibility, or authorization checks."
+      ],
+      "hard_refusal_triggers": [
+        "The request asks the specialist to approve downstream work instead of only validating intake conditions."
+      ],
+      "success_measures": [
+        "Work is accepted only when required prerequisites are explicit and satisfied.",
+        "Routing decisions are fast, specific, and traceable."
+      ]
+    },
+    {
+      "id": "onboarding-enablement-and-enrollment",
+      "primary_job_template": "Bring {industry_name} users, members, partners, or accounts into live service for {agent_name} with verified setup, readiness checks, and documented handoff into steady-state operations.",
+      "decision_types": [
+        "Determine whether setup, training, credentialing, or enablement prerequisites are complete.",
+        "Decide whether the subject is ready for go-live, additional setup, or escalation."
+      ],
+      "required_output_shapes": [
+        "Onboarding checklist with completion status by prerequisite.",
+        "Readiness summary showing blockers, risks, and pending approvals.",
+        "Go-live handoff note describing what is live, what is deferred, and who owns next steps."
+      ],
+      "must_pass_scenario_families": [
+        "Setup blocked by missing credentials, permissions, or training.",
+        "Go-live requested without readiness evidence.",
+        "Ambiguous ownership between onboarding and steady-state support."
+      ]
+    },
+    {
+      "id": "planning-scheduling-and-allocation",
+      "primary_job_template": "Convert demand, constraints, and priorities in {industry_name} for {agent_name} into planning recommendations, schedules, or allocations with documented tradeoffs and escalation boundaries.",
+      "decision_types": [
+        "Prioritize work, capacity, or resources using documented constraints and rules.",
+        "Recommend schedules, sequencing, staffing, or allocation changes without claiming final approval authority."
+      ],
+      "required_output_shapes": [
+        "Schedule, capacity, or allocation recommendation.",
+        "Constraint log capturing assumptions, tradeoffs, and unresolved blockers.",
+        "Approval-needed summary for tradeoffs outside lane authority."
+      ],
+      "must_pass_scenario_families": [
+        "Demand exceeds capacity or approved service levels.",
+        "Conflicting priorities with no approved tie-break rule.",
+        "Stakeholder asks for final approval the lane cannot grant."
+      ]
+    },
+    {
+      "id": "maintenance-and-asset-lifecycle",
+      "primary_job_template": "Manage maintenance or asset-lifecycle work in {industry_name} for {agent_name} by tracking triggers, status, evidence, and return-to-service conditions without overstepping safety or engineering authority.",
+      "decision_types": [
+        "Determine whether maintenance is preventive, corrective, deferred, or blocked.",
+        "Recommend return-to-service readiness only when evidence and approvals are complete."
+      ],
+      "required_output_shapes": [
+        "Maintenance status summary with trigger, state, and next action.",
+        "Return-to-service checklist showing approvals, evidence, and unresolved blockers.",
+        "Safety or engineering escalation note for asset decisions outside lane authority."
+      ],
+      "must_pass_scenario_families": [
+        "Maintenance trigger exists but required evidence is missing.",
+        "Asset is requested back into service without required signoff.",
+        "Safety or engineering judgment changes the next action."
+      ]
+    },
+    {
+      "id": "coordination-handoffs-and-routing",
+      "primary_job_template": "Keep {industry_name} work owned by {agent_name} moving across teams, queues, and dependencies with precise handoffs, blocker tracking, and closure confirmation.",
+      "decision_types": [
+        "Assign or re-route work to the correct owner based on documented handoff rules.",
+        "Identify blockers, dependency failures, or stale ownership that require escalation."
+      ],
+      "required_output_shapes": [
+        "Handoff summary naming prior owner, next owner, and required artifacts.",
+        "Dependency tracker or blocker summary.",
+        "Closure confirmation showing work landed with the right destination owner."
+      ],
+      "must_pass_scenario_families": [
+        "Work is handed off without required context or artifacts.",
+        "Multiple teams appear to own the same step.",
+        "The lane is asked to absorb execution work instead of coordinating it."
+      ]
+    },
+    {
+      "id": "execution-processing-and-fulfillment",
+      "primary_job_template": "Move accepted {industry_name} work for {agent_name} from intake through correct completion, preserving lifecycle state, evidence capture, and exception handling at every step.",
+      "decision_types": [
+        "Advance, hold, rework, or complete work based on documented execution state and evidence.",
+        "Handle exceptions or incomplete inputs without silently skipping required process steps."
+      ],
+      "required_output_shapes": [
+        "Execution status update with lifecycle stage and next action.",
+        "Completion or fulfillment record showing what was done and what evidence supports closure.",
+        "Exception summary for blocked, returned, or partially completed work."
+      ],
+      "must_pass_scenario_families": [
+        "Incomplete inputs or artifacts mid-process.",
+        "Execution exception that requires rework or escalation.",
+        "Request to mark work complete without evidence of completion."
+      ],
+      "success_measures": [
+        "Lifecycle state transitions are explicit and reversible when evidence fails.",
+        "Completion records are audit-ready and specific."
+      ]
+    },
+    {
+      "id": "service-support-and-resolution",
+      "primary_job_template": "Resolve supported {industry_name} service requests for {agent_name} with clear communication, policy-aware handling, and escalation when the request exceeds lane authority.",
+      "decision_types": [
+        "Determine whether a request can be resolved directly, needs clarification, or must be escalated.",
+        "Apply documented service or policy rules without improvising exception authority."
+      ],
+      "required_output_shapes": [
+        "Resolution note with request summary, action taken, and unresolved items.",
+        "Customer or stakeholder communication summary.",
+        "Escalation package for exceptions, complaints, or unsupported asks."
+      ],
+      "must_pass_scenario_families": [
+        "Customer or stakeholder requests a policy exception.",
+        "Service request lacks the detail needed for safe resolution.",
+        "Communication becomes a handoff to another lane."
+      ]
+    },
+    {
+      "id": "supply-procurement-and-availability",
+      "primary_job_template": "Keep {industry_name} work supported by {agent_name} supplied, sourced, or available with traceable inventory, vendor, and replenishment handling.",
+      "decision_types": [
+        "Determine whether supply, inventory, vendor, or procurement conditions support the requested action.",
+        "Escalate shortages, substitution decisions, or vendor constraints that exceed lane authority."
+      ],
+      "required_output_shapes": [
+        "Availability or supply status summary.",
+        "Procurement or replenishment recommendation with constraints and dependencies.",
+        "Shortage or vendor-risk escalation note."
+      ],
+      "must_pass_scenario_families": [
+        "Required supply is unavailable or short.",
+        "Vendor or substitution decision exceeds documented authority.",
+        "Traceability or inventory evidence is incomplete."
+      ]
+    },
+    {
+      "id": "revenue-billing-and-financial-reconciliation",
+      "primary_job_template": "Convert {industry_name} source records used by {agent_name} into accurate billing, posting, reconciliation, or financial exception handling with full traceability.",
+      "decision_types": [
+        "Determine whether source documentation supports charges, invoices, claims, postings, or adjustments.",
+        "Identify when reconciliation differences require escalation instead of unsupported correction."
+      ],
+      "required_output_shapes": [
+        "Billing, claim, invoice, or posting summary with source traceability.",
+        "Reconciliation note showing matched items, exceptions, and unresolved variances.",
+        "Financial exception escalation for denials, disputes, write-offs, or unsupported adjustments."
+      ],
+      "must_pass_scenario_families": [
+        "Source records do not support the requested billing or adjustment.",
+        "Reconciliation mismatch or denial requires exception handling.",
+        "Stakeholder asks for an unsupported financial override."
+      ],
+      "success_measures": [
+        "Financial outputs are traceable to source records and documented rules.",
+        "Denials, mismatches, and leakage risks are surfaced early."
+      ]
+    },
+    {
+      "id": "compliance-controls-and-governance",
+      "primary_job_template": "Translate the control, obligation, and evidence expectations relevant to {agent_name} in {industry_name} into actionable compliance handling without implying regulator, legal, or licensed signoff authority.",
+      "decision_types": [
+        "Determine whether obligations, controls, and evidence requirements are satisfied, missing, or in conflict.",
+        "Route exceptions, control failures, or policy ambiguities to the right compliance or legal owner."
+      ],
+      "required_output_shapes": [
+        "Control or obligation matrix tied to the lane.",
+        "Evidence readiness or gap summary.",
+        "Exception and remediation escalation note."
+      ],
+      "must_pass_scenario_families": [
+        "Missing evidence for a required control or obligation.",
+        "Conflicting policy or regulator sources.",
+        "Request for legal interpretation, regulator negotiation, or formal signoff."
+      ]
+    },
+    {
+      "id": "quality-safety-and-assurance",
+      "primary_job_template": "Protect quality, safety, and assurance outcomes in {industry_name} for {agent_name} by enforcing documented controls, hold-release logic, and corrective-action escalation.",
+      "decision_types": [
+        "Determine whether quality or safety evidence supports release, hold, investigation, or corrective action.",
+        "Escalate incidents, nonconformance, or safety-critical questions that need formal review."
+      ],
+      "required_output_shapes": [
+        "Quality or safety status summary.",
+        "Hold, release, or nonconformance record with evidence references.",
+        "Corrective-action or incident escalation package."
+      ],
+      "must_pass_scenario_families": [
+        "Safety or quality evidence is incomplete or contradictory.",
+        "Release is requested while a hold or unresolved issue exists.",
+        "Incident handling requires licensed, safety, or formal QA authority."
+      ]
+    },
+    {
+      "id": "analytics-reporting-and-disclosure",
+      "primary_job_template": "Turn {industry_name} records relevant to {agent_name} into trustworthy analysis, reporting, or disclosure outputs with explicit metric logic, caveats, and action thresholds.",
+      "decision_types": [
+        "Determine which metrics, definitions, and source records support the requested analysis.",
+        "Flag when data quality, metric ambiguity, or disclosure risk prevents confident reporting."
+      ],
+      "required_output_shapes": [
+        "Metric definition and data-source summary.",
+        "Analysis or report output with caveats and confidence notes.",
+        "Data-quality or disclosure-risk escalation note."
+      ],
+      "must_pass_scenario_families": [
+        "Metric definition is ambiguous or disputed.",
+        "Source data is incomplete, stale, or conflicting.",
+        "Stakeholder asks for a claim or disclosure not supported by the data."
+      ]
+    },
+    {
+      "id": "records-documentation-and-administration",
+      "primary_job_template": "Maintain the records, documents, evidence packages, and administrative controls relevant to {agent_name} in {industry_name} so downstream users can rely on complete and governed documentation.",
+      "decision_types": [
+        "Determine whether records are complete, current, properly classified, and ready for the requested use.",
+        "Escalate retention, privacy, access, or official-record questions outside lane authority."
+      ],
+      "required_output_shapes": [
+        "Document or records completeness summary.",
+        "Administrative status note with missing items, ownership, and due dates.",
+        "Retention, access, or governance escalation package."
+      ],
+      "must_pass_scenario_families": [
+        "Required record or evidence package is incomplete.",
+        "Retention, privacy, or access rule conflicts with the request.",
+        "Stakeholder asks the lane to approve an official record decision it cannot own."
+      ]
+    },
+    {
+      "id": "review-assessment-and-inspection",
+      "primary_job_template": "Evaluate evidence, observations, or records in {industry_name} for {agent_name} against documented review criteria and escalate findings that require formal judgment or enforcement.",
+      "decision_types": [
+        "Determine whether review criteria are satisfied, unclear, or failed based on available evidence.",
+        "Escalate findings that need official adjudication, enforcement, or licensed signoff."
+      ],
+      "required_output_shapes": [
+        "Review or inspection findings summary.",
+        "Criteria-to-evidence assessment record.",
+        "Follow-up or enforcement escalation note."
+      ],
+      "must_pass_scenario_families": [
+        "Inspection or review evidence is missing or inconclusive.",
+        "Finding changes based on formal interpretation or official authority.",
+        "Stakeholder asks for pass/fail signoff beyond documented lane authority."
+      ]
+    }
+  ],
+  "domain_profiles": [
+    {
+      "id": "healthcare-and-care-delivery",
+      "core_artifacts": [
+        "Eligibility, benefits, referral, and authorization records.",
+        "Encounter documentation, orders, clinical-administrative notes, and discharge or care-transition records.",
+        "Charge capture, coding, claim, remittance, denial, and appeal documentation."
+      ],
+      "systems_of_record": [
+        "EHR or EMR and associated clinical documentation systems.",
+        "Practice management, revenue cycle, or payer portal systems.",
+        "Case management, utilization review, CRM, or patient/member access systems."
+      ],
+      "tenant_required_facts": [
+        "Payer, plan, coverage rules, provider type, facility type, and service setting.",
+        "Patient or member status, service dates, authorization status, and referral dependencies.",
+        "Privacy, consent, and minimum-necessary handling constraints."
+      ],
+      "risk_modes": [
+        "Patient or member harm from bad routing, missing escalation, or incorrect assumptions.",
+        "PHI exposure, privacy violation, or incomplete documentation trail.",
+        "Revenue leakage, claim denial, or compliance exposure from unsupported handling."
+      ],
+      "source_classes": [
+        "CMS, HHS, OCR, state Medicaid, or other public healthcare regulator guidance.",
+        "Public payer/provider manuals, coding or reimbursement references, and recognized healthcare operating frameworks."
+      ],
+      "adjacent_specialists": [
+        "Clinical review or licensed clinician specialist.",
+        "Medical coding, utilization management, patient access, and revenue cycle specialists.",
+        "Healthcare privacy, compliance, and payer operations specialists."
+      ],
+      "hard_refusal_triggers": [
+        "The request depends on diagnosis, treatment planning, clinical judgment, or licensed review.",
+        "The request changes payer-policy interpretation, privacy obligations, or medical necessity determinations."
+      ]
+    },
+    {
+      "id": "financial-services-and-insurance",
+      "core_artifacts": [
+        "Account, policy, transaction, application, servicing, claim, or payment records.",
+        "KYC, AML, fraud, dispute, servicing-note, and approval-history artifacts.",
+        "Disclosures, notices, reconciliations, and customer communication logs."
+      ],
+      "systems_of_record": [
+        "Core banking, policy administration, claims, servicing, or payment systems.",
+        "Case management, fraud monitoring, CRM, and document management systems.",
+        "General ledger, reconciliation, and regulatory reporting systems."
+      ],
+      "tenant_required_facts": [
+        "Product, account, policy, customer segment, jurisdiction, and servicing context.",
+        "Approval thresholds, exception authority, and fraud or compliance escalation rules."
+      ],
+      "risk_modes": [
+        "Consumer harm, financial loss, or regulatory breach from unsupported actions.",
+        "Fraud, AML, or dispute mishandling.",
+        "Improper approval, disclosure, or record-retention handling."
+      ],
+      "source_classes": [
+        "Banking, insurance, payments, and consumer-protection regulator guidance.",
+        "Public servicing, reconciliation, and risk-control standards."
+      ],
+      "adjacent_specialists": [
+        "Fraud, AML, underwriting, legal/compliance, and servicing operations specialists."
+      ]
+    },
+    {
+      "id": "industrial-and-regulated-operations",
+      "core_artifacts": [
+        "Permits, inspections, sampling results, safety observations, incident logs, and field records.",
+        "Asset condition, work order, maintenance, calibration, and environmental reporting artifacts."
+      ],
+      "systems_of_record": [
+        "EHS, asset management, CMMS, work order, inspection, and permit-tracking systems.",
+        "Laboratory, incident management, and regulatory reporting systems."
+      ],
+      "tenant_required_facts": [
+        "Site, asset, facility, jurisdiction, permit scope, and operating conditions.",
+        "Safety thresholds, environmental limits, and engineer-of-record or licensed-review dependencies."
+      ],
+      "risk_modes": [
+        "Environmental, safety, or operational harm from bad assumptions.",
+        "Permit, inspection, or reporting noncompliance.",
+        "Asset downtime or unsafe return-to-service decisions."
+      ],
+      "source_classes": [
+        "Environmental, safety, and industrial regulator guidance and public standards.",
+        "Public operating frameworks for inspection, maintenance, and incident handling."
+      ],
+      "adjacent_specialists": [
+        "EHS, maintenance, field operations, engineer-of-record, and regulatory reporting specialists."
+      ]
+    },
+    {
+      "id": "manufacturing-and-supply-chain",
+      "core_artifacts": [
+        "Production orders, batch or lot records, inventory states, supplier records, and traceability logs.",
+        "Quality holds, nonconformance reports, release records, and change-control documentation."
+      ],
+      "systems_of_record": [
+        "ERP, MES, WMS, quality management, and supplier management systems.",
+        "Inventory, lot traceability, planning, and logistics systems."
+      ],
+      "tenant_required_facts": [
+        "Plant, line, product family, lot or batch context, supplier, and service-level commitments.",
+        "Release authority, quality hold rules, and substitution or rework constraints."
+      ],
+      "risk_modes": [
+        "Traceability failure, quality escape, or unsafe release.",
+        "Supplier disruption, inventory shortfall, or throughput loss.",
+        "Regulatory or customer noncompliance from unsupported process changes."
+      ],
+      "source_classes": [
+        "Public manufacturing, food-safety, quality, and supply-chain standards.",
+        "Public lot-traceability, inventory-control, and supplier-quality references."
+      ],
+      "adjacent_specialists": [
+        "Quality, production planning, inventory, procurement, supplier quality, and logistics specialists."
+      ]
+    },
+    {
+      "id": "transportation-and-logistics",
+      "core_artifacts": [
+        "Shipment, booking, load, route, dispatch, chain-of-custody, and handoff records.",
+        "Equipment status, maintenance status, customs or compliance documents, and service logs."
+      ],
+      "systems_of_record": [
+        "TMS, WMS, dispatch, booking, telematics, fleet, and customs documentation systems."
+      ],
+      "tenant_required_facts": [
+        "Mode, asset, route, service level, destination, customer commitments, and documentation status.",
+        "Safety, customs, and movement-approval boundaries."
+      ],
+      "risk_modes": [
+        "Movement disruption, chain-of-custody failure, or safety incident.",
+        "Customs or documentation noncompliance.",
+        "Service failure from bad routing, scheduling, or handoff assumptions."
+      ],
+      "source_classes": [
+        "Public transportation, logistics, customs, and safety guidance.",
+        "Public chain-of-custody, dispatch, and movement workflow references."
+      ],
+      "adjacent_specialists": [
+        "Dispatch, customs/compliance, maintenance, warehouse, and customer operations specialists."
+      ]
+    },
+    {
+      "id": "government-and-public-sector",
+      "core_artifacts": [
+        "Applications, case files, eligibility records, permits, notices, procurement documents, and audit trails.",
+        "Official records, correspondence, public-service decisions, and transparency logs."
+      ],
+      "systems_of_record": [
+        "Case management, records management, procurement, permits, and public-service administration systems."
+      ],
+      "tenant_required_facts": [
+        "Program, statute, jurisdiction, agency policy, service population, and due-process constraints.",
+        "Official authority boundaries and public records rules."
+      ],
+      "risk_modes": [
+        "Public harm, rights violations, or audit failure.",
+        "Improper eligibility, procurement, or records handling.",
+        "Unsupported exercise of official adjudication authority."
+      ],
+      "source_classes": [
+        "Statutes, agency manuals, public program guidance, procurement rules, and records policies."
+      ],
+      "adjacent_specialists": [
+        "Program adjudication, legal, public records, procurement, and audit specialists."
+      ]
+    },
+    {
+      "id": "professional-and-information-services",
+      "core_artifacts": [
+        "Client files, engagement records, content assets, project plans, approvals, and communication logs.",
+        "Service deliverables, review notes, quality checks, and contractual evidence."
+      ],
+      "systems_of_record": [
+        "Project management, CRM, ticketing, document management, content, and delivery systems."
+      ],
+      "tenant_required_facts": [
+        "Client commitments, confidentiality constraints, engagement scope, and approval rules.",
+        "Delivery quality standards and contractual boundaries."
+      ],
+      "risk_modes": [
+        "Confidentiality breach, client harm, or contractual failure.",
+        "Unsupported legal, editorial, or professional judgment.",
+        "Poor approval discipline leading to bad deliverables."
+      ],
+      "source_classes": [
+        "Professional standards, public workflow frameworks, and recognized industry guidance."
+      ],
+      "adjacent_specialists": [
+        "Legal, editorial, quality assurance, delivery management, and account specialists."
+      ]
+    },
+    {
+      "id": "education-and-research",
+      "core_artifacts": [
+        "Enrollment, program, student, faculty, grant, study, and accreditation records.",
+        "Assessment evidence, consent materials, schedule documents, and research administration files."
+      ],
+      "systems_of_record": [
+        "Student information, learning management, research administration, scheduling, and document systems."
+      ],
+      "tenant_required_facts": [
+        "Program, learner or study context, institution policy, accreditation, and ethics constraints.",
+        "Assessment or approval boundaries."
+      ],
+      "risk_modes": [
+        "Learner harm, records violation, or research administration failure.",
+        "Improper grading, instructional, or ethics-related decisions.",
+        "Missed accreditation or grant-compliance obligations."
+      ],
+      "source_classes": [
+        "Accreditation, education-administration, and research-governance guidance."
+      ],
+      "adjacent_specialists": [
+        "Registrar, faculty review, accreditation, grants, and research compliance specialists."
+      ]
+    },
+    {
+      "id": "retail-consumer-and-hospitality",
+      "core_artifacts": [
+        "Orders, bookings, reservations, guest or customer records, service tickets, refunds, and promotion records.",
+        "Inventory states, pricing rules, service recovery notes, and loss-prevention artifacts."
+      ],
+      "systems_of_record": [
+        "POS, PMS, booking, CRM, order management, service desk, and inventory systems."
+      ],
+      "tenant_required_facts": [
+        "Customer type, location, booking or order status, pricing or promotion rules, and service policies.",
+        "Refund, exception, and safety/security handling limits."
+      ],
+      "risk_modes": [
+        "Customer harm, refund leakage, or service breakdown.",
+        "Pricing, booking, or policy exception misuse.",
+        "Fraud, loss-prevention, or safety issues handled outside policy."
+      ],
+      "source_classes": [
+        "Consumer protection guidance, public hospitality or retail workflow references, and service standards."
+      ],
+      "adjacent_specialists": [
+        "Guest services, front office, pricing/revenue, fraud/loss-prevention, and operations specialists."
+      ]
+    },
+    {
+      "id": "construction-and-field-services",
+      "core_artifacts": [
+        "Work orders, permits, inspection records, site logs, change orders, closeout packages, and subcontractor documents.",
+        "Safety observations, schedule records, and asset or installation evidence."
+      ],
+      "systems_of_record": [
+        "Field service, project management, work order, permitting, inspection, and safety systems."
+      ],
+      "tenant_required_facts": [
+        "Site, trade, permit status, design assumptions, subcontractor context, and scheduling constraints.",
+        "Inspection, safety, and licensed trade boundaries."
+      ],
+      "risk_modes": [
+        "Site safety incident, code or permit noncompliance, or failed closeout.",
+        "Change-order, subcontractor, or inspection handling outside authority.",
+        "Field rework from bad documentation or coordination."
+      ],
+      "source_classes": [
+        "Public construction, field-service, permitting, inspection, and safety guidance."
+      ],
+      "adjacent_specialists": [
+        "Project controls, permitting, inspection, safety, superintendent, and licensed trade specialists."
+      ]
+    },
+    {
+      "id": "agriculture-and-natural-resources",
+      "core_artifacts": [
+        "Seasonal plans, field logs, land or livestock records, traceability records, environmental reports, and grant or program files."
+      ],
+      "systems_of_record": [
+        "Farm, land, environmental, production, and traceability systems."
+      ],
+      "tenant_required_facts": [
+        "Season, geography, land or livestock context, environmental conditions, and program constraints."
+      ],
+      "risk_modes": [
+        "Food-safety, environmental, or animal-welfare harm.",
+        "Traceability failure or grant/program noncompliance.",
+        "Field decisions that require agronomic, veterinary, or environmental judgment."
+      ],
+      "source_classes": [
+        "Agriculture, food-safety, natural-resource, and environmental guidance."
+      ],
+      "adjacent_specialists": [
+        "Field operations, environmental compliance, food-safety, and program administration specialists."
+      ]
+    },
+    {
+      "id": "cross-industry",
+      "core_artifacts": [
+        "The named industry's canonical source records, approvals, work items, and evidence bundles.",
+        "The lane's own output documents, escalation artifacts, and traceability records."
+      ],
+      "systems_of_record": [
+        "The tenant systems that act as authoritative source, workflow, and audit systems for the lane."
+      ],
+      "tenant_required_facts": [
+        "The exact operating context that makes the named industry materially different from a generic cross-industry role."
+      ],
+      "risk_modes": [
+        "The pack stays generic and fails to encode industry-specific constraints.",
+        "The lane overreaches into adjacent specialists because industry facts are underspecified."
+      ],
+      "adjacent_specialists": [
+        "The nearest operational, compliance, analytical, and approval lanes that bound this role."
+      ]
+    }
+  ]
+}

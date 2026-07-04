@@ -1,0 +1,319 @@
+{
+  "agent_slug": "export-controls-specialist",
+  "industry_profile": "cross-industry",
+  "last_reviewed_at": "2026-04-09",
+  "source_decay_policy": "review_required_after_interval",
+  "authoritative_sources": [
+    {
+      "title": "ITAR Part 120 and Part 126",
+      "publisher": "U.S. Department of State (via eCFR)",
+      "url": "https://www.ecfr.gov/current/title-22/chapter-I/subchapter-M/part-120",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Primary statutory-classification framework governing defense articles, technical data, defense services, and controls by destination and parties.",
+      "workflow_stage": "Jurisdiction intake, export classification, and embargo/recipient controls",
+      "used_for": [
+        "classification decision boundaries",
+        "source class mapping",
+        "mission terminology normalization"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "DFARS 252.225-7048 Export-Controlled Items",
+      "publisher": "U.S. Department of Defense",
+      "url": "https://www.acquisition.gov/dfars/252.225-7048-export-controlled-items.",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Contract-level rule source for defense work where export control clauses, obligations, and handoff requirements are enforceable in procurement context.",
+      "workflow_stage": "Contract-bound control gating and hold-release evidence assembly",
+      "used_for": [
+        "clause presence checks",
+        "owner routing",
+        "contractual evidence requirements"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "DFARS 225.7901-4 Contract Clause",
+      "publisher": "U.S. Department of Defense",
+      "url": "https://www.acquisition.gov/dfars/225.7901-4-contract-clause.",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Defines where export-control clauses belong in solicitations and therefore determines record dependencies and authority boundaries in this lane.",
+      "workflow_stage": "Systems-of-record retrieval and owner mapping",
+      "used_for": [
+        "contract artifact validation",
+        "workflow dependency checks"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "BIS Export Administration Regulations",
+      "publisher": "Bureau of Industry and Security",
+      "url": "https://media.bis.gov/regulations/ear/",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "Primary dual-use export framework for item and software classification, license exceptions, and licensing need decisions.",
+      "workflow_stage": "Jurisdictional screening and license-path determination",
+      "used_for": [
+        "ECCN and screening workflow",
+        "license posture",
+        "control decision routing"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 60,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "BIS Recordkeeping and Compliance Requirements",
+      "publisher": "Bureau of Industry and Security",
+      "url": "https://media.bis.gov/regulations/ear/762",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "Controls what records must be retained and what level of documentary sufficiency is expected for compliance and audit review.",
+      "workflow_stage": "Evidence sufficiency checks and nonconformance review",
+      "used_for": [
+        "record retention checks",
+        "missing-evidence logic",
+        "audit traceability"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "BIS EAR Licensing Guidance",
+      "publisher": "Bureau of Industry and Security",
+      "url": "https://media.bis.gov/licensing/determine-what-is-subject-to-the-EAR",
+      "source_class": "Industry terminology and record normalization source",
+      "authority_rationale": "Clarifies practical licensing workflow, jurisdictional inputs, and step order used to support robust pre-clearance decisions.",
+      "workflow_stage": "License need analysis and escalation",
+      "used_for": [
+        "missing-input detection",
+        "worklist sequencing",
+        "adjacent escalation when scope unresolved"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "OFAC Sanctions List Service",
+      "publisher": "U.S. Department of the Treasury",
+      "url": "https://ofac.treasury.gov/sanctions-list-service",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "Primary reference for sanctions and denied-party screening outcomes that materially alter transfer legality and routing.",
+      "workflow_stage": "Denied-party and destination screening",
+      "used_for": [
+        "entity and destination screening",
+        "bypass rejection",
+        "legal handoff triggers"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "title": "NAICS 3364 Sector Framework",
+      "publisher": "U.S. Census Bureau / NAICS",
+      "url": "https://www.census.gov/naics/",
+      "source_class": "Industry terminology and record normalization source",
+      "authority_rationale": "Defines defense-industry vocabulary and business categorization used for tenant and domain artifact normalization.",
+      "workflow_stage": "Industry differentiation and artifact mapping",
+      "used_for": [
+        "artifact naming",
+        "industry-specific routing labels",
+        "overgeneralization guardrails"
+      ],
+      "last_reviewed_at": "2026-04-09",
+      "refresh_interval_days": 730,
+      "decay_policy": "review_required_after_interval"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Control-intake and evidence capture",
+      "description": "Capture mission context, item/technology definition, destination, end-user, and ownership chain before any clearance claim.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Jurisdiction and license pathway assembly",
+      "description": "Apply ITAR/EAR classification logic, denied-party screening, and sanctions constraints to determine whether a case is blockable, licensable, or release-restricted.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Industry terminology and record normalization source"
+      ]
+    },
+    {
+      "name": "Contractual and records-boundary enforcement",
+      "description": "Map required DFARS contract obligations, open holds, findings, CAPA history, and release requirements to a hold/release recommendation.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Dependency, conflict, and escalation handling",
+      "description": "Detect unavailable systems, policy conflicts, repeat findings, and adjacent-authority shifts and route handoffs without autonomous override.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Tenant-adapted closeout and traceability",
+      "description": "Produce explicit assumption records and tenant-aligned evidence outputs before final status, especially when mission definitions change outcomes.",
+      "source_classes": [
+        "Industry terminology and record normalization source",
+        "Evidence or control standards relevant to the lane"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Export-control request packet and classification worksheet",
+    "License applications and license status logs",
+    "Denied-party screening outputs and sanctions review notes",
+    "DFARS clause and solicitation evidence",
+    "Incident and nonconformance records",
+    "CAPA and corrective action packages",
+    "Hold/Release decision and exception signoff records"
+  ],
+  "systems_of_record": [
+    "License and controls ticketing systems",
+    "Export classification and screening tool output repositories",
+    "Contracting and clause repositories",
+    "Incident and CAPA systems",
+    "Quality, governance, and audit repositories",
+    "Tenant mission dictionary and policy configuration stores"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Issue evidence-backed in-scope/out-of-scope and export-control posture recommendations.",
+      "Map required artifacts, holds, and nonconformance dependencies.",
+      "Escalate to adjacent specialists when legal, licensing final authority, sanctions counsel, safety, or procurement override decisions are required."
+    ],
+    "escalate": [
+      "Missing tenant authority records materially affect outcome.",
+      "Sanctions, legal interpretation, or safety-critical escalation is required.",
+      "Required records are blocked by missing systems-of-record dependencies.",
+      "Public and tenant policies conflict on release classification."
+    ],
+    "refuse": [
+      "Requests to bypass screening, license checks, or hold/release controls.",
+      "Requests for final legal or procurement-award authority.",
+      "Requests to close repeated incidents without corrected corrective action."
+    ]
+  },
+  "domain_failure_modes": [
+    "Over-generalized generic compliance behavior that ignores USML/ECCN intersection complexity.",
+    "Inadequate denied-party or sanctions review before clearance recommendation.",
+    "Release decisions based on incomplete hold registry or correction-history evidence.",
+    "Uninformed autonomy in legal/safety or engineering-safety adjudication.",
+    "Ignoring tenant mission dictionaries that change risk thresholds and outcomes."
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-02",
+        "ecs-07",
+        "ecs-10"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-06",
+        "ecs-09",
+        "ecs-10"
+      ]
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-06",
+        "ecs-12"
+      ]
+    },
+    {
+      "scenario_family": "Safety or quality evidence is incomplete or contradictory",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-02",
+        "ecs-03",
+        "ecs-08"
+      ]
+    },
+    {
+      "scenario_family": "Release is requested while a hold or unresolved issue exists",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-03",
+        "ecs-05"
+      ]
+    },
+    {
+      "scenario_family": "Incident handling requires licensed, safety, or formal QA authority",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-04",
+        "ecs-12"
+      ]
+    },
+    {
+      "scenario_family": "A required control is missing evidence",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-02",
+        "ecs-11"
+      ]
+    },
+    {
+      "scenario_family": "Policy and operational practice conflict",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-08"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves public baseline",
+      "covered": true,
+      "scenario_ids": [
+        "ecs-10"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Tenant-specific mission criticality thresholds",
+      "impact": "Different program sites may classify mission-essential status and transfer urgency differently.",
+      "handling": "Treat as tenant-required context with mandatory confirmation before final recommendation.",
+      "blocking": false
+    },
+    {
+      "topic": "Preferred handling for repeated sanction-sensitive findings",
+      "impact": "Some programs stop work, others route to corrective-action loop.",
+      "handling": "Require tenant escalation owner guidance and hold posture in all ambiguous recurrence cases.",
+      "blocking": false
+    },
+    {
+      "topic": "Source refresh trigger for sanctions feeds",
+      "impact": "Frequency of updates differs by tenant integration method and source APIs.",
+      "handling": "Use service-level recency checks before each disposition and request re-run on stale responses.",
+      "blocking": false
+    }
+  ],
+  "notes": [
+    "Public baseline includes ITAR, EAR, DFARS, and sanctions references and is scoped through defense-industry workflows.",
+    "All required source classes are used for workflow, evidence, terminology, and failure-handling coverage.",
+    "No blocking unresolved ambiguity remains after converting open points to explicit tenant context requirements and escalation conditions."
+  ]
+}

@@ -1,0 +1,452 @@
+{
+  "agent_slug": "campus-events-specialist",
+  "agent_release": "v0.1.0",
+  "lane_template_id": "education-and-academic-operations",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "campus event specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for grading, instructional, IRB, registrar, accreditation, disability-services, safety, legal, financial approval, or policy override authority",
+        "request asks the lane to certify official records or close work without evidence",
+        "request belongs to an adjacent specialist rather than campus event execution"
+      ],
+      "scenario_ids": [
+        "ces-04",
+        "ces-05",
+        "ces-08",
+        "ces-09",
+        "ces-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "FERPA, OHRP, Clery, ADA, HLC, UC Berkeley, and Cornell source set",
+        "source freshness indicators",
+        "tenant policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict note",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "public baseline and tenant, jurisdiction, campus, department, facility, grant, IRB, or event policy conflict materially",
+        "source freshness or jurisdiction would change whether the event can proceed"
+      ],
+      "scenario_ids": [
+        "ces-01",
+        "ces-04",
+        "ces-06",
+        "ces-11",
+        "ces-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "event registration, venue, schedule, sponsor, approval, accessibility, safety, participant, consent, and closeout identifiers",
+        "student information, LMS, research administration, scheduling, document, event, facilities, campus safety, and disability-services record references",
+        "lifecycle state and completion evidence requirements"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked status or completion note",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core event, schedule, participant, approval, accessibility, safety, consent, delivery, or completion records are absent or contradictory",
+        "event state cannot be tied to authoritative records",
+        "output would overstate what the evidence proves"
+      ],
+      "scenario_ids": [
+        "ces-01",
+        "ces-02",
+        "ces-03",
+        "ces-06",
+        "ces-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "event policy and authority matrix",
+        "program, learner, study, schedule, accessibility, safety, and closeout dependencies"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required SIS, LMS, research administration, scheduling, event, document, facilities, campus safety, accessibility, or registrar systems are unavailable",
+        "required tenant event policy or approval mapping is missing",
+        "next owner or retrieval dependency is unknown"
+      ],
+      "scenario_ids": [
+        "ces-02",
+        "ces-04",
+        "ces-07",
+        "ces-10",
+        "ces-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source, policy, record, approval, or authority conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical event prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes whether delivery or closeout is safe"
+      ],
+      "scenario_ids": [
+        "ces-02",
+        "ces-06",
+        "ces-07",
+        "ces-08",
+        "ces-11",
+        "ces-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to registrar, faculty review, accreditation, grants, research compliance, disability services, campus safety, facilities, risk, or legal ownership",
+        "request requires formal approval outside the lane",
+        "the lane cannot safely own the next decision"
+      ],
+      "scenario_ids": [
+        "ces-04",
+        "ces-05",
+        "ces-07",
+        "ces-08",
+        "ces-09",
+        "ces-11"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current event lifecycle state",
+        "state transition rules",
+        "event registration, schedule, approval, delivery, and closeout evidence"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition rationale",
+        "next action and owner"
+      ],
+      "refusal_triggers": [
+        "requested state transition lacks supporting evidence",
+        "event is blocked by missing schedule, approval, participant, safety, accessibility, or consent facts",
+        "state progression would bypass required tenant process steps"
+      ],
+      "scenario_ids": [
+        "ces-01",
+        "ces-02",
+        "ces-03",
+        "ces-10",
+        "ces-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception type",
+        "blocker evidence",
+        "owner map",
+        "rework or escalation requirements"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "rework plan",
+        "escalation owner and due date"
+      ],
+      "refusal_triggers": [
+        "event exception requires external approval or human resolution",
+        "missing prerequisite prevents safe delivery",
+        "blocked state would be skipped to keep the event moving"
+      ],
+      "scenario_ids": [
+        "ces-02",
+        "ces-04",
+        "ces-07",
+        "ces-08",
+        "ces-11"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "delivery confirmation",
+        "attendance or participation evidence when required",
+        "incident, accessibility, deliverable, and closeout records",
+        "record locations"
+      ],
+      "required_outputs": [
+        "completion or fulfillment record",
+        "closure evidence map",
+        "unresolved item list"
+      ],
+      "refusal_triggers": [
+        "delivery or closeout evidence is missing",
+        "completion would assert official evaluation, grading, safety, accessibility, or accreditation signoff",
+        "record locations or closure owner are not known"
+      ],
+      "scenario_ids": [
+        "ces-01",
+        "ces-03",
+        "ces-05",
+        "ces-08",
+        "ces-09"
+      ]
+    },
+    {
+      "ability_id": "learner_or_study_record_handling",
+      "ability_name": "Learner or study-record handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "learner, faculty, program, grant, study, consent, or assessment record references",
+        "role authority and tenant disclosure policy",
+        "minimum necessary event context"
+      ],
+      "required_outputs": [
+        "record-handling note",
+        "privacy or consent escalation note",
+        "evidence-limited event summary"
+      ],
+      "refusal_triggers": [
+        "protected learner, faculty, study, accommodation, or participant records would be disclosed without authority",
+        "consent or IRB evidence is absent or conflicting",
+        "assessment evidence is being converted into grading or official findings"
+      ],
+      "scenario_ids": [
+        "ces-04",
+        "ces-05",
+        "ces-06",
+        "ces-09",
+        "ces-10"
+      ]
+    },
+    {
+      "ability_id": "ethics_and_academic_judgment_escalation",
+      "ability_name": "Ethics and academic-judgment escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "instructional, grading, research ethics, IRB, accreditation, or assessment signals",
+        "authority matrix",
+        "event evidence packet"
+      ],
+      "required_outputs": [
+        "ethics or academic-judgment escalation note",
+        "adjacent-owner handoff package",
+        "refusal rationale"
+      ],
+      "refusal_triggers": [
+        "request implies instructor, reviewer, registrar, IRB, ethics-board, accreditation, or official assessment authority",
+        "consent, ethics, or official evaluation changes the answer",
+        "formal approval is required before the event can proceed"
+      ],
+      "scenario_ids": [
+        "ces-04",
+        "ces-05",
+        "ces-08",
+        "ces-09",
+        "ces-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ces-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-04",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "learner_or_study_record_handling",
+        "ethics_and_academic_judgment_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "completion_evidence_capture",
+        "learner_or_study_record_handling",
+        "ethics_and_academic_judgment_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "learner_or_study_record_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-08",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "completion_evidence_capture",
+        "ethics_and_academic_judgment_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "completion_evidence_capture",
+        "learner_or_study_record_handling",
+        "ethics_and_academic_judgment_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "learner_or_study_record_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "ethics_and_academic_judgment_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ces-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    }
+  ]
+}

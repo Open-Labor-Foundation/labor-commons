@@ -1,0 +1,408 @@
+{
+  "agent_slug": "contact-center-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "contact center specialty boundary",
+        "client SOW and service catalog",
+        "adjacent specialist matrix",
+        "tenant approval and authority rules"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "adjacent-owner routing summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, privacy, payment, sales, workforce, telephony engineering, compliance certification, or final approval authority",
+        "request tries to override consent, DNC, disclosure, identity, call-recording, payment-data, or client policy controls",
+        "request treats contact center entry as authority to resolve the underlying business decision"
+      ],
+      "scenario_ids": [
+        "ccops-06",
+        "ccops-07",
+        "ccops-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness and precedence policy",
+        "tenant policy and client SOW precedence rules",
+        "jurisdiction, channel, and contact-purpose context"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "conflict escalation summary",
+        "source freshness status"
+      ],
+      "refusal_triggers": [
+        "required public source, tenant policy, or client SOW context is missing",
+        "outbound contact, consent, DNC, recording, or payment-data rules materially conflict",
+        "source or tenant policy is stale enough to change the operational answer"
+      ],
+      "scenario_ids": [
+        "ccops-01",
+        "ccops-04",
+        "ccops-10",
+        "ccops-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "ACD, IVR, CTI, CRM, ticketing, WFM, QM, recording, transcript, callback, consent, DNC, campaign, and audit records",
+        "scripts, knowledge articles, disclosures, disposition taxonomy, and QA rubric",
+        "completion criteria, source hierarchy, and retention requirements"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "missing-evidence packet",
+        "artifact-to-owner linkage",
+        "completion evidence record"
+      ],
+      "refusal_triggers": [
+        "critical interaction, script, consent, disposition, QA, or system-update evidence is missing",
+        "record cannot be linked to accountable owner or system of record",
+        "ACD, CRM, campaign, consent, QM, transcript, or audit evidence disagrees materially"
+      ],
+      "scenario_ids": [
+        "ccops-01",
+        "ccops-03",
+        "ccops-04",
+        "ccops-05",
+        "ccops-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant owner matrix",
+        "retrieval hooks and system availability state",
+        "channel, queue, campaign, script, consent, and QA dependencies"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "retrieval prerequisite map",
+        "handoff package"
+      ],
+      "refusal_triggers": [
+        "critical ACD, IVR, CRM, ticketing, WFM, QM, recording, transcript, consent, DNC, campaign, or audit system unavailable",
+        "required owner, approver, script authority, or queue authority unresolved",
+        "record location or retrieval hook missing"
+      ],
+      "scenario_ids": [
+        "ccops-02",
+        "ccops-03",
+        "ccops-11",
+        "ccops-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence-impacting missing facts",
+        "policy, source, SOW, consent, or system conflicts",
+        "customer harm, sensitive-data, or authority uncertainty flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "service model, jurisdiction, client contract, script, consent, or system-of-record facts missing",
+        "source precedence conflict unresolved",
+        "evidence sufficiency, customer-impact risk, or owner authority unknown"
+      ],
+      "scenario_ids": [
+        "ccops-02",
+        "ccops-04",
+        "ccops-06",
+        "ccops-10",
+        "ccops-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff context",
+        "adjacent-lane owner map",
+        "customer-impact and authority boundary facts"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "responsibility transfer map"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, privacy, compliance, payment, refund, credit, collections, sales, telephony, workforce, security, or quality signoff authority",
+        "request asks for regulated disclosure, DNC or consent override, payment approval, or dialer configuration change",
+        "customer harm, fraud, emergency, or safety escalation requires specialized owner"
+      ],
+      "scenario_ids": [
+        "ccops-06",
+        "ccops-07",
+        "ccops-08",
+        "ccops-10"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "contact center work item",
+        "queue, campaign, contact, case, and interaction state",
+        "script and source-record readiness",
+        "SLA and QA status"
+      ],
+      "required_outputs": [
+        "lifecycle state update",
+        "next action and next owner",
+        "state transition evidence"
+      ],
+      "refusal_triggers": [
+        "prerequisite state or source record missing",
+        "state transition lacks authoritative system evidence",
+        "requested transition bypasses required script, disclosure, QA, consent, or approval step"
+      ],
+      "scenario_ids": [
+        "ccops-01",
+        "ccops-02",
+        "ccops-03",
+        "ccops-09"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception type and source",
+        "partial evidence and affected system records",
+        "rework criteria and owner matrix"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "rework or escalation route",
+        "open blocker and SLA risk summary"
+      ],
+      "refusal_triggers": [
+        "exception cannot be assigned to accountable owner",
+        "required remediation path unresolved",
+        "conflict changes legal, privacy, payment, consent, or approval outcome"
+      ],
+      "scenario_ids": [
+        "ccops-03",
+        "ccops-04",
+        "ccops-06",
+        "ccops-10",
+        "ccops-12"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "completion criteria",
+        "final disposition and system update",
+        "recording or transcript pointer where required",
+        "QA, callback, customer promise, and audit evidence"
+      ],
+      "required_outputs": [
+        "completion or fulfillment record",
+        "missing completion evidence list",
+        "closure or hold recommendation"
+      ],
+      "refusal_triggers": [
+        "required disposition, CRM update, callback status, QA review, transcript, recording, or audit evidence missing",
+        "customer promise or follow-up remains open",
+        "closure request conflicts with consent, payment, privacy, or quality control"
+      ],
+      "scenario_ids": [
+        "ccops-01",
+        "ccops-05",
+        "ccops-09",
+        "ccops-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "contact center service-family context",
+        "client queue, campaign, interaction, consent, script, quality, and SLA artifacts",
+        "administrative support and business-services client boundary facts"
+      ],
+      "required_outputs": [
+        "industry-specific artifact map",
+        "contact center record checklist",
+        "service-family terminology normalization"
+      ],
+      "refusal_triggers": [
+        "contact center artifacts are missing",
+        "request treats the industry label as cosmetic",
+        "program, channel, jurisdiction, client model, consent source, or system map omitted in a way that changes artifact expectations"
+      ],
+      "scenario_ids": [
+        "ccops-01",
+        "ccops-04",
+        "ccops-09",
+        "ccops-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ccops-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "lifecycle_state_progression"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-04",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-06",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-09",
+      "ability_ids": [
+        "lifecycle_state_progression",
+        "completion_evidence_capture",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ccops-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_declared": true,
+    "all_scenarios_mapped": true,
+    "functionality_coverage_complete": true
+  }
+}

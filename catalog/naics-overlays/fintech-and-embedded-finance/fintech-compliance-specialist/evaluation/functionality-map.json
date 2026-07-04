@@ -1,0 +1,415 @@
+{
+  "agent_slug": "fintech-compliance-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "product and jurisdiction context",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation intent"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, licensing judgment, or regulator-facing authority",
+        "request asks for AML, sanctions, fraud, credit, or executive approval decisions",
+        "request treats fintech compliance as generic governance without named records or systems"
+      ],
+      "scenario_ids": [
+        "fcs-04",
+        "fcs-07",
+        "fcs-08",
+        "fcs-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "tenant source precedence",
+        "source freshness and conflict indicators"
+      ],
+      "required_outputs": [
+        "source-priority mapping",
+        "conflict summary",
+        "reliability or confidence marker"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public source and tenant policy materially conflict",
+        "product or jurisdiction changes make current source selection unreliable"
+      ],
+      "scenario_ids": [
+        "fcs-03",
+        "fcs-06",
+        "fcs-10",
+        "fcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "control inventory",
+        "evidence bundle",
+        "system-of-record identifiers"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "readiness-confidence statement",
+        "missing-evidence escalation packet"
+      ],
+      "refusal_triggers": [
+        "required control evidence is missing",
+        "artifacts cannot be tied to authoritative systems",
+        "timestamps, owners, or versioning are incomplete for material evidence"
+      ],
+      "scenario_ids": [
+        "fcs-01",
+        "fcs-02",
+        "fcs-05",
+        "fcs-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant operating model",
+        "owner and approval matrix"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system-readiness blockers",
+        "handoff route when blocked"
+      ],
+      "refusal_triggers": [
+        "required source system is unavailable",
+        "sponsor-bank, processor, or product ownership is unclear",
+        "required approval owner is unknown"
+      ],
+      "scenario_ids": [
+        "fcs-01",
+        "fcs-06",
+        "fcs-09",
+        "fcs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact flags",
+        "confidence rubric",
+        "policy or source conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption log",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisites remain unknown",
+        "policy or source conflict is unresolved",
+        "jurisdiction or authority boundary is materially uncertain"
+      ],
+      "scenario_ids": [
+        "fcs-03",
+        "fcs-05",
+        "fcs-06",
+        "fcs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request is outside fintech-compliance handling scope",
+        "request requires legal, AML, sanctions, fraud, privacy, or partner-bank approval authority",
+        "request asks for regulator negotiation or formal certification"
+      ],
+      "scenario_ids": [
+        "fcs-04",
+        "fcs-07",
+        "fcs-08",
+        "fcs-11"
+      ]
+    },
+    {
+      "ability_id": "obligation_and_control_mapping",
+      "ability_name": "Obligation and control mapping",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "product and jurisdiction context",
+        "public authority baseline",
+        "tenant control inventory"
+      ],
+      "required_outputs": [
+        "control or obligation matrix",
+        "obligation-to-evidence-owner map",
+        "review cadence notes"
+      ],
+      "refusal_triggers": [
+        "product scope is undefined",
+        "governing source set cannot be narrowed",
+        "control owner cannot be identified"
+      ],
+      "scenario_ids": [
+        "fcs-01",
+        "fcs-03",
+        "fcs-09",
+        "fcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_and_review_management",
+      "ability_name": "Evidence and review management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "evidence packet",
+        "review cadence policy",
+        "artifact retention and retrieval links"
+      ],
+      "required_outputs": [
+        "evidence readiness summary",
+        "review-preparation packet",
+        "open-gap list by owner"
+      ],
+      "refusal_triggers": [
+        "evidence packet is incomplete",
+        "required review cadence cannot be established",
+        "retention or retrieval hooks are missing for material artifacts"
+      ],
+      "scenario_ids": [
+        "fcs-02",
+        "fcs-09",
+        "fcs-10",
+        "fcs-11"
+      ]
+    },
+    {
+      "ability_id": "exception_and_remediation_handling",
+      "ability_name": "Exception and remediation handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "issue or control failure details",
+        "remediation owner matrix",
+        "severity and due-date context"
+      ],
+      "required_outputs": [
+        "exception escalation note",
+        "remediation tracker entry",
+        "blocked-versus-monitor decision"
+      ],
+      "refusal_triggers": [
+        "control failure severity cannot be assessed",
+        "exception owner is unknown",
+        "operations asks to proceed despite unresolved material gaps"
+      ],
+      "scenario_ids": [
+        "fcs-02",
+        "fcs-05",
+        "fcs-08",
+        "fcs-10"
+      ]
+    },
+    {
+      "ability_id": "unauthorized_signoff_refusal",
+      "ability_name": "Unauthorized signoff refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requested signoff type",
+        "documented approval authority map",
+        "available evidence package"
+      ],
+      "required_outputs": [
+        "refusal or escalation note",
+        "formal-owner handoff package"
+      ],
+      "refusal_triggers": [
+        "formal legal, regulatory, or executive signoff is requested",
+        "certification or attestation owner is outside the lane",
+        "evidence exists but cannot substitute for formal approval authority"
+      ],
+      "scenario_ids": [
+        "fcs-04",
+        "fcs-08",
+        "fcs-11"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "named-industry records and systems",
+        "fintech product and partner model context",
+        "artifact glossary or terminology map"
+      ],
+      "required_outputs": [
+        "industry-specific artifact map",
+        "named-record dependency summary",
+        "warning when the request drifts into generic-function language"
+      ],
+      "refusal_triggers": [
+        "industry-specific records and systems are not identified",
+        "request uses fintech as a label but omits product, program, or partner context",
+        "artifact mapping would rely on generic controls instead of named fintech evidence"
+      ],
+      "scenario_ids": [
+        "fcs-01",
+        "fcs-06",
+        "fcs-09",
+        "fcs-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "fcs-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "obligation_and_control_mapping",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "exception_and_remediation_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-06",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "exception_and_remediation_handling",
+        "unauthorized_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-09",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "evidence_and_review_management",
+        "unauthorized_signoff_refusal"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "fcs-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

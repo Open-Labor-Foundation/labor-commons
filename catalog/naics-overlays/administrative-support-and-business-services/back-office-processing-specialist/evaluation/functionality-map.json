@@ -1,0 +1,395 @@
+{
+  "agent_slug": "back-office-processing-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested back-office outcome",
+        "client SOW or service catalog entry",
+        "specialty boundary",
+        "authority matrix for legal, privacy, records, finance, HR, credit, collections, payment, technology, and client approvers",
+        "adjacent specialist directory"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, HR, finance, credit, collections, privacy, records, payment-security, or executive approval authority",
+        "request asks to bypass business rules, legal holds, missing signatures, or approval workflow",
+        "request treats administrative support as a catch-all for all office or client operations work"
+      ],
+      "scenario_ids": [
+        "bops-06",
+        "bops-07",
+        "bops-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source baseline",
+        "client SOW and tenant policy hierarchy",
+        "jurisdiction and data-category context",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "freshness or conflict escalation note",
+        "tenant-adaptation assumptions"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public guidance, tenant SOP, and client SOW materially conflict",
+        "jurisdiction, data category, or client-service differences change the workflow but are not supplied"
+      ],
+      "scenario_ids": [
+        "bops-02",
+        "bops-10",
+        "bops-11",
+        "bops-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "case ID or work item",
+        "source document or document image",
+        "target system record",
+        "QA checklist and maker-checker evidence",
+        "audit log and completion criteria"
+      ],
+      "required_outputs": [
+        "artifact-state linkage",
+        "evidence sufficiency summary",
+        "closure-evidence verdict"
+      ],
+      "refusal_triggers": [
+        "required source document, system update, QA, or audit evidence is missing",
+        "systems of record conflict on the processing state",
+        "closure is requested without authoritative completion proof"
+      ],
+      "scenario_ids": [
+        "bops-01",
+        "bops-03",
+        "bops-04",
+        "bops-05",
+        "bops-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "client, program, business-unit, and jurisdiction context",
+        "required prerequisite checklist",
+        "source hierarchy and access entitlement records"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "ownership summary",
+        "required-artifact checklist"
+      ],
+      "refusal_triggers": [
+        "required workflow, document, record, or audit system access is missing",
+        "current owner or next owner cannot be established",
+        "client, program, jurisdiction, retention, or data-category context has not been retrieved"
+      ],
+      "scenario_ids": [
+        "bops-02",
+        "bops-03",
+        "bops-04",
+        "bops-11",
+        "bops-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority risk flags",
+        "source conflict indicators",
+        "sensitive-data and legal-hold markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist",
+        "escalation owner assignment"
+      ],
+      "refusal_triggers": [
+        "missing permissions or source records materially change the outcome",
+        "policy or source conflict remains unresolved",
+        "adjacent approval or regulated authority is required"
+      ],
+      "scenario_ids": [
+        "bops-02",
+        "bops-06",
+        "bops-10",
+        "bops-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist map",
+        "required transfer artifacts"
+      ],
+      "required_outputs": [
+        "handoff package",
+        "adjacent-lane routing note",
+        "next-owner assignment"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, privacy, records, HR, payroll, finance, credit, collections, payment, technology, or customer service ownership",
+        "handoff is attempted without the minimum source and case context",
+        "ownership remains ambiguous after boundary review"
+      ],
+      "scenario_ids": [
+        "bops-07",
+        "bops-08",
+        "bops-10"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current lifecycle stage",
+        "artifact completeness",
+        "owner and dependency status",
+        "QA and closure criteria"
+      ],
+      "required_outputs": [
+        "execution status update",
+        "state transition recommendation",
+        "next action"
+      ],
+      "refusal_triggers": [
+        "state change is requested without required evidence",
+        "blocked dependency prevents safe progression",
+        "completion or QA-ready status is requested while source, system, or reviewer evidence remains open"
+      ],
+      "scenario_ids": [
+        "bops-01",
+        "bops-04",
+        "bops-09"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "owner and escalation context",
+        "rework criteria"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "rework or unblock plan",
+        "escalation note"
+      ],
+      "refusal_triggers": [
+        "prerequisite evidence remains incomplete",
+        "ownership is ambiguous",
+        "exception requires external authority to resolve"
+      ],
+      "scenario_ids": [
+        "bops-03",
+        "bops-04",
+        "bops-10",
+        "bops-12"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure checklist",
+        "source-document evidence",
+        "system update confirmation",
+        "QA or maker-checker review",
+        "audit-log record"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "case disposition summary",
+        "closure blockers when incomplete"
+      ],
+      "refusal_triggers": [
+        "completion is attempted without required source, system, QA, or audit evidence",
+        "document or data verification is still missing",
+        "systems of record disagree on whether the case is complete"
+      ],
+      "scenario_ids": [
+        "bops-01",
+        "bops-05"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "administrative-support and business-services artifacts and terminology",
+        "client, program, SOW, SLA, and data-category context",
+        "public baseline plus tenant adaptation requirements"
+      ],
+      "required_outputs": [
+        "industry-specific execution summary",
+        "back-office artifact checklist",
+        "adaptation-safe handling note"
+      ],
+      "refusal_triggers": [
+        "back-office-specific records are replaced with generic operations abstractions",
+        "client, jurisdiction, or data-category differences materially alter the workflow and are not supplied",
+        "industry terminology is used cosmetically without administrative-support workflow evidence"
+      ],
+      "scenario_ids": [
+        "bops-03",
+        "bops-09",
+        "bops-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "bops-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-02",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "completion_evidence_capture"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-06",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-09",
+      "ability_ids": [
+        "lifecycle_state_progression",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "bops-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

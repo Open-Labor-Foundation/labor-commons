@@ -1,0 +1,447 @@
+{
+  "agent_slug": "trade-compliance-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 12,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "adjacent specialist matrix",
+        "tenant policy and approval boundary rules"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation or regulator-facing finality",
+        "request seeks policy-override, underwriting, or financial approval authority",
+        "request bypasses mandatory evidence and control gates"
+      ],
+      "scenario_ids": [
+        "tcs-04",
+        "tcs-08",
+        "tcs-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness and precedence policy",
+        "tenant policy precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "conflict escalation summary",
+        "evidence freshness status"
+      ],
+      "refusal_triggers": [
+        "required source context is missing",
+        "public source and tenant rules materially conflict",
+        "source feed stale beyond tenant policy threshold"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-03",
+        "tcs-08",
+        "tcs-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "declaration and transaction artifacts",
+        "KYC/AML/fraud artifacts",
+        "approvals and communication logs"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "missing-evidence packet",
+        "artifact-to-owner linkage"
+      ],
+      "refusal_triggers": [
+        "critical artifacts are missing",
+        "artifacts cannot be linked to accountable owner",
+        "reconciliation evidence and operational truth disagree"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-06",
+        "tcs-11",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "tenant owner matrix",
+        "integration and availability state"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "reroute or handoff package",
+        "retrieval prerequisite map"
+      ],
+      "refusal_triggers": [
+        "critical system-of-record unavailable",
+        "tenant approver owner unresolved",
+        "required evidence source inaccessible"
+      ],
+      "scenario_ids": [
+        "tcs-07",
+        "tcs-11",
+        "tcs-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "confidence-impacting missing facts",
+        "policy conflicts",
+        "risk or source uncertainty flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required follow-up checklist",
+        "owner-resolution plan"
+      ],
+      "refusal_triggers": [
+        "tenant context or owner map missing",
+        "source precedence conflict unresolved",
+        "evidence sufficiency unknown"
+      ],
+      "scenario_ids": [
+        "tcs-03",
+        "tcs-07",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "handoff context",
+        "adjacent-lane owner map"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff evidence packet",
+        "blocker and responsibility transfer map"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, underwriting, fraud, or policy-override authority",
+        "request requires formal regulator-facing adjudication",
+        "control decision requires unsupported downstream authority"
+      ],
+      "scenario_ids": [
+        "tcs-04",
+        "tcs-10",
+        "tcs-05"
+      ]
+    },
+    {
+      "ability_id": "obligation_and_control_mapping",
+      "ability_name": "Obligation and control mapping",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "tenant obligations and controls",
+        "regulatory references",
+        "policy-priority matrix"
+      ],
+      "required_outputs": [
+        "obligation-control matrix",
+        "control gap and overlap analysis"
+      ],
+      "refusal_triggers": [
+        "required control references missing",
+        "control interpretation materially changes with missing source context"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-03",
+        "tcs-06",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_and_review_management",
+      "ability_name": "Evidence and review management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness state",
+        "review readiness criteria",
+        "audit and approval trail"
+      ],
+      "required_outputs": [
+        "review-ready evidence package",
+        "closure-readiness state",
+        "open-review blocker list"
+      ],
+      "refusal_triggers": [
+        "required approvals or notices missing",
+        "review trail cannot be proven"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-06",
+        "tcs-09"
+      ]
+    },
+    {
+      "ability_id": "exception_and_remediation_handling",
+      "ability_name": "Exception and remediation handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception source and impact",
+        "remediation options",
+        "owner assignment state"
+      ],
+      "required_outputs": [
+        "exception escalation package",
+        "remediation owner routing"
+      ],
+      "refusal_triggers": [
+        "exception cannot be assigned to accountable owner",
+        "required remediation path unresolved",
+        "conflict changes legal or risk outcome"
+      ],
+      "scenario_ids": [
+        "tcs-02",
+        "tcs-05",
+        "tcs-06",
+        "tcs-11",
+        "tcs-12"
+      ]
+    },
+    {
+      "ability_id": "unauthorized_signoff_refusal",
+      "ability_name": "Unauthorized signoff refusal",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "request for final signoff",
+        "requested authority scope",
+        "ownership map"
+      ],
+      "required_outputs": [
+        "refusal notice",
+        "adjacent-signoff routing package"
+      ],
+      "refusal_triggers": [
+        "request asks for final legal or regulator-facing signoff",
+        "request requests policy override signoff",
+        "request requires underwriting approval or credit authority"
+      ],
+      "scenario_ids": [
+        "tcs-04",
+        "tcs-10"
+      ]
+    },
+    {
+      "ability_id": "regulated_transaction_evidence_handling",
+      "ability_name": "Regulated-transaction evidence handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "account or policy truth-set references",
+        "transaction records",
+        "reconciliation artifacts"
+      ],
+      "required_outputs": [
+        "transaction evidence sufficiency statement",
+        "account-policy-truth alignment summary"
+      ],
+      "refusal_triggers": [
+        "account or policy truth set missing",
+        "reconciliation disagreement unresolved",
+        "customer-impacting disclosure artifact absent"
+      ],
+      "scenario_ids": [
+        "tcs-01",
+        "tcs-02",
+        "tcs-06",
+        "tcs-09"
+      ]
+    },
+    {
+      "ability_id": "fraud_and_consumer_protection_escalation",
+      "ability_name": "Fraud and consumer-protection escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "fraud or AML signals",
+        "customer impact indicators",
+        "dispute and consumer communication context"
+      ],
+      "required_outputs": [
+        "fraud escalation summary",
+        "consumer impact and remediation route",
+        "handoff owner package"
+      ],
+      "refusal_triggers": [
+        "fraud or AML indicators indicate unresolved material risk",
+        "dispute has consumer-impact implications beyond lane",
+        "risk posture requires fraud/consumer specialist involvement"
+      ],
+      "scenario_ids": [
+        "tcs-05",
+        "tcs-07",
+        "tcs-06"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "tcs-01",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "obligation_and_control_mapping",
+        "evidence_and_review_management",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "regulated_transaction_evidence_handling",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-03",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping",
+        "boundary_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-04",
+      "ability_ids": [
+        "boundary_control",
+        "unauthorized_signoff_refusal",
+        "adjacent_lane_routing",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-05",
+      "ability_ids": [
+        "fraud_and_consumer_protection_escalation",
+        "exception_and_remediation_handling",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-06",
+      "ability_ids": [
+        "evidence_and_review_management",
+        "evidence_traceability",
+        "regulated_transaction_evidence_handling",
+        "exception_and_remediation_handling",
+        "fraud_and_consumer_protection_escalation",
+        "obligation_and_control_mapping"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-07",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "dependency_and_system_awareness",
+        "evidence_traceability",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "obligation_and_control_mapping",
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-09",
+      "ability_ids": [
+        "evidence_and_review_management",
+        "regulated_transaction_evidence_handling",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unauthorized_signoff_refusal",
+        "dependency_and_system_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-11",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "source_selection_and_refresh",
+        "exception_and_remediation_handling",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "tcs-12",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "obligation_and_control_mapping",
+        "source_selection_and_refresh",
+        "evidence_and_review_management",
+        "exception_and_remediation_handling",
+        "evidence_traceability"
+      ],
+      "status": "covered"
+    }
+  ]
+}

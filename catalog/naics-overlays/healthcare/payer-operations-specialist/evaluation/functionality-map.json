@@ -1,0 +1,439 @@
+{
+  "agent_slug": "payer-operations-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested payer operations outcome",
+        "payer operations specialty boundary",
+        "authority matrix for utilization management, claims adjudication, benefits, appeals, privacy, compliance, finance, legal, and clinical owners",
+        "adjacent specialist directory"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for medical necessity, clinical judgment, benefit interpretation, forced adjudication, final appeal or grievance disposition, privacy approval, legal advice, or finance signoff",
+        "request asks to bypass authorization, referral, eligibility, claim, provider response, notice, or audit requirements",
+        "request treats payer operations as a catch-all for utilization management, claims adjudication, member service, provider network, compliance, or finance work"
+      ],
+      "scenario_ids": [
+        "pos-04",
+        "pos-06",
+        "pos-07",
+        "pos-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source baseline",
+        "tenant payer product, policy hierarchy, jurisdiction, delegated entity, and contract context",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "freshness or conflict escalation note",
+        "tenant-adaptation assumptions"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public guidance, product rule, delegated entity policy, tenant SOP, and system evidence materially conflict",
+        "source freshness exceeds package decay tolerance for the decision"
+      ],
+      "scenario_ids": [
+        "pos-03",
+        "pos-09",
+        "pos-10",
+        "pos-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "member, provider, authorization, claim, inquiry, appeal, grievance, and case identifiers",
+        "eligibility, benefit, referral, authorization, claim, remittance, provider inquiry, correspondence, policy, and audit records",
+        "queue state and source-of-record hierarchy"
+      ],
+      "required_outputs": [
+        "evidence matrix",
+        "operational disposition support summary",
+        "missing evidence and conflict index"
+      ],
+      "refusal_triggers": [
+        "member, provider, authorization, claim, case, correspondence, or audit linkage is missing",
+        "authoritative records are incomplete, contradictory, or unverifiable",
+        "requested disposition, closure, or escalation is not supported by traceable source evidence"
+      ],
+      "scenario_ids": [
+        "pos-01",
+        "pos-02",
+        "pos-05",
+        "pos-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record retrieval hooks",
+        "payer, plan, product, jurisdiction, provider, member, authorization, referral, claim, and inquiry facts",
+        "owner and escalation map"
+      ],
+      "required_outputs": [
+        "system dependency matrix",
+        "required fact checklist",
+        "blocker summary with missing systems or records"
+      ],
+      "refusal_triggers": [
+        "required payer core administration, claims, authorization, provider portal, CRM, case management, correspondence, policy, or audit system is unavailable",
+        "payer, plan, product, jurisdiction, authorization, referral, claim, provider response, or queue context is missing",
+        "current owner or next owner cannot be established"
+      ],
+      "scenario_ids": [
+        "pos-02",
+        "pos-03",
+        "pos-05",
+        "pos-09",
+        "pos-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority risk flags",
+        "source conflict indicators",
+        "member-impact, PHI, clinical-risk, and compliance markers"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist",
+        "escalation owner assignment"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact or source record is unknown",
+        "record truth cannot be established",
+        "policy or source conflict remains unresolved",
+        "member harm, PHI exposure, incorrect denial, or payment error could result from assumptions"
+      ],
+      "scenario_ids": [
+        "pos-04",
+        "pos-07",
+        "pos-09",
+        "pos-10"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist map",
+        "required transfer artifacts"
+      ],
+      "required_outputs": [
+        "handoff package",
+        "adjacent-lane routing note",
+        "next-owner assignment"
+      ],
+      "refusal_triggers": [
+        "request belongs to utilization management, clinical review, claims adjudication, provider network, member service, grievance and appeals, privacy, compliance, finance, or legal ownership",
+        "handoff is attempted without minimum member, provider, claim, authorization, policy, and case context",
+        "ownership remains ambiguous after boundary review"
+      ],
+      "scenario_ids": [
+        "pos-05",
+        "pos-06",
+        "pos-07",
+        "pos-08"
+      ]
+    },
+    {
+      "ability_id": "lifecycle_state_progression",
+      "ability_name": "Lifecycle-state progression",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current payer queue state",
+        "artifact completeness",
+        "owner and dependency status",
+        "SLA, rework, pend, and closure criteria"
+      ],
+      "required_outputs": [
+        "payer operations status update",
+        "state transition recommendation",
+        "next action"
+      ],
+      "refusal_triggers": [
+        "state change is requested without required evidence",
+        "blocked dependency prevents safe progression",
+        "completion, release, or adjudication-ready status is requested while source, system, owner, or audit evidence remains open"
+      ],
+      "scenario_ids": [
+        "pos-01",
+        "pos-03",
+        "pos-11",
+        "pos-12"
+      ]
+    },
+    {
+      "ability_id": "exception_queue_handling",
+      "ability_name": "Exception-queue handling",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception reason",
+        "blocker evidence",
+        "member or provider impact",
+        "owner and escalation context",
+        "rework criteria"
+      ],
+      "required_outputs": [
+        "exception summary",
+        "rework or unblock plan",
+        "escalation note"
+      ],
+      "refusal_triggers": [
+        "prerequisite evidence remains incomplete",
+        "ownership is ambiguous",
+        "exception requires utilization management, clinical, appeal, privacy, compliance, legal, finance, or adjudication authority to resolve"
+      ],
+      "scenario_ids": [
+        "pos-02",
+        "pos-03",
+        "pos-05",
+        "pos-09",
+        "pos-10"
+      ]
+    },
+    {
+      "ability_id": "completion_evidence_capture",
+      "ability_name": "Completion-evidence capture",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "closure checklist",
+        "source evidence",
+        "system update confirmation",
+        "provider or member correspondence evidence",
+        "audit-log record"
+      ],
+      "required_outputs": [
+        "completion evidence record",
+        "case disposition summary",
+        "closure blockers when incomplete"
+      ],
+      "refusal_triggers": [
+        "completion is attempted without required source, system, correspondence, owner, or audit evidence",
+        "document or data verification is still missing",
+        "systems of record disagree on whether the case is complete"
+      ],
+      "scenario_ids": [
+        "pos-01",
+        "pos-12"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "request action class",
+        "clinical risk and medical-necessity signals",
+        "licensed owner escalation path",
+        "tenant clinical and UM escalation policy"
+      ],
+      "required_outputs": [
+        "administrative-only payer operations note",
+        "clinical or UM escalation handoff"
+      ],
+      "refusal_triggers": [
+        "request asks for diagnosis, treatment planning, medical necessity, level of care, clinical urgency, or patient-safety interpretation",
+        "clinical risk or member-safety signal requires licensed review",
+        "authorization approval or denial requires UM decision authority"
+      ],
+      "scenario_ids": [
+        "pos-02",
+        "pos-06",
+        "pos-07",
+        "pos-08"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI request details",
+        "consent, proxy, minimum-necessary, role-based access, and communication constraints",
+        "member-impact and patient-safety indicators"
+      ],
+      "required_outputs": [
+        "privacy-controlled routing note",
+        "member-impact escalation note",
+        "audit-ready disclosure posture"
+      ],
+      "refusal_triggers": [
+        "PHI disclosure authority is missing, stale, or disputed",
+        "clinical risk, member harm, access delay, or patient-safety signal changes the operational answer",
+        "privacy policy interpretation is required"
+      ],
+      "scenario_ids": [
+        "pos-04",
+        "pos-05",
+        "pos-08",
+        "pos-09",
+        "pos-10"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "pos-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ]
+    },
+    {
+      "scenario_id": "pos-02",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "exception_queue_handling",
+        "clinical_vs_administrative_boundary"
+      ]
+    },
+    {
+      "scenario_id": "pos-03",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "exception_queue_handling"
+      ]
+    },
+    {
+      "scenario_id": "pos-04",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pos-05",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "exception_queue_handling",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pos-06",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ]
+    },
+    {
+      "scenario_id": "pos-07",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ]
+    },
+    {
+      "scenario_id": "pos-08",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pos-09",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pos-10",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "exception_queue_handling",
+        "privacy_and_patient_safety_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pos-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "lifecycle_state_progression"
+      ]
+    },
+    {
+      "scenario_id": "pos-12",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "lifecycle_state_progression",
+        "completion_evidence_capture"
+      ]
+    }
+  ],
+  "coverage_complete": true,
+  "notes": [
+    "All shared abilities, all execution-processing-and-fulfillment abilities, and all healthcare-and-care-delivery abilities are mapped to one or more scenarios.",
+    "Every scenario in evaluation/results.json is represented in scenario coverage."
+  ]
+}

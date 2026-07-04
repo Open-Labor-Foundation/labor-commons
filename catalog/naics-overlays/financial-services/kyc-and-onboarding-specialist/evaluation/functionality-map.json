@@ -1,0 +1,406 @@
+{
+  "agent_slug": "kyc-and-onboarding-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and desired decision",
+        "kyc and onboarding specialty boundary",
+        "adjacent specialist registry and approval matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or handoff rationale"
+      ],
+      "refusal_triggers": [
+        "request asks for legal interpretation, underwriting approval, sanctions clearance, or SAR decisioning",
+        "request asks the lane to waive required KYC, disclosure, or onboarding controls",
+        "request asks the lane to treat financial-services onboarding as generic onboarding without KYC records"
+      ],
+      "scenario_ids": [
+        "kyc-04",
+        "kyc-06",
+        "kyc-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "tenant source precedence and jurisdiction context",
+        "source freshness metadata"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "conflict disposition",
+        "refresh or staleness risk marker"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "FFIEC, FinCEN, OFAC, Nacha, NIST, or tenant policy materially conflict",
+        "source freshness no longer supports a reliable readiness decision"
+      ],
+      "scenario_ids": [
+        "kyc-09",
+        "kyc-10",
+        "kyc-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "application, account, policy, or party identifiers",
+        "KYC, screening, disclosure, and approval artifacts",
+        "setup and communication records"
+      ],
+      "required_outputs": [
+        "artifact-to-readiness linkage",
+        "missing-evidence escalation packet",
+        "evidence-backed disposition summary"
+      ],
+      "refusal_triggers": [
+        "required KYC, disclosure, or approval evidence is missing",
+        "records cannot be linked to the subject in scope",
+        "document and system evidence materially conflict"
+      ],
+      "scenario_ids": [
+        "kyc-01",
+        "kyc-03",
+        "kyc-06",
+        "kyc-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "owner map across onboarding, compliance, fraud, and servicing",
+        "dependency and blocker signals"
+      ],
+      "required_outputs": [
+        "dependency readiness matrix",
+        "system or owner blocker summary"
+      ],
+      "refusal_triggers": [
+        "required source system is unavailable or contradictory",
+        "critical owner or approver is unknown",
+        "dependency state cannot be retrieved from tenant systems"
+      ],
+      "scenario_ids": [
+        "kyc-02",
+        "kyc-03",
+        "kyc-05",
+        "kyc-10"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "source or policy conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption log",
+        "required-facts checklist"
+      ],
+      "refusal_triggers": [
+        "critical KYC or onboarding facts remain unknown",
+        "policy or source conflict is unresolved",
+        "high-impact readiness claim lacks required tenant evidence"
+      ],
+      "scenario_ids": [
+        "kyc-09",
+        "kyc-10",
+        "kyc-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope and boundary outcome",
+        "adjacent owner registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and required artifacts"
+      ],
+      "refusal_triggers": [
+        "request is outside KYC and onboarding ownership",
+        "fraud, AML, underwriting, legal, sanctions, or steady-state servicing authority is required",
+        "handoff destination or required artifact set is missing"
+      ],
+      "scenario_ids": [
+        "kyc-04",
+        "kyc-07",
+        "kyc-08"
+      ]
+    },
+    {
+      "ability_id": "onboarding_readiness_validation",
+      "ability_name": "Onboarding readiness validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "onboarding request context",
+        "core KYC and disclosure artifacts",
+        "training, setup, and approval prerequisites"
+      ],
+      "required_outputs": [
+        "onboarding checklist",
+        "readiness disposition",
+        "hard-blocker list"
+      ],
+      "refusal_triggers": [
+        "core onboarding prerequisites are missing",
+        "financial-services evidence is incomplete",
+        "required approval ownership is unresolved"
+      ],
+      "scenario_ids": [
+        "kyc-01",
+        "kyc-02",
+        "kyc-06"
+      ]
+    },
+    {
+      "ability_id": "setup_and_permission_tracking",
+      "ability_name": "Setup and permission tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "role grants and access requests",
+        "training and enablement records",
+        "setup work-item status"
+      ],
+      "required_outputs": [
+        "setup status summary",
+        "permission readiness matrix",
+        "setup exception route"
+      ],
+      "refusal_triggers": [
+        "permissions are absent, excessive, or uncertain",
+        "required access approvals are missing",
+        "training or setup evidence is stale or incomplete"
+      ],
+      "scenario_ids": [
+        "kyc-02",
+        "kyc-05",
+        "kyc-11"
+      ]
+    },
+    {
+      "ability_id": "go_live_handoff_control",
+      "ability_name": "Go-live handoff control",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "readiness summary",
+        "open blockers and deferred items",
+        "go-live owner and approval chain"
+      ],
+      "required_outputs": [
+        "go-live handoff note",
+        "deferred-scope matrix",
+        "handoff owner summary"
+      ],
+      "refusal_triggers": [
+        "go-live evidence is incomplete",
+        "open blockers remain unresolved",
+        "handoff owner or approval confirmation is missing"
+      ],
+      "scenario_ids": [
+        "kyc-01",
+        "kyc-03",
+        "kyc-04",
+        "kyc-11"
+      ]
+    },
+    {
+      "ability_id": "regulated_transaction_evidence_handling",
+      "ability_name": "Regulated-transaction evidence handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "application, account, policy, or party context",
+        "KYC, disclosure, and payment or policy setup records",
+        "screening, validation, and approval artifacts"
+      ],
+      "required_outputs": [
+        "regulated onboarding evidence package",
+        "source-of-truth determination or blocker note"
+      ],
+      "refusal_triggers": [
+        "identity, account, or policy evidence cannot be reconciled",
+        "onboarding status lacks authoritative record support",
+        "required notice, validation, or screening artifacts are missing"
+      ],
+      "scenario_ids": [
+        "kyc-01",
+        "kyc-06",
+        "kyc-09",
+        "kyc-12"
+      ]
+    },
+    {
+      "ability_id": "fraud_and_consumer_protection_escalation",
+      "ability_name": "Fraud and consumer-protection escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "fraud, AML, sanctions, or suspicious-activity indicators",
+        "consumer-impact or disclosure context",
+        "required escalation owners"
+      ],
+      "required_outputs": [
+        "fraud or consumer-protection escalation package",
+        "stop-condition rationale",
+        "owner mapping and communication constraints"
+      ],
+      "refusal_triggers": [
+        "fraud, AML, sanctions, or suspicious-activity indicators are present without owner review",
+        "consumer-impact issue exceeds onboarding authority",
+        "resolution would require regulated advice or discretionary approval"
+      ],
+      "scenario_ids": [
+        "kyc-03",
+        "kyc-07",
+        "kyc-08",
+        "kyc-09"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "kyc-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "onboarding_readiness_validation",
+        "go_live_handoff_control",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "onboarding_readiness_validation",
+        "setup_and_permission_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "go_live_handoff_control",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "go_live_handoff_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-05",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "setup_and_permission_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-06",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "onboarding_readiness_validation",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-07",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "regulated_transaction_evidence_handling",
+        "fraud_and_consumer_protection_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "setup_and_permission_tracking",
+        "go_live_handoff_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "kyc-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "regulated_transaction_evidence_handling"
+      ],
+      "status": "covered"
+    }
+  ]
+}

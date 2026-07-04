@@ -1,0 +1,779 @@
+{
+  "agent_slug": "dns-dhcp-and-ipam-specialist",
+  "agent_release": "v1.1.0",
+  "resolved_workflow_phase_group": "planning-scheduling-and-allocation",
+  "industry_profile": "cross-industry",
+  "current_review_date": "2026-04-14",
+  "source_decay_policy": "review_required_after_interval_or_material_standard_vendor_policy_change",
+  "authoritative_sources": [
+    {
+      "title": "RFC 1034 - Domain Names - Concepts and Facilities",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF protocol standard defining DNS hierarchy, zones, delegation, caching, and resolver concepts that constrain DNS architecture and troubleshooting claims.",
+      "workflow_stage": "DNS intake, zone design, delegation review, resolver boundary assessment, fault isolation",
+      "practical_use_in_pack": [
+        "zone and delegation scenario constraints",
+        "authoritative versus recursive boundary language",
+        "source-backed DNS fault-isolation evidence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dns_standard_update"
+    },
+    {
+      "title": "RFC 1035 - Domain Names - Implementation and Specification",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF protocol standard for DNS messages, resource records, query behavior, and response interpretation used to read DNS artifacts.",
+      "workflow_stage": "record review, zone-file evidence review, query and response troubleshooting",
+      "practical_use_in_pack": [
+        "DNS record evidence requirements",
+        "resolver and authoritative troubleshooting",
+        "output fidelity for architecture and fault-isolation notes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dns_standard_update"
+    },
+    {
+      "title": "RFC 8499 - DNS Terminology",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc8499.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF terminology reference for consistent DNS terms used to avoid over-broad or ambiguous ownership claims.",
+      "workflow_stage": "intake classification, artifact naming, handoff notes, evaluation wording",
+      "practical_use_in_pack": [
+        "consistent DNS terminology",
+        "boundary wording",
+        "audit-friendly evidence labels"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dns_terminology_update"
+    },
+    {
+      "title": "RFC 2131 - Dynamic Host Configuration Protocol",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc2131.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF DHCPv4 protocol standard for address leasing, allocation lifecycle, client/server exchange, and lease-state interpretation.",
+      "workflow_stage": "DHCP scope planning, lease-policy review, conflict troubleshooting, evidence review",
+      "practical_use_in_pack": [
+        "DHCP scope and lease scenario constraints",
+        "duplicate lease troubleshooting",
+        "capacity and renewal-window planning"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dhcp_standard_update"
+    },
+    {
+      "title": "RFC 8415 - Dynamic Host Configuration Protocol for IPv6",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc8415.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF DHCPv6 standard required for IPv6 addressing, options, and lease behavior in dual-stack planning.",
+      "workflow_stage": "IPv6 planning, DHCPv6/SLAAC tradeoff review, dual-stack evidence review",
+      "practical_use_in_pack": [
+        "dual-stack scenario constraints",
+        "DHCPv6 evidence requirements",
+        "IPAM lifecycle implications"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dhcpv6_standard_update"
+    },
+    {
+      "title": "RFC 8156 - DHCP Failover Protocol",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc8156.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF DHCP failover reference for high-availability behavior, partner states, and recovery limits in DHCP planning.",
+      "workflow_stage": "availability planning, DHCP failover review, incident recovery sequencing",
+      "practical_use_in_pack": [
+        "availability tradeoff scenario",
+        "DHCP recovery evidence",
+        "capacity and failover caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dhcp_failover_update"
+    },
+    {
+      "title": "RFC 2317 - Classless IN-ADDR.ARPA Delegation",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc2317.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF reference for reverse DNS delegation of classless IPv4 blocks, which governs PTR remediation in fragmented subnets.",
+      "workflow_stage": "reverse DNS planning, PTR ownership review, audit remediation",
+      "practical_use_in_pack": [
+        "classless reverse DNS scenario",
+        "PTR ownership and validation requirements",
+        "reverse-zone handoff constraints"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_reverse_dns_update"
+    },
+    {
+      "title": "RFC 4033 and RFC 4035 - DNSSEC Requirements and Protocol Modifications",
+      "publisher": "Internet Engineering Task Force",
+      "url": "https://www.rfc-editor.org/rfc/rfc4033.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "IETF DNSSEC references for trust, authentication, resolver validation, and signed response behavior needed for DNSSEC rollout guidance.",
+      "workflow_stage": "DNSSEC readiness, key rollover planning, resolver validation review, availability tradeoff assessment",
+      "practical_use_in_pack": [
+        "DNSSEC rollout scenario",
+        "resolver readiness and rollback gates",
+        "security hardening without security attestation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_dnssec_standard_update"
+    },
+    {
+      "title": "NIST SP 800-81 Rev. 2 - Secure Domain Name System (DNS) Deployment Guide",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/81/2/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST official DNS security deployment guidance for secure DNS architecture, operational practices, and DNS failure handling.",
+      "workflow_stage": "secure DNS design, DNSSEC planning, resolver policy, audit evidence, failure handling",
+      "practical_use_in_pack": [
+        "DNS security caveats",
+        "resolver and DNSSEC evidence expectations",
+        "boundary between hardening guidance and security attestation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_nist_dns_guidance_update"
+    },
+    {
+      "title": "NIST SP 800-53 Rev. 5 - Security and Privacy Controls for Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST official control catalog for inventory, configuration management, audit, monitoring, contingency, and access-control evidence language; used for evidence expectations, not certification.",
+      "workflow_stage": "evidence mapping, audit package assembly, control-context caveats, retention and owner review",
+      "practical_use_in_pack": [
+        "audit evidence package scenario",
+        "systems-of-record and traceability requirements",
+        "compliance-signoff refusal language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_nist_control_update"
+    },
+    {
+      "title": "Encrypted DNS Implementation Guidance",
+      "publisher": "Cybersecurity and Infrastructure Security Agency",
+      "url": "https://www.cisa.gov/resources-tools/resources/encrypted-dns-implementation-guidance",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "CISA public enterprise guidance for encrypted DNS deployment considerations, protective DNS posture, and resolver policy impacts.",
+      "workflow_stage": "resolver policy review, DNS security hardening, monitoring caveats, adjacent security escalation",
+      "practical_use_in_pack": [
+        "resolver policy and monitoring caveats",
+        "encrypted DNS source conflict handling",
+        "security-boundary handoff"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_after_cisa_dns_guidance_update"
+    },
+    {
+      "title": "Amazon VPC IP Address Manager",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/ipam/",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS official cloud IPAM documentation for address planning, allocation, utilization, monitoring, and governance in AWS VPC environments.",
+      "workflow_stage": "cloud IPAM intake, prefix allocation, capacity review, address exhaustion handling",
+      "practical_use_in_pack": [
+        "cloud IPAM evidence requirements",
+        "address-burst and capacity scenarios",
+        "provider-specific caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_aws_ipam_update"
+    },
+    {
+      "title": "DHCP option sets in Amazon VPC",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_DHCP_Options.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS official VPC guidance for DHCP option sets and resolver behavior in AWS tenant networks.",
+      "workflow_stage": "cloud DHCP review, resolver option review, tenant platform adaptation",
+      "practical_use_in_pack": [
+        "DHCP option evidence in cloud networks",
+        "provider-specific scope caveats",
+        "tenant adaptation scenario"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_aws_vpc_update"
+    },
+    {
+      "title": "Subnet sizing for IPv4",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS official subnet sizing guidance for reserved addresses and practical address allocation constraints in cloud VPCs.",
+      "workflow_stage": "resource allocation, subnet planning, capacity and exhaustion assessment",
+      "practical_use_in_pack": [
+        "capacity calculation caveats",
+        "reserved-address planning",
+        "cloud burst scenario"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_aws_vpc_update"
+    },
+    {
+      "title": "DNS Architecture in Windows Server",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/dns/dns-architecture",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft official Windows Server DNS documentation for DNS architecture, records, dynamic updates, and platform integration in Windows estates.",
+      "workflow_stage": "Windows DNS evidence review, DNS record analysis, tenant platform adaptation",
+      "practical_use_in_pack": [
+        "Windows DNS systems-of-record examples",
+        "record and dynamic-update caveats",
+        "platform-specific artifact language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_windows_server_dns_update"
+    },
+    {
+      "title": "Dynamic Host Configuration Protocol in Windows Server",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-top",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft official Windows Server DHCP documentation for DHCP role behavior, scopes, options, leases, and operational records in Windows environments.",
+      "workflow_stage": "Windows DHCP evidence review, scope planning, lease troubleshooting",
+      "practical_use_in_pack": [
+        "DHCP scope and lease record examples",
+        "platform-specific DHCP caveats",
+        "tenant systems-of-record mapping"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_windows_server_dhcp_update"
+    },
+    {
+      "title": "IP Address Management in Windows Server",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/windows-server/networking/technologies/ipam/ipam-top",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft official Windows Server IPAM documentation for IP address space management, DNS/DHCP integration, and IPAM evidence in Windows environments.",
+      "workflow_stage": "IPAM source-of-truth review, address lifecycle, ownership and audit evidence",
+      "practical_use_in_pack": [
+        "IPAM records and owner mapping",
+        "tenant platform adaptation",
+        "audit package terminology"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_windows_server_ipam_update"
+    },
+    {
+      "title": "NetBox IPAM",
+      "publisher": "NetBox Labs",
+      "url": "https://docs.netbox.dev/en/stable/features/ipam/",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Official NetBox documentation for a widely used IPAM source-of-truth model covering prefixes, IP addresses, VLANs, VRFs, and allocation workflows.",
+      "workflow_stage": "IPAM data modeling, source-of-truth mapping, prefix allocation, audit evidence",
+      "practical_use_in_pack": [
+        "IPAM data-model expectations",
+        "address lifecycle and ownership fields",
+        "tenant source-of-truth examples"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_netbox_ipam_update"
+    },
+    {
+      "title": "Current package task baseline from dns-dhcp-and-ipam-specialist",
+      "publisher": "olf-agents",
+      "url": "catalog/networking-and-connectivity/dns-dhcp-and-ipam-specialist/",
+      "source_class": "Current package task baseline from dns-dhcp-and-ipam-specialist",
+      "authority_rationale": "Committed package baseline used to preserve existing specialist boundary, supported tasks, common inputs, output shapes, and legacy evaluation rigor while treating the refreshed spec as canonical.",
+      "workflow_stage": "baseline comparison, regression coverage, boundary preservation",
+      "practical_use_in_pack": [
+        "legacy scenario family preservation",
+        "boundary continuity",
+        "no unreviewed regressions claim"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "superseded_by_refreshed_spec_pack_after_issue_1658"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "stage_id": "intake-and-classification",
+      "name": "Demand or work intake for DDI planning",
+      "description": "Classify the request as DNS, DHCP, IPAM, reverse DNS, DNSSEC, capacity, troubleshooting, evidence, or adjacent-lane work.",
+      "required_evidence": [
+        "request intent",
+        "desired output",
+        "tenant topology",
+        "systems-of-record map",
+        "approval matrix",
+        "industry-specific constraints"
+      ],
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-13",
+        "dnsipam-14",
+        "dnsipam-15",
+        "dnsipam-16"
+      ]
+    },
+    {
+      "stage_id": "source-and-record-selection",
+      "name": "Source and record selection",
+      "description": "Select current IETF, NIST, CISA, vendor, platform, and tenant records before making workflow claims.",
+      "required_evidence": [
+        "source review date",
+        "source precedence",
+        "zone, scope, lease, prefix, telemetry, and change records"
+      ],
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-04",
+        "dnsipam-08",
+        "dnsipam-09",
+        "dnsipam-11",
+        "dnsipam-18"
+      ]
+    },
+    {
+      "stage_id": "constraint-and-capacity-assessment",
+      "name": "Constraint and capacity assessment",
+      "description": "Assess address pools, resolver capacity, authoritative service posture, change windows, validation capacity, priority rules, and tenant constraints.",
+      "required_evidence": [
+        "utilization data",
+        "demand forecast",
+        "change calendar",
+        "criticality",
+        "priority rules",
+        "rollback limits"
+      ],
+      "scenario_ids": [
+        "dnsipam-02",
+        "dnsipam-03",
+        "dnsipam-09",
+        "dnsipam-10",
+        "dnsipam-17",
+        "dnsipam-18"
+      ]
+    },
+    {
+      "stage_id": "recommendation-and-sequencing",
+      "name": "Schedule, priority, or allocation recommendation support",
+      "description": "Produce advisory schedule, allocation, migration, rollback, and remediation recommendations without final approval claims.",
+      "required_evidence": [
+        "constraints",
+        "dependencies",
+        "risk rank",
+        "validation gates",
+        "approval owners",
+        "downstream impacts"
+      ],
+      "scenario_ids": [
+        "dnsipam-02",
+        "dnsipam-04",
+        "dnsipam-06",
+        "dnsipam-08",
+        "dnsipam-09",
+        "dnsipam-10",
+        "dnsipam-12"
+      ]
+    },
+    {
+      "stage_id": "troubleshooting-and-failure-isolation",
+      "name": "Fault isolation and failure handling",
+      "description": "Separate DDI failures from routing, firewall, endpoint, identity, application, and monitoring failures while requesting targeted evidence.",
+      "required_evidence": [
+        "incident timeline",
+        "DNS query and resolver logs",
+        "DHCP logs and leases",
+        "IPAM state",
+        "network telemetry",
+        "change evidence"
+      ],
+      "scenario_ids": [
+        "dnsipam-05",
+        "dnsipam-07",
+        "dnsipam-10",
+        "dnsipam-17"
+      ]
+    },
+    {
+      "stage_id": "evidence-and-audit-packaging",
+      "name": "Evidence and audit packaging",
+      "description": "Produce traceable DDI evidence packages with owner, source, retention, caveat, and non-attestation boundaries.",
+      "required_evidence": [
+        "systems of record",
+        "metrics",
+        "logs",
+        "change tickets",
+        "owners",
+        "retention rules"
+      ],
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-11",
+        "dnsipam-18"
+      ]
+    },
+    {
+      "stage_id": "refresh-and-exception-escalation",
+      "name": "Refresh and exception escalation",
+      "description": "Escalate when sources, tenant policies, safety constraints, priority rules, evidence, or approval authority are missing or conflicting.",
+      "required_evidence": [
+        "missing-data register",
+        "source conflict",
+        "policy conflict",
+        "approval gap",
+        "orchestrator target"
+      ],
+      "scenario_ids": [
+        "dnsipam-03",
+        "dnsipam-12",
+        "dnsipam-17",
+        "dnsipam-18"
+      ]
+    }
+  ],
+  "artifacts": [
+    "network topology and subnet inventory",
+    "DNS zone files, hosted-zone inventory, registrar and delegation records, resolver and forwarding topology, DNSSEC state, DS records, query logs, and reverse-zone ownership",
+    "DHCP scope, pool, exclusion, option, reservation, relay, lease, conflict, failover, and utilization datasets",
+    "IPAM prefixes, aggregates, VRFs, address lifecycle states, duplicate/orphan records, owner assignments, approval records, and audit history",
+    "incident timelines, resolver metrics, DHCP server logs, latency/error telemetry, packet evidence, alert history, and outage evidence",
+    "change tickets, maintenance windows, change-freeze rules, business criticality, priority rules, safety or regulated-workload constraints, and approval matrix",
+    "schedule or allocation recommendation, constraint log, migration plan, rollback plan, fault-isolation note, evidence package, and orchestrator handoff"
+  ],
+  "systems_of_record": [
+    {
+      "system": "Enterprise IPAM or source-of-truth platform",
+      "examples": [
+        "NetBox",
+        "Windows Server IPAM",
+        "AWS VPC IPAM",
+        "tenant CMDB or network source of truth"
+      ],
+      "governs": [
+        "prefix hierarchy",
+        "subnet allocation",
+        "address lifecycle",
+        "ownership",
+        "reservation",
+        "audit history"
+      ]
+    },
+    {
+      "system": "Authoritative DNS and registrar systems",
+      "examples": [
+        "BIND or NSD repositories",
+        "Route 53 hosted zones",
+        "Windows DNS",
+        "registrar delegation console"
+      ],
+      "governs": [
+        "zones",
+        "delegations",
+        "resource records",
+        "DNSSEC state",
+        "reverse DNS",
+        "authority boundaries"
+      ]
+    },
+    {
+      "system": "Recursive resolver and forwarding platforms",
+      "examples": [
+        "Windows DNS resolvers",
+        "BIND/Unbound resolvers",
+        "cloud DNS resolver services",
+        "enterprise protective DNS"
+      ],
+      "governs": [
+        "resolver paths",
+        "forwarding",
+        "cache behavior",
+        "query logs",
+        "encrypted DNS policy",
+        "resolver health"
+      ]
+    },
+    {
+      "system": "DHCP platforms",
+      "examples": [
+        "Windows DHCP",
+        "ISC Kea or ISC DHCP",
+        "cloud DHCP option services",
+        "network appliance DHCP services"
+      ],
+      "governs": [
+        "scopes",
+        "leases",
+        "options",
+        "reservations",
+        "relays",
+        "failover",
+        "conflicts"
+      ]
+    },
+    {
+      "system": "Network observability and incident systems",
+      "examples": [
+        "SIEM",
+        "metrics platform",
+        "log platform",
+        "packet capture archive",
+        "incident ticketing"
+      ],
+      "governs": [
+        "latency",
+        "error rate",
+        "resolver health",
+        "lease churn",
+        "outage timeline",
+        "evidence retention"
+      ]
+    },
+    {
+      "system": "Change, approval, policy, and industry-specific record systems",
+      "examples": [
+        "ITSM change calendar",
+        "maintenance schedule",
+        "business criticality registry",
+        "tenant policy repository",
+        "regulated workload inventory",
+        "safety or change-freeze record"
+      ],
+      "governs": [
+        "priority",
+        "timing",
+        "approval authority",
+        "retention",
+        "privacy",
+        "safety",
+        "source precedence"
+      ]
+    }
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Recommend DNS zone, delegation, resolver, forwarding, reverse DNS, DNSSEC readiness, and validation approaches.",
+      "Recommend DHCP scope, lease, option, reservation, relay, failover, and DHCPv6/SLAAC coexistence approaches.",
+      "Recommend IPAM data model, prefix hierarchy, subnet allocation, exhaustion response, conflict remediation, and audit evidence improvements.",
+      "Prepare schedule or allocation recommendations, constraint logs, risk-ranked options, rollback criteria, and approval-needed notes.",
+      "Request targeted evidence and state confidence when troubleshooting DDI symptoms."
+    ],
+    "escalate": [
+      "Demand exceeds available address, resolver, DHCP, validation, change-window, or staffing capacity and tradeoffs need approval.",
+      "Conflicting priorities lack an approved decision rule.",
+      "Tenant policy, public standards, vendor guidance, contract terms, regulatory obligations, safety rules, or change authority conflict.",
+      "Required topology, DNS, DHCP, IPAM, telemetry, owner, retention, source-precedence, or approval facts are missing.",
+      "The request requires final production, budget, staffing, legal, compliance, security, safety, or risk authority."
+    ],
+    "refuse": [
+      "Endpoint patching, MDM policy, identity directory administration, PAM policy, MFA rollout, or endpoint registry changes.",
+      "Application-layer routing logic, API design, service-discovery code, application implementation, or application-only debugging.",
+      "Live firewall rule deployment, perimeter tuning, exploit execution, vulnerability remediation, forensic investigation, or broad security architecture.",
+      "Replacing platform networking ownership outside DNS, DHCP, reverse DNS, and address management.",
+      "Presenting a planning recommendation as final budget, staffing, operational, compliance, legal, risk, or production approval."
+    ]
+  },
+  "domain_failure_modes": [
+    {
+      "failure_mode": "Generic DNS advice ignores authoritative versus recursive boundaries.",
+      "impact": "Resolver loops, cache poisoning exposure, split-horizon leakage, unresolved delegation, and unclear ownership.",
+      "scenario_ids": [
+        "dnsipam-04",
+        "dnsipam-07"
+      ]
+    },
+    {
+      "failure_mode": "DHCP capacity or failover is planned without lease, scope, reservation, relay, and renewal evidence.",
+      "impact": "Address exhaustion, duplicate assignment, branch outage, misleading routing diagnosis, and uncontrolled emergency changes.",
+      "scenario_ids": [
+        "dnsipam-02",
+        "dnsipam-05"
+      ]
+    },
+    {
+      "failure_mode": "IPAM source-of-truth records appear complete but omit owner, lifecycle state, conflict, reservation, or tenant priority facts.",
+      "impact": "Duplicate allocations, stale records, unsupported schedule decisions, and audit gaps.",
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-03",
+        "dnsipam-10",
+        "dnsipam-11"
+      ]
+    },
+    {
+      "failure_mode": "Reverse DNS and DNSSEC are treated as routine record updates without delegation, chain-of-trust, resolver, validation, or rollback constraints.",
+      "impact": "PTR inconsistency, validation failures, signed-zone outages, and hard-to-rollback name resolution failures.",
+      "scenario_ids": [
+        "dnsipam-06",
+        "dnsipam-09"
+      ]
+    },
+    {
+      "failure_mode": "Cross-industry tenant constraints are treated as cosmetic.",
+      "impact": "Recommendations ignore change freezes, safety-sensitive workloads, regulated retention, business criticality, or tenant approval authority.",
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-11",
+        "dnsipam-17",
+        "dnsipam-18"
+      ]
+    },
+    {
+      "failure_mode": "Adjacent endpoint, identity, application, firewall, security, or approval work is absorbed by the DDI specialist.",
+      "impact": "Boundary drift, unauthorized execution, wrong owner routing, compliance risk, and unsupported operational claims.",
+      "scenario_ids": [
+        "dnsipam-12",
+        "dnsipam-13",
+        "dnsipam-14",
+        "dnsipam-15",
+        "dnsipam-16"
+      ]
+    },
+    {
+      "failure_mode": "Conflicting standards, vendor guidance, tenant policy, or safety facts are synthesized without precedence authority.",
+      "impact": "Over-confident recommendations that violate tenant policy, platform limits, or safety/change authority.",
+      "scenario_ids": [
+        "dnsipam-18"
+      ]
+    }
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-17",
+        "dnsipam-18"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-11",
+        "dnsipam-18"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "scenario_ids": [
+        "dnsipam-13",
+        "dnsipam-14",
+        "dnsipam-15",
+        "dnsipam-16"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Demand exceeds available capacity",
+      "scenario_ids": [
+        "dnsipam-02",
+        "dnsipam-10"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Conflicting priorities with no approved decision rule",
+      "scenario_ids": [
+        "dnsipam-03"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Request for final approval outside lane authority",
+      "scenario_ids": [
+        "dnsipam-12"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Normal in-scope execution using realistic industry terminology and artifact shapes",
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-11"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Low-confidence handling when required facts, records, or authority sources are missing",
+      "scenario_ids": [
+        "dnsipam-17"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling that requires escalation instead of confident synthesis",
+      "scenario_ids": [
+        "dnsipam-18"
+      ],
+      "covered": true
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves the public baseline and records assumptions",
+      "scenario_ids": [
+        "dnsipam-01",
+        "dnsipam-18"
+      ],
+      "covered": true
+    }
+  ],
+  "required_workflow_questions": [
+    {
+      "question": "What named-industry records and systems actually govern the lane?",
+      "answer": "For cross-industry DDI, tenant-specific topology, DNS, DHCP, IPAM, monitoring, incident, change, policy, criticality, retention, safety, and approval systems govern safe recommendations. Public sources constrain protocol and platform claims, but tenant systems determine ownership, timing, and authority."
+    },
+    {
+      "question": "What failure modes make this industry materially different from a generic function?",
+      "answer": "Cross-industry DDI is materially changed by tenant-specific criticality, regulated workloads, change freezes, safety windows, retention policy, cloud/on-prem platform records, and source-precedence rules. The pack must ask for those facts instead of issuing generic DNS/DHCP/IPAM best practices."
+    },
+    {
+      "question": "What adjacent authority boundaries constrain the lane?",
+      "answer": "Endpoint, identity, application, firewall, routing/switching, broad security, legal, compliance, budget, staffing, final production approval, and risk acceptance remain outside the lane. The specialist may preserve DDI evidence for handoff but must not own those decisions."
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Tenant source precedence between vendor guidance, public standards, and internal policy",
+      "status": "runtime_evidence_required",
+      "blocking": false,
+      "resolution_path": "At runtime, request tenant policy and approval authority. If conflict remains, return to orchestrator instead of synthesizing a confident recommendation."
+    },
+    {
+      "topic": "Sector-specific safety, privacy, retention, or regulated-change constraints for a cross-industry tenant",
+      "status": "runtime_evidence_required",
+      "blocking": false,
+      "resolution_path": "At runtime, require the named tenant industry record set and safety/change authority. If absent, use dnsipam-17 or dnsipam-18 escalation behavior."
+    },
+    {
+      "topic": "Exact platform behavior for tenant-specific DNS, DHCP, or IPAM products not represented in the source baseline",
+      "status": "runtime_evidence_required",
+      "blocking": false,
+      "resolution_path": "Request current official vendor documentation and tenant configuration exports before making provider-specific claims."
+    }
+  ],
+  "blocking_unresolved_ambiguities": 0,
+  "notes": [
+    "Research output constrains the spec pack to DNS, DHCP, reverse DNS, DNSSEC, and IPAM advisory work with planning, scheduling, allocation, evidence, and boundary controls.",
+    "No blocking unresolved ambiguity remains for a validated spec pack because unresolved tenant-specific ambiguity is converted into runtime retrieval and escalation rules.",
+    "The current package baseline was used for continuity only; the refreshed spec pack is the canonical source of truth."
+  ]
+}

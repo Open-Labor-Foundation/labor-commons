@@ -1,0 +1,387 @@
+{
+  "agent_slug": "hospital-admissions-specialist",
+  "agent_release": "v0.1.0",
+  "resolved_workflow_phase_group": "intake-access-and-initiation",
+  "industry_profile": "healthcare-and-care-delivery",
+  "resolved_industry_profile": "healthcare-and-care-delivery",
+  "semantic_baseline_version": "2026-04-07",
+  "source_decay_policy": "review_required_after_interval",
+  "last_reviewed_at": "2026-04-14",
+  "domain_research_pack": "healthcare-and-care-delivery",
+  "authoritative_sources": [
+    {
+      "title": "Medicare Benefit Policy Manual, Chapter 1 - Inpatient Hospital Services Covered Under Part A",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/Regulations-and-Guidance/Guidance/Manuals/downloads/bp102c01.pdf",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS is the Medicare payer and policy administrator. Chapter 1 directly supports inpatient admission-order evidence, timing, ordering-practitioner boundaries, and ambiguous order handling for hospital admissions.",
+      "workflow_stage": "admission order, inpatient status evidence, and admission-readiness review",
+      "used_for": [
+        "inpatient order prerequisite handling",
+        "order timing and specificity caveats",
+        "clinical-admission and utilization-review boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_manual_revision"
+    },
+    {
+      "title": "42 CFR 482.24 - Condition of participation: Medical record services",
+      "publisher": "Electronic Code of Federal Regulations / Centers for Medicare & Medicaid Services",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.24",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Hospital Conditions of Participation define medical-record obligations for hospital services. The section grounds admissions evidence expectations around orders, documentation, and the patient record.",
+      "workflow_stage": "medical-record and order evidence capture",
+      "used_for": [
+        "EHR and order evidence expectations",
+        "documentation trail requirements",
+        "missing or conflicting record failure modes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cfr_revision"
+    },
+    {
+      "title": "42 CFR 482.30 - Condition of participation: Utilization review",
+      "publisher": "Electronic Code of Federal Regulations / Centers for Medicare & Medicaid Services",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.30",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Hospital Conditions of Participation define utilization-review governance for admissions and continued stays, making it authoritative for routing medical necessity and admission-status questions away from the admissions intake lane.",
+      "workflow_stage": "utilization review boundary and admission-status escalation",
+      "used_for": [
+        "medical necessity refusal triggers",
+        "utilization review handoff requirements",
+        "admission-status conflict escalation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cfr_revision"
+    },
+    {
+      "title": "42 CFR 482.43 - Condition of participation: Discharge planning",
+      "publisher": "Electronic Code of Federal Regulations / Centers for Medicare & Medicaid Services",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.43",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Hospital Conditions of Participation define discharge planning and transfer obligations. They support the boundary between admissions handoff evidence and case-management or discharge-planning authority.",
+      "workflow_stage": "discharge or care-transition handoff boundary",
+      "used_for": [
+        "discharge planning adjacent-lane routing",
+        "care-transition evidence caveats",
+        "transfer protocol awareness"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cfr_revision"
+    },
+    {
+      "title": "HIPAA Eligibility Transaction System (HETS) 270/271",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/research-statistics-data-and-systems/cms-information-technology/hetshelp",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS operates the Medicare real-time eligibility transaction channel. It directly supports eligibility evidence, 270/271 terminology, and the boundary between coverage evidence and admissions clearance.",
+      "workflow_stage": "eligibility verification and coverage evidence capture",
+      "used_for": [
+        "eligibility prerequisite handling",
+        "270/271 terminology",
+        "eligibility versus referral, authorization, order, or placement boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_transaction_revision"
+    },
+    {
+      "title": "CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F)",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/priorities/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "CMS-0057-F is federal public policy for impacted payer prior authorization processes, APIs, status transparency, and denial-reason communication. It supports authorization status handling without granting approval authority.",
+      "workflow_stage": "authorization status readiness and payer-response handling",
+      "used_for": [
+        "authorization dependency checks",
+        "payer response status caveats",
+        "payer interpretation refusal"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "HIPAA Minimum Necessary Standard",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the HIPAA privacy regulator. Minimum-necessary guidance directly constrains admissions status requests, transfer packets, payer authorization details, and escalation notes containing PHI.",
+      "workflow_stage": "privacy-gated admissions evidence packaging and requester handling",
+      "used_for": [
+        "minimum-necessary PHI controls",
+        "requester verification escalation",
+        "privacy refusal logic"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "HL7 FHIR R4 Encounter Resource",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/encounter.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 is a recognized healthcare interoperability standards body. The Encounter resource grounds vendor-neutral encounter class, status, hospitalization, admit source, and discharge disposition terminology for ADT and EHR evidence mapping.",
+      "workflow_stage": "ADT, encounter, and admissions terminology normalization",
+      "used_for": [
+        "encounter class and status terminology",
+        "admit source and hospitalization artifact mapping",
+        "tenant terminology adaptation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    },
+    {
+      "title": "National Patient Safety Goals",
+      "publisher": "The Joint Commission",
+      "url": "https://www.jointcommission.org/resources/patient-safety-topics/patient-safety/national-patient-safety-goals/",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "The Joint Commission is a recognized healthcare accrediting body. Its patient-identification safety goals support refusal to clear admission or placement when identity, encounter, or demographic evidence conflicts.",
+      "workflow_stage": "patient identity reconciliation and safety escalation",
+      "used_for": [
+        "identity mismatch blocker handling",
+        "wrong-patient admissions risk framing",
+        "registration or MPI reconciliation escalation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_joint_commission_revision"
+    }
+  ],
+  "workflow_questions": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Minimum prerequisites include confirmed patient/member identity, MRN or MPI match, encounter or pre-admit shell, requested admission type, admit source, facility, service line, requested service date or arrival window, admitting or attending practitioner, admission or observation order status, bed or placement request, payer and plan context, eligibility response, referral dependency, authorization status, utilization review intake path where applicable, consent/privacy posture, tenant source hierarchy, retrieval hooks, and queue owner."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "Truth-set systems include EHR/EMR and clinical documentation, ADT and encounter systems, registration and MPI, order entry, bed board or placement systems, eligibility transaction systems, payer portals, authorization and referral platforms, transfer center systems, utilization review and case management systems, document repositories, patient/member access or CRM systems, consent/privacy systems, and audit logs. Tenant source hierarchy determines which record controls when systems conflict."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops before admission approval, diagnosis, treatment planning, clinical urgency, level-of-care selection, isolation or placement safety judgment, medical necessity, utilization review determination, authorization approval, payer policy interpretation, privacy-release approval, legal interpretation, financial approval, coding, claim correction, denial appeal, discharge planning, or care-transition decisioning. Those require adjacent owner escalation or orchestrator return."
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Admissions intake and lane classification",
+      "description": "Normalize request intent, admission type, admit source, facility, service line, service date or arrival window, patient/member identity, encounter shell, order status, payer, plan, bed request, and desired action before treating work as actionable.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Identity, encounter, and order readiness",
+      "description": "Validate MRN, MPI match, demographics, encounter or pre-admit shell, ADT posture, admission or observation order, ordering practitioner context, and documentation trail against controlling source systems.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Eligibility, referral, authorization, and utilization review prerequisite validation",
+      "description": "Check current eligibility, payer and plan context, referral requirements, authorization status, payer portal evidence, service setting, facility, service line, and whether utilization review or payer-facing owner action is required before admission readiness.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Public healthcare regulator guidance"
+      ]
+    },
+    {
+      "name": "Bed, placement, transfer, and documentation blocker classification",
+      "description": "Reconcile ADT, EHR, bed-board, transfer center, registration, order, payer portal, authorization, referral, utilization review, case management, privacy, and audit records; classify blockers as identity, order, encounter, placement, eligibility, authorization, referral, utilization review, documentation, privacy, source conflict, or tenant policy related.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public healthcare regulator guidance"
+      ]
+    },
+    {
+      "name": "Disposition, routing, and controlled escalation",
+      "description": "Produce accept, pend, reject, route, or blocked dispositions; create admission-readiness summaries and escalation packets; route PHI, patient-safety, clinical, payer, privacy, utilization-review, revenue-cycle, discharge, and source-conflict cases to responsible owners.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Patient demographics, MRN, MPI match evidence, date of birth, legal name, contact details, guarantor, patient/member status, and patient communication preferences",
+    "Encounter or pre-admit shell, ADT status, admission request, admit source, encounter class, service line, facility, service date or arrival window, bed request, bed class, and placement queue state",
+    "Admission or observation order, ordering/referring/admitting/attending practitioner details, clinical-administrative notes, transfer packet, and utilization review intake flag",
+    "Insurance card images, payer and plan identifiers, subscriber/member IDs, eligibility 270/271 responses, coverage dates, referral records, authorization records, authorization numbers, payer portal statuses, and attachment acknowledgements",
+    "Bed-management notes, transfer center case IDs, case management notes, discharge or care-transition dependencies, referral packets, document repository records, and audit logs",
+    "Consent, proxy, privacy restriction, minimum-necessary handling, disclosure, patient-location or admission-status request, and patient communication records",
+    "Intake disposition notes, admission prerequisite checklists, eligibility or authorization blocker summaries, placement-readiness summaries, routing summaries, and escalation packets"
+  ],
+  "systems_of_record": [
+    "EHR/EMR and associated clinical documentation systems",
+    "ADT, encounter, registration, and master patient index systems",
+    "Order entry and admission-order workflows",
+    "Bed board, patient placement, transfer center, and capacity management systems",
+    "Real-time eligibility and benefits verification systems",
+    "Payer portals and electronic prior-authorization platforms",
+    "Referral-management and authorization-management systems",
+    "Utilization review and case management systems",
+    "Practice management, revenue cycle, charge capture, coding, claim, remittance, denial, and appeal systems for routing context only",
+    "Document repository, fax-import, attachment, CRM, patient/member access, patient communication, consent, privacy, identity-access, and audit systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify the admissions request as accepted, pended, rejected, routed, or blocked based on documented patient, encounter, payer, provider, facility, order, authorization, referral, placement, privacy, and tenant-policy evidence.",
+      "Determine whether administrative admission or placement readiness can proceed based on identity, encounter, order, eligibility, referral, authorization, placement, privacy, and documentation prerequisites.",
+      "Identify whether the blocker is identity, demographic, order, encounter, ADT, bed/placement, transfer, eligibility, referral, authorization, utilization-review handoff, documentation, privacy, source-conflict, or tenant-policy related.",
+      "Prepare intake disposition notes, prerequisite checklists, eligibility or authorization blocker summaries, placement-readiness summaries, and escalation packets with source traceability."
+    ],
+    "escalate": [
+      "Tenant payer, plan, facility, service-line, bed class, source hierarchy, retrieval hook, jurisdiction, privacy, or queue-owner rules are missing and would change admissions disposition.",
+      "EHR, ADT, registration, order, bed board, payer portal, eligibility, referral, authorization, transfer center, utilization review, case management, privacy, or audit systems materially conflict.",
+      "The request involves PHI disclosure uncertainty, proxy or consent ambiguity, patient-safety risk, patient identity mismatch, clinical urgency, level-of-care selection, isolation handling, medical necessity, payer policy interpretation, or authorization approval.",
+      "Public baseline guidance and tenant policy, payer contract, facility rule, state program requirement, or bed-management rule materially conflict."
+    ],
+    "refuse": [
+      "Accept, reserve, admit, or clear placement despite unresolved identity, encounter, order, eligibility, referral, authorization, privacy, consent, placement, documentation, or tenant-policy prerequisites.",
+      "Diagnose, triage, determine clinical urgency, choose treatment, approve inpatient status, select level of care, assign isolation precautions, or state that admission is medically necessary.",
+      "Approve or deny authorization, interpret payer policy as binding, override a payer prerequisite, or write appeal or claim strategy.",
+      "Disclose admission status, patient location, authorization details, or transfer packet PHI when requester authority, minimum-necessary purpose, consent, proxy status, or communication rule is unresolved.",
+      "Take ownership of coding, charge capture, claim correction, denial cleanup, appeal strategy, discharge planning, or post-acute provider selection."
+    ]
+  },
+  "domain_failure_modes": [
+    "admission or bed placement is accepted even though identity, encounter, order, eligibility, referral, authorization, or tenant prerequisites remain missing",
+    "active eligibility is treated as full admission clearance when inpatient authorization, referral, order, or utilization-review prerequisites are unresolved",
+    "ambiguous observation or inpatient order language is converted into inpatient admission readiness without practitioner or utilization-review clarification",
+    "wrong-patient or wrong-encounter admission occurs because MRN, MPI, ADT, EHR, registration, and payer conflicts are guessed away",
+    "PHI such as admission status, unit location, authorization detail, or transfer packet content is disclosed without verified authority and minimum-necessary handling",
+    "administrative admissions intake is converted into clinical admission, level-of-care, isolation, or medical-necessity judgment",
+    "payer portal, eligibility, referral, authorization, EHR, ADT, and bed-board statuses conflict and the lane resolves them without tenant source hierarchy",
+    "direct admission or transfer proceeds without accepting service, attending practitioner, bed class, transfer center case ID, arrival window, or authorization evidence",
+    "post-service coding, charge, claim, remittance, denial, appeal, discharge planning, or care-transition work is misrouted into a pre-execution admissions lane",
+    "generic intake language omits hospital-specific ADT, encounter, order, bed-board, utilization-review, payer, facility, service-line, and documentation details that materially change the answer"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "covered": true,
+      "scenario_ids": [
+        "has-01",
+        "has-02",
+        "has-09",
+        "has-12"
+      ]
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "covered": true,
+      "scenario_ids": [
+        "has-06",
+        "has-10",
+        "has-12"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "covered": true,
+      "scenario_ids": [
+        "has-04",
+        "has-07",
+        "has-11",
+        "has-14"
+      ]
+    },
+    {
+      "scenario_family": "Missing prerequisite or required intake data",
+      "covered": true,
+      "scenario_ids": [
+        "has-01",
+        "has-12"
+      ]
+    },
+    {
+      "scenario_family": "Request routed to the wrong lane before execution starts",
+      "covered": true,
+      "scenario_ids": [
+        "has-04",
+        "has-07",
+        "has-08",
+        "has-14"
+      ]
+    },
+    {
+      "scenario_family": "Attempt to bypass access, eligibility, or authorization checks",
+      "covered": true,
+      "scenario_ids": [
+        "has-09"
+      ]
+    },
+    {
+      "scenario_family": "Invalid, incomplete, or ineligible admissions request",
+      "covered": true,
+      "scenario_ids": [
+        "has-01",
+        "has-03",
+        "has-12"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling requires escalation",
+      "covered": true,
+      "scenario_ids": [
+        "has-10",
+        "has-11"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation preserves the public baseline",
+      "covered": true,
+      "scenario_ids": [
+        "has-11",
+        "has-13"
+      ]
+    },
+    {
+      "scenario_family": "Normal in-scope execution using realistic industry terminology and artifact shapes",
+      "covered": true,
+      "scenario_ids": [
+        "has-05",
+        "has-13"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "payer-specific inpatient authorization, referral, and notification rules",
+      "status": "tenant_required",
+      "blocking": false,
+      "handling": "The validated public baseline requires tenant payer, plan, product, facility, provider type, service line, source hierarchy, and contract facts before final admissions disposition. Missing tenant facts trigger pend, route, or orchestrator return rather than guessed clearance."
+    },
+    {
+      "topic": "facility-specific bed-management, direct-admit, transfer-center, and service-line rules",
+      "status": "tenant_required",
+      "blocking": false,
+      "handling": "The pack identifies bed and transfer dependencies but requires tenant facility policy, bed-board source hierarchy, transfer center workflow, accepting-service rules, and escalation SLAs before producing final readiness."
+    },
+    {
+      "topic": "state, program, and facility privacy or patient-location disclosure rules",
+      "status": "tenant_required",
+      "blocking": false,
+      "handling": "The pack applies HIPAA minimum-necessary baseline and requires tenant privacy, consent, proxy, directory, communication, and jurisdictional rules before disclosure or patient-location handling."
+    }
+  ],
+  "research_to_spec_constraints": [
+    "Active eligibility alone is never sufficient to clear admission when order, referral, authorization, encounter, placement, privacy, or tenant prerequisites remain unresolved.",
+    "Inpatient-versus-observation ambiguity is a blocker requiring practitioner, utilization-review, or tenant-policy clarification; the lane may not infer clinical or payer status.",
+    "Patient identity, encounter, ADT, and demographic conflicts are safety blockers, not clerical details to smooth over.",
+    "Payer portal or public guidance status is not equivalent to authorization approval or medical-necessity determination.",
+    "PHI handling is minimum-necessary and requester-authority constrained, including admission status, unit location, authorization details, and transfer packets.",
+    "Direct-admit, transfer, and bed-placement readiness require accepting service, attending practitioner, arrival window, bed or placement facts, and owner routing without taking bed-control or clinical authority.",
+    "The runtime strategy remains specification-based until a separate trusted implementation validates connectors, PHI controls, and tenant retrieval hooks."
+  ]
+}

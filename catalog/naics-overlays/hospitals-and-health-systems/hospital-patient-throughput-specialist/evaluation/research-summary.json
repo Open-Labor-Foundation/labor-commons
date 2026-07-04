@@ -1,0 +1,429 @@
+{
+  "agent_slug": "hospital-patient-throughput-specialist",
+  "industry_profile": "healthcare-and-care-delivery",
+  "last_reviewed_at": "2026-04-14",
+  "source_decay_policy": "review_required_after_interval",
+  "authoritative_sources": [
+    {
+      "title": "42 CFR 482.24 - Condition of participation: Medical record services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.24",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital medical-record regulation for Medicare and Medicaid participating hospitals; authoritative for EHR, encounter, ADT, and medical-record truth sets used in patient placement.",
+      "workflow_stage": "Truth-set validation and evidence traceability",
+      "used_for": [
+        "requiring EHR, encounter, and medical-record traceability",
+        "preventing throughput recommendations based only on informal status notes",
+        "anchoring auditability of patient-specific patient movement evidence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "Admission, Discharge, and Transfer Patient Event Notification Conditions of Participation",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/priorities/burden-reduction/overview/interoperability/frequently-asked-questions/admission-discharge-transfer-patient-event-notification-conditions-participation-cop-42-cfr-482-24d",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS interprets the hospital ADT event notification Conditions of Participation and is authoritative for patient status event, notification, EHR, administrative system, and privacy-preference handling.",
+      "workflow_stage": "ADT status refresh, notification dependency review, and source hierarchy",
+      "used_for": [
+        "treating ADT as a central hospital-patient-throughput status source",
+        "requiring status refresh before recommendations change",
+        "preserving privacy preferences and recipient restrictions in patient movement outputs"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    },
+    {
+      "title": "42 CFR 482.43 - Condition of participation: Discharge planning",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.43",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital discharge-planning regulation; authoritative for why capacity release and care-transition dependencies must be documented without hospital patient throughput deciding discharge readiness.",
+      "workflow_stage": "Discharge-dependent capacity release and care-transition blocker review",
+      "used_for": [
+        "separating capacity release forecasts from discharge-readiness decisions",
+        "requiring discharge and post-acute blockers to be captured as constraints",
+        "routing care-transition decisions to discharge planning or clinical owners"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.30 - Condition of participation: Utilization review",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.30",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital utilization-review regulation; authoritative for escalation when throughput decisions depend on admission status, medical necessity, continued stay, payer interpretation, or utilization review outcome.",
+      "workflow_stage": "Authorization, eligibility, admission-status, and utilization-review prerequisite handling",
+      "used_for": [
+        "refusing to decide medical necessity or continued-stay status",
+        "routing payer or utilization interpretation to adjacent owners",
+        "blocking placement when tenant policy requires current UR or authorization evidence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 482.23 - Condition of participation: Nursing services",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-482/subpart-C/section-482.23",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal hospital nursing-services regulation; authoritative for treating staffed-bed and care-team and licensed nursing constraints as real throughput availability constraints that require nursing or staffing-owner escalation.",
+      "workflow_stage": "Staffed-throughput capacity and unit readiness assessment",
+      "used_for": [
+        "distinguishing physical beds and treatment spaces from staffed, serviceable throughput capacity",
+        "escalating licensed staffing adequacy instead of approving closed-bed reopening",
+        "capturing staffing blockers in capacity shortfall summaries"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "42 CFR 489.24 - Special responsibilities of Medicare hospitals in emergency cases",
+      "publisher": "Electronic Code of Federal Regulations",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-G/part-489/subpart-B/section-489.24",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "Primary federal EMTALA regulation; authoritative for emergency transfer capacity concepts involving beds, qualified staff, and equipment while keeping legal and clinical transfer acceptance conclusions outside this lane.",
+      "workflow_stage": "Transfer-center capacity fact packaging and legal or clinical escalation",
+      "used_for": [
+        "packaging transfer capacity facts without acceptance or refusal authority",
+        "capturing qualified staff and equipment as constraints",
+        "escalating EMTALA-sensitive requests to legal, clinical, and transfer-center owners"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "HIPAA Minimum Necessary Standard",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the federal HIPAA privacy regulator; authoritative for minimum-necessary PHI handling in census extracts, throughput-board notes, transfer packets, and escalation summaries.",
+      "workflow_stage": "Privacy and PHI handling gate review",
+      "used_for": [
+        "limiting patient identifiers and diagnoses in outputs",
+        "refusing uncontrolled census or placement-list disclosure",
+        "routing privacy exceptions to healthcare privacy owners"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "Guideline for Isolation Precautions: Recommendations",
+      "publisher": "Centers for Disease Control and Prevention",
+      "url": "https://www.cdc.gov/infection-control/hcp/isolation-precautions/recommendations.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "CDC is the federal public health authority for infection-control guidance; authoritative for patient-placement principles that make isolation, single-patient room, and cohorting questions safety-sensitive.",
+      "workflow_stage": "Isolation, cohorting, and infection-control blocker review",
+      "used_for": [
+        "treating isolation uncertainty as a blocker",
+        "routing cohorting or infection-control clearance to qualified owners",
+        "preventing generic throughput allocation when infection risk changes placement"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_cdc_revision"
+    },
+    {
+      "title": "Improving Patient Flow and Reducing Emergency Department Crowding: A Guide for Hospitals",
+      "publisher": "Agency for Healthcare Research and Quality",
+      "url": "https://www.ahrq.gov/research/findings/final-reports/ptflow/index.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "AHRQ is a federal healthcare quality and patient-safety agency; this public hospital guide is authoritative for patient-flow, boarding, capacity, and hospitalwide throughput workflow framing.",
+      "workflow_stage": "Demand intake, capacity assessment, sequencing, and refresh",
+      "used_for": [
+        "ED boarding and hospitalwide flow scenario design",
+        "capacity shortfall, throughput, and escalation framing",
+        "distinguishing flow recommendations from final approval"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_ahrq_revision"
+    },
+    {
+      "title": "Location - FHIR R4",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/location.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 is a recognized healthcare interoperability standards body; FHIR Location is authoritative vendor-neutral terminology for facilities, wards, rooms, beds, treatment spaces, and operational location hierarchy.",
+      "workflow_stage": "Location, room, unit, bed, and treatment-space terminology normalization",
+      "used_for": [
+        "normalizing hospital, unit, room, and bed hierarchy",
+        "separating physical location from assignment authority",
+        "supporting system-of-record retrieval expectations"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    },
+    {
+      "title": "Encounter - FHIR R4",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/encounter.html",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "HL7 FHIR Encounter is authoritative vendor-neutral terminology for patient encounter status, class, hospitalization, participants, and location history used by EHR and ADT systems.",
+      "workflow_stage": "Encounter, location history, and ADT truth-set normalization",
+      "used_for": [
+        "normalizing inpatient, observation, ED, transfer, and discharge states",
+        "requiring encounter context before placement recommendations",
+        "tracing location history and status changes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_hl7_revision"
+    },
+    {
+      "title": "CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F)",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/priorities/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS public policy for payer prior authorization APIs and decision transparency; authoritative for payer/provider prior authorization evidence dependencies without granting this lane payer interpretation authority.",
+      "workflow_stage": "Coverage, referral, authorization, and payer dependency handling",
+      "used_for": [
+        "scenario coverage for missing authorization, referral, or eligibility dependencies",
+        "routing payer-policy interpretation away from hospital patient throughput",
+        "preserving documented authorization status as a dependency rather than a throughput decision"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_revision"
+    }
+  ],
+  "workflow_questions": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Throughput work requires tenant facility context, source hierarchy, ADT or encounter record, current throughput-board and unit capacity state, documented request source, accepting service or provider context, required order or transfer packet, staffed-bed, care-team, and unit-scope evidence, EVS or room readiness, isolation and equipment constraints, transport readiness, discharge or care-transition dependencies, and tenant priority or approval rules. Eligibility, referral, prior authorization, payer, and utilization review facts are prerequisites when tenant policy or the service setting makes them material, but payer interpretation remains adjacent."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "The truth set is established by EHR or EMR encounter and clinical documentation, ADT feed, hospital-patient-throughput board, capacity dashboard, unit census, staffed-bed and care-team roster, EVS and transport systems, transfer-center record, case-management and discharge planning notes, utilization review system, patient access or payer portal records, privacy or audit system, and tenant source-of-truth hierarchy."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops at recommendation-quality operational planning and evidence packaging. Licensed clinical authority begins at diagnosis, treatment planning, acuity, level-of-care, discharge readiness, infection-control clearance, and medical necessity. Privacy authority begins when PHI disclosure, consent, recipient, or minimum-necessary questions change the safe output. Payer or utilization authority begins when eligibility, referral, authorization, admission status, coverage, continued stay, coding, claim, denial, or appeal interpretation affects the answer."
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Demand intake and placement-frame normalization",
+      "description": "Confirm the request is hospital patient-throughput work and normalize ED holds, direct admissions, interfacility transfers, post-op or PACU demand, ICU or stepdown moves, med-surg or telemetry placement, behavioral health placement, discharge pending, transport or diagnostic delays, closed beds, and room-clean states into a planning frame.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Truth-set and prerequisite validation",
+      "description": "Validate ADT, EHR encounter, throughput board, order or transfer request, accepting service, authorization or referral dependencies where material, privacy constraints, unit scope, and source-of-truth hierarchy before acting.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Constraint and capacity assessment",
+      "description": "Assess staffed beds, treatment spaces, unit census, service-line fit, isolation and cohorting blockers, diagnostic or procedure delays, equipment readiness, EVS and transport readiness, nurse staffing, discharge dependencies, and downstream impacts.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Allocation and sequence recommendation",
+      "description": "Prepare recommendation-only patient-flow sequencing, candidate units or treatment spaces, shortfall summaries, deferred-demand sets, blocked alternatives, discharge-impact notes, and escalation packages using approved priority rules and planning horizon.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Refresh, handoff, and exception escalation",
+      "description": "Refresh ADT, throughput board, EVS, transport, staffing, transfer-center, discharge, payer, and approval evidence; escalate when systems conflict, patient safety is implicated, or authority shifts to an adjacent owner.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Privacy, patient safety, and authority gate review",
+      "description": "Apply minimum-necessary PHI controls, refuse uncontrolled census disclosure, and route clinical, infection-control, utilization-review, transfer, legal, payer, privacy, staffing, or final approval decisions to accountable owners.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Throughput request with source, service line, requested destination, priority flag, timing, and requesting owner",
+    "EHR or EMR encounter record, ADT status, location history, admission order, accepting service note, and clinical-administrative handoff notes",
+    "Throughput board, unit census, staffed-bed and care-team roster, physical bed and treatment-space inventory, capacity dashboard, closed-bed log, and surge status",
+    "EVS room-clean status, transport queue, equipment availability, isolation flag, cohorting note, and infection-prevention escalation record",
+    "Transfer-center packet, accepting provider record, discharge or care-transition note, case-management blocker, and post-acute placement status",
+    "Eligibility, benefits, referral, authorization, utilization review, payer portal, inpatient or observation status, coding, charge capture, claim, denial, or appeal records where material to the throughput workflow",
+    "Tenant priority matrix, approval log, command-center decision record, exception log, constraint log, allocation recommendation, and escalation note"
+  ],
+  "systems_of_record": [
+    "EHR or EMR and associated clinical documentation systems",
+    "ADT feed or patient registration system",
+    "Throughput board, capacity dashboard, unit census, and physical bed and treatment-space inventory",
+    "Staffing or workforce management system and nursing supervisor roster",
+    "EVS or housekeeping room-turn system, transport system, and equipment tracking system",
+    "Transfer-center platform, case-management system, utilization review workflow, and discharge or care-transition tracker",
+    "Practice management, revenue cycle, payer portal, eligibility, referral, and prior authorization systems",
+    "Privacy, consent, audit, incident, command-center, and approval systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify throughput work as in scope, out of scope, or blocked on missing prerequisites",
+      "Validate patient placement facts, throughput capacity, readiness, source records, and tenant policy inputs",
+      "Recommend throughput allocation, sequencing, deferral, shortfall, and escalation packages with explicit assumptions and authority limits",
+      "Prioritize work, capacity, or resources using documented constraints and approved tenant rules",
+      "Refresh throughput board, ADT, EVS, transport, staffing, transfer, discharge, payer, and approval evidence before changing recommendation state"
+    ],
+    "escalate": [
+      "Missing or conflicting ADT, EHR, throughput-board, staffed-bed and care-team, EVS, isolation, transport, transfer, discharge, authorization, or approval records",
+      "Clinical acuity, level-of-care, medical necessity, discharge readiness, diagnosis, treatment, infection-control, or patient-safety judgment is required",
+      "Payer policy, coverage, referral, authorization, admission status, continued stay, coding, claim, denial, or appeal interpretation changes the answer",
+      "PHI disclosure, privacy preference, consent, or minimum-necessary handling changes the safe output",
+      "Transfer acceptance or refusal is EMTALA-sensitive or requires legal, receiving-physician, transfer-center, or executive authority",
+      "Tenant, payer, public, facility, or jurisdictional rules conflict materially"
+    ],
+    "refuse": [
+      "Request to provide final throughput, staffing, transfer, surge, closed-bed reopening, discharge, or operational approval",
+      "Request to determine clinical urgency, level of care, medical necessity, treatment suitability, isolation clearance, or discharge readiness",
+      "Request to disclose named census, diagnosis, location, payer, or movement history outside role-based and minimum-necessary controls",
+      "Request to treat a generic room, facilities, or office scheduling prompt as hospital patient throughput without patient, encounter, ADT, or throughput-board evidence",
+      "Request to override missing prerequisites, source conflicts, payer dependencies, or tenant approval matrices"
+    ]
+  },
+  "domain_failure_modes": [
+    "The lane behaves like generic room scheduling and ignores ADT, encounter, service-line, staffed-bed and care-team, isolation, discharge, and patient-safety evidence.",
+    "A throughput slot is recommended as ready even though EHR, ADT, throughput board, EVS, transport, staffing, isolation, or equipment systems materially conflict.",
+    "Physical beds, treatment spaces, or discharge pathways are counted as available when nursing staffing, unit scope, transport, diagnostics, or downstream care-transition blockers make them unavailable for safe flow.",
+    "The lane implies clinical acuity, level-of-care, discharge readiness, infection-control, or medical-necessity authority.",
+    "A planned admission, transfer, or post-acute dependency proceeds despite missing eligibility, referral, authorization, payer, or utilization review evidence required by tenant policy.",
+    "Census, isolation, diagnosis, payer, or movement-history PHI is exported or shared without minimum-necessary controls.",
+    "A transfer-center scenario is treated as simple throughput availability and omits qualified staff, equipment, receiving-physician, legal, or EMTALA-sensitive escalation.",
+    "Public, payer, and tenant policies conflict but the lane synthesizes a confident answer instead of escalating.",
+    "Tenant source-of-truth hierarchy, unit taxonomy, priority matrix, surge rules, and approval authorities are guessed rather than retrieved."
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Demand exceeds capacity or approved service levels",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-02"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting priorities with no approved tie-break rule",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-03"
+      ]
+    },
+    {
+      "scenario_family": "Stakeholder asks for final approval the lane cannot grant",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-04",
+        "hpts-10"
+      ]
+    },
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-05",
+        "hpts-13"
+      ]
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-06",
+        "hpts-10"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-07",
+        "hpts-08",
+        "hpts-10",
+        "hpts-13"
+      ]
+    },
+    {
+      "scenario_family": "Normal in-scope execution using realistic industry terminology and artifact shapes",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-01",
+        "hpts-14"
+      ]
+    },
+    {
+      "scenario_family": "Boundary rejection when the request should move to an adjacent specialist",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-07",
+        "hpts-11"
+      ]
+    },
+    {
+      "scenario_family": "Low-confidence handling when required facts, records, or authority sources are missing",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-09",
+        "hpts-12"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling that requires escalation instead of confident synthesis",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-09",
+        "hpts-13"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves the public baseline and records assumptions",
+      "covered": true,
+      "scenario_ids": [
+        "hpts-14"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Tenant-specific throughput priority matrix and surge command authority",
+      "status": "resolved_for_market_ready_by_runtime_requirement",
+      "blocking": false,
+      "resolution": "The public baseline cannot define a universal priority order or surge approval owner. The package records these as required tenant facts and refuses deterministic prioritization when missing."
+    },
+    {
+      "topic": "Payer, plan, referral, authorization, and utilization review differences",
+      "status": "resolved_for_market_ready_by_runtime_requirement",
+      "blocking": false,
+      "resolution": "The package treats payer and UR facts as prerequisites when material but routes interpretation and approval to adjacent owners."
+    },
+    {
+      "topic": "Jurisdiction-specific transfer, privacy, and facility policy variation",
+      "status": "resolved_for_market_ready_by_runtime_requirement",
+      "blocking": false,
+      "resolution": "The package requires jurisdiction and tenant policy retrieval, escalates conflicts, and does not claim legal, privacy, or EMTALA compliance authority."
+    }
+  ],
+  "blocking_unresolved_ambiguity": []
+}

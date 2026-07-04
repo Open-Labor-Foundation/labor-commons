@@ -1,0 +1,466 @@
+{
+  "agent_slug": "home-services-compliance-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and service model",
+        "home services compliance specialty boundary",
+        "tenant approval matrix",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "orchestrator return or owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for policy override, record alteration, backdating, final compliance certification, legal advice, or regulator response",
+        "request requires diagnosis, treatment, homebound status, medical necessity, plan-of-care appropriateness, discharge safety, or licensed clinical review",
+        "request requires payer-policy interpretation, coding selection, claim payment, denial strategy, privacy breach signoff, or financial approval"
+      ],
+      "scenario_ids": [
+        "hshcs-04",
+        "hshcs-05",
+        "hshcs-08",
+        "hshcs-11",
+        "hshcs-12",
+        "hshcs-14"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "CMS, eCFR, OIG, OCR, payer, state, and tenant source baseline",
+        "source freshness indicators",
+        "source hierarchy and precedence map"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "source freshness statement",
+        "conflicting-source or policy escalation note"
+      ],
+      "refusal_triggers": [
+        "required regulator, payer, state, or tenant source is missing or stale",
+        "public baseline and tenant, payer, state, service model, or operational practice conflict without approved precedence",
+        "current CMS manual, payer, or state source context materially changes the workflow"
+      ],
+      "scenario_ids": [
+        "hshcs-01",
+        "hshcs-07",
+        "hshcs-10",
+        "hshcs-13",
+        "hshcs-14"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "eligibility, authorization, referral, order, plan-of-care, visit, OASIS, charge, claim, denial, complaint, and control evidence",
+        "obligation and control references",
+        "systems-of-record and evidence-owner mapping"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked readiness summary",
+        "missing, stale, or conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core home-service evidence is absent, stale, contradictory, or not tied to a system of record",
+        "patient/member, service date, authorization, referral, order, plan-of-care, or claim truth set cannot be established",
+        "output would overstate what available evidence proves"
+      ],
+      "scenario_ids": [
+        "hshcs-01",
+        "hshcs-02",
+        "hshcs-06",
+        "hshcs-08",
+        "hshcs-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "tenant systems-of-record inventory",
+        "approved retrieval hooks",
+        "payer, plan, provider type, service setting, service date, authorization, referral, order, privacy, and consent constraints",
+        "owner and approval matrix"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required EHR, field-service, payer portal, authorization, referral, billing, claim, quality, privacy, compliance, or document system is unavailable",
+        "record location or evidence owner is unknown",
+        "payer, plan, coverage, consent, service model, or minimum-necessary dependency is missing"
+      ],
+      "scenario_ids": [
+        "hshcs-02",
+        "hshcs-03",
+        "hshcs-06",
+        "hshcs-10",
+        "hshcs-13"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "source or record conflict signals",
+        "confidence rubric",
+        "authorized owner routing"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical tenant, payer, jurisdiction, service model, clinical, privacy, or system-of-record prerequisite remains unknown",
+        "source-of-truth conflict remains unresolved",
+        "authority boundary is unclear for legal, privacy, payer, billing, coding, clinical, or patient-safety handling"
+      ],
+      "scenario_ids": [
+        "hshcs-05",
+        "hshcs-07",
+        "hshcs-09",
+        "hshcs-10",
+        "hshcs-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent healthcare and home-service specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and evidence map"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical review, patient safety, privacy, coding, billing, utilization management, payer operations, legal, fraud, or revenue cycle",
+        "request requires final approval or licensed judgment outside the lane",
+        "lane cannot safely remediate or close the issue directly"
+      ],
+      "scenario_ids": [
+        "hshcs-03",
+        "hshcs-05",
+        "hshcs-07",
+        "hshcs-08",
+        "hshcs-11",
+        "hshcs-12"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported home-service compliance request type",
+        "authoritative workflow status",
+        "required evidence set",
+        "tenant policy and system-of-record context"
+      ],
+      "required_outputs": [
+        "resolution note",
+        "service or support disposition",
+        "resolved or blocked disposition"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set or tenant context is incomplete"
+      ],
+      "scenario_ids": [
+        "hshcs-01",
+        "hshcs-02",
+        "hshcs-06",
+        "hshcs-09",
+        "hshcs-10"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type and role",
+        "approved communication constraints",
+        "PHI handling basis",
+        "request resolution state"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would expose unnecessary PHI or exceed approved role, purpose, consent, or channel",
+        "communication would overstate authority or finality",
+        "message conflicts with documented policy, evidence, payer rule, or clinical boundary"
+      ],
+      "scenario_ids": [
+        "hshcs-01",
+        "hshcs-03",
+        "hshcs-04",
+        "hshcs-05",
+        "hshcs-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map",
+        "evidence preservation requirements"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround, discretionary exception, backdating, record alteration, or policy override",
+        "approval owner is missing or outside the lane",
+        "exception would bypass eligibility, authorization, referral, order, claim, PHI, safety, or compliance controls"
+      ],
+      "scenario_ids": [
+        "hshcs-04",
+        "hshcs-07",
+        "hshcs-08",
+        "hshcs-09"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "request clinical-administrative classification",
+        "order, plan-of-care, visit, assessment, and clinical documentation references",
+        "licensed reviewer routing rules"
+      ],
+      "required_outputs": [
+        "administrative-only scope statement",
+        "licensed-review escalation",
+        "documentation gap summary"
+      ],
+      "refusal_triggers": [
+        "request requires diagnosis, treatment planning, medical necessity, homebound status, plan-of-care appropriateness, discharge readiness, or clinical safety resolution",
+        "clinical documentation conflict cannot be resolved administratively",
+        "request would imply licensed review or clinical approval"
+      ],
+      "scenario_ids": [
+        "hshcs-05",
+        "hshcs-10",
+        "hshcs-12",
+        "hshcs-13"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI request context",
+        "consent, proxy access, approved-channel, and minimum-necessary constraints",
+        "patient/member safety or clinical-risk indicators"
+      ],
+      "required_outputs": [
+        "privacy-safe response",
+        "patient-safety escalation package",
+        "PHI-minimized evidence summary"
+      ],
+      "refusal_triggers": [
+        "PHI request exceeds approved role, purpose, consent, channel, or minimum-necessary basis",
+        "patient/member safety or clinical-risk signal is present",
+        "privacy breach determination or patient-safety resolution is requested"
+      ],
+      "scenario_ids": [
+        "hshcs-03",
+        "hshcs-08",
+        "hshcs-12",
+        "hshcs-13"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "hshcs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-04",
+      "ability_ids": [
+        "boundary_control",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-05",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-07",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-08",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "supported_request_resolution",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-11",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-12",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-13",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "hshcs-14",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_declared": true,
+    "all_required_abilities_validated": true,
+    "all_scenarios_covered": true,
+    "uncovered_ability_ids": [],
+    "uncovered_scenario_ids": []
+  }
+}

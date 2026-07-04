@@ -1,0 +1,407 @@
+{
+  "agent_slug": "pre-need-services-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "pre-need specialty boundary",
+        "authority owner map",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "adjacent routing or orchestrator return note"
+      ],
+      "refusal_triggers": [
+        "request asks for legal, tax, estate, Medicaid, insurance, investment, trust, licensed funeral, cemetery authority, refund, or policy-override decision",
+        "request asks the lane to modify executed pre-need contract selections or funding status without authority",
+        "request treats pre-need service as generic customer support and omits contract, funding, disclosure, purchaser, beneficiary, or at-need reconciliation records"
+      ],
+      "scenario_ids": [
+        "pns-03",
+        "pns-04",
+        "pns-06",
+        "pns-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "source freshness metadata",
+        "tenant jurisdiction",
+        "tenant policy and contract precedence"
+      ],
+      "required_outputs": [
+        "source priority note",
+        "freshness or decay note",
+        "conflicting-source escalation"
+      ],
+      "refusal_triggers": [
+        "required public or jurisdiction-specific source context is missing",
+        "source freshness exceeds decay tolerance for a material pre-need rule",
+        "public source, tenant policy, contract terms, trust records, insurance records, or provider records materially conflict"
+      ],
+      "scenario_ids": [
+        "pns-08",
+        "pns-11",
+        "pns-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "executed pre-need contract",
+        "price-list and disclosure records",
+        "selected goods and services",
+        "trust or insurance funding records",
+        "communication and audit logs"
+      ],
+      "required_outputs": [
+        "source-linked evidence map",
+        "missing-evidence index",
+        "pre-need evidence packet"
+      ],
+      "refusal_triggers": [
+        "contract, disclosure, funding, payment, purchaser, beneficiary, or selected-services evidence is missing",
+        "support disposition cannot be tied to named source systems",
+        "source records conflict across contract, trust, insurance, provider, or at-need systems"
+      ],
+      "scenario_ids": [
+        "pns-01",
+        "pns-02",
+        "pns-05",
+        "pns-07",
+        "pns-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks",
+        "tenant authority matrix",
+        "access and privacy policy"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocked-prerequisite note",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required pre-need system of record is unavailable",
+        "retrieval hook or owner is unknown",
+        "jurisdiction, funding type, seller permit context, cancellation policy, or authority owner is missing"
+      ],
+      "scenario_ids": [
+        "pns-01",
+        "pns-02",
+        "pns-08",
+        "pns-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "source conflict signals",
+        "approval risk flags",
+        "privacy or complaint risk flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact remains unknown",
+        "contract, funding, disclosure, provider, or policy truth cannot be established",
+        "privacy, complaint, unlicensed-sales, elder-exploitation, or authority conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "pns-02",
+        "pns-07",
+        "pns-08",
+        "pns-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff evidence package",
+        "authority boundary"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request requires legal, licensed funeral, cemetery, insurance, trustee, tax, estate, Medicaid, benefits, compliance, complaint, privacy, finance, or regulator ownership",
+        "request requires approval or signoff outside the lane",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "pns-03",
+        "pns-04",
+        "pns-09",
+        "pns-10",
+        "pns-11"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "pre-need case status",
+        "required evidence set",
+        "documented tenant service rules"
+      ],
+      "required_outputs": [
+        "service or support disposition",
+        "resolution or blocked-status note",
+        "next action summary"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "contract, disclosure, funding, payment, or provider status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "pns-01",
+        "pns-02",
+        "pns-05"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "case status",
+        "access and consent posture"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers and next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate paid, guaranteed, refundable, legally binding, or approved status",
+        "required access authority, source evidence, approval, caveat, or tenant communication template is missing",
+        "customer-facing message conflicts with public source, contract terms, tenant policy, trust, insurance, or provider evidence"
+      ],
+      "scenario_ids": [
+        "pns-01",
+        "pns-05",
+        "pns-07",
+        "pns-11"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "approval thresholds",
+        "policy exception context",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround or discretionary exception",
+        "request asks to waive price, refund, cancellation, contract, funding, provider, or eligibility limits",
+        "exception would bypass legal, licensed, financial, trust, insurance, compliance, or policy approval controls"
+      ],
+      "scenario_ids": [
+        "pns-03",
+        "pns-09",
+        "pns-10",
+        "pns-11"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "pre-need-specific records list",
+        "funeral and cemetery terminology",
+        "source-system map",
+        "public baseline and tenant facts"
+      ],
+      "required_outputs": [
+        "pre-need artifact checklist",
+        "industry-specific status summary",
+        "non-generic evidence packet"
+      ],
+      "refusal_triggers": [
+        "request substitutes generic CRM language for pre-need contract, funding, disclosure, purchaser, beneficiary, provider, or at-need reconciliation evidence",
+        "industry-specific authority or safety facts are missing",
+        "the industry name is treated as cosmetic and would change the case outcome"
+      ],
+      "scenario_ids": [
+        "pns-01",
+        "pns-05",
+        "pns-06",
+        "pns-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "pns-01",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ]
+    },
+    {
+      "scenario_id": "pns-02",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ]
+    },
+    {
+      "scenario_id": "pns-03",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pns-04",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing"
+      ]
+    },
+    {
+      "scenario_id": "pns-05",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "industry_specific_artifact_awareness"
+      ]
+    },
+    {
+      "scenario_id": "pns-06",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "industry_specific_artifact_awareness"
+      ]
+    },
+    {
+      "scenario_id": "pns-07",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "stakeholder_communication"
+      ]
+    },
+    {
+      "scenario_id": "pns-08",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pns-09",
+      "status": "covered",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pns-10",
+      "status": "covered",
+      "ability_ids": [
+        "evidence_traceability",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pns-11",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ]
+    },
+    {
+      "scenario_id": "pns-12",
+      "status": "covered",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "industry_specific_artifact_awareness"
+      ]
+    }
+  ],
+  "coverage_summary": {
+    "all_required_abilities_mapped": true,
+    "all_scenarios_represented": true,
+    "functionality_coverage_complete": true
+  }
+}

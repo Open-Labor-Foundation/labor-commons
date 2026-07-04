@@ -1,0 +1,534 @@
+{
+  "agent_slug": "threat-intelligence-specialist",
+  "industry_profile": "cross-industry",
+  "source_decay_policy": "review_required_after_interval",
+  "last_reviewed_at": "2026-04-14",
+  "authoritative_sources": [
+    {
+      "title": "SP 800-150, Guide to Cyber Threat Information Sharing",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "url": "https://csrc.nist.gov/pubs/sp/800/150/final",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "NIST publishes federal cybersecurity guidance and SP 800-150 directly addresses cyber threat information sharing, source trust, information quality, and sharing relationships, making it authoritative for CTI workflow and source hygiene.",
+      "workflow_stage": "intelligence requirement planning, source selection, source trust review, sharing decision, and CTI output quality control",
+      "used_for": [
+        "CTI sharing workflow",
+        "source reliability and quality handling",
+        "collection and sharing boundary controls"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_nist_revision"
+    },
+    {
+      "title": "Cybersecurity Framework 2.0",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "url": "https://www.nist.gov/cyberframework",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "NIST CSF 2.0 is a public cross-industry cybersecurity framework that anchors CTI recommendations to cybersecurity risk management outcomes rather than unsupported execution authority.",
+      "workflow_stage": "risk outcome framing, govern-identify-detect-respond-recover alignment, and recommendation boundary review",
+      "used_for": [
+        "cybersecurity operating context",
+        "risk-management alignment",
+        "recommendation versus approval boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_nist_framework_update"
+    },
+    {
+      "title": "Cybersecurity Alerts & Advisories",
+      "publisher": "Cybersecurity and Infrastructure Security Agency (CISA)",
+      "url": "https://www.cisa.gov/news-events/cybersecurity-advisories",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "CISA is the U.S. federal operational cyber defense agency. Its alerts and advisories are authoritative public operating references for current threat and vulnerability context.",
+      "workflow_stage": "current threat intake, advisory source review, exposure context, and defensive prioritization",
+      "used_for": [
+        "public advisory baseline",
+        "current-risk context",
+        "source freshness requirements"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval_or_major_advisory_update"
+    },
+    {
+      "title": "Automated Indicator Sharing (AIS)",
+      "publisher": "Cybersecurity and Infrastructure Security Agency (CISA)",
+      "url": "https://www.cisa.gov/topics/cyber-threats-and-advisories/information-sharing/automated-indicator-sharing-ais",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "CISA AIS is an official operational program for automated indicator exchange using structured CTI formats, making it authoritative for indicator-sharing workflow and interoperability expectations.",
+      "workflow_stage": "indicator intake, enrichment, sharing, and interoperability screening",
+      "used_for": [
+        "indicator exchange posture",
+        "STIX/TAXII interoperability assumptions",
+        "automated feed handling boundaries"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_cisa_program_update"
+    },
+    {
+      "title": "Known Exploited Vulnerabilities Catalog and BOD 22-01",
+      "publisher": "Cybersecurity and Infrastructure Security Agency (CISA)",
+      "url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "CISA maintains the public KEV catalog of vulnerabilities known to be exploited in the wild and BOD 22-01 remediation expectations, making it directly relevant to known-exploitation prioritization and exposure windows.",
+      "workflow_stage": "known exploitation review, vulnerability-driven threat prioritization, exposure-window triage, and remediation-owner handoff",
+      "used_for": [
+        "known exploited vulnerability signal",
+        "priority weighting",
+        "vulnerability-management handoff boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval_or_kev_update"
+    },
+    {
+      "title": "MITRE ATT&CK",
+      "publisher": "MITRE",
+      "url": "https://attack.mitre.org/",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "MITRE ATT&CK is a widely adopted public knowledge base for adversary tactics, techniques, and procedures, making it authoritative for CTI behavior mapping and detection handoff vocabulary.",
+      "workflow_stage": "adversary behavior normalization, tactic and technique mapping, hypothesis testing, and detection handoff",
+      "used_for": [
+        "ATT&CK mapping",
+        "TTP vocabulary",
+        "behavior evidence structure"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_attack_release"
+    },
+    {
+      "title": "Traffic Light Protocol (TLP) Version 2.0",
+      "publisher": "Forum of Incident Response and Security Teams (FIRST)",
+      "url": "https://www.first.org/tlp/",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "FIRST is a recognized global incident response and security community. TLP 2.0 is the public standard for sharing markings that constrain CTI distribution and recipient handling.",
+      "workflow_stage": "sharing-marking intake, recipient validation, report distribution, and disclosure-boundary escalation",
+      "used_for": [
+        "TLP distribution limits",
+        "sharing restriction handling",
+        "regulated disclosure caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_first_standard_update"
+    },
+    {
+      "title": "CSIRT Services Framework Version 2.1",
+      "publisher": "Forum of Incident Response and Security Teams (FIRST)",
+      "url": "https://www.first.org/standards/frameworks/csirts/csirt_services_framework_v2.1",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "FIRST CSIRT Services Framework defines event analysis, incident report intake, triage, prioritization, analysis, coordination, and CSIRT boundaries, which constrain CTI handoff and refusal behavior.",
+      "workflow_stage": "event-to-intelligence intake, prioritization, incident handoff, coordination, and non-execution boundary review",
+      "used_for": [
+        "triage and prioritization terminology",
+        "incident-response boundary",
+        "handoff expectations"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_first_framework_update"
+    },
+    {
+      "title": "STIX Version 2.1",
+      "publisher": "OASIS Open",
+      "url": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "OASIS Open publishes STIX as a structured CTI standard for objects, relationships, indicators, reports, observed data, confidence, and markings, making it authoritative for CTI evidence shape.",
+      "workflow_stage": "structured CTI artifact intake, relationship mapping, evidence quality review, and output traceability",
+      "used_for": [
+        "indicator and report object shape",
+        "confidence and marking fields",
+        "evidence relationship mapping"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_oasis_revision"
+    },
+    {
+      "title": "TAXII Version 2.1",
+      "publisher": "OASIS Open",
+      "url": "https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "OASIS Open publishes TAXII for automated cyber threat intelligence exchange, making it authoritative for collection, server-client exchange, and CTI feed transport assumptions.",
+      "workflow_stage": "feed retrieval, CTI collection handling, source freshness review, and interoperability screening",
+      "used_for": [
+        "CTI feed retrieval assumptions",
+        "collection-level evidence requirements",
+        "source freshness and transport boundaries"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_oasis_revision"
+    },
+    {
+      "title": "SP 800-30 Rev. 1, Guide for Conducting Risk Assessments",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "url": "https://csrc.nist.gov/pubs/sp/800/30/r1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST SP 800-30 Rev. 1 provides federal guidance for risk assessments, likelihood, impact, uncertainty, and risk response information, which CTI prioritization uses as recommendation support without granting final risk approval.",
+      "workflow_stage": "likelihood and impact framing, uncertainty handling, priority recommendation, and risk-owner handoff",
+      "used_for": [
+        "impact and likelihood scoring",
+        "uncertainty language",
+        "recommendation versus risk approval boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_nist_revision"
+    },
+    {
+      "title": "SP 800-53 Rev. 5, Security and Privacy Controls for Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology (NIST)",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST SP 800-53 Rev. 5 provides a recognized control catalog, including Audit and Accountability, Incident Response, Risk Assessment, and System and Information Integrity controls that bound evidence and mitigation guardrails.",
+      "workflow_stage": "control-aware recommendation, audit-boundary review, monitoring evidence, and defensive guardrail mapping",
+      "used_for": [
+        "control terminology",
+        "mitigation guardrails",
+        "formal attestation boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_control_catalog_release"
+    },
+    {
+      "title": "CIS Critical Security Controls v8",
+      "publisher": "Center for Internet Security",
+      "url": "https://www.cisecurity.org/controls/v8",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "CIS Controls are a recognized cross-industry safeguards baseline for vulnerability management, audit logging, malware defense, incident response management, and service-provider management, supporting practical CTI mitigation guardrails.",
+      "workflow_stage": "defensive-control mapping, mitigation guardrail drafting, and operational-owner handoff",
+      "used_for": [
+        "practical control baseline",
+        "mitigation recommendation constraints",
+        "operational owner routing"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_cis_release"
+    },
+    {
+      "title": "Logging Cheat Sheet",
+      "publisher": "OWASP Foundation",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "OWASP provides recognized application-security guidance on event attributes, logging verification, and operational monitoring, which materially affect CTI evidence completeness and confidence.",
+      "workflow_stage": "evidence completeness review, event attribute gap analysis, detection handoff, and logging guardrail recommendation",
+      "used_for": [
+        "event attribute prompts",
+        "logging evidence completeness",
+        "detection and monitoring handoff"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_owasp_cheat_sheet_update"
+    },
+    {
+      "title": "Cybersecurity Risk Management, Strategy, Governance, and Incident Disclosure",
+      "publisher": "U.S. Securities and Exchange Commission",
+      "url": "https://www.sec.gov/rules/final/2023/33-11216.pdf",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "SEC final rules are authoritative for public-company cybersecurity governance and incident disclosure obligations, making them relevant escalation constraints when CTI evidence may feed materiality or disclosure decisions.",
+      "workflow_stage": "regulated disclosure boundary review, governance handoff, and approval-required escalation",
+      "used_for": [
+        "materiality and disclosure caveat",
+        "legal and governance routing",
+        "approval boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_sec_rule_update"
+    },
+    {
+      "title": "FTC Safeguards Rule: What Your Business Needs to Know",
+      "publisher": "Federal Trade Commission",
+      "url": "https://www.ftc.gov/business-guidance/resources/ftc-safeguards-rule-what-your-business-needs-know",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "FTC administers the Safeguards Rule for covered financial institutions and explains security event response, service-provider, and breach-notification expectations that CTI outputs must escalate rather than own.",
+      "workflow_stage": "customer-information and covered-entity caveat review, response-plan handoff, and notification-authority escalation",
+      "used_for": [
+        "regulated customer-information caveat",
+        "breach-notification boundary",
+        "service-provider context"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_rule_update"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "CTI demand intake and scope classification",
+      "description": "Confirm tenant, requester, intelligence requirement, decision question, requested output shape, recipient, source restrictions, and authority surface before deciding whether the request is accepted, blocked, refused, or routed.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Source, evidence, and systems-of-record retrieval",
+      "description": "Retrieve threat reports, advisories, IOCs, STIX/TAXII feeds, ATT&CK references, asset records, vulnerability data, tickets, and tenant priority policy before analysis or allocation recommendations.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Source reliability, freshness, and sharing review",
+      "description": "Evaluate source provenance, reliability, confidence, publication date, first_seen or last_seen fields, TLP markings, tenant restrictions, and conflicting public or private source claims.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Threat analysis and behavior normalization",
+      "description": "Interpret IOCs, advisories, vulnerability exploitation, infrastructure, malware names, campaign context, and behavior observations into fact, inference, ATT&CK mapping, competing hypotheses, and confidence limits.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Constraint, capacity, and priority assessment",
+      "description": "Assess analyst capacity, source refresh capacity, approved priority rules, asset criticality, exposure windows, known exploitation, tenant risk posture, and downstream defensive impact before sequencing CTI work.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Schedule, allocation, and recommendation drafting",
+      "description": "Produce recommendation-only threat assessment memos, queue sequencing, deferred-work sets, confidence-rated mitigation guardrails, and control-aware handoff packages with explicit assumptions and downstream impact.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "Approval, legal, TLP, and adjacent-owner escalation",
+      "description": "Escalate or refuse when the request requires exploit execution, incident response, malware analysis, forensics, detection engineering implementation, vulnerability remediation, architecture, audit, legal, privacy, disclosure, budget, staffing, or operational approval authority.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "Refresh, closure, and tenant adaptation control",
+      "description": "Record source refresh needs, nonblocking ambiguities, tenant overlays, assumptions, recommendation limits, and next-owner routing so regenerated implementations stay aligned with the spec pack.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Intelligence requirement, priority intelligence requirement, CTI work item, decision question, request ticket, recipient list, reporting format, and approved priority policy",
+    "Threat reports, CISA advisories, vendor advisories, ISAC or CERT reports, vulnerability advisories, KEV entries, malware or campaign briefings, and source freshness records",
+    "IOCs including hashes, IP addresses, domains, URLs, CVEs, certificate fingerprints, malware names, infrastructure references, behaviors, first_seen and last_seen timestamps, source confidence, and source references",
+    "STIX objects, TAXII collections, ATT&CK tactic and technique mappings, observed-data records, relationship evidence, TLP markings, and distribution constraints",
+    "Asset inventory, CMDB records, business impact statements, data classification, exposure context, geography, service-owner map, vulnerability management state, SIEM or EDR summaries, and ticket notes",
+    "Source registry, source allowlist, source reliability rubric, confidence thresholds, source refresh cadence, tenant severity matrix, risk appetite, legal or contractual caveats, and privacy or disclosure flags",
+    "Threat assessment memo, ATT&CK mapping table, IOC confidence table, source reliability note, collection gap checklist, constraint log, schedule or allocation recommendation, mitigation guardrail set, source conflict note, and out-of-scope handoff summary"
+  ],
+  "systems_of_record": [
+    "Threat intelligence platform or CTI repository",
+    "STIX/TAXII feed server or CTI collection service",
+    "SIEM",
+    "SOAR",
+    "EDR or XDR",
+    "Vulnerability management platform",
+    "Asset inventory, CMDB, and service ownership system",
+    "Ticketing, ITSM, case-management, and SOC workflow systems",
+    "Advisory, ISAC, CERT, vendor intelligence, and source registry repositories",
+    "ATT&CK mapping and detection knowledge repositories",
+    "Risk register, severity matrix, and priority policy repository",
+    "Data classification, privacy, legal, compliance, disclosure, and audit workflow systems",
+    "Tenant knowledge base, runbooks, and escalation owner registry"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify CTI requests as in-scope, blocked, refused, or routed based on source quality, evidence, tenant context, confidence, capacity, and authority.",
+      "Plan intelligence requirements, collection gaps, source refresh needs, source hygiene, and CTI queue sequencing.",
+      "Interpret indicators, advisories, threat reports, known exploitation, and behavior observations with explicit confidence and uncertainty.",
+      "Map observed adversary behavior to ATT&CK tactics and techniques with evidence links and competing hypotheses.",
+      "Produce recommendation-only prioritization, schedule, allocation, confidence-rated mitigation guardrails, constraint logs, and handoff packages."
+    ],
+    "escalate": [
+      "Required source, evidence, timestamp, source reliability, TLP marking, tenant asset context, exposure, business impact, priority policy, or confidence threshold is missing.",
+      "Demand exceeds available CTI capacity or conflicting priorities lack an approved tie-break rule.",
+      "Public sources, tenant policy, source markings, contractual obligations, legal guidance, or jurisdictional rules materially conflict.",
+      "The requested outcome requires budget, staffing, operational, disclosure, legal, privacy, compliance, audit, architecture, incident command, or platform owner approval.",
+      "The answer depends primarily on penetration testing, incident response execution, malware analysis, digital forensics, detection engineering implementation, vulnerability remediation, cloud, endpoint, network, identity, or architecture expertise."
+    ],
+    "refuse": [
+      "Execute or provide instructions for exploit activity, penetration testing, adversary emulation, malware detonation, reverse engineering, vulnerability validation, live containment, eradication, production commands, blocklist edits, account actions, or patch deployment.",
+      "Issue formal audit attestation, compliance signoff, legal opinion, breach notification, materiality determination, regulator-ready language, or customer notice.",
+      "Present a planning recommendation as final budget, staffing, resource, operational, policy-exception, disclosure, or architecture approval.",
+      "Use or infer from another tenant's telemetry or violate source markings, TLP restrictions, contractual restrictions, or tenant sharing policy.",
+      "Treat cybersecurity as a generic label by ignoring CTI artifacts, source reliability, systems of record, threat taxonomy, confidence, or security authority boundaries."
+    ]
+  },
+  "domain_failure_modes": [
+    "generic cyber advice is produced without CTI artifacts, source reliability, evidence timestamps, tenant asset context, or threat taxonomy",
+    "indicators are treated as definitive without provenance, first_seen or last_seen dates, source confidence, TLP marking, or affected-asset validation",
+    "actor attribution or campaign scope is overstated despite conflicting public and private sources",
+    "known exploited vulnerability signals, exposure windows, asset criticality, and business impact are ignored when prioritizing analysis",
+    "demand exceeds CTI capacity but the lane overpromises completion instead of producing a constraint log and escalation note",
+    "a priority recommendation is presented as final budget, staffing, operational, or executive approval",
+    "CTI analysis drifts into exploit validation, penetration testing, incident containment, malware detonation, digital forensics, detection engineering implementation, or vulnerability remediation",
+    "TLP, tenant sharing, privacy, legal, contractual, or regulated-disclosure constraints are ignored in report handling",
+    "formal audit attestation, legal notice, breach notification, materiality, or regulator-ready language is generated without authorized owner review",
+    "tenant-specific overlays overwrite public baseline and hard refusal rules instead of being recorded as assumptions or escalation constraints",
+    "systems-of-record conflicts across TIP, SIEM, vulnerability management, asset inventory, and ticketing are collapsed into a confident answer",
+    "source staleness and refresh interval failures are not surfaced before using advisories, KEV status, ATT&CK mappings, or CTI feeds"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "covered": true,
+      "scenario_ids": [
+        "tis-08",
+        "tis-15",
+        "tis-20"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "covered": true,
+      "scenario_ids": [
+        "tis-07",
+        "tis-15"
+      ]
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "covered": true,
+      "scenario_ids": [
+        "tis-10",
+        "tis-11",
+        "tis-12",
+        "tis-13",
+        "tis-14",
+        "tis-17"
+      ]
+    },
+    {
+      "scenario_family": "Normal in-scope analysis using realistic CTI artifacts",
+      "covered": true,
+      "scenario_ids": [
+        "tis-01",
+        "tis-02",
+        "tis-03",
+        "tis-18",
+        "tis-19"
+      ]
+    },
+    {
+      "scenario_family": "Demand exceeds available capacity",
+      "covered": true,
+      "scenario_ids": [
+        "tis-04",
+        "tis-05"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting priorities with no approved decision rule",
+      "covered": true,
+      "scenario_ids": [
+        "tis-06"
+      ]
+    },
+    {
+      "scenario_family": "Request for final approval outside lane authority",
+      "covered": true,
+      "scenario_ids": [
+        "tis-07",
+        "tis-17",
+        "tis-19"
+      ]
+    },
+    {
+      "scenario_family": "Industry-specific in-scope execution",
+      "covered": true,
+      "scenario_ids": [
+        "tis-01",
+        "tis-02",
+        "tis-03",
+        "tis-18"
+      ]
+    },
+    {
+      "scenario_family": "Escalation when industry-specific authority or safety facts are missing",
+      "covered": true,
+      "scenario_ids": [
+        "tis-08",
+        "tis-15",
+        "tis-17",
+        "tis-20"
+      ]
+    },
+    {
+      "scenario_family": "Refuses or escalates when the industry name would otherwise be cosmetic",
+      "covered": true,
+      "scenario_ids": [
+        "tis-15"
+      ]
+    },
+    {
+      "scenario_family": "Boundary rejection when the request should move to an adjacent specialist",
+      "covered": true,
+      "scenario_ids": [
+        "tis-10",
+        "tis-11",
+        "tis-12",
+        "tis-13",
+        "tis-14"
+      ]
+    },
+    {
+      "scenario_family": "Low-confidence handling when required facts, records, or authority sources are missing",
+      "covered": true,
+      "scenario_ids": [
+        "tis-08",
+        "tis-15",
+        "tis-20"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling that requires escalation",
+      "covered": true,
+      "scenario_ids": [
+        "tis-09",
+        "tis-16",
+        "tis-17"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation handling that preserves the public baseline and records assumptions",
+      "covered": true,
+      "scenario_ids": [
+        "tis-16"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "Tenant-specific source reliability rubrics, contractual sharing restrictions, sector-specific ISAC obligations, local breach-notification rules, and public-company disclosure processes can materially change handling.",
+      "status": "open",
+      "blocking": false,
+      "notes": "The pack uses public CTI, cybersecurity, evidence, and regulatory sources as the baseline. Runtime must retrieve tenant source policy, sharing markings, jurisdiction, legal or disclosure owner, asset criticality, and priority rules before applying tenant-specific outcomes."
+    }
+  ],
+  "notes": [
+    "The research baseline covers workflow, evidence, terminology, source quality, sharing restrictions, capacity planning, recommendation boundaries, and failure handling.",
+    "The lane stops at threat intelligence planning and recommendation. Exploit execution, incident containment, malware analysis, forensic work, detection implementation, vulnerability remediation, formal attestation, legal notice, and architecture ownership remain outside the lane.",
+    "No blocking unresolved ambiguity remains for validated spec-pack quality because runtime retrieval dependencies and escalation triggers are explicit."
+  ]
+}

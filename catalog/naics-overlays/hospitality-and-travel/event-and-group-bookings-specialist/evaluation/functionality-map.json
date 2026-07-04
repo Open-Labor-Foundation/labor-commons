@@ -1,0 +1,472 @@
+{
+  "agent_slug": "event-and-group-bookings-specialist",
+  "agent_release": "v0.1.0",
+  "resolved_workflow_phase_group": "intake-access-and-initiation",
+  "resolved_industry_profile": "healthcare-and-care-delivery",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested booking action",
+        "hospitality and travel event/group booking boundary",
+        "healthcare administrative boundary",
+        "approval and adjacent specialist matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or routing note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for rate approval, contract negotiation, cancellation waiver, refund, concession, or financial exception",
+        "request asks for medical necessity, diagnosis, treatment planning, clinical urgency, prior-authorization approval, payer determination, privacy release, legal interpretation, or safety-critical signoff",
+        "request asks the specialist to finalize booking work instead of only validating intake readiness"
+      ],
+      "scenario_ids": [
+        "egbs-04",
+        "egbs-05",
+        "egbs-07",
+        "egbs-09",
+        "egbs-12"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "DOJ, FTC, DOT, CMS, HHS OCR, CAQH CORE, ASTP/ONC, EIC, and tenant source baseline",
+        "source review dates and refresh intervals",
+        "jurisdiction, property, payer, sponsor, supplier, and policy precedence map"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "source freshness statement",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "tenant, payer, supplier, facility, brand, or jurisdiction source context materially changes the answer",
+        "public source and tenant policy conflict without a documented precedence rule"
+      ],
+      "scenario_ids": [
+        "egbs-01",
+        "egbs-05",
+        "egbs-08",
+        "egbs-12",
+        "egbs-13"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "group resume, event specification, BEO or function sheet, rooming list, pickup report, rate and fee evidence, deposit status, authorization records, referral records, eligibility response, and PHI handling notes",
+        "systems-of-record references",
+        "evidence owner and retrieval hook mapping"
+      ],
+      "required_outputs": [
+        "record-linked booking readiness summary",
+        "prerequisite checklist",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "required booking, eligibility, authorization, referral, accessibility, payment, privacy, or capacity evidence is missing or stale",
+        "booking state cannot be tied to a source of record",
+        "output would overstate what the evidence proves"
+      ],
+      "scenario_ids": [
+        "egbs-01",
+        "egbs-02",
+        "egbs-03",
+        "egbs-06",
+        "egbs-08",
+        "egbs-10",
+        "egbs-14"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "PMS, CRS, sales and catering, event CRM, GDS, booking engine, travel management, payer portal, EHR/EMR, practice management, case management, utilization review, privacy, and document repository inventory",
+        "tenant retrieval hooks",
+        "source-of-truth hierarchy",
+        "owner readiness and escalation matrix"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable",
+        "record location or evidence owner is unknown",
+        "tenant, payer, facility, property, supplier, or jurisdiction dependency is missing"
+      ],
+      "scenario_ids": [
+        "egbs-02",
+        "egbs-08",
+        "egbs-11",
+        "egbs-13",
+        "egbs-14"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "source or policy conflict signals",
+        "confidence rubric",
+        "human owner routing"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical tenant, jurisdiction, payer, provider, property, supplier, capacity, or privacy prerequisite remains unknown",
+        "source-of-truth conflict remains unresolved",
+        "authority boundary is unclear for clinical, payer, privacy, accessibility, legal, safety, rate, or contract handling"
+      ],
+      "scenario_ids": [
+        "egbs-06",
+        "egbs-08",
+        "egbs-11",
+        "egbs-12",
+        "egbs-14"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent lane registry",
+        "handoff artifact requirements",
+        "owner and approver matrix"
+      ],
+      "required_outputs": [
+        "adjacent-specialist routing summary",
+        "handoff owner and artifact map",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical review, utilization management, patient access, privacy, payer operations, coding, revenue cycle, group sales, revenue management, legal, safety, or event production",
+        "request requires final approval or licensed judgment outside the lane",
+        "lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "egbs-04",
+        "egbs-06",
+        "egbs-07",
+        "egbs-09",
+        "egbs-12"
+      ]
+    },
+    {
+      "ability_id": "intake_prerequisite_validation",
+      "ability_name": "Intake prerequisite validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "event dates, room block, attendee or traveler count, requested service package, property or travel program, payer or sponsor, booking channel, service setting, accessibility needs, deposit status, and approval posture",
+        "tenant prerequisite rules",
+        "source-of-record references"
+      ],
+      "required_outputs": [
+        "intake disposition note",
+        "satisfied and missing prerequisite checklist",
+        "blocked intake reason"
+      ],
+      "refusal_triggers": [
+        "required intake data is missing and would change acceptance",
+        "request is invalid, duplicate, ineligible, or unsupported by tenant policy",
+        "source records do not establish booking identity, event scope, or owner readiness"
+      ],
+      "scenario_ids": [
+        "egbs-01",
+        "egbs-02",
+        "egbs-09",
+        "egbs-10",
+        "egbs-13"
+      ]
+    },
+    {
+      "ability_id": "eligibility_authorization_decisioning",
+      "ability_name": "Eligibility and authorization decisioning",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "eligibility and benefits response",
+        "payer, plan, member, provider, facility, service date, and service setting",
+        "referral and authorization records",
+        "booking approval and reservation prerequisites"
+      ],
+      "required_outputs": [
+        "eligibility or authorization readiness verdict",
+        "missing authorization/referral checklist",
+        "payer or provider escalation packet"
+      ],
+      "refusal_triggers": [
+        "eligibility, referral, authorization, reservation, or approval status is absent or expired",
+        "request asks the lane to interpret payer policy or approve medical necessity",
+        "coverage or authorization status conflicts across payer portal, EHR, PMS, or case-management records"
+      ],
+      "scenario_ids": [
+        "egbs-02",
+        "egbs-03",
+        "egbs-05",
+        "egbs-07",
+        "egbs-08"
+      ]
+    },
+    {
+      "ability_id": "pre_execution_routing",
+      "ability_name": "Pre-execution routing",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "accepted, pended, rejected, blocked, or routed queue state",
+        "downstream owner readiness",
+        "capacity and timing constraints",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "schedule, routing, or booking readiness summary",
+        "timing, capacity, or owner-readiness escalation note",
+        "next-owner routing decision"
+      ],
+      "refusal_triggers": [
+        "room-block inventory, meeting space, travel component, accessible accommodation, payment, authorization, referral, or owner readiness is not established",
+        "routing would bypass access, eligibility, authorization, privacy, or booking controls",
+        "downstream owner or approver is ambiguous"
+      ],
+      "scenario_ids": [
+        "egbs-01",
+        "egbs-04",
+        "egbs-05",
+        "egbs-10",
+        "egbs-14"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "requested clinical or administrative action",
+        "service setting and clinical-administrative records",
+        "clinical review and payer interpretation boundaries"
+      ],
+      "required_outputs": [
+        "administrative-only scope statement",
+        "clinical or payer handoff note",
+        "refusal to imply clinical judgment"
+      ],
+      "refusal_triggers": [
+        "request depends on diagnosis, treatment planning, clinical urgency, medical necessity, licensed review, or care-pathway approval",
+        "request asks for payer-policy interpretation or prior-authorization approval",
+        "patient safety signal changes the booking readiness answer"
+      ],
+      "scenario_ids": [
+        "egbs-03",
+        "egbs-07",
+        "egbs-09",
+        "egbs-13"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI classification and minimum-necessary purpose",
+        "requester role and consent context",
+        "patient/member safety indicators",
+        "privacy and escalation owner map"
+      ],
+      "required_outputs": [
+        "PHI-safe escalation packet",
+        "minimum-necessary handling note",
+        "patient-safety or privacy owner routing"
+      ],
+      "refusal_triggers": [
+        "PHI handling, consent, proxy access, requester identity, or disclosure authority is unresolved",
+        "patient or member safety risk requires clinical, privacy, or care-team handling",
+        "request would expose sensitive records in an unapproved channel"
+      ],
+      "scenario_ids": [
+        "egbs-06",
+        "egbs-07",
+        "egbs-11",
+        "egbs-13"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "egbs-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "intake_prerequisite_validation",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-03",
+      "ability_ids": [
+        "evidence_traceability",
+        "eligibility_authorization_decisioning",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-05",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "eligibility_authorization_decisioning",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "intake_prerequisite_validation",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-10",
+      "ability_ids": [
+        "evidence_traceability",
+        "intake_prerequisite_validation",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-11",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-12",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-13",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "intake_prerequisite_validation",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "egbs-14",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_summary": {
+    "required_abilities_declared": true,
+    "all_scenarios_covered": true,
+    "all_required_outputs_defined": true,
+    "all_refusal_triggers_defined": true,
+    "functionality_coverage_complete": true
+  }
+}

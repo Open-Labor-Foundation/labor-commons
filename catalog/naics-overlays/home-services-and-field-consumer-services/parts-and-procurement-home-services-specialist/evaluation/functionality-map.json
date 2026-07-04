@@ -1,0 +1,440 @@
+{
+  "agent_slug": "parts-and-procurement-home-services-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "specialty boundary",
+        "approval-authority context",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "scope verdict",
+        "routed owner guidance"
+      ],
+      "refusal_triggers": [
+        "request asks for clinical, payer, coding, privacy, spend approval, supplier approval, substitute approval, licensed trade, or technician execution authority",
+        "request asks to bypass approved-vendor, safety hold, recall, hazardous-material, authorization, or PHI controls"
+      ],
+      "scenario_ids": [
+        "pphss-04",
+        "pphss-05",
+        "pphss-06",
+        "pphss-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source list",
+        "tenant source precedence policy",
+        "source review metadata",
+        "conflict signals"
+      ],
+      "required_outputs": [
+        "source-priority summary",
+        "evidence freshness status",
+        "conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "public guidance and tenant policy conflict materially",
+        "source freshness exceeds allowed decay policy"
+      ],
+      "scenario_ids": [
+        "pphss-01",
+        "pphss-06",
+        "pphss-11",
+        "pphss-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "work order and requested part records",
+        "inventory, PO, vendor, warranty, recall, and shipment records",
+        "payer, authorization, referral, order, and patient/member boundary records"
+      ],
+      "required_outputs": [
+        "artifact-state linkage",
+        "availability evidence summary",
+        "resolution evidence sufficiency status"
+      ],
+      "refusal_triggers": [
+        "required part, model, serial, inventory, vendor, order, or prerequisite evidence is missing",
+        "records conflict across systems of record",
+        "resolution is requested without authoritative closure records"
+      ],
+      "scenario_ids": [
+        "pphss-01",
+        "pphss-02",
+        "pphss-06",
+        "pphss-07",
+        "pphss-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "work-order, inventory, vendor, payer, and EHR dependency map",
+        "owner and escalation path"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "parts support status summary",
+        "handoff note"
+      ],
+      "refusal_triggers": [
+        "required CRM, FSM, inventory, ERP, vendor, warranty, recall, EHR, payer, or authorization records are unavailable",
+        "critical dependency owner is unresolved",
+        "required retrieval hook or source hierarchy is missing"
+      ],
+      "scenario_ids": [
+        "pphss-01",
+        "pphss-02",
+        "pphss-07",
+        "pphss-08",
+        "pphss-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "authority confidence signals",
+        "tenant policy confidence",
+        "source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist"
+      ],
+      "refusal_triggers": [
+        "critical tenant policy, approved-source, privacy, payer, or retrieval context is missing",
+        "source or policy conflict remains unresolved",
+        "evidence sufficiency cannot be determined safely"
+      ],
+      "scenario_ids": [
+        "pphss-07",
+        "pphss-11",
+        "pphss-12",
+        "pphss-13"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist directory"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical review, payer operations, coding, revenue cycle, privacy, compliance, supplier approval, finance, warranty, scheduling, technician, licensed trade, safety, or legal ownership",
+        "approval ownership ambiguity remains unresolved"
+      ],
+      "scenario_ids": [
+        "pphss-03",
+        "pphss-04",
+        "pphss-09",
+        "pphss-10"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative work-order and parts records",
+        "inventory and vendor status",
+        "resolution criteria"
+      ],
+      "required_outputs": [
+        "service-support disposition",
+        "availability or logistics status summary",
+        "resolution evidence record"
+      ],
+      "refusal_triggers": [
+        "request is unsupported by lane scope",
+        "required availability or vendor evidence is missing",
+        "resolution would require non-owned approval authority"
+      ],
+      "scenario_ids": [
+        "pphss-01",
+        "pphss-07",
+        "pphss-08",
+        "pphss-13"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "stakeholder request",
+        "approved communication boundary",
+        "source-backed facts",
+        "handoff items"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "unresolved item list",
+        "handoff owner list"
+      ],
+      "refusal_triggers": [
+        "communication would disclose PHI beyond minimum-necessary controls",
+        "communication would imply clinical, payer, legal, warranty, safety, or approval decision authority",
+        "facts are not supported by authoritative records"
+      ],
+      "scenario_ids": [
+        "pphss-03",
+        "pphss-08",
+        "pphss-09",
+        "pphss-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "exception request",
+        "policy or authority boundary",
+        "risk evidence",
+        "accountable owner"
+      ],
+      "required_outputs": [
+        "unsupported-workaround refusal note",
+        "vendor-risk or shortage escalation note",
+        "policy-conflict escalation"
+      ],
+      "refusal_triggers": [
+        "request asks for policy, spend, vendor, substitute, safety, recall, clinical, payer, privacy, or legal exception authority",
+        "repeat failure or unsupported workaround cannot be resolved inside lane authority",
+        "conflicting policy changes the answer"
+      ],
+      "scenario_ids": [
+        "pphss-05",
+        "pphss-06",
+        "pphss-08",
+        "pphss-12"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "administrative procurement facts",
+        "order, encounter, referral, authorization, and documentation posture",
+        "clinical or payer decision request signal"
+      ],
+      "required_outputs": [
+        "clinical-or-payer boundary escalation note",
+        "administrative facts package",
+        "licensed owner route"
+      ],
+      "refusal_triggers": [
+        "request depends on diagnosis, treatment planning, clinical judgment, medical necessity, or licensed review",
+        "request changes payer-policy interpretation, authorization approval, coverage, referral sufficiency, or claim handling",
+        "patient/member safety signal changes whether procurement can proceed"
+      ],
+      "scenario_ids": [
+        "pphss-02",
+        "pphss-04",
+        "pphss-09",
+        "pphss-10"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI sensitivity signal",
+        "minimum-necessary rule",
+        "patient/member safety or DME/HME risk signal",
+        "privacy owner route"
+      ],
+      "required_outputs": [
+        "privacy-controlled routing note",
+        "patient-safety escalation note",
+        "audit requirement summary"
+      ],
+      "refusal_triggers": [
+        "request would disclose PHI outside role-based, consent, business-associate, or minimum-necessary controls",
+        "patient/member safety, DME/HME setup, recall, or device replacement risk requires accountable review",
+        "privacy obligation or consent interpretation changes the answer"
+      ],
+      "scenario_ids": [
+        "pphss-03",
+        "pphss-04",
+        "pphss-06",
+        "pphss-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "pphss-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-03",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-05",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-06",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "unsupported_exception_escalation",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-09",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "stakeholder_communication",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "stakeholder_communication",
+        "unsupported_exception_escalation",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pphss-13",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_notes": [
+    "All required shared abilities, service-support-and-resolution abilities, and healthcare-and-care-delivery abilities map to one or more passing scenarios.",
+    "Every scenario in evaluation/results.json appears in scenario_coverage.",
+    "Refusal triggers cover policy override, missing prerequisites, PHI, patient safety, clinical judgment, payer interpretation, recall, hazardous-material, vendor, substitute, spend, and adjacent-lane authority boundaries."
+  ]
+}

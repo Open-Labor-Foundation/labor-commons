@@ -1,0 +1,422 @@
+{
+  "agent_slug": "public-procurement-specialist",
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested procurement action",
+        "authority map for contracting, finance, source selection, legal, public records, and quality release",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "adjacent owner route"
+      ],
+      "refusal_triggers": [
+        "request asks to approve spend, commit funds, award, modify, terminate, or administer a contract",
+        "request asks for source-selection voting, vendor responsibility, legal, protest, enforcement, public-records, or quality release decision",
+        "request asks to bypass competition, threshold, documentation, or approval controls"
+      ],
+      "scenario_ids": [
+        "pps-04",
+        "pps-06",
+        "pps-08"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source list",
+        "source review metadata",
+        "tenant source hierarchy across FAR, Uniform Guidance, state/local code, agency supplements, grant terms, contract terms, and policy"
+      ],
+      "required_outputs": [
+        "applicable source posture",
+        "source or policy conflict warning",
+        "refresh or decay warning"
+      ],
+      "refusal_triggers": [
+        "required procurement authority source is missing",
+        "source freshness no longer supports safe recommendation",
+        "public baseline and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "pps-09",
+        "pps-10",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "requisition, market research, estimate, threshold, procurement method, approval, solicitation, quote, bid, proposal, award, receiving, vendor, and inventory records",
+        "system IDs, timestamps, correspondence, and audit logs",
+        "records retention and public-records posture"
+      ],
+      "required_outputs": [
+        "evidence completeness matrix",
+        "procurement-records completeness summary",
+        "audit-trail exception note"
+      ],
+      "refusal_triggers": [
+        "required procurement history or inventory evidence is absent",
+        "record linkage across systems cannot be reproduced",
+        "requested output would imply unsupported official procurement status"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-05",
+        "pps-11"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "procurement, contract writing, inventory, vendor master, SAM, records, case, public-service, audit, and finance systems map",
+        "retrieval hooks and owner matrix",
+        "approval chain and system-of-record priority"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "retrieval blocker log",
+        "owner routing map"
+      ],
+      "refusal_triggers": [
+        "required system of record is unavailable or unidentified",
+        "approval owner or source-of-truth priority is unknown",
+        "procurement, vendor, inventory, or records systems materially disagree"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-03",
+        "pps-05",
+        "pps-09",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "policy, source, jurisdiction, vendor, inventory, or record conflicts",
+        "confidence rubric and escalation owner map"
+      ],
+      "required_outputs": [
+        "low-confidence escalation packet",
+        "missing-information checklist",
+        "recommended follow-up actions"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact, official record, or authority source is unknown",
+        "policy conflict cannot be resolved administratively",
+        "confidence remains below required threshold for procurement or public-service use"
+      ],
+      "scenario_ids": [
+        "pps-03",
+        "pps-09",
+        "pps-10",
+        "pps-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifacts and owner dependencies"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff ownership package",
+        "blocked decision rationale"
+      ],
+      "refusal_triggers": [
+        "request moves to contracting officer, legal, public records, audit, budget, quality release, supplier management, or program adjudication authority",
+        "adjacent owner cannot be identified",
+        "handoff requires official authority outside the lane"
+      ],
+      "scenario_ids": [
+        "pps-03",
+        "pps-04",
+        "pps-06",
+        "pps-07",
+        "pps-08"
+      ]
+    },
+    {
+      "ability_id": "availability_and_supply_tracking",
+      "ability_name": "Availability and supply tracking",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "inventory state, demand signal, reorder point, service window, allocation, hold, and lead-time records",
+        "procurement and contract vehicle context",
+        "official stock and movement system records"
+      ],
+      "required_outputs": [
+        "availability-or-supply-status-summary",
+        "availability-or-logistics-status-summary",
+        "availability assumptions and constraints"
+      ],
+      "refusal_triggers": [
+        "inventory, allocation, hold, or lead-time evidence is missing or contradictory",
+        "availability claim depends on quality release, substitution, supplier approval, or official allocation authority",
+        "public-service impact cannot be determined from official records"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-02",
+        "pps-05",
+        "pps-07"
+      ]
+    },
+    {
+      "ability_id": "procurement_or_vendor_action_management",
+      "ability_name": "Procurement or vendor action management",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requisition, procurement method, threshold, source list, solicitation or quote package, vendor record, SAM status, contract vehicle, and approval route",
+        "competition, price, responsibility, and records requirements",
+        "tenant procurement policy and system IDs"
+      ],
+      "required_outputs": [
+        "procurement-or-replenishment-recommendation",
+        "vendor-or-procurement-action-note",
+        "constraint and approval dependency list"
+      ],
+      "refusal_triggers": [
+        "vendor action requires contractor responsibility, exclusion, source selection, award, price reasonableness, or financial approval decision",
+        "procurement method or threshold authority is missing or disputed",
+        "request bypasses competition, documentation, or approval controls"
+      ],
+      "scenario_ids": [
+        "pps-01",
+        "pps-03",
+        "pps-04",
+        "pps-06",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "shortage_and_hold_escalation",
+      "ability_name": "Shortage and hold escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "shortage state, affected service, hold or release status, vendor blocker, substitution request, and approval boundary",
+        "inventory, contract, supplier, and procurement records",
+        "public-service and emergency constraints"
+      ],
+      "required_outputs": [
+        "shortage-or-vendor-risk-escalation-note",
+        "shortage-sourcing-or-vendor-risk-escalation-note",
+        "blocked action summary"
+      ],
+      "refusal_triggers": [
+        "shortage mitigation requires substitution, sole-source, quality release, supplier approval, or spend approval",
+        "vendor-risk blocker remains unresolved",
+        "hold or public-service exception cannot be resolved from documented authority"
+      ],
+      "scenario_ids": [
+        "pps-02",
+        "pps-03",
+        "pps-04",
+        "pps-07"
+      ]
+    },
+    {
+      "ability_id": "statutory_authority_awareness",
+      "ability_name": "Statutory-authority awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "procurement statute, regulation, agency supplement, grant term, contract term, jurisdiction, and tenant policy context",
+        "contracting officer and public-records authority map",
+        "source hierarchy and unresolved authority notes"
+      ],
+      "required_outputs": [
+        "authority-context summary",
+        "source hierarchy and unresolved-authority note",
+        "safe administrative recommendation or refusal"
+      ],
+      "refusal_triggers": [
+        "statutory, regulatory, grant, or contract authority is missing or disputed",
+        "request requires legal interpretation or official procurement authority",
+        "tenant asks for official decision without documented delegation"
+      ],
+      "scenario_ids": [
+        "pps-06",
+        "pps-08",
+        "pps-09",
+        "pps-10",
+        "pps-12"
+      ]
+    },
+    {
+      "ability_id": "rights_and_due_process_escalation",
+      "ability_name": "Rights and due-process escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "eligibility, public-service obligation, protest, notice, appeal, hearing, supplier diversity, emergency, or enforcement indicators",
+        "deadline and owner facts",
+        "official procurement and public-service records"
+      ],
+      "required_outputs": [
+        "public-service-due-process-escalation",
+        "deadline and evidence preservation note",
+        "adjudication, protest, legal, or program routing direction"
+      ],
+      "refusal_triggers": [
+        "rights, benefits, obligations, continued service, protest posture, or vendor eligibility depends on legal interpretation",
+        "user asks the lane to decide protest, eligibility, enforcement, debarment, suspension, or appeal outcome",
+        "required notice, hearing, protest, objection, or public-service record is missing"
+      ],
+      "scenario_ids": [
+        "pps-07",
+        "pps-08",
+        "pps-10",
+        "pps-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "pps-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "availability_and_supply_tracking",
+        "procurement_or_vendor_action_management"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-02",
+      "ability_ids": [
+        "availability_and_supply_tracking",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "procurement_or_vendor_action_management",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "procurement_or_vendor_action_management",
+        "shortage_and_hold_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "availability_and_supply_tracking"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "procurement_or_vendor_action_management",
+        "statutory_authority_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-07",
+      "ability_ids": [
+        "adjacent_lane_routing",
+        "availability_and_supply_tracking",
+        "shortage_and_hold_escalation",
+        "rights_and_due_process_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "statutory_authority_awareness",
+        "rights_and_due_process_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "statutory_authority_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "statutory_authority_awareness",
+        "rights_and_due_process_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-11",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "rights_and_due_process_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "pps-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "procurement_or_vendor_action_management",
+        "statutory_authority_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

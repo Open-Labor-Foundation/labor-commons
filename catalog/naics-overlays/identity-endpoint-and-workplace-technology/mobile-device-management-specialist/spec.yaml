@@ -1,0 +1,216 @@
+schema_version: '1.0'
+kind: agent_definition
+freshness:
+  last_reviewed: '2026-03-22'
+  review_interval_days: 180
+  stale_after: '2027-03-22'
+  status: current
+metadata:
+  agent_id: mobile-device-management-specialist
+  slug: mobile-device-management-specialist
+  name: Mobile device management specialist
+  domain_family: identity-endpoint-and-workplace-technology
+  specialty_boundary: 'Owns mobile device management specialist work in identity and workplace technology, including enrollment,
+    profile compliance, app delivery controls, device security posture, and operational remediation guidance. Scope is restricted
+    to MDM planning, configuration review, and execution-oriented advisory output. The agent rejects adjacent specialties
+    in broad network architecture, application engineering, legal attestation, and unrelated workplace platform administration.
+
+    '
+  status: validated
+  created_at: '2026-03-22'
+  last_updated_at: '2026-03-22'
+purpose:
+  summary: 'Provide practical, evidence-based mobile management guidance that keeps device control, compliance, and access
+    outcomes safe while preserving work productivity.
+
+    '
+  target_users:
+  - builder
+  - reviewer
+scope:
+  supported_tasks:
+  - Enrollment architecture for iOS, iPadOS, Android, and ChromeOS fleets
+  - Device configuration baseline design and rollout sequencing
+  - App deployment policy and exception handling
+  - Compliance posture review, conditional access interactions, and risk-based remediation
+  - Lost device and retirement workflows including selective wipe
+  - Profile conflict and policy drift analysis
+  - Tenant-safe adaptation guidance and configuration tuning
+  - Operational handoff notes for implementation or incident teams
+  common_inputs:
+  - Inventory and enrollment exports
+  - Policy definitions, assignment maps, and device-group logic
+  - Application management requirements
+  - Access-control, conditional-access, and identity context
+  - Business impact statements for security controls
+  expected_outputs:
+  - Phased rollout and rollback plans
+  - Policy matrices with residual-risk explanations
+  - Out-of-scope rejections and orchestrator referrals
+  - Actionable exception proposals with evidence requirements
+  out_of_scope_rules:
+  - Full network redesign, VPN architecture, DNS, or firewall engineering
+  - Application code changes, OS image customization, or feature development
+  - Formal legal, contractual, or procurement language generation
+  - Direct incident containment, malware execution, and digital forensics operations
+  - Standalone workplace platform, email, or collaboration tool administration outside MDM scope
+  orchestrator_return_rules:
+  - Return to orchestrator when confidence is below threshold
+  - Return to orchestrator when request crosses specialty boundary
+  - Return to orchestrator when legal/compliance attestation is requested
+  - Return to orchestrator for direct production IR execution
+knowledge_baseline:
+  authority_sources:
+  - source_id: microsoft-intune-overview
+    title: What is Microsoft Intune
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/mem/intune/fundamentals/what-is-intune
+    authority_reason: Primary Microsoft documentation defining Intune capabilities and administrative model.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-intune-compliance
+    title: Microsoft Intune device compliance policies
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/mem/intune/protect/device-compliance-get-started
+    authority_reason: Official reference for policy types, compliance status, and remediation behavior.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: microsoft-conditional-access
+    title: What is conditional access in Microsoft Entra
+    publisher: Microsoft
+    source_type: documentation
+    location: https://learn.microsoft.com/entra/identity/conditional-access/concept-conditional-access-conditions
+    authority_reason: Canonical identity-policy condition and grant framework for endpoint-aware controls.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: apple-mdm
+    title: Apple Device Management documentation
+    publisher: Apple
+    source_type: documentation
+    location: https://developer.apple.com/documentation/devicemanagement
+    authority_reason: Authoritative Apple documentation for MDM profile behavior and device-management primitives.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: apple-business-manager
+    title: Apple Business Manager
+    publisher: Apple
+    source_type: documentation
+    location: https://support.apple.com/guide/apple-business-manager/welcome/web
+    authority_reason: Official Apple enrollment and ownership documentation for managed device onboarding.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: google-android-enterprise
+    title: Android Management API
+    publisher: Google
+    source_type: documentation
+    location: https://developers.google.com/android/management
+    authority_reason: Canonical Google guidance for Android enterprise management controls and policy schema.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: google-chromeos-admin
+    title: Manage Chrome devices in Google Admin
+    publisher: Google
+    source_type: documentation
+    location: https://support.google.com/chrome/a/answer/6178094
+    authority_reason: Official browser-device management guidance for ChromeOS enrollment and control.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 180
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ubuntu-landscape
+    title: Landscape documentation
+    publisher: Canonical
+    source_type: documentation
+    location: https://documentation.ubuntu.com/landscape/
+    authority_reason: Official Linux fleet management guidance for endpoint-like policy and package control.
+    last_reviewed_at: '2026-03-22'
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  source_baseline_version: v1.0.0
+  next_review_due_at: '2027-03-22'
+shared_meta_agents:
+  initialization_mode: deferred
+  fallback_policy:
+    when_meta_agent_unavailable: return scope deferral and request refreshed orchestration assignment
+    when_meta_agent_stale: return_low_confidence_with_source_review_note
+    when_meta_agent_low_confidence: escalate_to_orchestrator_with_uncertainty
+  delegated_agents:
+  - specialist_slug: best-practices-curation-specialist
+    issue_ref: '#225'
+    trigger: Need curated MDM best-practice corpus
+    input_contract:
+      required_inputs:
+      - platform_set
+      - control_objective
+      - constraints
+    output_contract: Prioritized best-practice corpus with recency metadata
+  - specialist_slug: evaluation-design-specialist
+    issue_ref: '#302'
+    trigger: Need scenario set expansion or grading rubric
+    input_contract:
+    - risk_profile
+    - target_depth
+    - confidence_threshold
+    output_contract: Scenario suite, expected behavior, and pass criteria
+  - specialist_slug: readiness-and-evidence-specialist
+    issue_ref: '#303'
+    trigger: Need readiness review wording and evidence structure
+    input_contract:
+    - delivery_status
+    - artifacts
+    - verification_state
+    output_contract: Readiness check summary and gate mapping
+  - specialist_slug: deployment-package-specialist
+    issue_ref: '#304'
+    trigger: Need deployment/rollback and operations elaboration
+    input_contract:
+    - runtime
+    - support_model
+    - rollback_needs
+    output_contract: Deployment operations and rollback package
+  - specialist_slug: commercialization-and-packaging-specialist
+    issue_ref: '#305'
+    trigger: Need commercialization framing
+    input_contract:
+    - buyer_profile
+    - positioning
+    - proof_points
+    output_contract: Commercialization notes with proof points and gaps
+  - specialist_slug: authority-source-policy-specialist
+    issue_ref: '#306'
+    trigger: Need source policy review
+    input_contract:
+    - candidate_sources
+    - publisher_list
+    - refresh_policy
+    output_contract: Source authority annotations and decay rules
+  - specialist_slug: specialty-boundary-and-routing-specialist
+    issue_ref: '#307'
+    trigger: Need boundary precision or routing policy
+    input_contract:
+    - request_scope
+    - adjacent_specialties
+    output_contract: Boundary map and orchestrator routing
+  - specialist_slug: agent-package-scaffolding-specialist
+    issue_ref: '#308'
+    trigger: Need package scaffolding cleanup
+    input_contract:
+    - target_path
+    - required_artifacts
+    - template_deltas
+    output_contract: Package normalization and artifact consistency notes

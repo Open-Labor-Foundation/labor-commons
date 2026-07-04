@@ -1,0 +1,402 @@
+{
+  "agent_slug": "cemetery-administration-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 10,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and intent",
+        "cemetery administration ownership boundary",
+        "authority owner map",
+        "adjacent specialist map"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal",
+        "orchestrator return or adjacent routing note"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to approve burial, disinterment, eligibility, legal right, financial waiver, or official-record decision",
+        "request treats cemetery administration as generic document handling and omits cemetery-specific records",
+        "request asks for a record change without source evidence and approval authority"
+      ],
+      "scenario_ids": [
+        "cas-03",
+        "cas-04",
+        "cas-06",
+        "cas-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "tenant jurisdiction and cemetery type",
+        "source freshness metadata",
+        "tenant source precedence policy"
+      ],
+      "required_outputs": [
+        "source priority note",
+        "freshness or decay note",
+        "conflicting-source escalation"
+      ],
+      "refusal_triggers": [
+        "required jurisdiction or cemetery-type source is missing",
+        "source freshness exceeds decay tolerance for a material rule",
+        "public source, tenant policy, and source-system records conflict without precedence"
+      ],
+      "scenario_ids": [
+        "cas-05",
+        "cas-08",
+        "cas-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "burial, cremation, natural organic reduction, or transit permit",
+        "body receipt and delivery record",
+        "interment authorization and lot-right records",
+        "plot map, GIS, ledger, work-order, and memorial records"
+      ],
+      "required_outputs": [
+        "artifact-state linkage",
+        "missing-evidence index",
+        "evidence-backed records completeness summary"
+      ],
+      "refusal_triggers": [
+        "core permit, receipt, authorization, location, or memorial evidence is missing",
+        "system status cannot be tied to named cemetery records",
+        "record evidence conflicts remain unresolved"
+      ],
+      "scenario_ids": [
+        "cas-01",
+        "cas-02",
+        "cas-05",
+        "cas-09",
+        "cas-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "retrieval hooks",
+        "tenant authority matrix",
+        "retention and access rules"
+      ],
+      "required_outputs": [
+        "dependency blocker list",
+        "system-readiness summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required cemetery system of record is unavailable",
+        "retrieval hook or owner is unknown",
+        "tenant policy or authority dependency cannot be confirmed"
+      ],
+      "scenario_ids": [
+        "cas-01",
+        "cas-02",
+        "cas-08",
+        "cas-11"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact signals",
+        "record conflict signals",
+        "access or retention risk flags",
+        "public-health or authority-risk flags"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "required-facts checklist",
+        "assumption register"
+      ],
+      "refusal_triggers": [
+        "critical tenant fact remains unknown",
+        "record truth cannot be established",
+        "privacy, retention, public-health, or authority conflict remains unresolved"
+      ],
+      "scenario_ids": [
+        "cas-05",
+        "cas-07",
+        "cas-08",
+        "cas-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope verdict",
+        "handoff context",
+        "adjacent specialist registry",
+        "evidence packet"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to legal, licensed funeral, compliance, cemetery authority, veteran benefits, public health, finance, grounds, memorial production, or records governance owners",
+        "request requires approval or signoff outside the lane",
+        "ownership ambiguity remains unresolved"
+      ],
+      "scenario_ids": [
+        "cas-04",
+        "cas-07",
+        "cas-10",
+        "cas-12"
+      ]
+    },
+    {
+      "ability_id": "record_and_document_maintenance",
+      "ability_name": "Record and document maintenance",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "current record state",
+        "source document packet",
+        "tenant update permissions",
+        "audit-log requirements"
+      ],
+      "required_outputs": [
+        "record update note",
+        "document completeness summary",
+        "administrative status note"
+      ],
+      "refusal_triggers": [
+        "required source document is missing",
+        "update permission is absent",
+        "record fields conflict across systems of record"
+      ],
+      "scenario_ids": [
+        "cas-01",
+        "cas-02",
+        "cas-03",
+        "cas-05",
+        "cas-09"
+      ]
+    },
+    {
+      "ability_id": "permission_and_retention_control",
+      "ability_name": "Permission and retention control",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "requester identity and authorization basis",
+        "tenant access policy",
+        "retention schedule",
+        "sensitive record classification"
+      ],
+      "required_outputs": [
+        "permission decision summary",
+        "retention or access escalation package",
+        "restricted-record handling note"
+      ],
+      "refusal_triggers": [
+        "requester authority is missing or disputed",
+        "access rule conflicts with the request",
+        "retention rule would be violated by release, destruction, or alteration"
+      ],
+      "scenario_ids": [
+        "cas-03",
+        "cas-07",
+        "cas-09",
+        "cas-11"
+      ]
+    },
+    {
+      "ability_id": "administrative_boundary_enforcement",
+      "ability_name": "Administrative-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "administrative task definition",
+        "approval boundary map",
+        "official-record owner",
+        "legal, licensed, financial, or safety trigger"
+      ],
+      "required_outputs": [
+        "administrative boundary verdict",
+        "authority refusal note",
+        "orchestrator return decision"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to decide the underlying case, right, eligibility, benefit, or legal outcome",
+        "request asks for official approval without delegated authority",
+        "public-health, safety-critical, or licensed judgment is required"
+      ],
+      "scenario_ids": [
+        "cas-04",
+        "cas-06",
+        "cas-10",
+        "cas-12"
+      ]
+    },
+    {
+      "ability_id": "industry_specific_artifact_awareness",
+      "ability_name": "Industry-specific artifact awareness",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "cemetery-specific records list",
+        "industry terminology",
+        "source-system map",
+        "public baseline and tenant facts"
+      ],
+      "required_outputs": [
+        "cemetery artifact checklist",
+        "industry-specific status summary",
+        "non-generic evidence packet"
+      ],
+      "refusal_triggers": [
+        "request omits cemetery-specific artifacts that materially govern the outcome",
+        "request substitutes generic records language for permit, lot, plot, interment, memorial, or retention evidence",
+        "industry-specific authority or safety facts are missing"
+      ],
+      "scenario_ids": [
+        "cas-01",
+        "cas-06",
+        "cas-09",
+        "cas-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "cas-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "record_and_document_maintenance",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-03",
+      "ability_ids": [
+        "boundary_control",
+        "record_and_document_maintenance",
+        "permission_and_retention_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-05",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "record_and_document_maintenance"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-06",
+      "ability_ids": [
+        "boundary_control",
+        "administrative_boundary_enforcement",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-07",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "permission_and_retention_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "record_and_document_maintenance",
+        "permission_and_retention_control",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-10",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "permission_and_retention_control"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "cas-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "administrative_boundary_enforcement",
+        "industry_specific_artifact_awareness"
+      ],
+      "status": "covered"
+    }
+  ]
+}

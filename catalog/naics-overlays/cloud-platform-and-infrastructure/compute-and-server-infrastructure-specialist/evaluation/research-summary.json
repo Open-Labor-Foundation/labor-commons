@@ -1,0 +1,574 @@
+{
+  "agent_slug": "compute-and-server-infrastructure-specialist",
+  "agent_release": "v1.0.0",
+  "resolved_workflow_phase_group": "general-workflow-phase",
+  "industry_profile": "cross-industry",
+  "current_review_date": "2026-04-14",
+  "source_decay_policy": "review_required_after_interval",
+  "authoritative_sources": [
+    {
+      "title": "Amazon EC2 User Guide",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS official documentation for EC2 instance lifecycle, instance types, placement, storage, networking touchpoints, events, and VM-level compute behavior.",
+      "workflow_stage": "compute context intake, sizing, placement, lifecycle review, failure-domain analysis",
+      "practical_use_in_pack": [
+        "EC2 family and placement scenario constraints",
+        "AWS compute systems-of-record naming",
+        "provider-specific artifact requirements"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_ec2_instance_family_or_lifecycle_update"
+    },
+    {
+      "title": "Amazon EC2 Auto Scaling User Guide",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/autoscaling/ec2/userguide/what-is-amazon-ec2-auto-scaling.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "AWS official workflow documentation for Auto Scaling groups, launch templates, desired capacity, health checks, scaling policy behavior, lifecycle hooks, and instance replacement.",
+      "workflow_stage": "capacity planning, autoscaling analysis, fleet replacement, rollout and rollback planning",
+      "practical_use_in_pack": [
+        "AWS production compute sizing scenario",
+        "autoscaling activity evidence",
+        "scale-policy and lifecycle guardrails"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_auto_scaling_behavior_update"
+    },
+    {
+      "title": "AWS Well-Architected Framework: Reliability Pillar",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "AWS official reliability guidance for failure domains, quotas, backup, disaster recovery, resilience testing, change handling, and recovery objectives.",
+      "workflow_stage": "resilience review, quota and capacity evidence, backup and recovery readiness, DR planning",
+      "practical_use_in_pack": [
+        "failure-domain and RTO/RPO scenario constraints",
+        "resilience decision log requirements",
+        "capacity and DR failure modes"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_aws_reliability_update"
+    },
+    {
+      "title": "Amazon CloudWatch User Guide",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "AWS official monitoring documentation for metrics, logs, alarms, dashboards, and event evidence used in EC2 capacity, alerting, and incident workflows.",
+      "workflow_stage": "observability intake, incident evidence review, capacity validation, alert and runbook design",
+      "practical_use_in_pack": [
+        "CloudWatch history prerequisite",
+        "incident evidence expectations",
+        "compute observability output constraints"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_cloudwatch_feature_update"
+    },
+    {
+      "title": "AWS Backup Developer Guide",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/aws-backup/latest/devguide/whatisbackup.html",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "AWS official documentation for backup plans, vaults, recovery points, copy behavior, restore behavior, and recovery evidence.",
+      "workflow_stage": "backup readiness, restore-test evidence, DR validation, rollback planning",
+      "practical_use_in_pack": [
+        "stateful VM recovery scenario",
+        "restore-test evidence requirements",
+        "risk-acceptance boundary language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_aws_backup_update"
+    },
+    {
+      "title": "Azure Virtual Machines documentation",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/virtual-machines/overview",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft official documentation for Azure VM selection, lifecycle, availability, disks, images, monitoring touchpoints, and operations.",
+      "workflow_stage": "Azure compute intake, sizing, placement, lifecycle, evidence mapping",
+      "practical_use_in_pack": [
+        "Azure compute terminology",
+        "VM inventory and image evidence",
+        "multi-cloud provider-specific adaptation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_azure_vm_update"
+    },
+    {
+      "title": "Azure Virtual Machine Scale Sets documentation",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/virtual-machine-scale-sets/overview",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Microsoft official workflow documentation for VMSS orchestration, scaling, availability zones, rolling upgrades, health, and image lifecycle.",
+      "workflow_stage": "Azure fleet design, scale-set placement, patching, image lifecycle, rollback planning",
+      "practical_use_in_pack": [
+        "VMSS implementation guardrail scenario",
+        "rolling upgrade and health evidence",
+        "server lifecycle output shape"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_vmss_orchestration_update"
+    },
+    {
+      "title": "Azure Well-Architected Framework: Reliability",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/reliability/",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Microsoft official reliability guidance for workload resiliency, availability, failure-mode design, recovery, testing, and operational tradeoffs in Azure.",
+      "workflow_stage": "Azure resilience review, failure-mode analysis, availability and recovery guidance",
+      "practical_use_in_pack": [
+        "multi-cloud resilience vocabulary",
+        "Azure-specific tradeoff caveats",
+        "source-policy conflict handling"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_azure_well_architected_update"
+    },
+    {
+      "title": "Azure Monitor VM insights overview",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/azure-monitor/vm/vminsights-overview",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Microsoft official source for VM performance, dependency, map, health, and monitoring evidence used in Azure compute operations.",
+      "workflow_stage": "Azure observability intake, incident evidence, performance validation",
+      "practical_use_in_pack": [
+        "VMSS telemetry prerequisites",
+        "patch and image rollout validation",
+        "Azure monitoring systems of record"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_vm_insights_update"
+    },
+    {
+      "title": "Compute Engine instances documentation",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/compute/docs/instances",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Google Cloud official documentation for Compute Engine instance lifecycle, machine families, disks, maintenance behavior, networking touchpoints, and operational records.",
+      "workflow_stage": "Google compute intake, machine family selection, placement, lifecycle review",
+      "practical_use_in_pack": [
+        "Google Compute Engine artifact names",
+        "machine type and lifecycle assumptions",
+        "provider-specific adaptation requirements"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_compute_engine_update"
+    },
+    {
+      "title": "Managed instance groups documentation",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/compute/docs/instance-groups",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Google Cloud official workflow documentation for managed instance groups, autoscaling, health checks, rolling updates, regional placement, and fleet repair.",
+      "workflow_stage": "Google capacity planning, regional placement, autoscaling, update and rollback guidance",
+      "practical_use_in_pack": [
+        "MIG autoscaling scenario",
+        "managed instance group update-policy evidence",
+        "cross-provider fleet comparison"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_mig_behavior_update"
+    },
+    {
+      "title": "Google Cloud Architecture Framework: Reliability",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/architecture/framework/reliability",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "Google Cloud official reliability guidance for fault tolerance, recovery planning, testing, DR, operational readiness, and reliability tradeoffs.",
+      "workflow_stage": "Google and multi-cloud resilience review, reliability tradeoff analysis",
+      "practical_use_in_pack": [
+        "Google reliability vocabulary",
+        "DR and restore-test caveats",
+        "provider-source conflict checks"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_google_architecture_framework_update"
+    },
+    {
+      "title": "Cloud Monitoring documentation",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/monitoring/docs",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Google Cloud official monitoring documentation for metrics, alerting policies, dashboards, uptime checks, and observability records.",
+      "workflow_stage": "Google observability intake, autoscaling validation, incident and capacity evidence",
+      "practical_use_in_pack": [
+        "MIG monitoring evidence",
+        "capacity validation requirements",
+        "multi-cloud observability caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_cloud_monitoring_update"
+    },
+    {
+      "title": "Kubernetes Nodes",
+      "publisher": "Kubernetes Documentation Project",
+      "url": "https://kubernetes.io/docs/concepts/architecture/nodes/",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Kubernetes project official documentation for node objects, node status, heartbeats, leases, conditions, and lifecycle evidence used when server infrastructure is represented as cluster nodes.",
+      "workflow_stage": "Kubernetes node evidence intake, node health troubleshooting, node lifecycle guidance",
+      "practical_use_in_pack": [
+        "node pressure incident scenario",
+        "node condition systems of record",
+        "Kubernetes platform handoff boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_kubernetes_minor_release"
+    },
+    {
+      "title": "Node-pressure Eviction",
+      "publisher": "Kubernetes Documentation Project",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "Kubernetes project official failure-handling documentation for node pressure, eviction signals, thresholds, resource exhaustion, and node-level incident behavior.",
+      "workflow_stage": "node incident triage, resource pressure failure handling, evidence capture",
+      "practical_use_in_pack": [
+        "memory pressure and eviction runbook",
+        "resource exhaustion failure modes",
+        "application versus node ownership boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_kubernetes_eviction_policy_update"
+    },
+    {
+      "title": "Terraform resource management",
+      "publisher": "HashiCorp",
+      "url": "https://developer.hashicorp.com/terraform/language/resources",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "HashiCorp official Terraform language documentation for managed resources, lifecycle settings, and declarative infrastructure semantics affecting compute replacement and drift.",
+      "workflow_stage": "IaC guardrail review, resource lifecycle evaluation, rollback and replacement risk assessment",
+      "practical_use_in_pack": [
+        "IaC review scenario",
+        "resource lifecycle guardrail requirements",
+        "compute replacement risk language"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_terraform_language_update"
+    },
+    {
+      "title": "Terraform State",
+      "publisher": "HashiCorp",
+      "url": "https://developer.hashicorp.com/terraform/language/state",
+      "source_class": "Recognized workflow references tied directly to the lane",
+      "authority_rationale": "HashiCorp official Terraform documentation defining state behavior, object mappings, collaboration risks, drift implications, and recovery evidence.",
+      "workflow_stage": "IaC evidence intake, drift review, state recovery, collaboration and rollback guardrails",
+      "practical_use_in_pack": [
+        "Terraform state prerequisites",
+        "drift and rollback evidence",
+        "IaC handoff boundary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval_or_after_terraform_state_update"
+    },
+    {
+      "title": "NIST SP 500-292: NIST Cloud Computing Reference Architecture",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication500-292.pdf",
+      "source_class": "Named-industry operating guidance",
+      "authority_rationale": "NIST official cross-industry cloud reference architecture defining cloud actors, roles, activities, and provider-consumer-auditor responsibility vocabulary.",
+      "workflow_stage": "cross-industry cloud terminology, actor and authority boundary handling",
+      "practical_use_in_pack": [
+        "cross-industry artifact awareness",
+        "cloud provider versus consumer boundary",
+        "non-attestation caveats"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_nist_cloud_reference_update"
+    },
+    {
+      "title": "NIST SP 800-53 Rev. 5: Security and Privacy Controls for Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "NIST official control catalog gives recognized control, audit, monitoring, configuration, contingency, maintenance, access, and risk terminology for cross-industry evidence handling.",
+      "workflow_stage": "control and evidence prerequisite review, auditability, caveat handling, conflict escalation",
+      "practical_use_in_pack": [
+        "compliance evidence package outline",
+        "non-attestation boundary",
+        "control-evidence vocabulary"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_nist_control_catalog_update"
+    },
+    {
+      "title": "CIS Benchmarks for AWS, Microsoft Azure, and Google Cloud",
+      "publisher": "Center for Internet Security",
+      "url": "https://www.cisecurity.org/cis-benchmarks",
+      "source_class": "Evidence or control standards relevant to the lane",
+      "authority_rationale": "CIS publishes recognized cloud configuration benchmarks that provide evidence context for secure compute baselines while keeping security-control ownership routed to the correct adjacent lane.",
+      "workflow_stage": "guardrail evidence review, secure baseline caveats, adjacent security routing",
+      "practical_use_in_pack": [
+        "node hardening and security-boundary wording",
+        "managed security product routing scenario",
+        "evidence standard context without attestation"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_after_cis_benchmark_major_version_update"
+    },
+    {
+      "title": "Current compute-and-server-infrastructure-specialist package baseline",
+      "publisher": "olf-agents repository",
+      "url": "catalog/cloud-platform-and-infrastructure/compute-and-server-infrastructure-specialist/",
+      "source_class": "Current package task baseline from compute-and-server-infrastructure-specialist",
+      "authority_rationale": "The committed legacy package is authoritative only for preserving supported tasks, input and output shapes, validation threshold, refusal rules, and no-regression context.",
+      "workflow_stage": "baseline preservation and regression review",
+      "practical_use_in_pack": [
+        "preserved output shapes",
+        "preserved refusal categories",
+        "no unreviewed regressions evidence"
+      ],
+      "last_reviewed_at": "2026-04-14",
+      "refresh_interval_days": 365,
+      "decay_policy": "superseded_by_refreshed_spec_pack_use_only_for_regression_comparison"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "scope, authority, and compute context intake",
+      "description": "Confirm compute scope, request intent, desired artifact, provider, region, workload owner, business outcome, environment, urgency, source precedence, and adjacent-lane indicators before producing guidance.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "tenant evidence and system-of-record assembly",
+      "description": "Collect workload, compute inventory, autoscaling, quota, topology, image, patch, backup, monitoring, cost, incident, change, IaC, policy, owner, and exception records from tenant-approved systems.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "source selection and precedence review",
+      "description": "Choose current provider, Kubernetes, Terraform, NIST, CIS, and tenant sources; record freshness, scope, conflicts, and whether tenant or contractual policy overrides public baseline guidance.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    },
+    {
+      "name": "compute option and tradeoff analysis",
+      "description": "Evaluate sizing, placement, autoscaling, quota, failure-domain, patch, backup, restore, DR, rollback, cost, isolation, capacity reservation, and operability options against tenant constraints and failure modes.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "operations, troubleshooting, and lifecycle guidance",
+      "description": "Prepare triage order, evidence collection, containment, patching, image rollout, node replacement, restore test, DR drill, rollback, and owner handoff guidance without executing tenant changes.",
+      "source_classes": [
+        "Recognized workflow references tied directly to the lane"
+      ]
+    },
+    {
+      "name": "artifact delivery, refusal, or orchestrator return",
+      "description": "Deliver an evidence-linked compute architecture recommendation, decision log, runbook, implementation guardrail, or explicit refusal and escalation note with confidence state and unresolved assumptions.",
+      "source_classes": [
+        "Named-industry operating guidance",
+        "Evidence or control standards relevant to the lane"
+      ]
+    }
+  ],
+  "artifacts": [
+    "compute architecture guidance in markdown",
+    "capacity and resiliency decision log",
+    "incident response runbook",
+    "routine maintenance and patch runbook",
+    "implementation guardrails for server lifecycle operations",
+    "VM, scale-set, managed instance group, Auto Scaling group, and node pool sizing matrix",
+    "region, zone, placement, failure-domain, and isolation recommendation",
+    "autoscaling, quota, capacity reservation, spot or preemptible, and commitment tradeoff matrix",
+    "backup, restore-test, DR drill, failover/failback, and rollback plan",
+    "Terraform, CloudFormation, ARM/Bicep, Deployment Manager, or Kubernetes node IaC review notes",
+    "observability and alert evidence checklist",
+    "source and evidence register",
+    "assumption, ambiguity, and confidence register",
+    "boundary refusal, escalation, or adjacent-lane handoff note"
+  ],
+  "systems_of_record": [
+    "AWS EC2, EC2 Auto Scaling, launch templates, placement groups, Systems Manager Patch Manager, CloudWatch, CloudTrail, AWS Config, AWS Backup, Compute Optimizer, Cost Explorer, Service Quotas, Trusted Advisor, Health Dashboard, CloudFormation, and Terraform state",
+    "Azure Virtual Machines, Virtual Machine Scale Sets, availability sets, Azure Resource Graph, Azure Monitor, Log Analytics, VM insights, Azure Backup, Azure Policy, Update Manager, Cost Management, service health, ARM or Bicep templates, and Terraform state",
+    "Google Compute Engine instances, machine images, managed instance groups, instance templates, operations logs, Cloud Monitoring, Cloud Logging, Cloud Audit Logs, Backup and DR, quotas, recommender outputs, billing export, Deployment Manager if present, and Terraform state",
+    "Kubernetes API server, node objects, node conditions, events, cluster autoscaler or managed autoscaling records, maintenance and upgrade records, logs, metrics, and backup or restore records",
+    "CMDB, asset inventory, architecture diagrams, ADRs, runbook repositories, incident systems, change-management systems, source repositories, CI/CD systems, policy repositories, evidence stores, and tenant exception registers"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Recommend cloud VM, scale set, managed instance group, Auto Scaling group, node pool, image, patch, autoscaling, capacity, quota, placement, resilience, recovery, and compute IaC options.",
+      "Prepare implementation guidance, validation checkpoints, rollback moments, runbooks, evidence requests, and owner handoffs.",
+      "Identify compute infrastructure risks, tradeoffs, assumptions, and domain failure modes without approving execution, spend, risk acceptance, or legal/compliance claims."
+    ],
+    "escalate": [
+      "Required workload facts, provider records, telemetry, backup evidence, quota posture, source freshness, source precedence, data classification, RTO/RPO, SLO, region, zone, owner authority, or change approval is missing.",
+      "Provider documentation, tenant policy, contractual requirements, customer commitments, regulatory obligations, or reviewer instructions conflict.",
+      "The request needs architecture review board, change advisory board, incident command, provider support, security, identity, network, database, backup, FinOps, legal, compliance, procurement, or executive approval."
+    ],
+    "refuse": [
+      "Application-only engineering, database schema design, network deep design, endpoint or IAM ownership, security investigation, managed security product tuning, help-desk intake, legal advice, procurement approval, compliance attestation, production execution, or risk acceptance.",
+      "Requests to execute infrastructure changes, bypass change control, perform failover, restore production systems, apply IaC, alter accounts, handle secrets, approve spend, or direct provider support work.",
+      "Requests to treat generic cloud advice as compute infrastructure guidance without provider-specific records, artifacts, systems, and decision boundaries."
+    ]
+  },
+  "domain_failure_modes": [
+    "Generic cloud guidance ignores provider-specific VM family, quota, region, zone, maintenance, service-limit, host, image, disk, network attachment, or autoscaling behavior.",
+    "Sizing recommendations omit workload demand shape, statefulness, latency, IO, growth, dependency, SLO, RTO/RPO, or validation evidence.",
+    "Placement recommendations collapse Availability Zone, region, availability set, placement group, managed instance group, node pool, tenancy, and failure-domain semantics.",
+    "Autoscaling guidance ignores health checks, warmup, cooldown, lifecycle hooks, launch template or instance template drift, minimum capacity, quota, and rollback implications.",
+    "Cost guidance becomes purchase approval or budget decision rather than technical cost-performance evidence and FinOps handoff.",
+    "Patch or image refresh guidance ignores canaries, drain behavior, maintenance windows, health evidence, rollback, and application-owner validation.",
+    "Backup and recovery guidance recommends RTO/RPO or DR posture without restore-test evidence, ownership, recovery points, dependency order, or failover/failback authority.",
+    "IaC review overlooks Terraform state, drift, replacement behavior, lifecycle arguments, plan evidence, rollback, blast radius, and change-control records.",
+    "Kubernetes node incidents absorb cluster platform, CNI, admission, or service mesh ownership instead of routing when platform decisions dominate.",
+    "Cloud networking, identity, endpoint, security, database, storage, help desk, legal, compliance, or production execution work is absorbed instead of refused or routed.",
+    "Public source guidance and tenant policy conflict without precedence resolution.",
+    "Cross-industry evidence appears complete but lacks named compute systems of record, owner authority, or provider-specific artifacts."
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Industry-specific prerequisite or evidence gap",
+      "covered": true,
+      "scenario_ids": [
+        "csi-013",
+        "csi-014",
+        "csi-015",
+        "csi-019"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would overgeneralize from the industry name",
+      "covered": true,
+      "scenario_ids": [
+        "csi-008",
+        "csi-013",
+        "csi-020"
+      ]
+    },
+    {
+      "scenario_family": "Request that requires a more specialized adjacent lane",
+      "covered": true,
+      "scenario_ids": [
+        "csi-009",
+        "csi-010",
+        "csi-011",
+        "csi-012",
+        "csi-018"
+      ]
+    },
+    {
+      "scenario_family": "Core in-scope workflow execution",
+      "covered": true,
+      "scenario_ids": [
+        "csi-001",
+        "csi-002",
+        "csi-003",
+        "csi-004",
+        "csi-005",
+        "csi-006",
+        "csi-007",
+        "csi-016",
+        "csi-017"
+      ]
+    },
+    {
+      "scenario_family": "Boundary rejection or escalation",
+      "covered": true,
+      "scenario_ids": [
+        "csi-008",
+        "csi-009",
+        "csi-010",
+        "csi-011",
+        "csi-012",
+        "csi-013",
+        "csi-014",
+        "csi-015",
+        "csi-018",
+        "csi-019"
+      ]
+    },
+    {
+      "scenario_family": "Industry-specific in-scope execution",
+      "covered": true,
+      "scenario_ids": [
+        "csi-001",
+        "csi-002",
+        "csi-003",
+        "csi-004",
+        "csi-005",
+        "csi-016",
+        "csi-017"
+      ]
+    },
+    {
+      "scenario_family": "Escalation when industry-specific authority or safety facts are missing",
+      "covered": true,
+      "scenario_ids": [
+        "csi-013",
+        "csi-014",
+        "csi-015",
+        "csi-019"
+      ]
+    }
+  ],
+  "required_workflow_questions": [
+    {
+      "question": "What named-industry records and systems actually govern the lane?",
+      "answer": "EC2, EC2 Auto Scaling, Azure VMs, VM Scale Sets, Google Compute Engine, managed instance groups, Kubernetes nodes, provider monitoring and logging systems, backup and restore systems, provider quota and health records, Terraform state, cloud-native deployment templates, CI/CD logs, incident tickets, runbooks, change records, cost records, CMDB, diagrams, ADRs, policies, exception registers, and owner approval records govern the lane."
+    },
+    {
+      "question": "What failure modes make this industry materially different from a generic function?",
+      "answer": "Compute infrastructure fails materially when provider-specific machine families, region and zone semantics, quotas, health checks, host maintenance, autoscaling lifecycle behavior, node pressure, restore evidence, IaC state, capacity commitments, and ownership boundaries are absent; generic cloud advice can create wrong availability, cost, isolation, recovery, or execution assumptions."
+    },
+    {
+      "question": "What adjacent authority boundaries constrain the lane?",
+      "answer": "Application engineering, database platforms, cloud networking, Kubernetes platform operations, storage and backup platforms, observability ownership, SRE incident command, cloud security, identity and endpoint operations, FinOps approval, procurement, legal, compliance attestation, provider support ownership, production execution, and executive risk acceptance constrain the lane."
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "tenant policy and public-source precedence",
+      "status": "runtime_prerequisite",
+      "blocking": false,
+      "notes": "No blocking ambiguity remains for the spec pack. At runtime, conflicting provider guidance, tenant policy, contractual obligations, regulatory requirements, incident commander instructions, or reviewer decisions require precedence resolution before deterministic guidance."
+    },
+    {
+      "topic": "provider availability, quota, pricing, commitments, and preview features",
+      "status": "runtime_prerequisite",
+      "blocking": false,
+      "notes": "No blocking ambiguity remains for the spec pack. Runtime materialization must refresh provider region support, zone availability, quotas, instance-family availability, interruption posture, pricing, commitment terms, and preview-feature status when those facts affect the answer."
+    },
+    {
+      "topic": "retained implementation promotion",
+      "status": "resolved",
+      "blocking": false,
+      "notes": "This package remains specification-based. Retaining a trusted generated implementation requires separate frequent-use evidence, source refresh, tenant isolation review, regression validation, and human approval."
+    }
+  ],
+  "notes": [
+    "No blocking unresolved ambiguity remains for validated spec-pack release because tenant-specific uncertainty is represented as runtime prerequisites, refusal triggers, or orchestrator return conditions.",
+    "The source set covers workflow, evidence, terminology, and failure handling using official AWS, Microsoft, Google Cloud, Kubernetes, HashiCorp, NIST, and CIS sources plus the current package baseline only for regression preservation.",
+    "The research output constrains workflow stages, artifacts, systems of record, decision boundaries, domain failure modes, and scenario families in the refreshed package."
+  ]
+}

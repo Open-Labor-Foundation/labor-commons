@@ -1,0 +1,428 @@
+{
+  "agent_slug": "scheduling-and-dispatch-home-services-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested scheduling or dispatch action",
+        "specialty boundary, decision-rights matrix, and adjacent specialist map",
+        "clinical, payer, privacy, staffing, field-safety, legal, revenue-cycle, and final dispatch authority indicators"
+      ],
+      "required_outputs": [
+        "boundary-safe refusal note",
+        "adjacent-specialist routing note",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request asks for final overbook, staffing, route, dispatch, clinical, payer, privacy, financial, legal, coding, claim, or safety approval",
+        "request asks to bypass order, plan-of-care, authorization, referral, eligibility, capacity, credential, equipment, route, privacy, or owner-readiness evidence"
+      ],
+      "scenario_ids": [
+        "sdhss-05",
+        "sdhss-06",
+        "sdhss-07",
+        "sdhss-08",
+        "sdhss-10"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "public healthcare regulator, payer/provider, workflow, and home-services consumer sources",
+        "source freshness indicators",
+        "tenant policies, payer rules, state rules, plan-of-care instructions, route policy, and agreement terms"
+      ],
+      "required_outputs": [
+        "source-grounded scheduling posture",
+        "source or policy conflict note"
+      ],
+      "refusal_triggers": [
+        "required public or tenant authority source is missing or stale",
+        "public guidance, tenant policy, payer rule, state rule, plan-of-care instruction, route policy, or agreement term materially conflicts"
+      ],
+      "scenario_ids": [
+        "sdhss-01",
+        "sdhss-09",
+        "sdhss-10",
+        "sdhss-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "demand intake, service request, referral, order, plan-of-care, visit frequency, authorization, eligibility, payer, schedule, route, roster, credential, equipment, and supply records",
+        "patient/member, service date, service address, privacy posture, and source-of-truth context when operationally required",
+        "capacity, owner-readiness, residual blocker, and audit record links"
+      ],
+      "required_outputs": [
+        "traceable scheduling rationale",
+        "missing-evidence checklist",
+        "booking-readiness summary"
+      ],
+      "refusal_triggers": [
+        "critical scheduling artifact is absent, stale, contradictory, or not retrievable",
+        "traceability from service request to prerequisite status, capacity, owner, and recommendation cannot be established"
+      ],
+      "scenario_ids": [
+        "sdhss-01",
+        "sdhss-02",
+        "sdhss-09",
+        "sdhss-11",
+        "sdhss-12"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record map across EHR/EMR, practice management, payer portal, authorization, referral, case management, CRM, scheduling, dispatch, route, technician mobile, revenue cycle, privacy, and audit systems",
+        "tenant RACI, routing matrix, source hierarchy, service model, escalation SLA, and prerequisite rules",
+        "patient/member, payer, plan, order, plan-of-care, service address, route, roster, credential, equipment, supply, and owner dependencies"
+      ],
+      "required_outputs": [
+        "dependency map",
+        "blocker log",
+        "system conflict summary"
+      ],
+      "refusal_triggers": [
+        "critical dependency owner is unresolved",
+        "systems of record materially disagree on authorization, referral, eligibility, order, plan of care, visit frequency, service date, route, roster, credential, equipment, PHI posture, or owner readiness"
+      ],
+      "scenario_ids": [
+        "sdhss-02",
+        "sdhss-03",
+        "sdhss-09",
+        "sdhss-10",
+        "sdhss-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "evidence completeness signals",
+        "authority completeness signals",
+        "policy conflict indicators",
+        "patient-safety, privacy, payer, clinical, route, credential, equipment, field-safety, and owner-readiness risk indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "missing-information checklist",
+        "responsible-owner route"
+      ],
+      "refusal_triggers": [
+        "missing tenant facts or authority maps would change schedule or dispatch readiness",
+        "clinical risk, PHI handling, payer interpretation, route safety, owner conflict, or source conflict prevents safe synthesis"
+      ],
+      "scenario_ids": [
+        "sdhss-04",
+        "sdhss-07",
+        "sdhss-09",
+        "sdhss-10",
+        "sdhss-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "adjacent specialist map",
+        "authority boundary and handoff prerequisites",
+        "required evidence package for the adjacent owner"
+      ],
+      "required_outputs": [
+        "routing note",
+        "next-owner package",
+        "orchestrator return reason"
+      ],
+      "refusal_triggers": [
+        "request belongs to clinical review, patient access, utilization management, revenue cycle, coding, payer operations, privacy, compliance, care transition, technician support, field safety, legal, finance, staffing approval, or final dispatch ownership",
+        "adjacent owner cannot be uniquely identified"
+      ],
+      "scenario_ids": [
+        "sdhss-02",
+        "sdhss-05",
+        "sdhss-06",
+        "sdhss-07",
+        "sdhss-08",
+        "sdhss-10"
+      ]
+    },
+    {
+      "ability_id": "constraint_and_capacity_assessment",
+      "ability_name": "Constraint and capacity assessment",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "normalized demand and service request frame",
+        "clinician or technician roster, credential match, shift availability, territory, route, travel-time, vehicle, equipment, and supply capacity",
+        "authorization, referral, eligibility, order, plan-of-care, visit-frequency, privacy, and owner-readiness constraints"
+      ],
+      "required_outputs": [
+        "capacity-gap analysis",
+        "constraint log",
+        "shortfall quantification"
+      ],
+      "refusal_triggers": [
+        "capacity, route, credential, equipment, supply, or owner-readiness data is insufficient",
+        "missing authorization, referral, eligibility, order, plan-of-care, privacy, or source baseline would change readiness"
+      ],
+      "scenario_ids": [
+        "sdhss-01",
+        "sdhss-02",
+        "sdhss-03",
+        "sdhss-09",
+        "sdhss-12"
+      ]
+    },
+    {
+      "ability_id": "allocation_and_sequence_recommendation",
+      "ability_name": "Allocation and sequence recommendation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "priority policy and approved tie-break rules",
+        "constraint map, capacity model, route plan, visit windows, owner map, and allocation rules",
+        "confidence state and evidence sufficiency"
+      ],
+      "required_outputs": [
+        "schedule recommendation",
+        "allocation recommendation",
+        "deferred-work set"
+      ],
+      "refusal_triggers": [
+        "priority tie-break is missing",
+        "conflicting owners, service-level, capacity, route, credential, privacy, or payer constraints prevent deterministic ordering"
+      ],
+      "scenario_ids": [
+        "sdhss-01",
+        "sdhss-03",
+        "sdhss-04",
+        "sdhss-11",
+        "sdhss-12"
+      ]
+    },
+    {
+      "ability_id": "approval_boundary_enforcement",
+      "ability_name": "Approval-boundary enforcement",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "approval matrix for overbooks, overtime, route locks, service-level exceptions, authorization holds, staffing changes, and final dispatch commitment",
+        "recommendation package and non-owned decision list",
+        "owner readiness and escalation SLA"
+      ],
+      "required_outputs": [
+        "approval-needed summary",
+        "recommendation-only disclaimer",
+        "approver routing note"
+      ],
+      "refusal_triggers": [
+        "request asks the lane to grant final approval, staffing approval, route approval, service-level exception, authorization bypass, payer interpretation, or safety release",
+        "approval owner is unknown or has not accepted the tradeoff"
+      ],
+      "scenario_ids": [
+        "sdhss-03",
+        "sdhss-04",
+        "sdhss-05",
+        "sdhss-10"
+      ]
+    },
+    {
+      "ability_id": "clinical_vs_administrative_boundary",
+      "ability_name": "Clinical-versus-administrative boundary",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "request content and patient-safety indicators",
+        "clinical protocol, order, plan-of-care, visit-frequency, medical necessity, authorization, referral, care-team, and payer authority map",
+        "administrative scheduling and dispatch facts that can be summarized safely"
+      ],
+      "required_outputs": [
+        "administrative-only scheduling summary",
+        "clinical or payer escalation note"
+      ],
+      "refusal_triggers": [
+        "request requires diagnosis, symptom triage, treatment planning, medical necessity, care-pathway direction, visit-frequency change, authorization approval, referral sufficiency, or payer coverage interpretation",
+        "schedule or dispatch request includes patient-safety indicators that require licensed review"
+      ],
+      "scenario_ids": [
+        "sdhss-02",
+        "sdhss-07",
+        "sdhss-08",
+        "sdhss-10",
+        "sdhss-12"
+      ]
+    },
+    {
+      "ability_id": "privacy_and_patient_safety_escalation",
+      "ability_name": "Privacy and patient-safety escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "PHI handling context, role-based access posture, consent/proxy and minimum-necessary rules",
+        "patient-safety, site-readiness, infection-control, weather, access, equipment, clinical-risk, route-risk, and service-risk indicators",
+        "privacy, clinical, safety, technician, compliance, or command owner map"
+      ],
+      "required_outputs": [
+        "privacy-controlled routing note",
+        "patient-safety escalation note",
+        "controlled evidence package"
+      ],
+      "refusal_triggers": [
+        "request seeks PHI disclosure, patient-level export, broad distribution, vendor routing, or route-sheet sharing without documented authorization",
+        "field-service, technician, infection-control, clinical, weather, access, equipment, or patient-safety signal requires accountable clinical, safety, or technician owner"
+      ],
+      "scenario_ids": [
+        "sdhss-06",
+        "sdhss-07",
+        "sdhss-09",
+        "sdhss-12"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "sdhss-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "constraint_and_capacity_assessment",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-03",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-04",
+      "ability_ids": [
+        "low_confidence_and_escalation",
+        "allocation_and_sequence_recommendation",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-05",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-07",
+      "ability_ids": [
+        "boundary_control",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-09",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-10",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "approval_boundary_enforcement",
+        "clinical_vs_administrative_boundary"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "allocation_and_sequence_recommendation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "sdhss-12",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "constraint_and_capacity_assessment",
+        "allocation_and_sequence_recommendation",
+        "clinical_vs_administrative_boundary",
+        "privacy_and_patient_safety_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

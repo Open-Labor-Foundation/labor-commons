@@ -1,0 +1,421 @@
+{
+  "agent_slug": "repair-intake-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request scope and requested outcome",
+        "specialty boundary",
+        "adjacent specialist map",
+        "authority ownership matrix"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or routing note"
+      ],
+      "refusal_triggers": [
+        "request asks for refund approval, final warranty adjudication, final repair pricing, fraud determination, or safety clearance",
+        "request asks the lane to approve downstream repair execution",
+        "request attempts to bypass intake queue states or required authorizations"
+      ],
+      "scenario_ids": [
+        "ris-03",
+        "ris-04",
+        "ris-07",
+        "ris-08",
+        "ris-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative source set",
+        "source freshness metadata",
+        "tenant source-precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority decision",
+        "staleness or conflict marker",
+        "source conflict summary"
+      ],
+      "refusal_triggers": [
+        "required public or tenant source context is missing",
+        "authoritative sources conflict materially on the intake outcome",
+        "source freshness exceeds the allowed decay window for a material decision"
+      ],
+      "scenario_ids": [
+        "ris-10",
+        "ris-11",
+        "ris-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "customer and product identifiers",
+        "service ticket and appointment records",
+        "estimate, claim-check, and payment artifacts"
+      ],
+      "required_outputs": [
+        "evidence-linked prerequisite checklist",
+        "artifact-to-system traceability summary",
+        "missing-evidence note"
+      ],
+      "refusal_triggers": [
+        "serial, IMEI, model, customer, or claim-check records cannot be tied to named systems",
+        "estimate or authorization evidence is incomplete or contradictory",
+        "safety or ownership disposition would rely on undocumented facts"
+      ],
+      "scenario_ids": [
+        "ris-01",
+        "ris-02",
+        "ris-05",
+        "ris-06",
+        "ris-09"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record inventory",
+        "record-location hooks",
+        "tenant policy and owner map"
+      ],
+      "required_outputs": [
+        "dependency blocker summary",
+        "record-of-truth map",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required POS, CRM, service desk, booking, inventory, or payment records are unavailable",
+        "record-of-truth hierarchy is unknown",
+        "tenant routing owner for pricing, fraud, or safety is missing"
+      ],
+      "scenario_ids": [
+        "ris-02",
+        "ris-04",
+        "ris-06",
+        "ris-10",
+        "ris-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing prerequisite flags",
+        "confidence rubric",
+        "policy or source conflict indicators"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "next-evidence request list"
+      ],
+      "refusal_triggers": [
+        "minimum tenant facts or authoritative records are missing",
+        "conflicting policy or source materially changes the answer",
+        "identity, safety, or ownership confidence is below safe threshold"
+      ],
+      "scenario_ids": [
+        "ris-09",
+        "ris-10",
+        "ris-11",
+        "ris-12"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope outcome",
+        "adjacent specialist registry",
+        "handoff artifact requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff package with owner and blockers"
+      ],
+      "refusal_triggers": [
+        "request belongs to pricing, warranty, guest services, fraud or loss-prevention, operations, or repair execution ownership",
+        "policy or source conflict cannot be resolved in-lane",
+        "safe downstream owner is required before the request can move"
+      ],
+      "scenario_ids": [
+        "ris-03",
+        "ris-07",
+        "ris-08",
+        "ris-09",
+        "ris-11"
+      ]
+    },
+    {
+      "ability_id": "intake_prerequisite_validation",
+      "ability_name": "Intake prerequisite validation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "customer identity and possession posture",
+        "product identifiers",
+        "service request and intake record"
+      ],
+      "required_outputs": [
+        "prerequisite validation outcome",
+        "missing-fact checklist",
+        "accept or pend decision"
+      ],
+      "refusal_triggers": [
+        "customer or product identity is missing",
+        "claim-check, service request, or intake artifact is absent",
+        "required intake facts are missing and would change the result"
+      ],
+      "scenario_ids": [
+        "ris-01",
+        "ris-02",
+        "ris-05"
+      ]
+    },
+    {
+      "ability_id": "eligibility_authorization_decisioning",
+      "ability_name": "Eligibility and authorization decisioning",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "warranty, service-contract, or protection-plan state",
+        "estimate and diagnosis-fee authorization records",
+        "product-support and booking eligibility context"
+      ],
+      "required_outputs": [
+        "eligibility or authorization status",
+        "authorization gap list",
+        "blocked or ready intake disposition"
+      ],
+      "refusal_triggers": [
+        "estimate approval is missing",
+        "coverage or service eligibility cannot be confirmed with named records",
+        "authorization to proceed or to retain the unit is absent"
+      ],
+      "scenario_ids": [
+        "ris-01",
+        "ris-04",
+        "ris-07",
+        "ris-10"
+      ]
+    },
+    {
+      "ability_id": "pre_execution_routing",
+      "ability_name": "Pre-execution routing",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "validated prerequisite result",
+        "queue state and owner map",
+        "routing policy"
+      ],
+      "required_outputs": [
+        "routing disposition",
+        "intake or access disposition summary",
+        "pending or reject state"
+      ],
+      "refusal_triggers": [
+        "validation failed",
+        "access or authorization checks are incomplete",
+        "downstream owner requires additional approvals or safety review"
+      ],
+      "scenario_ids": [
+        "ris-01",
+        "ris-03",
+        "ris-04",
+        "ris-08"
+      ]
+    },
+    {
+      "ability_id": "high_volume_customer_workflow_handling",
+      "ability_name": "High-volume customer-workflow handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "queue volume and promised service windows",
+        "customer-facing intake artifacts",
+        "store, depot, or field-service capacity context"
+      ],
+      "required_outputs": [
+        "high-volume intake prioritization-safe summary",
+        "customer-safe queue disposition",
+        "throughput caveat note"
+      ],
+      "refusal_triggers": [
+        "required identity, estimate, or safety checks are skipped to protect speed metrics",
+        "customer promise windows cannot be tied to booking records",
+        "volume pressure would cause unauthorized intake acceptance"
+      ],
+      "scenario_ids": [
+        "ris-05",
+        "ris-06"
+      ]
+    },
+    {
+      "ability_id": "customer_harm_and_policy_exception_escalation",
+      "ability_name": "Customer-harm and policy-exception escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "customer-impact facts",
+        "refund, pricing, fraud, or safety policy context",
+        "service recovery or escalation owner map"
+      ],
+      "required_outputs": [
+        "customer-impact escalation note",
+        "policy-exception routing packet",
+        "harm-aware disposition summary"
+      ],
+      "refusal_triggers": [
+        "request asks intake to override refund, pricing, or safety policy",
+        "customer harm, fraud, or loss-prevention implications determine the answer",
+        "service recovery requires authority outside the lane"
+      ],
+      "scenario_ids": [
+        "ris-07",
+        "ris-08",
+        "ris-09",
+        "ris-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "ris-01",
+      "ability_ids": [
+        "evidence_traceability",
+        "intake_prerequisite_validation",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "intake_prerequisite_validation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-03",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-04",
+      "ability_ids": [
+        "boundary_control",
+        "dependency_and_system_awareness",
+        "eligibility_authorization_decisioning",
+        "pre_execution_routing"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-05",
+      "ability_ids": [
+        "evidence_traceability",
+        "intake_prerequisite_validation",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-06",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "high_volume_customer_workflow_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-07",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "eligibility_authorization_decisioning",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-08",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "pre_execution_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-09",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "eligibility_authorization_decisioning"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "customer_harm_and_policy_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "ris-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    }
+  ]
+}

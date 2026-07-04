@@ -1,0 +1,339 @@
+{
+  "agent_slug": "patient-access-specialist",
+  "agent_release": "v0.1.0",
+  "resolved_workflow_phase_group": "intake-access-and-initiation",
+  "industry_profile": "healthcare-and-care-delivery",
+  "resolved_industry_profile": "healthcare-and-care-delivery",
+  "semantic_baseline_version": "2026-04-07",
+  "source_decay_policy": "review_required_after_interval",
+  "last_reviewed_at": "2026-04-13",
+  "domain_research_pack": "healthcare-and-care-delivery",
+  "authoritative_sources": [
+    {
+      "title": "HIPAA Eligibility Transaction System (HETS) 270/271",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/research-statistics-data-and-systems/cms-information-technology/hetshelp",
+      "source_class": "Public payer or provider operating guidance",
+      "authority_rationale": "CMS operates the Medicare real-time eligibility transaction channel. It directly supports eligibility evidence, 270/271 terminology, and the boundary between active coverage evidence and final access clearance.",
+      "workflow_stage": "eligibility verification and coverage evidence capture",
+      "used_for": [
+        "real-time eligibility prerequisite handling",
+        "270/271 terminology",
+        "eligibility versus referral or authorization boundary"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_transaction_revision"
+    },
+    {
+      "title": "CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F)",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/priorities/burden-reduction/overview/interoperability/policies-regulations/cms-interoperability-prior-authorization-final-rule-cms-0057-f",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "CMS-0057-F is federal public policy for impacted payer prior authorization APIs, status transparency, and denial-reason communication. It supports authorization status and escalation workflows without granting approval authority to the lane.",
+      "workflow_stage": "authorization status readiness and payer-response handling",
+      "used_for": [
+        "authorization dependency checks",
+        "payer response status caveats",
+        "payer interpretation refusal"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_regulatory_revision"
+    },
+    {
+      "title": "Provider requirements and resources under the No Surprises Act",
+      "publisher": "Centers for Medicare & Medicaid Services",
+      "url": "https://www.cms.gov/nosurprises/policies-and-resources/provider-requirements-and-resources",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "CMS provider guidance describes good faith estimate and patient-provider dispute resources for uninsured and self-pay patients, making it authoritative for estimate prerequisite boundaries in access workflows.",
+      "workflow_stage": "upfront estimate and self-pay access prerequisite handling",
+      "used_for": [
+        "good faith estimate prerequisite checks",
+        "estimate owner routing",
+        "financial counseling boundary"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 120,
+      "decay_policy": "review_required_after_interval_or_cms_no_surprises_revision"
+    },
+    {
+      "title": "HIPAA Minimum Necessary Standard",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/minimum-necessary-requirement/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR is the HIPAA privacy regulator. Minimum-necessary guidance directly constrains patient access evidence requests, communications, and escalation packets containing PHI.",
+      "workflow_stage": "privacy-gated evidence packaging and requester handling",
+      "used_for": [
+        "minimum-necessary PHI controls",
+        "requester verification escalation",
+        "privacy refusal logic"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "HIPAA Privacy Rule and Care Coordination",
+      "publisher": "U.S. Department of Health & Human Services, Office for Civil Rights",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/special-topics/disclosures-treatment-payment-health-care-operations/index.html",
+      "source_class": "Public healthcare regulator guidance",
+      "authority_rationale": "HHS OCR guidance on treatment, payment, and health care operations is authoritative for PHI disclosure boundaries that appear during registration, scheduling, and patient communication work.",
+      "workflow_stage": "patient communication and PHI disclosure gating",
+      "used_for": [
+        "family or proxy request handling",
+        "patient communication constraints",
+        "privacy specialist escalation"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_hhs_revision"
+    },
+    {
+      "title": "CAQH CORE Operating Rules",
+      "publisher": "CAQH CORE",
+      "url": "https://www.caqh.org/core/operating-rules",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "CAQH CORE is a recognized vendor-neutral operating-rules body for eligibility and benefits, prior authorization, referrals, attachments, acknowledgements, and healthcare administrative transaction workflow.",
+      "workflow_stage": "eligibility, referral, prior-authorization, attachment, and acknowledgement workflow",
+      "used_for": [
+        "270/271 and 278 terminology",
+        "transaction acknowledgement and error posture",
+        "workflow-specific evidence expectations"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_core_rule_revision"
+    },
+    {
+      "title": "United States Core Data for Interoperability Version 6",
+      "publisher": "Assistant Secretary for Technology Policy / Office of the National Coordinator for Health IT",
+      "url": "https://isp.healthit.gov/sites/default/files/2025-07/USCDI-Version-6-July-2025.pdf",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "ASTP/ONC USCDI is the federal interoperability baseline for EHR data classes such as patient demographics, encounter, care team, coverage, insurance, and clinical artifact terminology used in access evidence normalization.",
+      "workflow_stage": "patient demographics, insurance, encounter, and artifact terminology normalization",
+      "used_for": [
+        "demographic and coverage terminology",
+        "EHR artifact mapping",
+        "tenant terminology adaptation"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval_or_uscdi_revision"
+    },
+    {
+      "title": "National Patient Safety Goals",
+      "publisher": "The Joint Commission",
+      "url": "https://www.jointcommission.org/resources/patient-safety-topics/patient-safety/national-patient-safety-goals/",
+      "source_class": "Recognized healthcare workflow or measure guidance",
+      "authority_rationale": "The Joint Commission is a recognized healthcare accrediting body. Its patient-identification safety goals support refusal to clear service when demographics or identity conflict across systems.",
+      "workflow_stage": "patient identity reconciliation and safety escalation",
+      "used_for": [
+        "identity mismatch blocker handling",
+        "wrong-patient safety risk framing",
+        "registration correction escalation"
+      ],
+      "last_reviewed_at": "2026-04-13",
+      "refresh_interval_days": 365,
+      "decay_policy": "review_required_after_interval_or_joint_commission_revision"
+    }
+  ],
+  "workflow_questions": [
+    {
+      "question": "What prerequisites or authorizations gate the workflow?",
+      "answer": "Minimum prerequisites include confirmed patient/member identity, demographics, payer and plan context, subscriber/member status, service date, requested service, service setting, ordering/referring and rendering provider, facility, referral status, authorization status, estimate requirement, patient communication constraints, consent/privacy posture, and tenant source-of-truth and retrieval rules."
+    },
+    {
+      "question": "Which records or systems establish the patient, member, or claim truth set?",
+      "answer": "Truth-set systems include registration and MPI systems, EHR pre-access workflows, scheduling systems, real-time eligibility systems, payer portals, referral and authorization platforms, insurance card and document repositories, estimate/financial counseling systems, patient communication tools, consent/privacy systems, and audit logs. Tenant source hierarchy determines which record controls when systems conflict."
+    },
+    {
+      "question": "Where does the lane stop and licensed clinical, privacy, or payer-interpretation authority begin?",
+      "answer": "The lane stops before diagnosis, treatment planning, clinical urgency, medical necessity, utilization review judgment, authorization approval, payer policy interpretation, appeal strategy, privacy-release approval, legal interpretation, financial approval, or post-service claim handling. Those require adjacent owner escalation or orchestrator return."
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "Access intake and lane classification",
+      "description": "Normalize request intent, requested service, patient/member identity, payer, plan, provider, facility, service date, service setting, and desired access action before treating work as actionable.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Identity, demographics, and registration readiness",
+      "description": "Validate MRN, MPI match, demographics, insurance card evidence, guarantor or subscriber information, communication preferences, and registration edits against controlling source systems.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public healthcare regulator guidance"
+      ]
+    },
+    {
+      "name": "Eligibility, referral, authorization, and estimate prerequisite validation",
+      "description": "Check current eligibility, benefit or plan signals, referral order, authorization requirement and status, service setting, provider/facility context, and good faith estimate or financial counseling dependency before access clearance.",
+      "source_classes": [
+        "Public payer or provider operating guidance",
+        "Public healthcare regulator guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    },
+    {
+      "name": "Source reconciliation and blocker classification",
+      "description": "Reconcile registration, scheduling, EHR, payer portal, eligibility, referral, authorization, estimate, communication, and privacy records; classify blockers as demographic, coverage, referral, authorization, estimate, privacy, documentation, system, or policy related.",
+      "source_classes": [
+        "Recognized healthcare workflow or measure guidance",
+        "Public payer or provider operating guidance"
+      ]
+    },
+    {
+      "name": "Disposition, routing, and controlled escalation",
+      "description": "Produce accept, pend, reject, route, or blocked dispositions; create clearance summaries and escalation notes; route PHI, patient-safety, clinical, payer, privacy, and policy conflicts to the responsible owner.",
+      "source_classes": [
+        "Public healthcare regulator guidance",
+        "Public payer or provider operating guidance",
+        "Recognized healthcare workflow or measure guidance"
+      ]
+    }
+  ],
+  "artifacts": [
+    "Patient demographics, MRN, MPI match evidence, date of birth, legal name, contact details, guarantor, and patient communication preferences",
+    "Insurance card images, payer and plan identifiers, subscriber/member IDs, eligibility 270/271 responses, coverage dates, and benefit indicators",
+    "Referral orders, referral shell records, authorization records, authorization numbers, payer portal status, prior-auth case IDs, and attachment acknowledgements",
+    "Scheduling requests, appointment records, service date, facility, provider, service setting, requested service, urgency flag, and registration edits",
+    "Price estimate and good faith estimate prerequisites, financial counseling notes, uninsured or self-pay status, and patient estimate owner routing",
+    "Consent, proxy, privacy restriction, minimum-necessary handling, disclosure, and audit records",
+    "Pre-service clearance summaries, intake disposition notes, prerequisite checklists, missing-item requests, and escalation summaries"
+  ],
+  "systems_of_record": [
+    "Registration and master patient index systems",
+    "Scheduling and appointment systems",
+    "EHR pre-access, order, encounter, and document-management workflows",
+    "Real-time eligibility and benefits verification systems",
+    "Payer portals and electronic prior-authorization platforms",
+    "Referral-management and authorization-management systems",
+    "Insurance card image, document repository, fax-import, and attachment systems",
+    "Price-estimate, good faith estimate, and financial counseling systems",
+    "Patient communication, CRM, portal messaging, consent, privacy, identity-access, and audit systems"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify the access request as accepted, pended, rejected, routed, or blocked based on documented patient, payer, provider, service, and prerequisite evidence.",
+      "Determine whether scheduling, registration, or pre-service clearance can proceed based on identity, eligibility, referral, authorization, estimate, privacy, and documentation prerequisites.",
+      "Identify whether the blocker is demographic, coverage, referral, authorization, estimate, privacy, documentation, system, or tenant-policy related.",
+      "Prepare pre-service clearance summaries, intake disposition notes, prerequisite checklists, missing-item requests, and escalation summaries with source traceability."
+    ],
+    "escalate": [
+      "Tenant payer, plan, facility, jurisdiction, retrieval, source hierarchy, or service-setting rules are missing and would change access disposition.",
+      "Registration, EHR, scheduling, payer portal, eligibility, referral, authorization, estimate, communication, or privacy systems materially conflict.",
+      "The request involves PHI disclosure uncertainty, proxy or consent ambiguity, patient-safety risk, identity mismatch, clinical urgency, medical necessity, payer policy interpretation, or authorization approval.",
+      "Public baseline guidance and tenant policy, payer contract, facility rule, or state program requirement materially conflict."
+    ],
+    "refuse": [
+      "Schedule, register, or clear service despite unresolved identity, eligibility, referral, authorization, consent, privacy, or estimate prerequisites.",
+      "Diagnose, triage, determine clinical urgency, approve medical necessity, select treatment, or state that care is clinically appropriate.",
+      "Approve or deny authorization, interpret payer policy as binding, override a payer prerequisite, or write appeal or claim strategy.",
+      "Disclose PHI when requester authority, minimum-necessary purpose, consent, proxy status, or communication rule is unresolved.",
+      "Take ownership of post-service billing, claim correction, denial cleanup, or revenue-cycle resolution."
+    ]
+  },
+  "domain_failure_modes": [
+    "service is scheduled or cleared even though eligibility is active but referral or authorization prerequisites remain missing",
+    "wrong-patient scheduling or registration occurs because demographic conflicts across MPI, EHR, payer, and registration records are guessed away",
+    "PHI is disclosed to a requester without verified authority or without minimum-necessary controls",
+    "administrative access handling is converted into medical necessity, clinical triage, or payer approval judgment",
+    "payer portal, eligibility, referral, and authorization statuses conflict and the lane resolves them without tenant source hierarchy",
+    "good faith estimate or financial counseling dependencies are skipped for uninsured or self-pay access workflows",
+    "generic scheduling language omits payer, plan, service setting, provider, facility, and authorization details that materially change the access answer",
+    "post-service billing or denial work is misrouted into a pre-service access lane"
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Missing authorization, referral, or eligibility dependency",
+      "covered": true,
+      "scenario_ids": [
+        "pas-01",
+        "pas-02",
+        "pas-04",
+        "pas-09"
+      ]
+    },
+    {
+      "scenario_family": "PHI or privacy-sensitive request that requires controlled handling",
+      "covered": true,
+      "scenario_ids": [
+        "pas-03",
+        "pas-06",
+        "pas-09"
+      ]
+    },
+    {
+      "scenario_family": "Boundary case that would require licensed clinical or payer-interpretation escalation",
+      "covered": true,
+      "scenario_ids": [
+        "pas-07",
+        "pas-08",
+        "pas-13"
+      ]
+    },
+    {
+      "scenario_family": "Coverage is active but referral or authorization requirements are still missing",
+      "covered": true,
+      "scenario_ids": [
+        "pas-02"
+      ]
+    },
+    {
+      "scenario_family": "The patient identity or demographics conflict across systems",
+      "covered": true,
+      "scenario_ids": [
+        "pas-03",
+        "pas-09"
+      ]
+    },
+    {
+      "scenario_family": "A scheduling request pressures the lane to bypass access controls",
+      "covered": true,
+      "scenario_ids": [
+        "pas-04"
+      ]
+    },
+    {
+      "scenario_family": "Conflicting-source or conflicting-policy handling requires escalation",
+      "covered": true,
+      "scenario_ids": [
+        "pas-09",
+        "pas-10"
+      ]
+    },
+    {
+      "scenario_family": "Tenant-specific adaptation preserves the public baseline",
+      "covered": true,
+      "scenario_ids": [
+        "pas-10",
+        "pas-12"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "payer-specific referral and authorization rules",
+      "status": "tenant_required",
+      "blocking": false,
+      "handling": "The validated public baseline requires tenant payer, plan, product, facility, provider type, service setting, and source hierarchy facts before final access disposition. Missing tenant facts trigger pend, route, or orchestrator return rather than guessed clearance."
+    },
+    {
+      "topic": "state, facility, or program-specific estimate and consent requirements",
+      "status": "tenant_required",
+      "blocking": false,
+      "handling": "The pack identifies estimate and consent dependencies but requires tenant jurisdiction, facility policy, and business-unit procedure before producing final clearance."
+    }
+  ],
+  "research_to_spec_constraints": [
+    "Active eligibility alone is never sufficient to clear access when referral, authorization, identity, estimate, privacy, or tenant prerequisites remain unresolved.",
+    "Patient identity and demographic conflicts are safety blockers, not clerical details to smooth over.",
+    "Payer portal or public guidance status is not equivalent to authorization approval or medical-necessity determination.",
+    "PHI handling is minimum-necessary and requester-authority constrained.",
+    "The runtime strategy remains specification-based until a separate trusted implementation validates connectors and tenant retrieval hooks."
+  ]
+}

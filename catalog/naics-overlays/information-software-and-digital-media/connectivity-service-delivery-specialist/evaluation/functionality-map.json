@@ -1,0 +1,408 @@
+{
+  "agent_slug": "connectivity-service-delivery-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent",
+        "connectivity service delivery boundary",
+        "tenant authority map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal or escalation decision"
+      ],
+      "refusal_triggers": [
+        "request asks for network engineering, security, legal, editorial, regulatory, financial, service-credit, or contractual signoff",
+        "request asks the lane to override access, change, service-level, or approval policy",
+        "request asks for confidential topology, incident, traffic, credential, or content-delivery records without approved recipient and channel"
+      ],
+      "scenario_ids": [
+        "csds-03",
+        "csds-04",
+        "csds-09"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative public source set",
+        "source freshness indicators",
+        "tenant service model and policy precedence"
+      ],
+      "required_outputs": [
+        "source-priority map",
+        "staleness or conflict note",
+        "confidence state"
+      ],
+      "refusal_triggers": [
+        "required public framework or tenant service context is missing",
+        "source freshness materially affects service or outage handling",
+        "public service baseline and tenant contract or policy materially conflict"
+      ],
+      "scenario_ids": [
+        "csds-01",
+        "csds-10",
+        "csds-11"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "service request, trouble ticket, and service-order identifiers",
+        "connectivity inventory, NMS, DCIM, carrier, test, and approval records",
+        "customer communication and confirmation evidence"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "request summary tied to records",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "service identifiers or systems of record are missing",
+        "ticket, DCIM, carrier, service-order, telemetry, or activation-test evidence conflicts",
+        "customer-facing communication lacks support for the claimed service state"
+      ],
+      "scenario_ids": [
+        "csds-01",
+        "csds-02",
+        "csds-07",
+        "csds-08"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "service dependencies and approval owner map"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system-readiness blockers",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "ticketing, CRM, service inventory, CMDB, DCIM, NMS, carrier portal, document repository, or approval system is unavailable or stale",
+        "owner for the next service, customer, or escalation step is unknown",
+        "retrieval path cannot establish service, customer, environment, or commitment truth"
+      ],
+      "scenario_ids": [
+        "csds-02",
+        "csds-05",
+        "csds-10",
+        "csds-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing fact flags",
+        "confidence rubric",
+        "source, policy, service-record, or telemetry conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "csds-02",
+        "csds-07",
+        "csds-10",
+        "csds-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request leaves connectivity service delivery scope",
+        "request requires engineering, security, legal, editorial, regulatory, account, carrier, quality-review, delivery-management, or customer-approval authority",
+        "service lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "csds-04",
+        "csds-05",
+        "csds-09"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative service status",
+        "required evidence set"
+      ],
+      "required_outputs": [
+        "service or support disposition",
+        "connectivity resolution note",
+        "resolved, blocked, refused, or escalated status"
+      ],
+      "refusal_triggers": [
+        "request type is not supported in-lane",
+        "authoritative service status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "csds-01",
+        "csds-02",
+        "csds-08"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "request resolution state"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate service restoration, authority, or finality",
+        "required confidentiality, review, no-signoff, or outage caveat is missing",
+        "client-facing message conflicts with documented policy, contract, or evidence"
+      ],
+      "scenario_ids": [
+        "csds-01",
+        "csds-06",
+        "csds-08",
+        "csds-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround or override",
+        "approval owner is missing or outside the lane",
+        "exception would bypass change, access, confidentiality, service evidence, quality-review, or contract controls"
+      ],
+      "scenario_ids": [
+        "csds-03",
+        "csds-05",
+        "csds-11"
+      ]
+    },
+    {
+      "ability_id": "confidentiality_and_client_commitment_handling",
+      "ability_name": "Confidentiality and client-commitment handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "customer authorization and recipient list",
+        "service contract, confidentiality constraints, and customer commitments",
+        "delivery channel and record-retention requirements"
+      ],
+      "required_outputs": [
+        "confidentiality-safe communication summary",
+        "client commitment and delivery constraint note",
+        "disclosure blocker or approval request"
+      ],
+      "refusal_triggers": [
+        "recipient, channel, or deliverable is not authorized",
+        "client commitment or engagement scope is missing or contradicted",
+        "delivery would disclose confidential topology, traffic, incident, vulnerability, access, or content-delivery records without approval"
+      ],
+      "scenario_ids": [
+        "csds-06",
+        "csds-11",
+        "csds-12"
+      ]
+    },
+    {
+      "ability_id": "licensed_or_contractual_authority_escalation",
+      "ability_name": "Licensed or contractual-authority escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "authority requirements",
+        "contractual signoff rules",
+        "professional judgment, client-rights, or regulatory flags"
+      ],
+      "required_outputs": [
+        "authority escalation package",
+        "contractual or professional-judgment boundary rationale",
+        "owner mapping and communication constraints"
+      ],
+      "refusal_triggers": [
+        "request requires attorney, regulatory filer, network engineer, security approver, editorial owner, account owner, service-credit approver, or contract signer judgment",
+        "request asks the lane to imply legal, editorial, regulatory, financial, or contractual approval authority without explicit scope",
+        "client rights, outage reporting, security posture, content rights, or professional judgment determine the answer"
+      ],
+      "scenario_ids": [
+        "csds-04",
+        "csds-09",
+        "csds-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "csds-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-02",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-03",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-04",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-05",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-06",
+      "ability_ids": [
+        "stakeholder_communication",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-07",
+      "ability_ids": [
+        "evidence_traceability",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-08",
+      "ability_ids": [
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-09",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-11",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "unsupported_exception_escalation",
+        "confidentiality_and_client_commitment_handling",
+        "licensed_or_contractual_authority_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "csds-12",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "stakeholder_communication",
+        "confidentiality_and_client_commitment_handling"
+      ],
+      "status": "covered"
+    }
+  ],
+  "coverage_complete": true
+}

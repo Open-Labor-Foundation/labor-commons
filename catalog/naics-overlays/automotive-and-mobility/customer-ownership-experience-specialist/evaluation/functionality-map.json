@@ -1,0 +1,423 @@
+{
+  "agent_slug": "customer-ownership-experience-specialist",
+  "agent_release": "v0.1.0",
+  "required_ability_count": 11,
+  "required_abilities": [
+    {
+      "ability_id": "boundary_control",
+      "ability_name": "Boundary control",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "request intent and requested outcome",
+        "specialty boundary",
+        "authority and approval map",
+        "adjacent specialist registry"
+      ],
+      "required_outputs": [
+        "scope verdict",
+        "boundary-safe refusal note",
+        "owner-routing decision"
+      ],
+      "refusal_triggers": [
+        "request asks for compensation approval, supplier approval, engineering signoff, safety-release signoff, or legal interpretation",
+        "request asks the lane to bypass traceability, hold, release, or quality controls to close an owner case"
+      ],
+      "scenario_ids": [
+        "coes-03",
+        "coes-05",
+        "coes-06",
+        "coes-11"
+      ]
+    },
+    {
+      "ability_id": "source_selection_and_refresh",
+      "ability_name": "Source selection and refresh",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "authoritative APQC, ISO, AIAG, GS1, and NHTSA source set",
+        "source freshness indicators",
+        "tenant policy and jurisdiction precedence rules"
+      ],
+      "required_outputs": [
+        "source-priority note",
+        "staleness or conflict note",
+        "confidence statement"
+      ],
+      "refusal_triggers": [
+        "required public source context is missing or stale",
+        "jurisdiction, OEM, or tenant policy materially changes the answer",
+        "public guidance and tenant policy materially conflict"
+      ],
+      "scenario_ids": [
+        "coes-01",
+        "coes-08",
+        "coes-10",
+        "coes-11",
+        "coes-12"
+      ]
+    },
+    {
+      "ability_id": "evidence_traceability",
+      "ability_name": "Evidence traceability",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "VIN, repair-order, and case identifiers",
+        "campaign, warranty, and service artifacts",
+        "parts, inventory, traceability, and supplier evidence when relevant"
+      ],
+      "required_outputs": [
+        "evidence map",
+        "record-linked request summary",
+        "missing-or-conflicting evidence list"
+      ],
+      "refusal_triggers": [
+        "core records are absent or contradictory",
+        "vehicle or service state cannot be tied to authoritative artifacts",
+        "customer-facing summary would overstate what the records prove"
+      ],
+      "scenario_ids": [
+        "coes-01",
+        "coes-04",
+        "coes-05",
+        "coes-09",
+        "coes-10"
+      ]
+    },
+    {
+      "ability_id": "dependency_and_system_awareness",
+      "ability_name": "Dependency and system awareness",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "systems-of-record availability",
+        "tenant retrieval hooks",
+        "authority matrix",
+        "service and escalation policy constraints"
+      ],
+      "required_outputs": [
+        "dependency tracker",
+        "system blocker summary",
+        "retrieval owner routing"
+      ],
+      "refusal_triggers": [
+        "required CRM, DMS, warranty, ERP, MES, WMS, QMS, or supplier systems are unavailable",
+        "required tenant policy or authority mapping is missing",
+        "next owner or retrieval dependency is unknown"
+      ],
+      "scenario_ids": [
+        "coes-02",
+        "coes-04",
+        "coes-07",
+        "coes-09",
+        "coes-12"
+      ]
+    },
+    {
+      "ability_id": "low_confidence_and_escalation",
+      "ability_name": "Low-confidence and escalation handling",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "missing-fact indicators",
+        "confidence rubric",
+        "source or policy conflict signals"
+      ],
+      "required_outputs": [
+        "low-confidence escalation note",
+        "assumption register",
+        "required next-evidence list"
+      ],
+      "refusal_triggers": [
+        "critical prerequisite remains unknown after retrieval attempts",
+        "source-of-truth conflict remains unresolved",
+        "policy or authority conflict changes the safe answer"
+      ],
+      "scenario_ids": [
+        "coes-02",
+        "coes-04",
+        "coes-09",
+        "coes-11"
+      ]
+    },
+    {
+      "ability_id": "adjacent_lane_routing",
+      "ability_name": "Adjacent-lane routing",
+      "ability_type": "shared",
+      "status": "validated",
+      "required_inputs": [
+        "scope classification",
+        "adjacent specialist registry",
+        "handoff requirements"
+      ],
+      "required_outputs": [
+        "adjacent-lane routing note",
+        "handoff owner and artifact map"
+      ],
+      "refusal_triggers": [
+        "request belongs to quality, production planning, inventory, procurement, supplier quality, logistics, engineering, warranty adjudication, legal, or safety ownership",
+        "request requires final approval outside the lane",
+        "the lane cannot safely remediate the issue directly"
+      ],
+      "scenario_ids": [
+        "coes-06",
+        "coes-07",
+        "coes-11"
+      ]
+    },
+    {
+      "ability_id": "supported_request_resolution",
+      "ability_name": "Supported-request resolution",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "supported request type",
+        "authoritative workflow status",
+        "required evidence set"
+      ],
+      "required_outputs": [
+        "resolution note",
+        "next-step summary",
+        "resolved or blocked disposition"
+      ],
+      "refusal_triggers": [
+        "request type is unsupported in-lane",
+        "authoritative workflow status cannot be confirmed",
+        "required evidence set is incomplete"
+      ],
+      "scenario_ids": [
+        "coes-01",
+        "coes-02",
+        "coes-09",
+        "coes-10",
+        "coes-12"
+      ]
+    },
+    {
+      "ability_id": "stakeholder_communication",
+      "ability_name": "Stakeholder communication",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "audience type",
+        "approved communication constraints",
+        "request resolution state"
+      ],
+      "required_outputs": [
+        "customer or stakeholder communication summary",
+        "safe wording for blockers or next steps",
+        "communication log update"
+      ],
+      "refusal_triggers": [
+        "communication would overstate authority or finality",
+        "required caveat or safety context is missing",
+        "message conflicts with documented policy or evidence"
+      ],
+      "scenario_ids": [
+        "coes-01",
+        "coes-05",
+        "coes-07",
+        "coes-10",
+        "coes-12"
+      ]
+    },
+    {
+      "ability_id": "unsupported_exception_escalation",
+      "ability_name": "Unsupported-exception escalation",
+      "ability_type": "workflow_phase",
+      "status": "validated",
+      "required_inputs": [
+        "unsupported ask details",
+        "documented approval thresholds",
+        "exception owner map"
+      ],
+      "required_outputs": [
+        "unsupported ask escalation packet",
+        "refusal rationale",
+        "next owner routing"
+      ],
+      "refusal_triggers": [
+        "request asks for unsupported workaround, discretionary exception, policy override, release override, or compensation approval",
+        "approval owner is missing or outside the lane",
+        "exception would bypass traceability, quality, or release controls"
+      ],
+      "scenario_ids": [
+        "coes-03",
+        "coes-05",
+        "coes-08",
+        "coes-11"
+      ]
+    },
+    {
+      "ability_id": "traceability_and_release_dependency_handling",
+      "ability_name": "Traceability and release-dependency handling",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "batch, lot, serial, and inventory history",
+        "vehicle-to-part traceability or installation status",
+        "quality release or hold records"
+      ],
+      "required_outputs": [
+        "traceability conflict memo",
+        "release dependency summary",
+        "hold or rework escalation package"
+      ],
+      "refusal_triggers": [
+        "traceability or inventory evidence conflict remains unresolved",
+        "hold or release evidence does not support part, vehicle, or case progression",
+        "customer-facing closure would bypass quarantine or nonconformance controls"
+      ],
+      "scenario_ids": [
+        "coes-04",
+        "coes-05",
+        "coes-10"
+      ]
+    },
+    {
+      "ability_id": "supplier_quality_and_release_escalation",
+      "ability_name": "Supplier-quality and release escalation",
+      "ability_type": "industry_profile",
+      "status": "validated",
+      "required_inputs": [
+        "supplier records",
+        "substitution or deviation details",
+        "quality or change-control requirements"
+      ],
+      "required_outputs": [
+        "supplier-quality escalation note",
+        "conflict escalation note"
+      ],
+      "refusal_triggers": [
+        "request to approve supplier or part substitution without authority",
+        "request to continue workflow despite unresolved supplier-quality or release issues",
+        "approval depends on formal PPAP, Service PPAP, engineering, or procurement decisions"
+      ],
+      "scenario_ids": [
+        "coes-06",
+        "coes-11"
+      ]
+    }
+  ],
+  "scenario_coverage": [
+    {
+      "scenario_id": "coes-01",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-02",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-03",
+      "ability_ids": [
+        "boundary_control",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-04",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-05",
+      "ability_ids": [
+        "boundary_control",
+        "evidence_traceability",
+        "stakeholder_communication",
+        "unsupported_exception_escalation",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-06",
+      "ability_ids": [
+        "boundary_control",
+        "adjacent_lane_routing",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-07",
+      "ability_ids": [
+        "dependency_and_system_awareness",
+        "adjacent_lane_routing",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-08",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "unsupported_exception_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-09",
+      "ability_ids": [
+        "evidence_traceability",
+        "dependency_and_system_awareness",
+        "low_confidence_and_escalation",
+        "supported_request_resolution"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-10",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "evidence_traceability",
+        "supported_request_resolution",
+        "stakeholder_communication",
+        "traceability_and_release_dependency_handling"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-11",
+      "ability_ids": [
+        "boundary_control",
+        "source_selection_and_refresh",
+        "low_confidence_and_escalation",
+        "adjacent_lane_routing",
+        "unsupported_exception_escalation",
+        "supplier_quality_and_release_escalation"
+      ],
+      "status": "covered"
+    },
+    {
+      "scenario_id": "coes-12",
+      "ability_ids": [
+        "source_selection_and_refresh",
+        "dependency_and_system_awareness",
+        "supported_request_resolution",
+        "stakeholder_communication"
+      ],
+      "status": "covered"
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "agent_slug": "aviation-analytics-specialist",
+  "industry_profile": "transportation-and-logistics",
+  "last_reviewed_at": "2026-04-13",
+  "authoritative_sources": [
+    {
+      "source_id": "ecfr-14-part-234",
+      "title": "14 CFR Part 234, Airline Service Quality Performance Reports",
+      "publisher": "U.S. Department of Transportation",
+      "url": "https://www.ecfr.gov/current/title-14/chapter-II/subchapter-A/part-234",
+      "source_class": "Transportation, customs, or safety regulator guidance",
+      "authority_rationale": "Primary regulatory baseline for airline service-quality metric definitions, required reporting, and consumer disclosure constraints.",
+      "workflow_stage": "metric definition, report assembly, disclosure review",
+      "used_for": [
+        "on-time, late, cancelled, diverted, reportable flight, and reporting-carrier definitions",
+        "disclosure and publication boundaries",
+        "unsupported public-service-quality claim refusal"
+      ],
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "dot-air-travel-consumer-reports",
+      "title": "Air Travel Consumer Reports",
+      "publisher": "U.S. Department of Transportation, Office of Aviation Consumer Protection",
+      "url": "https://www.transportation.gov/individuals/aviation-consumer-protection/air-travel-consumer-reports",
+      "source_class": "Transportation, customs, or safety regulator guidance",
+      "authority_rationale": "Official DOT monthly publication describing aviation service-quality reporting sections, source data, cadence, and consumer-facing interpretation.",
+      "workflow_stage": "report assembly, narrative synthesis, disclosure review",
+      "used_for": [
+        "service-quality reporting cadence and source ownership",
+        "mishandled baggage, oversales, complaints, and customer-service reporting context",
+        "public disclosure caveats"
+      ],
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "bts-transtats-on-time",
+      "title": "BTS TranStats Airline On-Time Performance Data",
+      "publisher": "U.S. Department of Transportation, Bureau of Transportation Statistics",
+      "url": "https://www.transtats.bts.gov/ot_delay/OT_DelayCause1.asp",
+      "source_class": "Transportation, customs, or safety regulator guidance",
+      "authority_rationale": "Official public statistical source for airline on-time performance and delay-cause analytics used to ground metric logic and benchmark claims.",
+      "workflow_stage": "source collection, metric calculation, benchmark review",
+      "used_for": [
+        "public on-time and delay-cause data source hierarchy",
+        "benchmark caveats and denominator discipline",
+        "cross-system reconciliation against tenant operational data"
+      ],
+      "refresh_interval_days": 30,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "faa-performance-databases",
+      "title": "FAA Performance Databases",
+      "publisher": "Federal Aviation Administration",
+      "url": "https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/perf_data",
+      "source_class": "Equipment, route, or service-level operating standards",
+      "authority_rationale": "Official FAA source for NAS performance data used to contextualize airport, route, delay, throughput, and service-level analytics.",
+      "workflow_stage": "source collection, route and service-level analysis, disruption review",
+      "used_for": [
+        "NAS performance context",
+        "airport and route operational metric caveats",
+        "route disruption and service-level impact analysis"
+      ],
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "faa-swim",
+      "title": "System Wide Information Management (SWIM)",
+      "publisher": "Federal Aviation Administration",
+      "url": "https://www.faa.gov/air_traffic/technology/swim",
+      "source_class": "Chain-of-custody, dispatch, or movement workflow references",
+      "authority_rationale": "Official FAA reference for NAS data exchange and movement-status signals that support operational analytics while preserving ATC and dispatch boundaries.",
+      "workflow_stage": "source collection, movement status validation, route disruption analysis",
+      "used_for": [
+        "movement-status signal expectations",
+        "freshness and source lineage for NAS operational data",
+        "boundary between analysis and air traffic or dispatch authority"
+      ],
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "ecfr-14-part-121",
+      "title": "14 CFR Part 121, Operating Requirements: Domestic, Flag, and Supplemental Operations",
+      "publisher": "Federal Aviation Administration",
+      "url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-G/part-121",
+      "source_class": "Transportation, customs, or safety regulator guidance",
+      "authority_rationale": "Primary FAA operating-rule baseline for air-carrier dispatch, operational control, maintenance, and safety boundaries that analytics must not override.",
+      "workflow_stage": "decision boundary, disruption review, safety escalation",
+      "used_for": [
+        "dispatch and operational-control boundary",
+        "maintenance and safety escalation triggers",
+        "refusal of flight-release or safety-signoff requests"
+      ],
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "ecfr-19-part-122",
+      "title": "19 CFR Part 122, Air Commerce Regulations",
+      "publisher": "U.S. Customs and Border Protection",
+      "url": "https://www.ecfr.gov/current/title-19/chapter-I/part-122",
+      "source_class": "Transportation, customs, or safety regulator guidance",
+      "authority_rationale": "Primary customs baseline for air cargo manifest, advance cargo information, ACAS, clearance, and documentation gates affecting compliant air movement.",
+      "workflow_stage": "cargo source validation, movement documentation, customs escalation",
+      "used_for": [
+        "air cargo manifest and advance information requirements",
+        "customs documentation gate awareness",
+        "refusal of customs-clearance authority"
+      ],
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "ecfr-49-part-1548",
+      "title": "49 CFR Part 1548, Indirect Air Carrier Security",
+      "publisher": "Transportation Security Administration",
+      "url": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-XII/subchapter-C/part-1548",
+      "source_class": "Chain-of-custody, dispatch, or movement workflow references",
+      "authority_rationale": "Primary TSA security baseline for indirect air carrier cargo acceptance, screening, security program, and custody boundaries that affect cargo analytics.",
+      "workflow_stage": "cargo handoff validation, custody exception handling, security escalation",
+      "used_for": [
+        "cargo screening and security-program boundary",
+        "chain-of-custody and handoff failure modes",
+        "refusal of screening or security clearance claims"
+      ],
+      "refresh_interval_days": 90,
+      "decay_policy": "review_required_after_interval"
+    },
+    {
+      "source_id": "iata-ground-ops-standards",
+      "title": "IATA Ground Operations Standards",
+      "publisher": "International Air Transport Association",
+      "url": "https://www.iata.org/en/programs/ops-infra/ground-operations/ground-ops-standards/",
+      "source_class": "Equipment, route, or service-level operating standards",
+      "authority_rationale": "Recognized industry operating-standard source for ground handling, passenger, cargo, mail, load control, GSE, and turnaround terminology.",
+      "workflow_stage": "terminology normalization, source validation, report assembly",
+      "used_for": [
+        "ground handling and turnaround artifact vocabulary",
+        "load control, GSE, passenger, baggage, cargo, and mail workflow terminology",
+        "industry-specific metric and evidence expectations"
+      ],
+      "refresh_interval_days": 180,
+      "decay_policy": "review_required_after_interval"
+    }
+  ],
+  "workflow_stages": [
+    {
+      "name": "source collection and validation",
+      "description": "Collect OOOI, ACARS, DCS, AODB, dispatch, SWIM, FAA, BTS, baggage, cargo, WMS/TMS, customs, screening, maintenance status, and service logs; validate refresh timestamp, event grain, source owner, and lineage.",
+      "source_classes": [
+        "Transportation, customs, or safety regulator guidance",
+        "Chain-of-custody, dispatch, or movement workflow references",
+        "Equipment, route, or service-level operating standards"
+      ]
+    },
+    {
+      "name": "metric calculation or report assembly",
+      "description": "Define D0, D15, A14, completion factor, cancellation, diversion, turn time, delay cause, baggage, cargo, custody, and service-level metrics with explicit denominators, event anchors, scope, and refresh assumptions.",
+      "source_classes": [
+        "Transportation, customs, or safety regulator guidance",
+        "Equipment, route, or service-level operating standards"
+      ]
+    },
+    {
+      "name": "narrative synthesis or disclosure review",
+      "description": "Translate metric results into audience-ready analysis with caveats, confidence notes, source lineage, and refusal of unsupported causal, benchmark, service-quality, or public-disclosure claims.",
+      "source_classes": [
+        "Transportation, customs, or safety regulator guidance"
+      ]
+    },
+    {
+      "name": "escalation for stale, conflicting, or incomplete data",
+      "description": "Block or escalate when AODB, DCS, ACARS/OOOI, dispatch, BTS, SWIM, cargo, customs, screening, or maintenance records are stale, missing, contradictory, or materially incomplete.",
+      "source_classes": [
+        "Transportation, customs, or safety regulator guidance",
+        "Chain-of-custody, dispatch, or movement workflow references"
+      ]
+    },
+    {
+      "name": "movement or handoff coordination with chain-of-custody awareness",
+      "description": "Analyze movement and handoff signals such as AWB, ULD scan, manifest, screening status, customs document, WMS/TMS, service-level, and station handoff records without taking custody, dispatch, or clearance authority.",
+      "source_classes": [
+        "Chain-of-custody, dispatch, or movement workflow references",
+        "Transportation, customs, or safety regulator guidance"
+      ]
+    },
+    {
+      "name": "schedule disruption, safety, and documentation-gap escalation",
+      "description": "Escalate when reroute, diversion, NOTAM, equipment, maintenance, cargo screening, customs, or dispatch-release dependencies threaten compliant or safety-critical movement.",
+      "source_classes": [
+        "Transportation, customs, or safety regulator guidance",
+        "Equipment, route, or service-level operating standards"
+      ]
+    }
+  ],
+  "artifacts": [
+    "OOOI timestamp record",
+    "ACARS movement record",
+    "DCS departure and passenger records",
+    "AODB stand, gate, and airport movement records",
+    "FIDS and schedule records",
+    "dispatch release, delay code, route, and flight-following records",
+    "BTS on-time, delay, cancellation, diversion, baggage, and service-quality records",
+    "FAA NAS, SWIM, airport, and route performance data",
+    "air waybill, house air waybill, master air waybill, ULD scan, load, and cargo manifest records",
+    "ACAS, customs, screening, and compliance documents",
+    "WMS, TMS, telematics, chain-of-custody, and handoff records",
+    "equipment, maintenance status, MEL/CDL indicator, GSE, and service logs",
+    "tenant metric dictionary, source-precedence policy, service-level commitments, cadence, and signoff thresholds"
+  ],
+  "systems_of_record": [
+    "DCS",
+    "ACARS/OOOI",
+    "AODB",
+    "FIDS",
+    "dispatch and flight-following system",
+    "schedule and slot management system",
+    "FAA SWIM and FAA performance data sources",
+    "BTS TranStats and DOT Air Travel Consumer Report sources",
+    "TMS",
+    "WMS",
+    "cargo booking and air waybill system",
+    "customs documentation system",
+    "cargo screening/security system",
+    "telematics or ULD tracking system",
+    "fleet and maintenance system",
+    "customer operations and service-quality reporting system",
+    "document repository and approval workflow"
+  ],
+  "decision_boundaries": {
+    "allowed": [
+      "Classify requests as in-scope, out-of-scope, or blocked on missing prerequisites.",
+      "Choose the source hierarchy, metric definitions, denominators, event anchors, refresh assumptions, and caveat posture for an aviation analysis.",
+      "Prepare evidence-backed metric summaries, analytical briefs, report packages, reconciliation notes, disclosure-risk notes, and data-quality escalations.",
+      "Flag source, denominator, custody, documentation, schedule, safety, or disclosure risk that prevents confident reporting.",
+      "Package movement and handoff evidence for downstream operators without authorizing movement."
+    ],
+    "escalate": [
+      "Stale, incomplete, inaccessible, or conflicting DCS, ACARS/OOOI, AODB, dispatch, SWIM, BTS, cargo, customs, screening, maintenance, or service records materially change the answer.",
+      "Movement, custody, documentation, screening, customs, route, dispatch, equipment, or safety status cannot be established from authoritative records.",
+      "Schedule disruption, reroute, diversion, NOTAM, maintenance status, or documentation gap threatens compliant or safety-critical movement.",
+      "Tenant policy and public source interpretation conflict or jurisdiction materially changes the workflow.",
+      "Publication requires customer-facing, regulator-facing, legal, financial, policy, or safety signoff."
+    ],
+    "refuse": [
+      "Refuse flight release, dispatch instructions, route clearance, cargo release, customs clearance, cargo security screening approval, maintenance return-to-service, or safety certification.",
+      "Refuse unsupported causal, forecast, benchmark, service-quality, disclosure, or policy claims.",
+      "Refuse to hide denominator ambiguity, stale data, unresolved cross-system conflicts, or custody breaks."
+    ]
+  },
+  "domain_failure_modes": [
+    "Published on-time, delay, cancellation, or completion metric uses a different denominator or event anchor than the named reporting source.",
+    "ACARS/OOOI, DCS, AODB, dispatch, BTS, or SWIM records disagree and the analysis collapses them into one unsupported truth.",
+    "Cargo AWB, ULD, screening, manifest, WMS/TMS, or customs records break chain-of-custody but reporting claims movement success.",
+    "Reroute, diversion, schedule disruption, or airport constraint changes customs, screening, service-level, or safety posture without escalation.",
+    "Analytics output implies dispatch, customs, cargo security, ATC, maintenance, or safety approval authority.",
+    "Stakeholder asks for public disclosure, causal explanation, benchmark, or stronger conclusion that the evidence does not support.",
+    "Tenant-specific metric definition silently replaces DOT/BTS, FAA, or contractual baseline without assumption tracking.",
+    "Missing jurisdiction, service model, route, asset, destination, customer commitment, documentation status, or retrieval hook makes the analysis non-comparable."
+  ],
+  "scenario_family_coverage": [
+    {
+      "scenario_family": "Chain-of-custody or documentation break",
+      "covered": true,
+      "scenario_ids": [
+        "aas-07",
+        "aas-08",
+        "aas-09"
+      ]
+    },
+    {
+      "scenario_family": "Route or schedule disruption with compliance impact",
+      "covered": true,
+      "scenario_ids": [
+        "aas-08",
+        "aas-10"
+      ]
+    },
+    {
+      "scenario_family": "Request that implies customs, dispatch, or safety authority",
+      "covered": true,
+      "scenario_ids": [
+        "aas-09",
+        "aas-10"
+      ]
+    },
+    {
+      "scenario_family": "Metric definition is ambiguous or disputed",
+      "covered": true,
+      "scenario_ids": [
+        "aas-02",
+        "aas-12"
+      ]
+    },
+    {
+      "scenario_family": "Source data is incomplete, stale, or conflicting",
+      "covered": true,
+      "scenario_ids": [
+        "aas-03",
+        "aas-04",
+        "aas-07"
+      ]
+    },
+    {
+      "scenario_family": "Stakeholder asks for a claim or disclosure not supported by the data",
+      "covered": true,
+      "scenario_ids": [
+        "aas-05",
+        "aas-06"
+      ]
+    },
+    {
+      "scenario_family": "Different systems disagree on the metric outcome",
+      "covered": true,
+      "scenario_ids": [
+        "aas-04",
+        "aas-07"
+      ]
+    },
+    {
+      "scenario_family": "A stakeholder asks for stronger conclusions than the data supports",
+      "covered": true,
+      "scenario_ids": [
+        "aas-05",
+        "aas-06",
+        "aas-12"
+      ]
+    }
+  ],
+  "unresolved_ambiguities": [
+    {
+      "topic": "non-U.S. jurisdictional metric and clearance rules",
+      "status": "tenant_context_required",
+      "blocking": false,
+      "notes": "The public baseline uses U.S. DOT, FAA, CBP, and TSA sources. Non-U.S. operating jurisdictions must provide local authority sources and tenant source precedence at runtime before publication."
+    },
+    {
+      "topic": "tenant-specific D0, D15, A14, and controllable-delay definitions",
+      "status": "tenant_context_required",
+      "blocking": false,
+      "notes": "Tenant-specific metric definitions may be used only when recorded as adaptations and compared against preserved public or contractual baselines."
+    }
+  ],
+  "notes": [
+    "No blocking unresolved ambiguity remains for a validated U.S.-baseline specification-based package.",
+    "Research constrains the pack to analytics, reporting, and disclosure-safe outputs and explicitly excludes dispatch, customs, cargo security, maintenance, ATC, legal, and safety approval authority."
+  ]
+}
