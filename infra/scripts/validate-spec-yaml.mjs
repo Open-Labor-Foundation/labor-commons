@@ -65,6 +65,22 @@ function validateSpecYaml(filePath) {
     }
   }
 
+  // knowledge_baseline is required, non-empty, and backed by real research --
+  // this is universal across the existing catalog (651/651 have a populated
+  // knowledge_baseline; 650/651 specifically use authority_sources). A
+  // specialist with no research baseline at all is exactly the generic,
+  // ungrounded output this check exists to catch.
+  const knowledgeBaseline = root?.get?.("knowledge_baseline");
+  const knowledgeBaselineKeys = knowledgeBaseline?.items ?? [];
+  if (!Array.isArray(knowledgeBaselineKeys) || knowledgeBaselineKeys.length === 0) {
+    issues.push("knowledge_baseline is required and must not be empty -- specialists must be grounded in real research, not generic assumptions");
+  } else {
+    const authoritySources = knowledgeBaseline?.get?.("authority_sources");
+    if (authoritySources !== undefined && !readNonEmptyArray(knowledgeBaseline, "authority_sources")) {
+      issues.push("knowledge_baseline.authority_sources is present but empty -- cite real, named authoritative sources or omit the key entirely");
+    }
+  }
+
   return issues;
 }
 
