@@ -26,7 +26,57 @@ function readNonEmptyArray(record, key) {
   return Array.isArray(items) && items.length > 0 ? items : null;
 }
 
-function validateSpecYaml(filePath) {
+const URL_CHECK_TIMEOUT_MS = 8000;
+const URL_CHECK_CONCURRENCY = 5;
+
+// The coder has no live web-search tool -- it can only curl a URL it already
+// recalls from training data, so a hallucinated citation is a structural risk
+// regardless of model. This is the one check in this script that catches that
+// directly instead of hoping the content looks plausible: actually request
+// each cited URL and confirm it resolves. Observed live during the labor-commons
+// remediation session: a generated spec.yaml cited a real-looking SEC page and
+// a real-looking FINRA rule number that both returned 404.
+async function checkUrlReachable(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), URL_CHECK_TIMEOUT_MS);
+  try {
+    let response = await fetch(url, {
+      method: "HEAD",
+      redirect: "follow",
+      signal: controller.signal,
+      headers: { "user-agent": "Mozilla/5.0 (compatible; labor-commons-spec-validator/1.0)" }
+    });
+    if (response.status === 405 || response.status === 403) {
+      // Some sites reject HEAD outright; retry with GET before concluding failure.
+      response = await fetch(url, {
+        method: "GET",
+        redirect: "follow",
+        signal: controller.signal,
+        headers: { "user-agent": "Mozilla/5.0 (compatible; labor-commons-spec-validator/1.0)" }
+      });
+    }
+    return { ok: response.status >= 200 && response.status < 400, status: response.status };
+  } catch (error) {
+    return { ok: false, status: null, error: error.message };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function checkUrlsInBatches(urls) {
+  const results = new Map();
+  const queue = [...urls];
+  async function worker() {
+    while (queue.length > 0) {
+      const url = queue.shift();
+      results.set(url, await checkUrlReachable(url));
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(URL_CHECK_CONCURRENCY, urls.length) }, worker));
+  return results;
+}
+
+async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
   const issues = [];
   const source = fs.readFileSync(filePath, "utf8");
   const document = parseDocument(source);
@@ -76,31 +126,49 @@ function validateSpecYaml(filePath) {
     issues.push("knowledge_baseline is required and must not be empty -- specialists must be grounded in real research, not generic assumptions");
   } else {
     const authoritySources = knowledgeBaseline?.get?.("authority_sources");
-    if (authoritySources !== undefined && !readNonEmptyArray(knowledgeBaseline, "authority_sources")) {
-      issues.push("knowledge_baseline.authority_sources is present but empty -- cite real, named authoritative sources or omit the key entirely");
+    if (authoritySources !== undefined) {
+      const sourceEntries = readNonEmptyArray(knowledgeBaseline, "authority_sources");
+      if (!sourceEntries) {
+        issues.push("knowledge_baseline.authority_sources is present but empty -- cite real, named authoritative sources or omit the key entirely");
+      } else if (checkUrls) {
+        const urls = sourceEntries
+          .map((entry) => entry?.get?.("location"))
+          .filter((url) => typeof url === "string" && /^https?:\/\//.test(url));
+        const results = await checkUrlsInBatches(urls);
+        for (const [url, result] of results) {
+          if (!result.ok) {
+            const detail = result.error ? result.error : `HTTP ${result.status}`;
+            issues.push(`knowledge_baseline.authority_sources cites an unreachable URL (${detail}): ${url}`);
+          }
+        }
+      }
     }
   }
 
   return issues;
 }
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
-  const files = args.length > 0
-    ? args.filter((file) => file.endsWith("spec.yaml"))
+  const skipUrlCheck = args.includes("--no-url-check");
+  const files = args
+    .filter((arg) => arg !== "--no-url-check")
+    .filter((file) => file.endsWith("spec.yaml"));
+  const targets = files.length > 0
+    ? files
     : findAllSpecYamlFiles(path.join(process.cwd(), "catalog", "naics-overlays"));
 
-  if (files.length === 0) {
+  if (targets.length === 0) {
     console.log("No spec.yaml files to validate.");
     return;
   }
 
   let failures = 0;
-  for (const file of files) {
+  for (const file of targets) {
     if (!fs.existsSync(file)) {
       continue;
     }
-    const issues = validateSpecYaml(file);
+    const issues = await validateSpecYaml(file, { checkUrls: !skipUrlCheck });
     if (issues.length > 0) {
       failures += 1;
       console.error(`FAIL ${file}`);
@@ -111,11 +179,11 @@ function main() {
   }
 
   if (failures > 0) {
-    console.error(`\n${failures} of ${files.length} spec.yaml file(s) failed validation.`);
+    console.error(`\n${failures} of ${targets.length} spec.yaml file(s) failed validation.`);
     process.exitCode = 1;
     return;
   }
-  console.log(`${files.length} spec.yaml file(s) passed validation.`);
+  console.log(`${targets.length} spec.yaml file(s) passed validation.`);
 }
 
 function findAllSpecYamlFiles(root) {
