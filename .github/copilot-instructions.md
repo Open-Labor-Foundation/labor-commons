@@ -13,6 +13,13 @@ read `spec.yaml`, at exactly that path.
 
 ## Required shape
 
+This lists the **minimum required** fields — it is **not** an exhaustive schema.
+Existing catalog specs also commonly include additional top-level sections such
+as `adjacent_specialties`, `domain_lexicon`, `common_artifacts`, `common_tools`,
+and `implementation`. Those extra sections are **valid and encouraged** when a
+rich sibling spec includes them; do not treat their presence as a schema
+violation, and do not remove them.
+
 ```yaml
 schema_version: '1.0'
 kind: agent_definition
