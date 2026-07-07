@@ -75,9 +75,10 @@ knowledge_baseline:
   record, artifacts, and decisions — followed by (2) an explicit, itemized list of what it refuses and hands off to
   adjacent owners. Before writing it, open one rich sibling `spec.yaml` in this section and match the length and concrete
   specificity of its `specialty_boundary`; a short boundary will be rejected as generic.
-- `adjacent_specialties` is **required** (present in 86% of the catalog) and must list **at least 3** neighbouring lanes
-  in this or related sections that this specialist coordinates with or hands off to, each with a one-line reason. Read the
-  sibling specialists in this section to name real adjacent lanes, not invented ones.
+- `adjacent_specialties` is **required** (present in 86% of the catalog): a top-level list of **at least 3** real
+  sibling specialist slugs (e.g. `- corporate-actions-specialist`) in this or a related section that this specialist
+  coordinates with or hands off to. Use the exact slugs of specialists that actually exist in the catalog — read the
+  sibling directories in this section to get real slugs, do not invent names.
 - Get today's actual date from the environment (e.g. run `date -u +%Y-%m-%d`) for every date field. Do not guess a date
   or reuse a date recalled from training data — a wrong `stale_after` that has already passed on the day the file is
   created is a real, previously-observed defect.
