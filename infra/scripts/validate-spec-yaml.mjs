@@ -55,7 +55,7 @@ async function checkUrlReachable(url) {
       signal: controller.signal,
       headers: { "user-agent": "Mozilla/5.0 (compatible; labor-commons-spec-validator/1.0)" }
     });
-    if (response.status === 405 || response.status === 403) {
+    if (response.status === 405 || response.status === 401 || response.status === 403) {
       // Some sites reject HEAD outright; retry with GET before concluding failure.
       response = await fetch(url, {
         method: "GET",
@@ -64,7 +64,15 @@ async function checkUrlReachable(url) {
         headers: { "user-agent": "Mozilla/5.0 (compatible; labor-commons-spec-validator/1.0)" }
       });
     }
-    return { ok: response.status >= 200 && response.status < 400, status: response.status };
+    // 401/403 mean the host recognized the request and forbade it -- common for
+    // authorities that blanket-block datacenter IPs/bots (FASB and SEC return 403
+    // for their entire site, root included). That is NOT the fabrication signal
+    // this check exists to catch: a made-up path returns 404. Treat auth-blocked
+    // as reachable so real citations to bot-blocking regulators aren't rejected;
+    // keep failing 404/410 and DNS/connection errors, which are the real tells.
+    const status = response.status;
+    const ok = (status >= 200 && status < 400) || status === 401 || status === 403;
+    return { ok, status };
   } catch (error) {
     return { ok: false, status: null, error: error.message };
   } finally {
