@@ -45,6 +45,9 @@ scope:
   - <artifact the specialist produces>
   out_of_scope_rules:
   - <optional>
+adjacent_specialties:
+- <slug of a real sibling specialist this lane hands off to or coordinates with>
+- <at least 3 real sibling slugs total>
 knowledge_baseline:
   source_baseline_version: 'YYYY-MM-DD'
   authority_sources:
