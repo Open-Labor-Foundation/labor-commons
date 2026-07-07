@@ -14,6 +14,15 @@ import { parseDocument } from "yaml";
 
 const REQUIRED_SCHEMA_VERSION = "1.0";
 const REQUIRED_KIND = "agent_definition";
+// Depth backstops. The catalog quality *target* (median specialty_boundary
+// ~1,300 chars, median 9 authority_sources) is driven by the delivery contract
+// in .github/copilot-instructions.md, which the model follows. These validator
+// floors are only a hard safety net against egregiously thin output: they sit
+// at roughly the catalog p5 so they reject the genuinely-deficient bottom few
+// percent WITHOUT false-rejecting the ~18% of existing accepted specs that sit
+// between p5 and the median.
+const MIN_BOUNDARY_CHARS = 500;
+const MIN_AUTHORITY_SOURCES = 6;
 
 function readNonEmptyString(record, key) {
   const value = record?.get?.(key);
@@ -99,8 +108,17 @@ async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
   }
 
   const metadata = root?.get?.("metadata");
-  if (!readNonEmptyString(metadata, "specialty_boundary")) {
+  const specialtyBoundary = readNonEmptyString(metadata, "specialty_boundary");
+  if (!specialtyBoundary) {
     issues.push("metadata.specialty_boundary is required and must be a non-empty string");
+  } else if (specialtyBoundary.trim().length < MIN_BOUNDARY_CHARS) {
+    // Catalog median is ~1,300 chars; a one/two-sentence boundary reads as
+    // generic. This floor (below the catalog p25 of 922) catches egregiously
+    // thin boundaries without false-rejecting reasonable ones.
+    issues.push(
+      `metadata.specialty_boundary is too thin (${specialtyBoundary.trim().length} chars; require >= ${MIN_BOUNDARY_CHARS}). ` +
+      "Describe what the lane owns (workflows, systems of record, decisions) AND, explicitly, what it refuses/hands off."
+    );
   }
 
   const purpose = root?.get?.("purpose");
@@ -130,15 +148,25 @@ async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
       const sourceEntries = readNonEmptyArray(knowledgeBaseline, "authority_sources");
       if (!sourceEntries) {
         issues.push("knowledge_baseline.authority_sources is present but empty -- cite real, named authoritative sources or omit the key entirely");
-      } else if (checkUrls) {
-        const urls = sourceEntries
-          .map((entry) => entry?.get?.("location"))
-          .filter((url) => typeof url === "string" && /^https?:\/\//.test(url));
-        const results = await checkUrlsInBatches(urls);
-        for (const [url, result] of results) {
-          if (!result.ok) {
-            const detail = result.error ? result.error : `HTTP ${result.status}`;
-            issues.push(`knowledge_baseline.authority_sources cites an unreachable URL (${detail}): ${url}`);
+      } else {
+        if (sourceEntries.length < MIN_AUTHORITY_SOURCES) {
+          // Catalog median is 9, p25 is 8. Too few cited sources is a hallmark
+          // of thin, ungrounded generation.
+          issues.push(
+            `knowledge_baseline.authority_sources has only ${sourceEntries.length} source(s); require >= ${MIN_AUTHORITY_SOURCES} ` +
+            "real, topically-authoritative sources for this lane (catalog median is 9)."
+          );
+        }
+        if (checkUrls) {
+          const urls = sourceEntries
+            .map((entry) => entry?.get?.("location"))
+            .filter((url) => typeof url === "string" && /^https?:\/\//.test(url));
+          const results = await checkUrlsInBatches(urls);
+          for (const [url, result] of results) {
+            if (!result.ok) {
+              const detail = result.error ? result.error : `HTTP ${result.status}`;
+              issues.push(`knowledge_baseline.authority_sources cites an unreachable URL (${detail}): ${url}`);
+            }
           }
         }
       }

@@ -65,10 +65,18 @@ knowledge_baseline:
 - `metadata.specialty_boundary` is required and must live under `metadata`, not `scope`.
 - `purpose.summary` is required.
 - `scope.supported_tasks`, `scope.common_inputs`, and `scope.expected_outputs` are each required and must be non-empty lists.
-- `knowledge_baseline.authority_sources` is required and must be a non-empty list of **real, specifically-authoritative**
-  sources for this exact lane — e.g. named SEC/FINRA/CFTC rules, DTCC/NACHA/ISO operating standards, or an equivalent
-  named regulator/standards-body citation for the domain. Generic definitional or career-explainer sites (Investopedia,
-  Payscale, Wikipedia, glossary pages) are never sufficient on their own and do not count toward this requirement.
+- `knowledge_baseline.authority_sources` is required and must be a list of **at least 8** (catalog median is 9)
+  **real, specifically-authoritative** sources for this exact lane — e.g. named SEC/FINRA/CFTC rules,
+  DTCC/NACHA/ISO operating standards, or an equivalent named regulator/standards-body citation for the domain. Generic
+  definitional or career-explainer sites (Investopedia, Payscale, Wikipedia, glossary pages) are never sufficient on
+  their own and do not count toward this requirement.
+- `metadata.specialty_boundary` must be a **substantial paragraph** matching the depth of existing entries (the catalog
+  median is ~1,300 characters). It must concretely describe both what this lane owns — the specific workflows, systems of
+  record, artifacts, and decisions — and, as an explicit list, what it refuses / hands off to adjacent owners. A one- or
+  two-sentence boundary is below the bar and will read as generic.
+- Include an `adjacent_specialties` section (present in 86% of the catalog): a short list of the neighbouring lanes in
+  this and related sections that this specialist coordinates with or hands off to, each with a one-line reason. Read the
+  sibling specialists in this section to name real adjacent lanes, not invented ones.
 - Get today's actual date from the environment (e.g. run `date -u +%Y-%m-%d`) for every date field. Do not guess a date
   or reuse a date recalled from training data — a wrong `stale_after` that has already passed on the day the file is
   created is a real, previously-observed defect.
