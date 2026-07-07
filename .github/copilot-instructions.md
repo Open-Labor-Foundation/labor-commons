@@ -70,12 +70,13 @@ knowledge_baseline:
   DTCC/NACHA/ISO operating standards, or an equivalent named regulator/standards-body citation for the domain. Generic
   definitional or career-explainer sites (Investopedia, Payscale, Wikipedia, glossary pages) are never sufficient on
   their own and do not count toward this requirement.
-- `metadata.specialty_boundary` must be a **substantial paragraph** matching the depth of existing entries (the catalog
-  median is ~1,300 characters). It must concretely describe both what this lane owns — the specific workflows, systems of
-  record, artifacts, and decisions — and, as an explicit list, what it refuses / hands off to adjacent owners. A one- or
-  two-sentence boundary is below the bar and will read as generic.
-- Include an `adjacent_specialties` section (present in 86% of the catalog): a short list of the neighbouring lanes in
-  this and related sections that this specialist coordinates with or hands off to, each with a one-line reason. Read the
+- `metadata.specialty_boundary` must be **at least 900 characters** (the catalog median is ~1,300; do not stop at one or
+  two sentences). Structure it as: (1) a detailed statement of what this lane owns — the specific workflows, systems of
+  record, artifacts, and decisions — followed by (2) an explicit, itemized list of what it refuses and hands off to
+  adjacent owners. Before writing it, open one rich sibling `spec.yaml` in this section and match the length and concrete
+  specificity of its `specialty_boundary`; a short boundary will be rejected as generic.
+- `adjacent_specialties` is **required** (present in 86% of the catalog) and must list **at least 3** neighbouring lanes
+  in this or related sections that this specialist coordinates with or hands off to, each with a one-line reason. Read the
   sibling specialists in this section to name real adjacent lanes, not invented ones.
 - Get today's actual date from the environment (e.g. run `date -u +%Y-%m-%d`) for every date field. Do not guess a date
   or reuse a date recalled from training data — a wrong `stale_after` that has already passed on the day the file is
