@@ -79,7 +79,8 @@ knowledge_baseline:
   **real, specifically-authoritative** sources for this exact lane — e.g. named SEC/FINRA/CFTC rules,
   DTCC/NACHA/ISO operating standards, or an equivalent named regulator/standards-body citation for the domain. Generic
   definitional or career-explainer sites (Investopedia, Payscale, Wikipedia, glossary pages) are never sufficient on
-  their own and do not count toward this requirement.
+  their own and do not count toward this requirement. Each source's URL MUST be under the key `location:` (never `url:`) —
+  that is the only field commons-board and commons-crew read, and the validator's reachability check only sees `location:`.
 - `metadata.specialty_boundary` must be **at least 900 characters** (the catalog median is ~1,300; do not stop at one or
   two sentences). Structure it as: (1) a detailed statement of what this lane owns — the specific workflows, systems of
   record, artifacts, and decisions — followed by (2) an explicit, itemized list of what it refuses and hands off to

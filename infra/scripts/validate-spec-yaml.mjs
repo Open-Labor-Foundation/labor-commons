@@ -157,6 +157,24 @@ async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
             "real, topically-authoritative sources for this lane (catalog median is 9)."
           );
         }
+        // Catch the `url:`-instead-of-`location:` drift specifically. The catalog
+        // standard is `location:` (6375 uses vs 0 of `url`); the reachability
+        // check below only reads `location`, so a source that carries its URL
+        // under `url` both breaks the commons-board/commons-crew consumers and
+        // silently false-passes reachability. Flag any source that has an http
+        // `url` value but no http `location`. (Sources may legitimately carry a
+        // non-URL `location`, e.g. an internal package-baseline path, so we do
+        // NOT require every location to be a URL -- only that a real URL, when
+        // present, lives under `location`.)
+        sourceEntries.forEach((entry, index) => {
+          const location = entry?.get?.("location");
+          const url = entry?.get?.("url");
+          const locationIsHttp = typeof location === "string" && /^https?:\/\//.test(location);
+          const urlIsHttp = typeof url === "string" && /^https?:\/\//.test(url);
+          if (urlIsHttp && !locationIsHttp) {
+            issues.push(`knowledge_baseline.authority_sources[${index}] puts its URL under \`url:\` -- the catalog field is \`location:\` (commons-board/commons-crew read \`location\`, and the reachability check only sees \`location\`).`);
+          }
+        });
         if (checkUrls) {
           const urls = sourceEntries
             .map((entry) => entry?.get?.("location"))
