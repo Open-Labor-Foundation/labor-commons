@@ -2,7 +2,7 @@
 
 Every specialist in this catalog is a single self-contained file:
 
-```
+```text
 catalog/naics-overlays/{section_slug}/{agent_slug}/spec.yaml
 ```
 
