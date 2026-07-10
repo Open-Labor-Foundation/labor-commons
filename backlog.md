@@ -86,7 +86,7 @@ completed) jkm-agents issues.
 ### Current state (as of 2026-07-10)
 
 | Metric | Count |
-|--------|-------|
+| -------- | ------- |
 | Pre-OLF jkm-agents total issues | 1,139 |
 | Pre-OLF jkm-agents closed issues | 570 |
 | Pre-OLF jkm-agents open issues | 567 |
@@ -115,7 +115,7 @@ spec-pack issues in the OLF `labor-commons` repo using the corrected template.
 ### Missing specs by section (top 20)
 
 | Section | Missing |
-|---------|---------|
+| --------- | --------- |
 | professional-services | 16 |
 | manufacturing | 14 |
 | retail-and-e-commerce | 14 |
