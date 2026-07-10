@@ -219,7 +219,6 @@ export function buildSemanticRequirements(row) {
 export function buildBody(row, semantic = buildSemanticRequirements(row)) {
   const queueSlug = `industry-overlays::${row.industry_slug}::${row.agent_slug}`;
   const packageSectionSlug = row.package_section_slug || row.industry_slug;
-  const agentPath = `catalog/naics-overlays/${packageSectionSlug}/${row.agent_slug}/`;
   const domainResearchPack =
     researchContract.domain_research_packs?.[semantic.domainProfile.id] ??
     researchContract.domain_research_packs?.['cross-industry'] ??
@@ -327,32 +326,14 @@ ${renderBulletList(semantic.requiredOutputs)}
 ## Required Boundary And Refusal Rules
 ${renderBulletList(semantic.boundaryRules)}
 
-## Functional Ability Contract
-Create \`evaluation/functionality-map.json\` for this package.
-
-It must:
-- declare all shared abilities, all abilities for the resolved workflow phase group, and all abilities for the resolved industry profile
-- map every required ability to one or more scenario IDs
-- define required inputs, required outputs, and refusal triggers for each ability
-- ensure every scenario in \`evaluation/results.json\` is represented in scenario coverage
-- mark functionality coverage as complete in both \`evaluation/results.json\` and \`readiness/evidence.json\`
-
-## Research Output Contract
-Create \`evaluation/research-summary.json\` for this package.
-
-It must:
-- record the research contract version, resolved workflow phase group, resolved industry profile, and definition tier
-- list authoritative sources with source class, authority rationale, workflow-stage usage, and practical use in the pack
-- define workflow stages, artifacts, systems of record, decision boundaries, and domain failure modes
-- map every required domain scenario family to one or more scenario IDs
-- record unresolved ambiguity instead of guessing
-- leave no blocking unresolved ambiguity for a market-ready package
-
 ## Requested Change
-Create the complete NAICS-derived industry-overlay spec pack for this
-specialty. The package should reach market-ready quality every time
-autonomous-engine processes it, while still allowing the runtime strategy to remain \`spec_only\`
-until a trusted built package is explicitly promoted.
+Create the complete NAICS-derived industry-overlay spec.yaml for this
+specialty at \`catalog/naics-overlays/${packageSectionSlug}/${row.agent_slug}/spec.yaml\`.
+
+The spec.yaml must be a single self-contained file following the delivery contract
+in \`.github/copilot-instructions.md\`. Do not create \`manifest.yaml\`, \`evaluation/\`,
+\`readiness/\`, \`deployment/\`, or \`marketing/\` — those belong to an older format
+this repo does not use.
 
 Use the queue summary as a starting point for the lane:
 - baseline role summary: ${row.what_it_does}
@@ -370,7 +351,7 @@ ${renderBulletList([
   ...semantic.sharedSourceRules,
 ])}
 
-Each source included in the manifest must state publisher, authority rationale, refresh interval, decay policy, and review date.
+Each authority source in spec.yaml must state publisher, authority rationale, refresh interval, decay policy, and review date under the \`location:\` key (never \`url:\`).
 
 ## Evaluation And Accuracy Expectations
 Define scenarios spanning:
@@ -395,37 +376,22 @@ The queue-level must-pass scenario families for this lane are:
 ${renderBulletList(parseListField(row.must_pass_scenario_families))}
 
 ## Materialization Expectations
-Document what the commons-crew PA would need to materialize this lane safely:
-- required task and boundary metadata
-- assumptions that must be tenant-supplied or retrieved at runtime
-- regulated-lane caveats
-- conditions that require refusal or orchestrator return
-
-## Deployment And Market Expectations
-This issue targets \`${row.delivery_target}\`.
-
-The package must include:
-- deployment and rollback notes suitable for a market-ready package
-- commercialization positioning and packaging notes
-- clear explanation that runtime may still use \`spec_only\` until a trusted
-  build is committed separately
-- explicit statement of how this overlay should be promoted to a trusted built
-  package if usage proves common enough
+Document in spec.yaml what the commons-crew PA would need to materialize this lane safely:
+- required task and boundary metadata (in \`metadata\` and \`purpose\`)
+- assumptions that must be tenant-supplied or retrieved at runtime (in \`scope\`)
+- regulated-lane caveats (in \`scope.out_of_scope_rules\`)
+- conditions that require refusal or orchestrator return (in \`scope.orchestrator_return_rules\`)
 
 ## Acceptance Criteria
-- spec-pack package exists at \`${agentPath}\`
-- manifest is complete for this overlay lane
-- authority sources are documented
-- evaluation scenarios are present
-- research summary is present and satisfies the domain research pack
-- functionality map is present and complete
-- evaluation results are present
-- structured readiness evidence is present and internally consistent
-- deployment notes are present
-- commercialization notes are present
-- runtime strategy and delivery target are recorded
-- the package does not claim a trusted built runtime unless one is committed separately
-- package passes repository validation appropriate to a market-ready spec-pack target
+- spec.yaml exists at \`catalog/naics-overlays/${packageSectionSlug}/${row.agent_slug}/spec.yaml\`
+- \`schema_version\` is \`'1.0'\` and \`kind\` is \`agent_definition\`
+- \`metadata.specialty_boundary\` is at least 900 characters and concretely specific to this industry
+- \`knowledge_baseline.authority_sources\` has at least 8 real, specifically-authoritative sources with \`location:\` URLs
+- \`adjacent_specialties\` lists at least 3 real sibling specialist slugs
+- \`scope.supported_tasks\`, \`scope.common_inputs\`, and \`scope.expected_outputs\` are non-empty
+- all date fields use the current date
+- spec.yaml passes \`infra/scripts/validate-spec-yaml.mjs\`
+- no \`manifest.yaml\`, \`evaluation/\`, \`readiness/\`, \`deployment/\`, or \`marketing/\` files are created
 
 ## Risks And Unknowns
 - boundary overlap with neighboring core specialists
