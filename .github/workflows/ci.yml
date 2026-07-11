@@ -28,3 +28,23 @@ jobs:
         run: npm install -g markdown-link-check
       - name: Check links
         run: find . -name "*.md" -not -path "./node_modules/*" | xargs markdown-link-check --config .mlc_config.json
+
+  spec-validate:
+    name: Spec YAML validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install yaml dependency
+        run: npm install yaml
+      - name: Validate changed spec.yaml files
+        run: |
+          files=$(git diff --name-only "origin/${{ github.base_ref || 'main' }}...HEAD" -- 'catalog/naics-overlays/**/spec.yaml')
+          if [ -n "$files" ]; then
+            node infra/scripts/validate-spec-yaml.mjs $files
+          else
+            echo "No spec.yaml files changed in this PR"
+          fi
