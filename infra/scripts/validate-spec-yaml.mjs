@@ -93,8 +93,39 @@ async function checkUrlsInBatches(urls) {
   return results;
 }
 
+// Collect all specialist slugs that exist in the catalog. Used to verify that
+// adjacent_specialties entries reference real sibling specialists, not
+// fabricated slugs. The catalog root is derived from the file path:
+// catalog/naics-overlays/{section}/{slug}/spec.yaml → catalog/naics-overlays
+function collectCatalogSlugs(filePath) {
+  const slugs = new Set();
+  const parts = filePath.split(path.sep);
+  const overlaysIndex = parts.lastIndexOf("naics-overlays");
+  if (overlaysIndex < 0 || overlaysIndex + 2 >= parts.length) {
+    return slugs;
+  }
+  const catalogRoot = parts.slice(0, overlaysIndex + 1).join(path.sep);
+  if (!fs.existsSync(catalogRoot)) {
+    return slugs;
+  }
+  for (const sectionSlug of fs.readdirSync(catalogRoot)) {
+    const sectionPath = path.join(catalogRoot, sectionSlug);
+    if (!fs.statSync(sectionPath).isDirectory()) {
+      continue;
+    }
+    for (const agentSlug of fs.readdirSync(sectionPath)) {
+      const specPath = path.join(sectionPath, agentSlug, "spec.yaml");
+      if (fs.existsSync(specPath)) {
+        slugs.add(agentSlug);
+      }
+    }
+  }
+  return slugs;
+}
+
 async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
   const issues = [];
+  const warnings = [];
   const source = fs.readFileSync(filePath, "utf8");
   const document = parseDocument(source);
 
@@ -199,7 +230,42 @@ async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
     }
   }
 
-  return issues;
+  // adjacent_specialties is required (present in 86% of the catalog): a
+  // top-level list of at least 3 real sibling specialist slugs. The coder
+  // has been observed inventing slugs that don't exist in the catalog (e.g.
+  // "safety-security-specialist" in accommodation-and-travel-services where
+  // no such specialist exists). The count check is a hard failure; the
+  // slug-existence check is a warning because the catalog is still being
+  // built (560 specs pending) and many referenced slugs will exist once
+  // those specs are generated.
+  const adjacentSpecialties = readNonEmptyArray(root, "adjacent_specialties");
+  if (!adjacentSpecialties) {
+    issues.push("adjacent_specialties is required and must be a non-empty list of at least 3 real sibling specialist slugs");
+  } else {
+    const MIN_ADJACENT = 3;
+    const adjacentSlugs = adjacentSpecialties.map((entry) => {
+      const value = entry?.valueOf?.() ?? entry;
+      return typeof value === "string" ? value : String(value ?? "");
+    }).filter((s) => s.length > 0);
+    if (adjacentSlugs.length < MIN_ADJACENT) {
+      issues.push(
+        `adjacent_specialties has only ${adjacentSlugs.length} entr${adjacentSlugs.length === 1 ? "y" : "ies"}; require >= ${MIN_ADJACENT} real sibling specialist slugs`
+      );
+    }
+    const catalogSlugs = collectCatalogSlugs(filePath);
+    if (catalogSlugs.size > 0) {
+      const selfSlug = readNonEmptyString(metadata, "slug");
+      for (const slug of adjacentSlugs) {
+        if (slug === selfSlug) {
+          issues.push(`adjacent_specialties references the specialist's own slug "${slug}" -- it must reference OTHER sibling specialists`);
+        } else if (!catalogSlugs.has(slug)) {
+          warnings.push(`adjacent_specialties references "${slug}" which does not exist in the catalog -- verify this is a real sibling slug (catalog is still being built)`);
+        }
+      }
+    }
+  }
+
+  return { issues, warnings };
 }
 
 async function main() {
@@ -218,18 +284,25 @@ async function main() {
   }
 
   let failures = 0;
+  let warningsCount = 0;
   for (const file of targets) {
     if (!fs.existsSync(file)) {
       continue;
     }
-    const issues = await validateSpecYaml(file, { checkUrls: !skipUrlCheck });
+    const { issues, warnings } = await validateSpecYaml(file, { checkUrls: !skipUrlCheck });
     if (issues.length > 0) {
       failures += 1;
       console.error(`FAIL ${file}`);
       for (const issue of issues) {
         console.error(`  - ${issue}`);
       }
+    } else if (warnings.length > 0) {
+      console.warn(`WARN ${file}`);
+      for (const warning of warnings) {
+        console.warn(`  - ${warning}`);
+      }
     }
+    warningsCount += warnings.length;
   }
 
   if (failures > 0) {
@@ -237,7 +310,11 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  console.log(`${targets.length} spec.yaml file(s) passed validation.`);
+  if (warningsCount > 0) {
+    console.log(`${targets.length} spec.yaml file(s) passed validation (${warningsCount} warning(s)).`);
+  } else {
+    console.log(`${targets.length} spec.yaml file(s) passed validation.`);
+  }
 }
 
 function findAllSpecYamlFiles(root) {
