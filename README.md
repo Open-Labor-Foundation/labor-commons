@@ -17,6 +17,16 @@ governed specialist agents rather than open-ended ones.
 > practitioners in the profession, not just AI inference against the NAICS
 > backlog — has no working mechanism yet; it's expected to arrive as
 > user-guided spec updates from commons-board and commons-crew.
+>
+> Separately, the catalog currently has only one axis: `naics-overlays`,
+> industry-vertical specialists. A second axis — generic corporate-function
+> specialists (`function-overlays`, one directory per function: finance, HR,
+> legal-and-compliance, marketing, and others) — is planned but not yet
+> migrated. A real, already-generated seed for it exists: 260 specialists
+> built for this stack's predecessor, sitting unmigrated in the `jkm-agents`
+> repo. This is why commons-board's chair-matching currently produces poor
+> results — the specialty type a chair actually needs isn't in the catalog
+> yet, regardless of how good the matching logic is.
 
 ## What a definition is
 
