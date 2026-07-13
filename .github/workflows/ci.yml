@@ -46,7 +46,7 @@ jobs:
         run: |
           BASE="${{ github.base_ref || 'main' }}"
           git fetch origin "$BASE"
-          files=$(git diff --name-only "origin/$BASE...HEAD" -- 'catalog/naics-overlays/**/spec.yaml')
+          files=$(git diff --name-only "origin/$BASE...HEAD" -- 'catalog/naics-overlays/**/spec.yaml' 'catalog/function-overlays/**/spec.yaml')
           if [ -n "$files" ]; then
             node infra/scripts/validate-spec-yaml.mjs $files
           else
