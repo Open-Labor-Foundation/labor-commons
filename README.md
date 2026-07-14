@@ -8,6 +8,26 @@ refuse, and a test suite proving it stays inside that boundary. Consumed by
 [commons-crew](https://github.com/Open-Labor-Foundation/commons-crew) to run
 governed specialist agents rather than open-ended ones.
 
+> **Known shortcomings:** see [open-labor-foundation/ARCHITECTURE.md](https://github.com/Open-Labor-Foundation/open-labor-foundation/blob/main/ARCHITECTURE.md)
+> for the full ecosystem picture. A portion of this catalog carries debt from
+> an early, token-constrained generation process (fabricated or drifted
+> content) — tracked for discard-and-rebuild in
+> [labor-commons-curator](https://github.com/Open-Labor-Foundation/labor-commons-curator).
+> The catalog's other intended growth path — corrections and additions from
+> practitioners in the profession, not just AI inference against the NAICS
+> backlog — has no working mechanism yet; it's expected to arrive as
+> user-guided spec updates from commons-board and commons-crew.
+>
+> Separately, the catalog currently has only one axis: `naics-overlays`,
+> industry-vertical specialists. A second axis — generic corporate-function
+> specialists (`function-overlays`, one directory per function: finance, HR,
+> legal-and-compliance, marketing, and others) — is planned but not yet
+> migrated. A real, already-generated seed for it exists: 260 specialists
+> built for this stack's predecessor, sitting unmigrated in the `jkm-agents`
+> repo. This is why commons-board's chair-matching currently produces poor
+> results — the specialty type a chair actually needs isn't in the catalog
+> yet, regardless of how good the matching logic is.
+
 ## What a definition is
 
 Each entry lives under `catalog/naics-overlays/[industry]/[specialist-slug]/`

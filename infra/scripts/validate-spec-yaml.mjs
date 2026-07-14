@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //
-// Validates catalog/naics-overlays/*/*/spec.yaml against the real schema
+// Validates catalog/{naics-overlays,function-overlays}/*/*/spec.yaml against the real schema
 // commons-board and commons-crew consume (schema_version '1.0', kind
 // agent_definition, metadata.specialty_boundary, purpose.summary,
 // scope.supported_tasks/common_inputs/expected_outputs). This exists because
@@ -94,28 +94,36 @@ async function checkUrlsInBatches(urls) {
 
 // Collect all specialist slugs that exist in the catalog. Used to verify that
 // adjacent_specialties entries reference real sibling specialists, not
-// fabricated slugs. The catalog root is derived from the file path:
-// catalog/naics-overlays/{section}/{slug}/spec.yaml → catalog/naics-overlays
+// fabricated slugs. Two overlay axes exist side by side under catalog/ --
+// naics-overlays (industry-vertical) and function-overlays (generic
+// corporate-function) -- adjacency can legitimately cross either axis, so
+// this scans both from the shared catalog/ root rather than just the one
+// the file being validated happens to live under.
+const OVERLAY_DIR_NAMES = ["naics-overlays", "function-overlays"];
+
 function collectCatalogSlugs(filePath) {
   const slugs = new Set();
   const parts = filePath.split(path.sep);
-  const overlaysIndex = parts.lastIndexOf("naics-overlays");
-  if (overlaysIndex < 0 || overlaysIndex + 2 >= parts.length) {
+  const overlaysIndex = parts.findLastIndex((part) => OVERLAY_DIR_NAMES.includes(part));
+  if (overlaysIndex < 1 || overlaysIndex + 2 >= parts.length) {
     return slugs;
   }
-  const catalogRoot = parts.slice(0, overlaysIndex + 1).join(path.sep);
-  if (!fs.existsSync(catalogRoot)) {
-    return slugs;
-  }
-  for (const sectionSlug of fs.readdirSync(catalogRoot)) {
-    const sectionPath = path.join(catalogRoot, sectionSlug);
-    if (!fs.statSync(sectionPath).isDirectory()) {
+  const catalogDir = parts.slice(0, overlaysIndex).join(path.sep);
+  for (const overlayName of OVERLAY_DIR_NAMES) {
+    const catalogRoot = path.join(catalogDir, overlayName);
+    if (!fs.existsSync(catalogRoot)) {
       continue;
     }
-    for (const agentSlug of fs.readdirSync(sectionPath)) {
-      const specPath = path.join(sectionPath, agentSlug, "spec.yaml");
-      if (fs.existsSync(specPath)) {
-        slugs.add(agentSlug);
+    for (const sectionSlug of fs.readdirSync(catalogRoot)) {
+      const sectionPath = path.join(catalogRoot, sectionSlug);
+      if (!fs.statSync(sectionPath).isDirectory()) {
+        continue;
+      }
+      for (const agentSlug of fs.readdirSync(sectionPath)) {
+        const specPath = path.join(sectionPath, agentSlug, "spec.yaml");
+        if (fs.existsSync(specPath)) {
+          slugs.add(agentSlug);
+        }
       }
     }
   }
@@ -275,7 +283,7 @@ async function main() {
     .filter((file) => file.endsWith("spec.yaml"));
   const targets = files.length > 0
     ? files
-    : findAllSpecYamlFiles(path.join(process.cwd(), "catalog", "naics-overlays"));
+    : OVERLAY_DIR_NAMES.flatMap((name) => findAllSpecYamlFiles(path.join(process.cwd(), "catalog", name)));
 
   if (targets.length === 0) {
     console.log("No spec.yaml files to validate.");
