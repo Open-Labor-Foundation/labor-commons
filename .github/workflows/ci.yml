@@ -52,3 +52,72 @@ jobs:
           else
             echo "No spec.yaml files changed in this PR"
           fi
+
+  certification-gate:
+    name: Certification gate (published records)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout labor-commons
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+
+      - name: Find changed spec.yaml files with status "published"
+        id: find-published
+        run: |
+          BASE="${{ github.base_ref || 'main' }}"
+          git fetch origin "$BASE"
+          changed=$(git diff --name-only "origin/$BASE...HEAD" -- 'catalog/naics-overlays/**/spec.yaml' 'catalog/function-overlays/**/spec.yaml')
+          : > /tmp/published-files.txt
+          for f in $changed; do
+            if [ -f "$f" ] && grep -qE '^\s*status:\s*"?published"?\s*$' "$f"; then
+              echo "$f" >> /tmp/published-files.txt
+            fi
+          done
+          if [ -s /tmp/published-files.txt ]; then
+            echo "has_published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_published=false" >> "$GITHUB_OUTPUT"
+            echo "No spec.yaml change in this PR sets status: published -- certification gate not triggered."
+          fi
+
+      - name: Setup Node.js
+        if: steps.find-published.outputs.has_published == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Checkout labor-commons-curator
+        if: steps.find-published.outputs.has_published == 'true'
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          repository: Open-Labor-Foundation/labor-commons-curator
+          path: labor-commons-curator
+          submodules: true
+
+      - name: Install labor-commons-curator dependencies
+        if: steps.find-published.outputs.has_published == 'true'
+        working-directory: labor-commons-curator
+        run: npm ci
+
+      - name: Run certification gate on published records
+        if: steps.find-published.outputs.has_published == 'true'
+        working-directory: labor-commons-curator
+        env:
+          CERTIFY_PROVIDER_BASE_URL: ${{ secrets.CERTIFY_PROVIDER_BASE_URL }}
+          CERTIFY_PROVIDER_API_KEY: ${{ secrets.CERTIFY_PROVIDER_API_KEY }}
+          CERTIFY_PROVIDER_MODEL: ${{ secrets.CERTIFY_PROVIDER_MODEL }}
+        run: |
+          if [ -z "$CERTIFY_PROVIDER_API_KEY" ]; then
+            echo "::warning::$(tr '\n' ' ' < /tmp/published-files.txt)sets status: published, but CERTIFY_PROVIDER_API_KEY is not configured as a repository secret. The certification gate cannot run and is NOT enforcing on this PR -- configure CERTIFY_PROVIDER_BASE_URL/CERTIFY_PROVIDER_API_KEY/CERTIFY_PROVIDER_MODEL as repo secrets to enable it."
+            exit 0
+          fi
+          failures=0
+          while IFS= read -r f; do
+            echo "Certifying $GITHUB_WORKSPACE/$f ..."
+            npx tsx src/certification/certify-record-cli.ts "$GITHUB_WORKSPACE/$f" || failures=$((failures+1))
+          done < /tmp/published-files.txt
+          if [ "$failures" -gt 0 ]; then
+            echo "::error::$failures record(s) failed certification -- see logs above for each CertificationResult."
+            exit 1
+          fi
