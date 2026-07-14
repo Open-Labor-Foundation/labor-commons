@@ -17,12 +17,11 @@ const REQUIRED_KIND = "agent_definition";
 // Depth backstops. The catalog quality *target* (median specialty_boundary
 // ~1,300 chars, median 9 authority_sources) is driven by the delivery contract
 // in .github/copilot-instructions.md, which the model follows. These validator
-// floors are only a hard safety net against egregiously thin output: they sit
-// at roughly the catalog p5 so they reject the genuinely-deficient bottom few
-// percent WITHOUT false-rejecting the ~18% of existing accepted specs that sit
-// between p5 and the median.
-const MIN_BOUNDARY_CHARS = 500;
-const MIN_AUTHORITY_SOURCES = 6;
+// These thresholds match the delivery contract in .github/copilot-instructions.md:
+// specialty_boundary >= 900 chars (catalog median ~1,300), authority_sources >= 8
+// (catalog median 9). They are the hard floor — specs below these are rejected.
+const MIN_BOUNDARY_CHARS = 900;
+const MIN_AUTHORITY_SOURCES = 8;
 
 function readNonEmptyString(record, key) {
   const value = record?.get?.(key);

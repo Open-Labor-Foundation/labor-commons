@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Open-Labor-Foundation/labor-commons/infra/schema/specialist-record.schema.json",
+  "title": "Labor Commons Specialist Record",
+  "description": "Canonical schema for a labor-commons spec.yaml. Formalizes the structure already in use across the catalog's 651 existing records (schema_version, kind, freshness, metadata, purpose, scope, adjacent_specialties, knowledge_baseline) and additively defines two new blocks -- certification and seed_provenance -- introduced by the labor-commons-specialist-contract design. Existing records are valid without the new blocks; certification is populated over time by labor-commons-curator's backfill sweep, not required retroactively.",
+  "type": "object",
+  "required": ["schema_version", "kind", "freshness", "metadata", "purpose", "scope", "knowledge_baseline"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Locked to '1.0' for every record currently in the catalog. A future breaking change to this schema bumps this value; consumers should treat an unrecognized version as unsupported rather than guessing."
+    },
+    "kind": {
+      "type": "string",
+      "const": "agent_definition",
+      "description": "Fixed discriminator. Historical drift (agent_spec_pack, spec_pack) has reached main before -- any other value is invalid, not a variant to tolerate."
+    },
+    "freshness": {
+      "type": "object",
+      "required": ["last_reviewed", "review_interval_days", "stale_after", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "last_reviewed": { "type": "string", "format": "date" },
+        "review_interval_days": { "type": "integer", "minimum": 1 },
+        "stale_after": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["current", "stale"] }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["slug", "name", "domain_family", "specialty_boundary", "status", "created_at", "last_updated_at"],
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "description": "Present in all 651 current records by convention but not enforced by the pre-existing validator. Kept optional here rather than silently required, to document reality rather than assert an unverified contract."
+        },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "domain_family": { "type": "string", "minLength": 1 },
+        "specialty_boundary": {
+          "type": "string",
+          "minLength": 900,
+          "description": "One-paragraph statement of what this specialist owns and rejects. 900-char floor matches the delivery contract in .github/copilot-instructions.md and infra/scripts/validate-spec-yaml.mjs (catalog median ~1,300)."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "validated", "published", "flagged", "stale", "retired"],
+          "description": "draft/validated/published/flagged/stale/retired per the certification-gate design (labor-commons-curator/docs/data_model.md). Records predating that design use validated; flagged is set only by the backfill certification sweep on a failed retroactive check, never by hand."
+        },
+        "created_at": { "type": "string", "format": "date" },
+        "last_updated_at": { "type": "string", "format": "date" }
+      }
+    },
+    "purpose": {
+      "type": "object",
+      "required": ["summary"],
+      "additionalProperties": true,
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "target_users": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["supported_tasks", "common_inputs", "expected_outputs"],
+      "additionalProperties": true,
+      "properties": {
+        "supported_tasks": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "common_inputs": { "type": "array", "items": { "type": "string" } },
+        "expected_outputs": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "out_of_scope_rules": { "type": "array", "items": { "type": "string" } },
+        "orchestrator_return_rules": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "adjacent_specialties": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 3,
+      "description": "Slugs of real sibling specialists that exist elsewhere in the catalog. As of the labor-commons-specialist-contract design, this list is maintained on an ongoing basis by labor-commons-curator via LLM judgment over the catalog (not just set once at authoring time) -- see labor-commons-curator/docs for the adjacency-maintenance sweep. A slug that does not resolve to a real record is a defect, not a warning."
+    },
+    "knowledge_baseline": {
+      "type": "object",
+      "required": ["authority_sources"],
+      "additionalProperties": true,
+      "properties": {
+        "source_classes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["class", "rationale"],
+            "properties": {
+              "class": { "type": "string" },
+              "rationale": { "type": "string" }
+            }
+          }
+        },
+        "source_selection_approach": { "type": "string" },
+        "authority_sources": {
+          "type": "array",
+          "minItems": 8,
+          "description": "8-source floor matches the delivery contract (catalog median 9).",
+          "items": {
+            "type": "object",
+            "required": ["source_id", "title", "location"],
+            "additionalProperties": true,
+            "properties": {
+              "source_id": { "type": "string" },
+              "title": { "type": "string" },
+              "publisher": { "type": "string" },
+              "source_type": { "type": "string" },
+              "location": {
+                "type": "string",
+                "format": "uri",
+                "description": "The URL key is always `location`, never `url` -- a recurring drift the pre-existing validator flags because commons-board/commons-crew's consumption code only reads `location`."
+              },
+              "authority_reason": { "type": "string" },
+              "last_reviewed_at": { "type": "string", "format": "date" },
+              "refresh_interval_days": { "type": "integer", "minimum": 1 },
+              "decay_policy": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "certification": {
+      "type": "object",
+      "description": "Additive, optional -- absent on records that predate the certification-gate design (labor-commons-curator/docs/data_model.md § CertificationResult) until labor-commons-curator's backfill sweep processes them. Never hand-authored: written only by labor-commons-curator's independent scenario-generation/grading pipeline, which must not share session/context with whatever authored this record's content (see data_model.md's independence requirement) -- generated_by and graded_by exist so that independence is auditable, not just asserted.",
+      "required": ["passed", "origin"],
+      "additionalProperties": false,
+      "properties": {
+        "passed": { "type": "boolean" },
+        "scenario_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scenario_id", "passed"],
+            "properties": {
+              "scenario_id": { "type": "string" },
+              "derived_from": { "type": "string" },
+              "passed": { "type": "boolean" }
+            }
+          }
+        },
+        "generated_by": { "type": "string", "description": "Identifier for the scenario-generation pass, distinct from whatever authored this record." },
+        "graded_by": { "type": "string", "description": "Identifier for the grading pass, distinct from both authoring and scenario-generation." },
+        "certified_at": { "type": "string", "format": "date" },
+        "origin": {
+          "type": "string",
+          "enum": ["pre_publish_gate", "backfill_sweep"],
+          "description": "pre_publish_gate: certified before this record was ever published. backfill_sweep: certified retroactively by labor-commons-curator's non-blocking sweep of records that predate the gate."
+        }
+      }
+    },
+    "seed_provenance": {
+      "type": "object",
+      "description": "Additive, optional -- present only on records from the one-time initial NAICS-based curation pass (see labor-commons-curator/docs/roadmap.md). Absent on every record created through ongoing growth (system-detected gap-filling or curated human-authored sourcing), which does not reference this structure.",
+      "required": ["source"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "const": "naics_seed" },
+        "naics_code": { "type": "string" },
+        "automation_fit_rationale": {
+          "type": "string",
+          "description": "Why this code was judged a good candidate at seed time, e.g. information/knowledge-heavy work or repetitive/process-driven work."
+        }
+      }
+    }
+  }
+}
