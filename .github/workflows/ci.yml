@@ -40,15 +40,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install yaml dependency
-        run: npm install yaml
+      - name: Install dependencies
+        run: npm ci
       - name: Validate changed spec.yaml files
         run: |
           BASE="${{ github.base_ref || 'main' }}"
           git fetch origin "$BASE"
           files=$(git diff --name-only "origin/$BASE...HEAD" -- 'catalog/naics-overlays/**/spec.yaml' 'catalog/function-overlays/**/spec.yaml')
           if [ -n "$files" ]; then
-            node infra/scripts/validate-spec-yaml.mjs $files
+            npm run validate -- $files
           else
             echo "No spec.yaml files changed in this PR"
           fi
@@ -64,15 +64,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install yaml dependency
-        run: npm install yaml
+      - name: Install dependencies
+        run: npm ci
       - name: Check changed spec.yaml files for cross-industry source contamination
         run: |
           BASE="${{ github.base_ref || 'main' }}"
           git fetch origin "$BASE"
           files=$(git diff --name-only "origin/$BASE...HEAD" -- 'catalog/naics-overlays/**/spec.yaml')
           if [ -n "$files" ]; then
-            node infra/scripts/validate-source-coherence.mjs $files
+            npm run validate:coherence -- $files
           else
             echo "No naics-overlays spec.yaml files changed in this PR"
           fi
