@@ -109,8 +109,8 @@ jobs:
           CERTIFY_PROVIDER_MODEL: ${{ secrets.CERTIFY_PROVIDER_MODEL }}
         run: |
           if [ -z "$CERTIFY_PROVIDER_API_KEY" ]; then
-            echo "::warning::$(tr '\n' ' ' < /tmp/published-files.txt)sets status: published, but CERTIFY_PROVIDER_API_KEY is not configured as a repository secret. The certification gate cannot run and is NOT enforcing on this PR -- configure CERTIFY_PROVIDER_BASE_URL/CERTIFY_PROVIDER_API_KEY/CERTIFY_PROVIDER_MODEL as repo secrets to enable it."
-            exit 0
+            echo "::error::$(tr '\n' ' ' < /tmp/published-files.txt)sets status: published, but CERTIFY_PROVIDER_API_KEY is not configured as a repository secret. A missing credential must fail the build, not silently skip certification -- configure CERTIFY_PROVIDER_BASE_URL/CERTIFY_PROVIDER_API_KEY/CERTIFY_PROVIDER_MODEL as repo secrets, or set status back to validated until certification can run."
+            exit 1
           fi
           failures=0
           while IFS= read -r f; do
