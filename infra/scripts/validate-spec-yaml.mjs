@@ -140,7 +140,13 @@ async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
     issues.push(`parse error: ${error.message}`);
   }
   if (issues.length > 0) {
-    return issues;
+    // Must match the function's normal return shape ({ issues, warnings }),
+    // not a bare array -- returning issues alone here crashed main() with
+    // "Cannot read properties of undefined (reading 'length')" on any
+    // genuinely malformed spec.yaml (observed live: a coder-generated file
+    // with an under-indented multi-line YAML scalar), silently turning a
+    // reportable parse error into an unhandled exception instead.
+    return { issues, warnings };
   }
 
   const root = document.contents;
