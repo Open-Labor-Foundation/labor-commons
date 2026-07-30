@@ -278,6 +278,24 @@ test("T15: URL dead in 3 consecutive runs -> dead_confirmed", () => {
   assert.equal(isDeadConfirmed(run3), true);
 });
 
+test("T15b: an unreachable run right after confirmation must not un-confirm a dead_confirmed URL", () => {
+  const t0 = "2026-08-01T00:00:00.000Z";
+  const t1 = "2026-08-02T00:00:00.000Z";
+  const t2 = "2026-08-03T00:00:00.000Z";
+  const t3 = "2026-08-04T00:00:00.000Z";
+
+  const run1 = mergeLivenessState(null, { state: STATE.DEAD, status: 404 }, t0);
+  const run2 = mergeLivenessState(run1, { state: STATE.DEAD, status: 404 }, t1);
+  const run3 = mergeLivenessState(run2, { state: STATE.DEAD, status: 404 }, t2);
+  assert.equal(isDeadConfirmed(run3), true);
+
+  // A transient blip the run after confirmation must not silently drop the
+  // URL out of dead_confirmed -- only a `live` result should ever clear it.
+  const run4 = mergeLivenessState(run3, { state: STATE.UNREACHABLE, status: 503 }, t3);
+  assert.equal(run4.consecutive_dead_runs, 3);
+  assert.equal(isDeadConfirmed(run4), true);
+});
+
 test("T16: last_checked/generated_at uses the caller-supplied run timestamp, not a freshly computed one", async () => {
   const beforeIso = new Date().toISOString();
   // Simulate real check latency between capturing the run timestamp and

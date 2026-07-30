@@ -321,6 +321,13 @@ export function mergeLivenessState(previousRecord, currentResult, nowIso) {
 
 export const CONFIRMED_DEAD_THRESHOLD = 3;
 
+// Deliberately keyed on the persisted counter alone, NOT on
+// `record.state === STATE.DEAD`. mergeLivenessState carries
+// consecutive_dead_runs over unchanged (and overwrites state to
+// "unreachable") on an indeterminate run -- an already-confirmed-dead URL
+// must not silently drop out of dead_confirmed the moment a single
+// transient blip hits it after run 3. Only a `live` result (which resets
+// the counter to 0) should ever clear confirmed status.
 export function isDeadConfirmed(record) {
-  return record.state === STATE.DEAD && (record.consecutive_dead_runs ?? 0) >= CONFIRMED_DEAD_THRESHOLD;
+  return (record.consecutive_dead_runs ?? 0) >= CONFIRMED_DEAD_THRESHOLD;
 }

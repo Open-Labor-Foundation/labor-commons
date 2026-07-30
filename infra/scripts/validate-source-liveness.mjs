@@ -89,7 +89,16 @@ function findAllSpecFiles(catalogRoot) {
   return files;
 }
 
-async function runChangedFileMode(files) {
+async function runChangedFileMode(files, outPath) {
+  const runsCompleted = totalRunsCompleted(outPath);
+  const bootstrapping = runsCompleted < BOOTSTRAP_RUNS_REQUIRED;
+  if (bootstrapping) {
+    console.log(
+      `NOTE: full-corpus baseline has completed ${runsCompleted}/${BOOTSTRAP_RUNS_REQUIRED} runs -- ` +
+      "per the re-baseline procedure, the per-PR liveness gate is advisory (reported, not blocking) " +
+      "until 3 runs at least 24h apart have populated consecutive_dead_runs honestly."
+    );
+  }
   let anyIssues = false;
   for (const filePath of files) {
     const { entries, parseError } = extractAuthoritySources(filePath);
@@ -122,24 +131,43 @@ async function runChangedFileMode(files) {
     }
   }
   if (anyIssues) {
-    console.log("\nOne or more spec.yaml files cite a confirmed-dead authority_sources URL.");
+    if (bootstrapping) {
+      console.log(
+        `\nOne or more spec.yaml files cite a dead authority_sources URL, but the liveness gate ` +
+        `is still advisory (${runsCompleted}/${BOOTSTRAP_RUNS_REQUIRED} baseline runs completed) -- not failing this build.`
+      );
+      return;
+    }
+    console.log("\nOne or more spec.yaml files cite a dead authority_sources URL.");
     process.exit(1);
   }
 }
 
-function loadPreviousBaseline(outPath) {
+function loadPreviousReport(outPath) {
   if (!fs.existsSync(outPath)) {
-    return new Map();
+    return null;
   }
   try {
     const previous = JSON.parse(fs.readFileSync(outPath, "utf8"));
     if (previous.schema_version !== REPORT_SCHEMA_VERSION || !Array.isArray(previous.urls)) {
-      return new Map();
+      return null;
     }
-    return new Map(previous.urls.map((record) => [record.url, record]));
+    return previous;
   } catch {
-    return new Map();
+    return null;
   }
+}
+
+// The number of full-corpus runs the currently-committed baseline reflects.
+// Exported at module scope only via the report file itself (read by
+// runChangedFileMode) -- per spec section 6, the per-PR gate stays advisory
+// until 3 runs, at least 24h apart, have populated consecutive_dead_runs
+// honestly. Enforcing dead_confirmed against an incomplete run history
+// before then would fail PRs based on data that hasn't earned confidence yet.
+const BOOTSTRAP_RUNS_REQUIRED = 3;
+
+function totalRunsCompleted(outPath) {
+  return loadPreviousReport(outPath)?.total_runs ?? 0;
 }
 
 async function runFullCorpusMode(outPath) {
@@ -159,7 +187,9 @@ async function runFullCorpusMode(outPath) {
   const uniqueUrls = [...new Set(allEntries.map((entry) => entry.url))].sort();
   console.log(`Found ${allEntries.length} authority_sources citations, ${uniqueUrls.length} unique URLs. Checking...`);
 
-  const previousBaseline = loadPreviousBaseline(outPath);
+  const previousReport = loadPreviousReport(outPath);
+  const previousBaseline = new Map((previousReport?.urls ?? []).map((record) => [record.url, record]));
+  const totalRuns = (previousReport?.total_runs ?? 0) + 1;
 
   const results = await checkUrlsScheduled(uniqueUrls, {
     onProgress: (done, total) => {
@@ -208,6 +238,7 @@ async function runFullCorpusMode(outPath) {
     schema_version: REPORT_SCHEMA_VERSION,
     generated_at: runStartIso,
     run_id: process.env.GITHUB_RUN_ID ?? `local-${runStartIso}`,
+    total_runs: totalRuns,
     totals: {
       spec_files: specFiles.length,
       citations: allEntries.length,
@@ -256,7 +287,7 @@ async function main() {
     await runFullCorpusMode(outPath);
     return;
   }
-  await runChangedFileMode(files);
+  await runChangedFileMode(files, outPath);
 }
 
 main().catch((err) => {
