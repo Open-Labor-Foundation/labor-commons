@@ -1,0 +1,40 @@
+name: Source liveness (full corpus)
+
+on:
+  schedule:
+    # Weekly, Monday 05:00 UTC -- a full-corpus run touches every unique
+    # authority_sources URL in the catalog (thousands of requests), so this
+    # runs on a schedule rather than per-PR. Per-PR coverage for changed
+    # specs is the "Source liveness" job in ci.yml.
+    - cron: '0 5 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  full-corpus-liveness:
+    name: Full-corpus source liveness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full-corpus liveness check
+        run: npm run validate:liveness -- --full-corpus
+
+      - name: Commit updated report if changed
+        run: |
+          if git diff --quiet -- reports/generated/source-liveness-baseline.json; then
+            echo "No change in dead-URL count/content."
+            exit 0
+          fi
+          git config user.name "olf-steward[bot]"
+          git config user.email "299857430+olf-steward[bot]@users.noreply.github.com"
+          git add reports/generated/source-liveness-baseline.json
+          git commit -m "chore: refresh source-liveness baseline report"
+          git push origin HEAD:main
