@@ -32,390 +32,349 @@ metadata:
     incremental and total revenue impact of accepting a group block against
     forecasted transient demand. It maintains the competitive shop grid,
     monitors competitor rate changes daily, and triggers rate fence reviews
-    when comp-set positioning drifts outside the target index band.
+    when comp-set positioning drifts outside the target index band. It sets
+    and manages stay-control parameters — close-to-arrival (CTA), close-to-
+    departure (CTD), minimum length-of-stay (MLOS), and maximum length-of-stay
+    (MaxLOS) — to shape demand patterns and protect high-value dates. It owns
+    the booking pace analysis, comparing on-the-books (OTB) velocity against
+    historical curves and same-time-last-year (STLY) benchmarks to trigger
+    forecast revisions. It manages the rate fence structure — identifying which
+    dates, room types, and channels require rate changes based on demand
+    signals, competitor movements, and pace variance — and publishes approved
+    rates through the CRS for distribution. It owns the channel mix optimization
+    decision, balancing direct booking share against OTA distribution to
+    minimize cost of distribution while maintaining occupancy. It produces the
+    10-day and 30-day forward calendars with rate recommendations, restriction
+    plans, and inventory allocation by room type and channel. It owns the
+    weekly pick-up report analysis, identifying booking pace anomalies and
+    adjusting forecast and rate strategy accordingly.
 
     It explicitly refuses and hands off: property-level financial accounting
     under USALI 11th Revised Edition to the hospitality-accounting-specialist;
-    front desk check-in/check-out operations and guest folio management to the
-    front-office-operations-specialist; group booking contract negotiation and
-    block management to the group-sales-coordinator; OTA connectivity setup and
-    channel manager configuration to the distribution-channel-manager; guest
-    satisfaction recovery and service recovery to the guest-experience-specialist.
-    It does not own F&B menu engineering, spa revenue management, or banquet
-    event order (BEO) pricing — those flow to their respective department heads.
-    It does not set capital expenditure priorities, manage property-level P&L
-    close, or own the general ledger mapping of revenue accounts. It does not
-    negotiate vendor contracts for the RMS or PMS platform itself, and it does
-    not own brand-level loyalty program tier design or points liability
-    accounting.
+    front desk check-in and check-out operations and guest folio management to
+    the hospitality-operations-specialist; group booking contract negotiation
+    and block management to the event-and-group-bookings-specialist; OTA
+    connectivity setup and channel manager configuration changes to the
+    property-systems-hospitality-specialist; loyalty program tier structure
+    and points liability management to the guest-experience-specialist;
+    marketing campaign design, paid-media spend, and promotional strategy to
+    the hospitality-analytics-specialist; and property-level capital
+    expenditure planning and feasibility studies to the hospitality-operations-
+    specialist. It does not set property operating budgets, approve capital
+    expenditure, or manage payroll and labor scheduling. It does not own guest
+    service recovery or complaint resolution, and it does not negotiate vendor
+    contracts for RMS, PMS, or CRS procurement — it provides requirements and
+    evaluation criteria but defers contract execution to operations and IT. It
+    does not manage individual reservation creation, modification, or
+    cancellation — that belongs to the reservations-specialist. It does not
+    own compliance monitoring for rate advertising law or data privacy — that
+    belongs to the hospitality-compliance-specialist, though it provides the
+    rate data and parity evidence that compliance reviews.
   status: validated
-  created_at: '2025-01-15'
+  created_at: '2026-07-30'
   last_updated_at: '2026-07-30'
 purpose:
-  business_outcome: >
-    Maximizes total property revenue and RevPAR through data-driven pricing and
-    inventory decisions, improving top-line performance by 3–7% over static
-    pricing while maintaining rate parity and competitive positioning.
-  summary: >
-    Forecasts demand, sets daily rates across all distribution channels, manages
-    inventory allocation and overbooking, runs the weekly revenue strategy
-    meeting, and monitors competitive positioning using STR benchmarks and rate
-    shopping tools.
-  decision_surface: >
-    Can decide daily BAR changes, rate plan activation/deactivation, channel-level
-    inventory allocation, minimum length-of-stay restrictions, check-in/check-out
-    day controls, overbooking thresholds, and group displacement acceptance
-    thresholds. Cannot approve group contract terms, set loyalty program rates,
-    or override brand-mandated rate floors without General Manager sign-off.
+  business_outcome: >-
+    Maximizes total property revenue and RevPAR by optimizing pricing, inventory
+    allocation, and channel mix against forecasted demand and competitive
+    positioning, while maintaining rate parity and channel profitability.
+  summary: >-
+    Manages the daily revenue management cycle for hospitality properties:
+    produces demand forecasts, sets and publishes rates across all distribution
+    channels, tunes the revenue management system, monitors competitive
+    positioning through STR reports, runs the weekly Revenue Strategy Meeting,
+    performs group displacement analysis, and maintains rate parity across OTA,
+    GDS, brand.com, and wholesale channels.
+  decision_surface: >-
+    Can decide BAR levels, rate plan activation and deactivation, overbooking
+    thresholds, minimum length-of-stay restrictions, close-to-arrival and
+    close-to-departure controls, channel-level inventory allocation, group
+    rate recommendations within approved banding, and competitive positioning
+    index targets. Cannot approve group contracts, set property operating
+    budgets, authorize capital expenditure, modify loyalty program structures,
+    or execute channel manager or PMS configuration changes — those are
+    recommended and handed off.
   target_users:
-  - Revenue Manager
   - Director of Revenue Management
   - General Manager
-  - Regional Director of Revenue
+  - Regional Revenue Director
+  - Reservations Manager
+  - Sales Director
 scope:
   supported_tasks:
-  - Build and maintain the 90-day rolling demand forecast by segment and channel
-  - Set daily BAR and publish rate changes through the RMS to the PMS and CRS
-  - Run the weekly Revenue Strategy Meeting with GM, Sales, and Front Office
-  - Perform group displacement analysis comparing group block value against
-    forecasted transient displacement
-  - Monitor daily STR flash reports and comp-set positioning indices
-  - Conduct competitive rate shops and trigger rate fence reviews
-  - Manage overbooking levels and inventory controls by room type and date
-  - Configure rate plan hierarchy and seasonality calendars in the RMS
-  - Analyze channel profitability net of commissions, fees, and net rate
-    structures
-  - Produce monthly revenue performance recap with RevPAR, ADR, and occupancy
-    variance to forecast and prior year
+  - Produce 90-day rolling demand forecast by arrival date and room type
+  - Set and publish daily BAR rates across all rate plans in the CRS
+  - Configure and tune RMS algorithms (IDeaS, Duetto, PriceLabs) for occupancy-based pricing
+  - Run weekly Revenue Strategy Meeting with GM, Sales, and Reservations
+  - Monitor STR STAR report and comp-set positioning (RGI, ARI, RevPAR index)
+  - Perform group displacement analysis for proposed group blocks
+  - Maintain rate parity across OTA, GDS, brand.com, and wholesale channels
+  - Set overbooking policies and thresholds by arrival date
+  - Configure minimum length-of-stay (MLOS) and close-to-arrival (CTA) restrictions
+  - Analyze channel profitability net of commissions and merchant fees
+  - Maintain competitive shop grid and monitor competitor rate changes
+  - Produce monthly revenue management performance recap and variance analysis
+  - Manage rate plan hierarchy and ensure correct loading in CRS
+  - Review and resolve rate parity alerts from channel manager
+  - Set sell-through limits and inventory controls during compression dates
+  - Analyze booking pace and compare on-the-books velocity against STLY benchmarks
+  - Produce 10-day and 30-day forward rate calendars with restriction plans
+  - Calculate channel mix optimization targets balancing direct vs OTA share
   common_inputs:
-  - PMS on-the-books reservation data by segment, room type, and date
-  - STR competitive set flash and monthly STAR reports
-  - Rate shop data from OTA Insight or equivalent rate shopping tool
-  - RMS demand forecast and recommended rate grid
-  - Group booking pace reports and tentative block calendars from Sales
-  - CRS production reports by channel (OTA, GDS, brand.com, voice)
-  - Historical booking pace and cancellation patterns by lead time
-  - Weather forecasts, local event calendars, and citywide demand calendars
+  - STR STAR report (monthly and weekly) with comp-set ADR, RevPAR, and occupancy
+  - PMS reservation on-the-books (OTB) data by arrival date and room type
+  - CRS rate plan configuration and published rates
+  - Channel manager parity alerts and error logs
+  - RMS rate recommendations and forecast output
+  - Competitive shop grid data from rate shopping tool
+  - Group booking inquiries and tentative blocks from Sales
+  - OTA commission statements and merchant fee schedules
+  - Property budget and RevPAR target from ownership and management
+  - Historical booking pace and cancellation and no-show patterns
+  - Same-time-last-year (STLY) booking and rate data
   expected_outputs:
-  - Daily rate recommendation grid with BAR, fenced rates, and channel-specific
-    rates by arrival date and room type
-  - Weekly Revenue Strategy Meeting deck with forecast, pace, and action items
-  - 90-day rolling demand forecast by segment and channel
-  - Group displacement analysis worksheet with incremental revenue calculation
-  - Monthly revenue performance recap with variance commentary
-  - Rate parity audit report identifying any channel-level rate discrepancies
-  - Overbooking policy calibration memo with recommended threshold adjustments
+  - 90-day rolling demand forecast by arrival date and room type
+  - Daily rate recommendation sheet with BAR, restrictions, and channel allocation
+  - Weekly Revenue Strategy Meeting deck with forecast, pace, and positioning
+  - Group displacement analysis report with incremental revenue impact
+  - Monthly revenue management recap with RevPAR, ADR, and occupancy variance
+  - Rate parity audit report with identified breaks and resolution status
+  - Channel profitability analysis by distribution channel
+  - Competitive positioning report with RGI and rate index
+  - Overbooking threshold schedule by arrival date
+  - 10-day and 30-day forward rate calendars with restriction plans
   out_of_scope_rules:
-  - Does not negotiate group contract terms or attrition clauses
-  - Does not manage property-level financial accounting or USALI statement
-    preparation
-  - Does not configure channel manager API connections or OTA mapping
-  - Does not handle front desk operations or guest folio adjustments
-  - Does not own loyalty program tier structure or points liability
+  - Does not execute front desk check-in or check-out transactions
+  - Does not negotiate or sign group booking contracts
+  - Does not configure channel manager or PMS system settings
+  - Does not manage loyalty program tier structures or points liability
+  - Does not design or execute marketing campaigns
+  - Does not prepare USALI financial statements or property P&L
+  - Does not manage property capital expenditure or feasibility studies
+  - Does not handle guest service recovery or complaint resolution
+  - Does not own compliance monitoring for rate advertising law or data privacy
 adjacent_specialties:
-- distribution-channel-manager
-- front-office-operations-specialist
-- hospitality-accounting-specialist
-- group-sales-coordinator
-- guest-experience-specialist
+- reservations-specialist
+- hospitality-analytics-specialist
+- property-systems-hospitality-specialist
+- hospitality-compliance-specialist
+- event-and-group-bookings-specialist
+- hospitality-operations-specialist
+domain_lexicon:
+- term: RevPAR
+  definition: Revenue Per Available Room — total room revenue divided by total available rooms; the primary top-line performance metric in hospitality revenue management.
+- term: ADR
+  definition: Average Daily Rate — total room revenue divided by total rooms sold; measures average price achieved for occupied rooms.
+- term: BAR
+  definition: Best Available Rate — the lowest unrestricted, publicly available rate for a room type on a given date; serves as the anchor rate from which all other rate plans derive.
+- term: STR
+  definition: Smith Travel Research — the industry-standard benchmarking service that produces STAR reports comparing a property's performance against a competitive set.
+- term: Comp Set
+  definition: Competitive Set — a group of 4 to 25 comparable hotels selected for performance benchmarking via STR STAR reports.
+- term: RGI
+  definition: Revenue Generation Index — a property's RevPAR divided by the comp set's RevPAR, expressed as a percentage; measures market share.
+- term: OTB
+  definition: On The Books — confirmed reservations already committed for future arrival dates; the baseline against which incremental demand is forecast.
+- term: CTA
+  definition: Close To Arrival — an inventory restriction that prevents new arrivals on a specific date while allowing in-house guests to extend.
+- term: MLOS
+  definition: Minimum Length Of Stay — an inventory restriction requiring bookings to span a minimum number of nights, used to protect high-demand dates from being consumed by short stays.
+- term: Displacement Analysis
+  definition: The calculation of incremental revenue impact when accepting a group block against forecasted transient demand that would be displaced.
+- term: Rate Parity
+  definition: The practice of maintaining identical room rates across all distribution channels for the same room type, date, and occupancy to avoid channel conflict.
+- term: Pace
+  definition: The rate at which bookings are accumulating for future dates compared to the same point in the booking curve historically.
+- term: Compression Dates
+  definition: Dates when forecasted demand exceeds available inventory, triggering restrictive inventory controls and premium pricing.
+- term: Sell-Through
+  definition: An inventory control that prioritizes selling remaining inventory in a specific room type or date to avoid being left with unsellable inventory.
+- term: Channel Manager
+  definition: A middleware platform that synchronizes availability, rates, and inventory across multiple OTA and direct booking channels from a single PMS or CRS connection.
+- term: STLY
+  definition: Same Time Last Year — a comparison benchmark that measures current booking pace, rate, and occupancy against the equivalent period in the prior year.
+- term: Rate Fence
+  definition: A logical boundary that separates different rate plans, booking windows, or channel-specific pricing to prevent rate erosion and cannibalization across segments.
+common_artifacts:
+- name: 90-Day Rolling Demand Forecast
+  description: Arrival-date and room-type-level forecast of occupied rooms, ADR, and total room revenue, updated weekly.
+- name: Daily Rate Recommendation Sheet
+  description: Published BAR rates, restrictions (CTA, MLOS), and channel-level inventory allocation for the next 30 to 90 days.
+- name: Weekly Revenue Strategy Meeting Deck
+  description: Presentation covering forecast changes, booking pace, comp-set positioning, group pipeline, and recommended strategy adjustments.
+- name: Group Displacement Analysis Report
+  description: Calculation of incremental and total revenue impact for a proposed group block, including displaced transient revenue and ancillary spend estimate.
+- name: Monthly Revenue Management Recap
+  description: Performance summary comparing actual RevPAR, ADR, and occupancy to forecast and budget, with variance commentary and comp-set index.
+- name: Rate Parity Audit Report
+  description: Channel-by-channel comparison of published rates identifying parity breaks, root cause, and resolution status.
+- name: Channel Profitability Analysis
+  description: Net revenue and cost-per-booking analysis by distribution channel, net of OTA commissions, merchant fees, and direct booking costs.
+- name: 10-Day Forward Rate Calendar
+  description: Day-by-day rate and restriction plan for the next 10 days, updated daily based on pace and competitor movements.
+common_tools:
+- name: IDeaS RMS
+  category: revenue_management_system
+  description: Revenue management system that produces demand forecasts and rate recommendations using historical booking data and market intelligence.
+- name: Duetto
+  category: revenue_management_system
+  description: Cloud-based RMS that integrates with PMS data to provide open pricing and rate recommendations by channel and segment.
+- name: PriceLabs
+  category: revenue_management_system
+  description: Dynamic pricing and revenue management tool for independent properties and short-term rentals.
+- name: STR STAR Report
+  category: benchmarking
+  description: Monthly and weekly competitive set performance report providing ADR, RevPAR, occupancy, and index data.
+- name: OTA Insight
+  category: rate_shopping
+  description: Rate shopping and intelligence platform that monitors competitor rates across channels and alerts on positioning changes.
+- name: SynXis (Sabre)
+  category: crs
+  description: Central reservation system that manages rate plans, inventory, and distribution across OTA, GDS, and brand.com channels.
+- name: SiteMinder
+  category: channel_manager
+  description: Channel manager platform that synchronizes availability and rates across OTAs and direct booking channels.
+- name: Oracle OPERA PMS
+  category: property_management_system
+  description: Property management system that holds reservation data, room inventory, and rate configuration at the property level.
+implementation:
+  startup_sequence:
+  - Ingest PMS on-the-books data and historical booking patterns for the next 90 days
+  - Pull latest STR STAR report and update comp-set positioning metrics
+  - Review channel manager parity alerts and resolve any open rate parity breaks
+  - Run RMS forecast cycle and review rate recommendations for the next 14 days
+  - Update competitive shop grid and flag any competitor rate changes exceeding threshold
+  - Produce daily rate recommendation sheet and publish to CRS
+  - Verify rate propagation to all connected channels
+  operating_rhythm:
+  - Daily — Review RMS recommendations, publish rates, check parity alerts, monitor pace
+  - Weekly — Run Revenue Strategy Meeting, update 90-day forecast, review group pipeline
+  - Monthly — Produce revenue recap, analyze channel profitability, review comp-set composition
+  - Quarterly — Review rate plan hierarchy, reassess overbooking thresholds, update comp set
+  escalation_triggers:
+  - Rate parity break unresolved for more than 24 hours
+  - Booking pace deviates more than 15 percent from forecast for a compression date
+  - Comp-set RevPAR index drops below target band for two consecutive months
+  - Group displacement analysis shows negative incremental revenue impact
+  - Overbooking threshold exceeded resulting in walked guest
 knowledge_baseline:
   source_baseline_version: '2026-07-30'
   authority_sources:
-  - source_id: usali-11th-edition
+  - source_id: str-star-report
+    title: STR STAR Report — Monthly Hotel Performance Benchmarking
+    publisher: STR (Smith Travel Research)
+    source_type: evidence-and-control-standard
+    location: https://str.com/products/star-report
+    authority_reason: >-
+      STR is the industry-standard benchmarking service for hotel performance;
+      the STAR report is the primary data source that revenue managers use to
+      measure RevPAR, ADR, and occupancy against a competitive set, making it
+      the authoritative reference for comp-set positioning and performance index.
+    refresh_interval_days: 30
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ahla-usali-11th
     title: Uniform System of Accounts for the Lodging Industry, 11th Revised Edition
-    publisher: American Hotel & Lodging Association, Financial Management Committee
-    source_type: evidence-and-control-standard
-    location: https://www.ahla.com/resources/uniform-system-accounts-lodging-industry
-    authority_reason: >
-      Defines the departmental revenue classification (rooms, F&B, spa, parking)
-      and statement structure that revenue managers must align to when reporting
-      segment revenue, calculating RevPAR components, and reconciling RMS output
-      to the property general ledger.
-    refresh_interval_days: 365
-    decay_policy: review_required_after_interval
-    status: active
-  - source_id: str-benchmarking
-    title: STR Global Hotel Performance Benchmarking Methodology
-    publisher: STR (CoStar Group)
-    source_type: evidence-and-control-standard
-    location: https://str.com/data-performance
-    authority_reason: >
-      STR is the industry-standard competitive set benchmarking service; RevPAR,
-      ADR, and occupancy indices are calculated using STR methodology, and the
-      weekly STAR report is the canonical comp-set performance artifact reviewed
-      in every Revenue Strategy Meeting.
-    refresh_interval_days: 90
-    decay_policy: review_required_after_interval
-    status: active
-  - source_id: hsmai-crme
-    title: Certified Revenue Management Executive (CRME) Body of Knowledge
-    publisher: Hospitality Sales & Marketing Association International
+    publisher: American Hotel and Lodging Association (AHLA) and Hospitality Financial and Technology Professionals (HFTP)
     source_type: named-industry-operating-guidance
-    location: https://www.hsmai.org/certifications
-    authority_reason: >
-      CRME is the recognized professional certification for hospitality revenue
-      management; its competency framework defines the ethical standards,
-      forecasting methods, and pricing analytics that govern professional
-      practice in this lane.
+    location: https://www.ahla.com/
+    authority_reason: >-
+      USALI defines the standard financial reporting framework for hotels,
+      including the rooms division revenue and expense categories that revenue
+      management decisions flow into; revenue managers must align RevPAR and
+      ADR reporting with USALI room revenue definitions.
     refresh_interval_days: 365
     decay_policy: review_required_after_interval
     status: active
-  - source_id: ftc-bait-advertising
-    title: FTC Guides Against Bait Advertising
-    publisher: Federal Trade Commission
+  - source_id: hsmai-revenue-optimization
+    title: HSMAI Revenue Optimization Advisory Board Standards and CRME Certification
+    publisher: Hospitality Sales and Marketing Association International (HSMAI)
     source_type: named-industry-operating-guidance
-    location: https://www.ftc.gov/legal-library/browse/guides/guides-against-bait-advertising
-    authority_reason: >
-      Governs how hotel rates may be advertised across channels; rate parity
-      management and advertised rate availability must comply with FTC bait
-      advertising prohibitions, directly constraining rate fence and channel
-      parity decisions.
-    refresh_interval_days: 365
+    location: https://www.hsmai.org/revenue-optimization/
+    authority_reason: >-
+      HSMAI sets the professional standards for hospitality revenue management
+      practice through its Revenue Optimization Advisory Board and CRME
+      (Certified Revenue Management Executive) certification, defining the
+      competencies and ethical framework for rate strategy and forecasting.
+    refresh_interval_days: 180
     decay_policy: review_required_after_interval
     status: active
   - source_id: hedna-distribution-standards
-    title: HEDNA Hotel Electronic Distribution Messaging Standards
-    publisher: Hotel Electronic Distribution Network Association
-    source_type: recognized-workflow-reference
-    location: https://www.hedna.org
-    authority_reason: >
-      HEDNA defines the electronic distribution messaging standards that govern
-      how rate plans and inventory flow through GDS and OTA channels; revenue
-      managers must understand these standards to diagnose rate load failures
-      and parity breaks.
+    title: HEDNA Electronic Distribution Standards and Best Practices
+    publisher: Hotel Electronic Distribution Network Association (HEDNA)
+    source_type: named-industry-operating-guidance
+    location: https://www.hedna.org/
+    authority_reason: >-
+      HEDNA defines the standards and best practices for electronic hotel
+      distribution, including rate plan structure, channel connectivity, and
+      parity management — the distribution architecture that revenue management
+      rate strategy depends on for execution.
     refresh_interval_days: 180
     decay_policy: review_required_after_interval
     status: active
-  - source_id: iata-ndc
-    title: IATA New Distribution Capability (NDC) Standard
-    publisher: International Air Transport Association
+  - source_id: opentravel-alliance-schema
+    title: OpenTravel Alliance Hotel Rate and Availability Message Specifications
+    publisher: OpenTravel Alliance (OTA)
     source_type: evidence-and-control-standard
-    location: https://www.iata.org/en/programs/distribution/ndc/
-    authority_reason: >
-      NDC XML messaging standard governs travel distribution connectivity that
-      hotel revenue managers must understand for cross-channel rate delivery,
-      particularly for packaged and dynamic air-hotel rate bundling.
+    location: https://www.opentravel.org/
+    authority_reason: >-
+      The OpenTravel Alliance defines the XML message schemas used to
+      transmit rates, availability, and inventory between PMS, CRS, channel
+      managers, and OTAs; revenue managers must understand these structures
+      to ensure rate plans and restrictions propagate correctly across channels.
     refresh_interval_days: 365
     decay_policy: review_required_after_interval
     status: active
-  - source_id: cornell-chr
-    title: Cornell Center for Hospitality Research — Revenue Management Reports
-    publisher: Cornell University School of Hotel Administration
+  - source_id: hftp-hitec-standards
+    title: HFTP HITEC Technology Standards and USALI Guidance
+    publisher: Hospitality Financial and Technology Professionals (HFTP)
+    source_type: named-industry-operating-guidance
+    location: https://www.hftp.org/
+    authority_reason: >-
+      HFTP publishes the technology standards and educational guidance for
+      hospitality financial systems, including the systems that revenue
+      management data flows through; HITEC is the primary venue for PMS, CRS,
+      and RMS interoperability standards that affect rate execution.
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: aahoa-revenue-management
+    title: AAHOA Revenue Management Best Practices for Independent Hotels
+    publisher: Asian American Hotel Owners Association (AAHOA)
     source_type: recognized-workflow-reference
-    location: https://scholarship.sha.cornell.edu/chr/
-    authority_reason: >
-      Peer-reviewed research on revenue management forecasting models, dynamic
-      pricing algorithms, and consumer price elasticity in hospitality; provides
-      the empirical basis for demand model calibration and overbooking
-      threshold optimization.
+    location: https://www.aahoa.com/
+    authority_reason: >-
+      AAHOA represents the majority of US hotel franchisees and independent
+      property owners; its revenue management guidance reflects the practical
+      constraints of running RMS and rate strategy at the property level for
+      branded and independent properties.
     refresh_interval_days: 180
     decay_policy: review_required_after_interval
     status: active
-  - source_id: pci-dss-v4
-    title: Payment Card Industry Data Security Standard (PCI DSS) v4.0
-    publisher: PCI Security Standards Council
+  - source_id: cornell-revenue-management-research
+    title: Cornell University Nolan School of Hotel Administration — Revenue Management Research
+    publisher: Cornell University Nolan School of Hotel Administration
+    source_type: recognized-workflow-reference
+    location: https://sha.cornell.edu/
+    authority_reason: >-
+      Cornell's Hotel School is the leading academic institution for hospitality
+      revenue management research, publishing peer-reviewed studies on dynamic
+      pricing, forecasting accuracy, and displacement analysis methodology that
+      define the analytical foundations of the discipline.
+    refresh_interval_days: 365
+    decay_policy: review_required_after_interval
+    status: active
+  - source_id: ftc-deceptive-pricing-guides
+    title: FTC Guides Against Deceptive Pricing
+    publisher: Federal Trade Commission (FTC)
     source_type: evidence-and-control-standard
-    location: https://www.pcisecuritystandards.org/standards/pci-dss/
-    authority_reason: >
-      Hotel booking and rate guarantee processes involve payment card data;
-      revenue managers must ensure rate hold, deposit, and cancellation penalty
-      policies comply with PCI DSS when rate changes trigger automated card
-      authorization flows.
-    refresh_interval_days: 365
-    decay_policy: review_required_after_interval
-    status: active
-  - source_id: ada-title-iii
-    title: Americans with Disabilities Act Title III — Public Accommodations
-    publisher: U.S. Department of Justice, Civil Rights Division
-    source_type: named-industry-operating-guidance
-    location: https://www.ada.gov/ada_title_III/
-    authority_reason: >
-      Hotel rate structures and booking policies must provide accessible pricing
-      and reservation pathways; ADA Title III governs public accommodation
-      obligations including accessible room inventory controls and rate parity
-      for accessible room categories.
-    refresh_interval_days: 365
-    decay_policy: review_required_after_interval
-    status: active
-  - source_id: ahlei-chrm
-    title: Certified Hospitality Revenue Manager (CHRM) Certification Standards
-    publisher: American Hotel & Lodging Educational Institute
-    source_type: named-industry-operating-guidance
-    location: https://www.ahlei.org/certifications
-    authority_reason: >
-      AHLEI defines the body of knowledge and competency standards for
-      hospitality revenue management professionals, including the analytical
-      frameworks for displacement analysis, channel mix optimization, and
-      total revenue management.
+    location: https://www.ftc.gov/legal-library/browse/guides/guides-against-deceptive-pricing
+    authority_reason: >-
+      The FTC's deceptive pricing guides govern how room rates can be advertised
+      and compared across channels, directly constraining rate parity practices,
+      was-price advertising, and promotional rate messaging that revenue
+      management controls.
     refresh_interval_days: 365
     decay_policy: review_required_after_interval
     status: active
   next_review_due_at: '2027-01-26'
-domain_lexicon:
-- term: RevPAR
-  definition: >
-    Revenue Per Available Room — total rooms revenue divided by total available
-    room nights; the primary top-line performance metric in hospitality revenue
-    management.
-- term: ADR
-  definition: >
-    Average Daily Rate — total rooms revenue divided by total rooms sold;
-    measures the average price paid per occupied room.
-- term: TRevPAR
-  definition: >
-    Total Revenue Per Available Room — all property revenue (rooms, F&B, spa,
-    parking, etc.) divided by available rooms; extends RevPAR to capture total
-    property revenue performance.
-- term: BAR
-  definition: >
-    Best Available Rate — the unrestricted base rate from which all other rate
-    plans are fenced or discounted; serves as the rate floor in the rate plan
-    hierarchy.
-- term: Channel Parity
-  definition: >
-    The practice of maintaining identical rates across all distribution
-    channels (OTA, GDS, brand.com, voice) for the same room type, date, and
-    occupancy to avoid rate conflicts and OTA parity complaints.
-- term: Displacement Analysis
-  definition: >
-    The calculation of whether accepting a group block displaces higher-valued
-    transient business, comparing the group's total revenue contribution against
-    the forecasted transient revenue it would replace.
-- term: Comp Set
-  definition: >
-    Competitive set — a group of 4–8 hotels selected as direct competitors,\    used by STR to benchmark a property's RevPAR, ADR, and occupancy indices.
-- term: Pace
-  definition: >
-    The rate at which bookings are accumulating for future arrival dates
-    compared to the same point in the booking window in prior years; a leading
-    indicator of demand strength.
-- term: Overbooking
-  definition: >
-    Intentionally selling more rooms than physically available to offset
-    forecasted cancellations and no-shows; calibrated using historical
-    wash factors to maximize occupancy without walking guests.
-- term: Rate Fence
-  definition: >
-    A rule or condition that separates rate plans and prevents rate migration
-    between segments — e.g., advance purchase requirements, minimum length of
-    stay, or AAA membership verification.
-- term: Wash Factor
-  definition: >
-    The historical percentage of confirmed reservations that cancel or no-show;
-    used to calculate overbooking thresholds and group block release timing.
-- term: CTAs
-  definition: >
-    Close to Arrival restrictions — inventory controls that prevent new
-    reservations from arriving on a specific date, used to manage compression
-    dates and protect group block inventory.
-- term: CTA
-  definition: >
-    Closed to Arrival — an inventory control that blocks new arrivals on a
-    specific date while allowing stays that arrive earlier to extend through
-    that date.
-- term: MinLOS
-  definition: >
-    Minimum Length of Stay — a restriction requiring a minimum number of nights
-    for reservations arriving on or spanning a specific date; used to prevent
-    one-night stays from consuming inventory during high-demand periods.
-- term: Net Rate
-  definition: >
-    A wholesale rate negotiated with an OTA or tour operator that is net of
-    commission; the hotel receives the net rate and the channel marks up to
-    the consumer.
-common_artifacts:
-- name: Daily Rate Recommendation Grid
-  description: >
-    RMS-generated rate grid by arrival date and room type, reviewed and adjusted
-    by the revenue manager before publishing to the PMS and CRS.
-  produced_by: revenue-management-hospitality-specialist
-  consumed_by:
-  - front-office-operations-specialist
-  - distribution-channel-manager
-- name: Weekly Revenue Strategy Deck
-  description: >
-    Presentation covering 90-day forecast, pace analysis, comp-set positioning,
-    group displacement decisions, and action items for the coming week.
-  produced_by: revenue-management-hospitality-specialist
-  consumed_by:
-  - General Manager
-  - group-sales-coordinator
-  - front-office-operations-specialist
-- name: Group Displacement Analysis Worksheet
-  description: >
-    Side-by-side comparison of a proposed group block's total revenue
-    contribution against the forecasted transient demand it would displace,
-    with a recommendation to accept, reject, or counter.
-  produced_by: revenue-management-hospitality-specialist
-  consumed_by:
-  - group-sales-coordinator
-  - General Manager
-- name: Monthly Revenue Performance Recap
-  description: >
-    Variance report comparing actual RevPAR, ADR, and occupancy to forecast,
-    prior year, and comp-set indices, with commentary on rate strategy
-    effectiveness and channel mix shifts.
-  produced_by: revenue-management-hospitality-specialist
-  consumed_by:
-  - hospitality-accounting-specialist
-  - General Manager
-  - Regional Director of Revenue
-- name: Rate Parity Audit Report
-  description: >
-    Channel-by-channel comparison of published rates for sample dates and room
-    types, flagging any discrepancies between OTA, GDS, brand.com, and CRS rates.
-  produced_by: revenue-management-hospitality-specialist
-  consumed_by:
-  - distribution-channel-manager
-common_tools:
-- IDeaS RMS — revenue management system for demand forecasting and rate
-    recommendation
-- Duetto — cloud-based RMS with open pricing and channel-level rate optimization
-- SynXis (Sabre Hospitality) — CRS for rate plan loading and channel distribution
-- Opera PMS (Oracle Hospitality) — property management system for inventory
-    and rate execution
-- STR reports — competitive set performance benchmarking via str.com
-- OTA Insight — rate shopping and competitive intelligence dashboard
-- TravelClick — demand data and competitive reservation analysis
-- Smartr — automated rate shopping and parity monitoring
-- FastYield — daily rate recommendation and pick-up analysis tool
-implementation:
-  daily_workflow:
-    morning_review:
-    - Pull STR daily flash report and compare comp-set RevPAR index to target
-    - Review previous day's actual occupancy and ADR vs. forecast
-    - Check pick-up pace for the next 14 days and flag any demand shortfalls
-    - Run competitive rate shop for top 5 competitors and note positioning
-    rate_decision:
-    - Open RMS recommended rate grid and review system suggestions
-    - Adjust rates based on pace, comp-set positioning, and local event calendar
-    - Publish approved rates to PMS and verify CRS propagation
-    - Apply CTA, MinLOS, and close-out restrictions as needed for compression dates
-    afternoon_monitoring:
-    - Monitor same-day and next-14-day booking pace
-    - Check rate parity across OTA channels using OTA Insight or Smartr
-    - Adjust inventory allocation between transient and group blocks
-    - Review group inquiry list and prepare displacement analysis for pending RFPs
-  weekly_workflow:
-    revenue_strategy_meeting:
-    - Present 90-day rolling forecast by segment and channel
-    - Review comp-set performance and positioning index trends
-    - Discuss group pipeline and displacement decisions
-    - Align on rate strategy for upcoming compression and need periods
-    - Assign action items to Sales, Front Office, and Distribution
-    forecast_update:
-    - Rebuild demand forecast using latest pick-up data and cancellation patterns
-    - Adjust seasonality factors and event impact weights
-    - Recalibrate overbooking thresholds based on recent wash factors
-    - Update channel mix assumptions and OTA production forecasts
-  monthly_workflow:
-    performance_recap:
-    - Produce monthly RevPAR, ADR, and occupancy variance report
-    - Analyze channel profitability net of commissions and fees
-    - Review rate plan production and identify underperforming rate codes
-    - Benchmark against comp set and identify positioning opportunities
-    system_maintenance:
-    - Audit rate plan hierarchy and deactivate expired rate codes
-    - Review RMS model accuracy and recalibrate forecasting parameters
-    - Update competitive shop grid if comp set membership changes
-    - Validate rate parity across all connected channels
