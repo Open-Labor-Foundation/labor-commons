@@ -8,6 +8,13 @@ on:
     branches:
       - main
 
+# Every job here only checks out the repo and runs read-only lint/validation
+# commands -- none write to the repo, comment on PRs, or touch anything else.
+# Explicit least-privilege floor for the whole workflow instead of the
+# broader GITHUB_TOKEN default.
+permissions:
+  contents: read
+
 jobs:
   lint:
     name: Markdown lint
