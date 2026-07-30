@@ -225,7 +225,15 @@ async function main() {
   }
   const files = args.filter((arg) => arg.endsWith(".yaml") || arg.endsWith(".yml"));
   if (files.length === 0) {
-    console.log("No spec.yaml files given and --full-corpus not set -- nothing to check.");
+    // No file args (e.g. bare `npm run validate:liveness`, or validate:all's
+    // chain) -- default to a full-corpus report rather than silently doing
+    // nothing. Still non-blocking (see runFullCorpusMode): unlike the other
+    // three validators, a full-corpus liveness scan is deliberately not a
+    // merge gate (per brief -- "full-corpus run on a schedule, not per-PR",
+    // because pre-existing link rot shouldn't block unrelated PRs). Per-PR
+    // gating happens through the explicit changed-file args the CI job passes.
+    const outPath = path.join("reports", "generated", "source-liveness-baseline.json");
+    await runFullCorpusMode(outPath);
     return;
   }
   await runChangedFileMode(files);
