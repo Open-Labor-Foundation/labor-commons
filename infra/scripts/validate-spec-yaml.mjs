@@ -11,6 +11,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseDocument } from "yaml";
+import { checkUrlsScheduled, STATE } from "../lib/url-liveness.mjs";
 
 const REQUIRED_SCHEMA_VERSION = "1.0";
 const REQUIRED_KIND = "agent_definition";
@@ -34,63 +35,17 @@ function readNonEmptyArray(record, key) {
   return Array.isArray(items) && items.length > 0 ? items : null;
 }
 
-const URL_CHECK_TIMEOUT_MS = 8000;
-const URL_CHECK_CONCURRENCY = 5;
-
 // The coder has no live web-search tool -- it can only curl a URL it already
 // recalls from training data, so a hallucinated citation is a structural risk
 // regardless of model. This is the one check in this script that catches that
 // directly instead of hoping the content looks plausible: actually request
 // each cited URL and confirm it resolves. Observed live during the labor-commons
 // remediation session: a generated spec.yaml cited a real-looking SEC page and
-// a real-looking FINRA rule number that both returned 404.
-async function checkUrlReachable(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), URL_CHECK_TIMEOUT_MS);
-  try {
-    let response = await fetch(url, {
-      method: "HEAD",
-      redirect: "follow",
-      signal: controller.signal,
-      headers: { "user-agent": "Mozilla/5.0 (compatible; labor-commons-spec-validator/1.0)" }
-    });
-    if (response.status === 405 || response.status === 401 || response.status === 403) {
-      // Some sites reject HEAD outright; retry with GET before concluding failure.
-      response = await fetch(url, {
-        method: "GET",
-        redirect: "follow",
-        signal: controller.signal,
-        headers: { "user-agent": "Mozilla/5.0 (compatible; labor-commons-spec-validator/1.0)" }
-      });
-    }
-    // 401/403 mean the host recognized the request and forbade it -- common for
-    // authorities that blanket-block datacenter IPs/bots (FASB and SEC return 403
-    // for their entire site, root included). That is NOT the fabrication signal
-    // this check exists to catch: a made-up path returns 404. Treat auth-blocked
-    // as reachable so real citations to bot-blocking regulators aren't rejected;
-    // keep failing 404/410 and DNS/connection errors, which are the real tells.
-    const status = response.status;
-    const ok = (status >= 200 && status < 400) || status === 401 || status === 403;
-    return { ok, status };
-  } catch (error) {
-    return { ok: false, status: null, error: error.message };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function checkUrlsInBatches(urls) {
-  const results = new Map();
-  const queue = [...urls];
-  async function worker() {
-    while (queue.length > 0) {
-      const url = queue.shift();
-      results.set(url, await checkUrlReachable(url));
-    }
-  }
-  await Promise.all(Array.from({ length: Math.min(URL_CHECK_CONCURRENCY, urls.length) }, worker));
-  return results;
-}
+// a real-looking FINRA rule number that both returned 404. The actual HEAD/GET/
+// retry/backoff/classification logic lives in ../lib/url-liveness.mjs (shared
+// with validate-source-liveness.mjs) -- see that module's header comment for
+// the round-3 correction (a single HEAD-only request produced confirmed false
+// positives against real, live, Cloudflare-fronted documents).
 
 // Collect all specialist slugs that exist in the catalog. Used to verify that
 // adjacent_specialties entries reference real sibling specialists, not
@@ -231,11 +186,14 @@ async function validateSpecYaml(filePath, { checkUrls = true } = {}) {
           const urls = sourceEntries
             .map((entry) => entry?.get?.("location"))
             .filter((url) => typeof url === "string" && /^https?:\/\//.test(url));
-          const results = await checkUrlsInBatches(urls);
+          const results = await checkUrlsScheduled(urls);
           for (const [url, result] of results) {
-            if (!result.ok) {
-              const detail = result.error ? result.error : `HTTP ${result.status}`;
-              issues.push(`knowledge_baseline.authority_sources cites an unreachable URL (${detail}): ${url}`);
+            // Only a confirmed-dead verdict (HEAD+GET agreement, or an
+            // authoritative 410) fails validation -- `unreachable` (network
+            // blip, exhausted 429 retries, ambiguous status) is reported
+            // nowhere near as strong evidence and must not block a PR.
+            if (result.state === STATE.DEAD) {
+              issues.push(`knowledge_baseline.authority_sources cites a dead URL (HTTP ${result.status}${result.reason ? `, ${result.reason}` : ""}): ${url}`);
             }
           }
         }
