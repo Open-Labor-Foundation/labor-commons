@@ -291,9 +291,12 @@ export async function checkUrlsScheduled(urls, options = {}) {
 // something the code enforced -- once the full-corpus workflow started
 // triggering on every merge (source-liveness-schedule.yml's push trigger)
 // instead of only weekly, an unenforced rule would let a burst of same-day
-// merges fast-forward a URL to dead_confirmed in hours. 20h (not a strict
-// 24h) leaves slack for a scheduler firing a little early.
-export const MIN_RUN_INTERVAL_MS = 20 * 60 * 60 * 1000;
+// merges fast-forward a URL to dead_confirmed in hours. Enforced at the
+// documented 24h floor, not shaved down for scheduler slack -- slack only
+// makes sense on the late side (a run firing after 24h is still fine); a
+// floor that admits runs *before* 24h defeats the "genuinely time-separated"
+// guarantee it exists to provide.
+export const MIN_RUN_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
 export function mergeLivenessState(previousRecord, currentResult, nowIso) {
   const previous = previousRecord ?? {

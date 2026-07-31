@@ -325,8 +325,8 @@ test("T17: same-day re-triggers (e.g. two merges within hours) do not fast-forwa
 
 test("T18: a run right at the MIN_RUN_INTERVAL_MS boundary is credited; just under it is not", () => {
   const t0 = "2026-08-01T00:00:00.000Z";
-  const justUnder = "2026-08-01T19:59:00.000Z"; // 19h59m later
-  const atOrOver = "2026-08-01T20:00:01.000Z"; // 20h0m1s later
+  const justUnder = "2026-08-01T23:59:00.000Z"; // 23h59m later
+  const atOrOver = "2026-08-02T00:00:01.000Z"; // 24h0m1s later
 
   const run1 = mergeLivenessState(null, { state: STATE.DEAD, status: 404 }, t0);
   const run2 = mergeLivenessState(run1, { state: STATE.DEAD, status: 404 }, justUnder);
