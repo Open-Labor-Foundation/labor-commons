@@ -2,18 +2,38 @@ name: Source liveness (full corpus)
 
 on:
   schedule:
-    # Weekly, Monday 05:00 UTC -- a full-corpus run touches every unique
-    # authority_sources URL in the catalog (thousands of requests), so this
-    # runs on a schedule rather than per-PR. Per-PR coverage for changed
-    # specs is the "Source liveness" job in ci.yml.
+    # Weekly floor -- guarantees a run even if nothing merges for a while.
     - cron: '0 5 * * 1'
   workflow_dispatch: {}
+  push:
+    # The real trigger during active regeneration: every merge that touches
+    # a spec.yaml re-sweeps the full corpus, not just the changed files.
+    # Catching a bad citation while the record is still fresh (not 15
+    # records later) is the whole point -- a fixed weekly cadence was too
+    # slow for that during an active TASK-02-style regeneration run. Safe to
+    # fire this often: mergeLivenessState enforces its own minimum real-time
+    # gap (see infra/lib/url-liveness.mjs) before crediting a run toward
+    # consecutive_dead_runs, so back-to-back merges can't fast-forward the
+    # 3-run confirmation the way running this on a bare timer would.
+    branches:
+      - main
+    paths:
+      - 'catalog/**/spec.yaml'
 
 # contents: write is required -- the last step commits and pushes a refreshed
 # baseline report directly to main. Explicit rather than relying on the
 # broader GITHUB_TOKEN default.
 permissions:
   contents: write
+
+# Full-corpus runs read-then-write the same committed report file. Without
+# this, two runs triggered close together (e.g. two merges within minutes)
+# could race on that read-modify-write and silently drop one run's
+# consecutive_dead_runs update. Queue instead of racing or cancelling --
+# cancelling would also cancel a run's contribution toward confirmation.
+concurrency:
+  group: source-liveness-full-corpus
+  cancel-in-progress: false
 
 jobs:
   full-corpus-liveness:

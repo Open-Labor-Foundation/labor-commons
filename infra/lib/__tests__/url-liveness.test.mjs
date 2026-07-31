@@ -9,6 +9,13 @@ import {
   STATE
 } from "../url-liveness.mjs";
 
+// Real regression test for a gap a fresh review caught in a later round:
+// mergeLivenessState is what's actually exercised here, but the property
+// under test -- that triggering a full-corpus run more often (source-liveness-
+// schedule.yml's push trigger, added once regeneration was actively merging
+// records) can't fast-forward a URL to dead_confirmed within hours -- is
+// what motivates it.
+
 // All fixtures are local -- no live network calls in this suite.
 function startFixtureServer(handler) {
   return new Promise((resolve) => {
@@ -294,6 +301,47 @@ test("T15b: an unreachable run right after confirmation must not un-confirm a de
   const run4 = mergeLivenessState(run3, { state: STATE.UNREACHABLE, status: 503 }, t3);
   assert.equal(run4.consecutive_dead_runs, 3);
   assert.equal(isDeadConfirmed(run4), true);
+});
+
+test("T17: same-day re-triggers (e.g. two merges within hours) do not fast-forward dead_confirmed", () => {
+  const t0 = "2026-08-01T00:00:00.000Z";
+  const t0plus1h = "2026-08-01T01:00:00.000Z";
+  const t0plus5h = "2026-08-01T05:00:00.000Z";
+
+  const run1 = mergeLivenessState(null, { state: STATE.DEAD, status: 404 }, t0);
+  assert.equal(run1.consecutive_dead_runs, 1);
+
+  // A merge an hour later re-triggers the full-corpus run, but it's nowhere
+  // near MIN_RUN_INTERVAL_MS since the last one -- must not increment.
+  const run2 = mergeLivenessState(run1, { state: STATE.DEAD, status: 404 }, t0plus1h);
+  assert.equal(run2.consecutive_dead_runs, 1);
+  assert.equal(isDeadConfirmed(run2), false);
+
+  // Same for a third same-day trigger, still short of the 20h floor.
+  const run3 = mergeLivenessState(run2, { state: STATE.DEAD, status: 404 }, t0plus5h);
+  assert.equal(run3.consecutive_dead_runs, 1);
+  assert.equal(isDeadConfirmed(run3), false);
+});
+
+test("T18: a run right at the MIN_RUN_INTERVAL_MS boundary is credited; just under it is not", () => {
+  const t0 = "2026-08-01T00:00:00.000Z";
+  const justUnder = "2026-08-01T19:59:00.000Z"; // 19h59m later
+  const atOrOver = "2026-08-01T20:00:01.000Z"; // 20h0m1s later
+
+  const run1 = mergeLivenessState(null, { state: STATE.DEAD, status: 404 }, t0);
+  const run2 = mergeLivenessState(run1, { state: STATE.DEAD, status: 404 }, justUnder);
+  assert.equal(run2.consecutive_dead_runs, 1, "just under the floor must not credit");
+
+  const run3 = mergeLivenessState(run2, { state: STATE.DEAD, status: 404 }, atOrOver);
+  assert.equal(run3.consecutive_dead_runs, 2, "at/over the floor must credit");
+});
+
+test("T19: 410 (Gone) still confirms immediately regardless of run spacing", () => {
+  const t0 = "2026-08-01T00:00:00.000Z";
+  const t0plusOneMinute = "2026-08-01T00:01:00.000Z";
+  const run1 = mergeLivenessState(null, { state: STATE.DEAD, status: 410, reason: "gone" }, t0plusOneMinute);
+  assert.equal(run1.consecutive_dead_runs, 3);
+  assert.equal(isDeadConfirmed(run1), true);
 });
 
 test("T16: last_checked/generated_at uses the caller-supplied run timestamp, not a freshly computed one", async () => {

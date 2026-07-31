@@ -285,30 +285,70 @@ export async function checkUrlsScheduled(urls, options = {}) {
 // a network blip is neither evidence for nor against fabrication). A `410`
 // (Gone) is authoritative on its own and skips the multi-run requirement
 // entirely, per spec.
+// The re-baseline procedure requires 3 full-corpus runs at least 24h apart
+// so consecutive_dead_runs reflects genuinely time-separated samples, not
+// just 3 process invocations. That was only a documented procedure, not
+// something the code enforced -- once the full-corpus workflow started
+// triggering on every merge (source-liveness-schedule.yml's push trigger)
+// instead of only weekly, an unenforced rule would let a burst of same-day
+// merges fast-forward a URL to dead_confirmed in hours. 20h (not a strict
+// 24h) leaves slack for a scheduler firing a little early.
+export const MIN_RUN_INTERVAL_MS = 20 * 60 * 60 * 1000;
+
 export function mergeLivenessState(previousRecord, currentResult, nowIso) {
-  const previous = previousRecord ?? { consecutive_dead_runs: 0, first_seen_dead: null };
+  const previous = previousRecord ?? {
+    consecutive_dead_runs: 0,
+    first_seen_dead: null,
+    last_checked: null,
+    last_credited_check: null
+  };
+  // Measured against last_credited_check, NOT last_checked. last_checked
+  // updates on every single attempt regardless of whether it counted --
+  // comparing against it would mean a burst of frequent re-triggers keeps
+  // resetting the clock and a URL could never accumulate enough spacing to
+  // reach dead_confirmed at all, which is worse than the fast-forward bug
+  // this exists to prevent. last_credited_check only moves forward on a
+  // check that actually changed the counter (incremented or reset it).
+  const sinceCredited = previous.last_credited_check
+    ? Date.parse(nowIso) - Date.parse(previous.last_credited_check)
+    : Infinity;
+  const tooSoonToCredit = Number.isFinite(sinceCredited) && sinceCredited < MIN_RUN_INTERVAL_MS;
+
   const result = {
     state: currentResult.state,
     last_status: currentResult.status ?? null,
     consecutive_dead_runs: previous.consecutive_dead_runs ?? 0,
     first_seen_dead: previous.first_seen_dead ?? null,
-    last_checked: nowIso
+    last_checked: nowIso,
+    last_credited_check: previous.last_credited_check ?? null
   };
 
   if (currentResult.state === STATE.DEAD) {
     if (currentResult.reason === "gone") {
+      // 410 is authoritative -- doesn't need multi-run spacing.
       result.consecutive_dead_runs = Math.max(3, (previous.consecutive_dead_runs ?? 0) + 1);
+      result.last_credited_check = nowIso;
       result.reason = "gone";
+    } else if (tooSoonToCredit) {
+      // Records the observation (state/last_status/last_checked above) but
+      // doesn't let a same-day re-trigger fast-forward confirmation --
+      // last_credited_check deliberately does NOT move, so a whole burst of
+      // frequent re-triggers still only needs MIN_RUN_INTERVAL_MS from the
+      // last credited check, not from whichever attempt happened last.
+      result.consecutive_dead_runs = previous.consecutive_dead_runs ?? 0;
     } else {
       result.consecutive_dead_runs = (previous.consecutive_dead_runs ?? 0) + 1;
+      result.last_credited_check = nowIso;
     }
     result.first_seen_dead = previous.first_seen_dead ?? nowIso;
   } else if (currentResult.state === STATE.LIVE) {
     result.consecutive_dead_runs = 0;
     result.first_seen_dead = null;
+    result.last_credited_check = nowIso;
   }
-  // UNREACHABLE: consecutive_dead_runs and first_seen_dead carry over
-  // unchanged -- an indeterminate run is neither evidence for nor against.
+  // UNREACHABLE: consecutive_dead_runs, first_seen_dead, and
+  // last_credited_check all carry over unchanged -- an indeterminate run is
+  // neither evidence for nor against.
 
   if (currentResult.error) {
     result.error = currentResult.error;
